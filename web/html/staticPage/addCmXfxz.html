@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmCarrierCompanyApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.xf_h2{color:#ff0000; font-family:Arial,宋体; font-size:12px; margin-bottom:15px;}
+.xf_co{width: 860px;margin: 0 auto; background:#f4f9fd; padding:15px!important; margin-bottom:20px;}
+.xf_span{font-family:Arial,宋体; padding:0 5px; line-height:26px;}
+.xf_table{border-top:1px solid #cdddec;border-right:1px solid #cdddec; text-align:center}
+.xf_table td{ border-left:1px solid #cdddec; border-bottom:1px solid #cdddec;height:32px;}
+</style>
+
+</head>
+<body ng-controller="addCmCarrierCompanyCtrl" >
+
+	<!-- 小费计算规则 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"	style="min-height: 300px">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width: 860px;margin: 0 auto;">
+				    <tr>
+						<td width="110"><label class="term_label">计费规则名称：</label></td>
+						<td><input  maxlength="15" ng-model="data.orgPrincipal" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+					    <td width="110"><label class="term_label">归属专线：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						<td><label class="term_label">发站：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+					    <td><label class="term_label">到站：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td>
+							<div class="bottom_search" style="position:inherit;">
+								<a href="javascript:void(0);" style="width:auto; padding:0 10px;">获取通用模板为默认模板</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width: 860px;margin: 0 auto;">
+					<tr>
+						<td width="110"></td>
+						<td width="100">
+							<div class="controls fl">
+								<input id="check-1" class="none" name="check-1" checked="checked" ng-disabled="all" type="checkbox"><label for="check-1" class="yd_span">打印运单</label>
+							</div>
+						</td>
+						<td width="100">
+							<div class="controls fl">
+								<input id="check-2" class="none" name="check-1" ng-disabled="all" type="checkbox"><label for="check-2" class="yd_span">打印运单</label>
+							</div>
+						</td>
+						<td width="100">
+							<div class="controls fl">
+								<input id="check-3" class="none" name="check-1" ng-disabled="all" type="checkbox"><label for="check-3" class="yd_span">打印运单</label>
+							</div>
+						</td>
+						<td><label class="term_label">起价：</label></td>
+						<td width="100"><input  maxlength="16" style="width:100px!important;" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td><label class="term_label">封价：</label></td>
+						<td><input  maxlength="16" style="width:100px!important;" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					</tr>
+					
+				</table>
+				
+				<div class="search_term clearfix xf_co">
+					<h2 class="xf_h2">事例：若首重5kg，续重为2元/kg，10kg小费计算如：总费用=5（起价）+2（续重计费）*（10kg（总重量）-5kg（首重））；低于首重按起始价，高于封顶价则按封顶价格算</h2>
+					<div>
+						<div class="term_label fl" style="width:110px;">首重：</div>
+						<input  maxlength="16" style="width:100px!important;" ng-model="data.orgPrincipalPhone" class="form_billing fl ng-pristine ng-valid ng-valid-maxlength ng-touched" /><span class="fl xf_span">kg</span>
+						<div class="term_label fl" style="width:110px;">续重计费价：</div>
+						<input  maxlength="16" style="width:100px!important;" ng-model="data.orgPrincipalPhone" class="form_billing fl ng-pristine ng-valid ng-valid-maxlength ng-touched" /><span class="fl xf_span">元/kg</span>
+					</div>
+				</div>
+				
+				<div class="search_term clearfix xf_co">
+					<h2 class="xf_h2">这里输入一个公斤区间范围，输入这个区间范围的价格，当区间较多时，点击增加一级即可，区间不可重叠，0到10kg，表示大于0kg，小于等于10kg。</h2>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="xf_table" style="width:650px; margin:0 auto;">
+					  <tr>
+						<td width="250">
+							<div class="clearfix" style="width:150px; margin:0 auto">
+							<input  maxlength="16" style="width:50px!important;" ng-model="data.orgPrincipalPhone" class="form_billing fl ng-pristine ng-valid ng-valid-maxlength ng-touched" /><span class="fl xf_span">--</span>
+							<input  maxlength="16" style="width:50px!important;" ng-model="data.orgPrincipalPhone" class="form_billing fl ng-pristine ng-valid ng-valid-maxlength ng-touched" /><span class="fl xf_span">kg</span>
+							</div>
+						</td>
+						<td width="250">
+							<div class="clearfix" style="width:150px; margin:0 auto">
+							<input  maxlength="16" style="width:50px!important;" ng-model="data.orgPrincipalPhone" class="form_billing fl ng-pristine ng-valid ng-valid-maxlength ng-touched" /><span class="fl xf_span">--</span>
+							<input  maxlength="16" style="width:50px!important;" ng-model="data.orgPrincipalPhone" class="form_billing fl ng-pristine ng-valid ng-valid-maxlength ng-touched" /><span class="fl xf_span">kg</span>
+							</div>
+						</td>
+						<td width="150"><a class="button ml_10 newly" style="background:#98cc1a!important; height:22px; line-height:22px; color:#fff!important" href="javascript:void(0)" ng-click="">增加一级</a></td>
+					  </tr>
+					  <tr>
+						<td><span class="xf_span">30（元）</span></td>
+						<td><span class="xf_span">50（元）</span></td>
+						<td>&nbsp;</td>
+					  </tr>
+					</table>
+
+				</div>
+				
+				<div class="search_term clearfix xf_co">
+						<div class="term_label fl" style="width:110px;">占比率：</div>
+						<input  maxlength="16" style="width:100px!important;" ng-model="data.orgPrincipalPhone" class="form_billing fl ng-pristine ng-valid ng-valid-maxlength ng-touched" /><span class="fl xf_span">%</span>
+				</div>
+				<div class="bottom_nav1" style=" margin-top:15px;">
+					<a href="javascript:void(0)" ng-click="doSave()">保 存</a><a	href="javascript:void(0)" ng-click="close()">取 消</a>
+				</div>
+			</div>
+	</div>
+	<!-- 小费计算规则 新增 结束 -->
+	
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmCarrierCompanyCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

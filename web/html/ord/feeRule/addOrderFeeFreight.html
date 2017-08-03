@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addOrderFeeFreightApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master_open.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/lrtk.css?v=${ver}">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.xf_h2{color:#ff0000; font-family:Arial,宋体; font-size:12px; margin-bottom:15px;}
+.xf_co{width: 860px;margin: 0 auto; background:#f4f9fd; padding:15px!important; margin-bottom:20px;}
+.xf_span{font-family:Arial,宋体; padding:0 5px; line-height:26px;}
+.xf_table{border-top:1px solid #cdddec;border-right:1px solid #cdddec; text-align:center}
+.xf_table td{ border-left:1px solid #cdddec; border-bottom:1px solid #cdddec;height:32px;}
+
+.form_billing{
+	background: #fff;border: 1px solid #A1BBD1;
+	
+}
+</style>
+
+</head>
+<body ng-controller="addOrderFeeFreightCtrl" >
+
+	<!-- 小费计算规则 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"	style="min-height: 300px">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width: 860px;margin: 0 auto;">
+				    
+				    <tr>
+					    <td width="110"><label class="term_label">归属专线：</label></td>
+						<td  width="194">
+							<div class="ui-select">
+								<select ng-model="save.tenantId" ng-change="queryCompany(save.tenantId)" ng-disabled="isSee ==1" ng-options="obj.tenantId as obj.orgName for obj in curOrgData.items" class="ng-pristine ng-untouched ng-valid">
+								</select>
+							</div>
+						</td>
+						<td width="110"><label class="term_label">发站：</label></td>
+						<td  width="194">
+							<div class="ui-select">
+                               <select ng-model="save.beginOrgId" ng-change="selectChange()" ng-disabled="isSee ==1"
+									ng-options="obj.orgId as obj.orgName for  obj in orgInfo ">
+								</select>
+                            </div>
+							<!-- <table-City gain="sta" table-Class="form_billing w_b100" table-Disabled="isSee ==1"  input-Value="" ver="${ver}" city-Class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"></table-City> -->
+						</td>
+					    <td width="110"><label class="term_label">到站：</label></td>
+						<td  width="194">
+							<div class="ui-select " >
+                               <select ng-model="save.endOrgId" ng-change="selectChange()" ng-disabled="isSee ==1"
+									ng-options="obj.orgId as obj.orgName for  obj in orgInfo ">
+								</select>
+                       		 </div>
+						</td>
+						
+					</tr>
+					<tr>
+						<td><label class="term_label">最低一票：</label></td>
+						<td>
+							<div class="xx_pj">
+								<input  maxlength="11"  ng-disabled="isSee ==1" ng-model="save.minFeeString" my-Double-Val="keyup" my-Double-Val class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+								<span class="yuan">（元）</span>
+							</div>
+						</td>
+					    <td></td>
+						<td>
+						</td>
+						<td>
+						</td>
+						<td>
+						</td>
+					</tr>
+				
+					<tr><td colspan="6">
+					<div class="waybill_title" style="background: #f5f7f9;
+    margin: 20px 0;"><h2 class="title_h2" style="font-size: 14px;padding: 7px 0 6px;"><i class="icon title_icon fl"></i>按重量</h2></div>
+					</td>
+				</tr>
+					<tr>
+						<td width=""><label class="term_label">下限：</label></td>
+						<td width="">
+						<div class="xx_pj">
+							<input  maxlength="11" ng-disabled="isSee ==1" ng-model="save.minWeightFeeString" my-Double-Val="keyup" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+							<span class="yuan">（元/kg）</span>
+						</div>
+						</td>
+						<td width="" ><label class="term_label">上限：</label></td>
+						<td width="" >
+							<div class="xx_pj">
+								<input  maxlength="11"  ng-disabled="isSee ==1" ng-model="save.maxWeightFeeString" my-Double-Val="keyup" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+								<span class="yuan">（元/kg）</span>
+							</div>
+						</td>
+						
+						
+						<td><label class="term_label"></label></td>
+						<td></td>
+					</tr>
+				<tr><td colspan="6">
+				<div class="waybill_title" style="background: #f5f7f9;
+    margin: 20px 0;"><h2 class="title_h2" style="font-size: 14px;padding: 7px 0 6px;"><i class="icon title_icon fl"></i>按体积</h2></div>
+				</td>
+				</tr>
+					<tr>
+						<td width=""><label class="term_label">下限：</label></td>
+						<td width="">
+						<div class="xx_pj">
+							<input  maxlength="11"  ng-disabled="isSee ==1" ng-model="save.minVolumeFeeString" my-Double-Val="keyup" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+							<span class="yuan">（元/方）</span>
+						</div>
+						</td>
+						<td width="" ><label class="term_label">上限：</label></td>
+						<td width="" >
+						<div class="xx_pj">
+							<input  maxlength="11" ng-disabled="isSee ==1"  ng-model="save.maxVolumeFeeString" my-Double-Val="keyup" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+							<span class="yuan">（元/方）</span>
+						</div>
+						</td>
+						
+						<td><label class="term_label"></label></td>
+						<td></td>
+					</tr>
+				</table>
+				<div class="bottom_nav1" style=" border-top:1px solid #d2e0f0;padding-top: 15px;width: 860px;margin: 15px auto 0;">
+					<a href="javascript:void(0)" ng-click="doSave()" ng-show="isSee!=1">保 存</a><a	href="javascript:void(0)" ng-click="close()">取 消</a>
+				</div>
+			</div>
+	</div>
+	<!-- 小费计算规则 新增 结束 -->
+	
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/table/tableCommon.js?v=${ver}"></script>
+	<script type="text/javascript" src="addOrderFeeFreightCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

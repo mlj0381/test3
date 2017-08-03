@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="acMyWalletTipFeeApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}">
+<style>
+.form_billing {
+	border-radius: 1px;
+}
+
+.ui-select {
+	width: 100%;
+	width: -moz-calc(100% - 2px);
+	width: -webkit-calc(100% - 2px);
+	width: calc(100% - 2px)
+}
+
+.ui-select, .ui-select select {
+	height: 24px !important;
+	min-height: 24px !important;
+}
+
+.ui-select select {
+	
+}
+
+.qlfconsignor {
+	
+}
+</style>
+
+</head>
+<body ng-controller="acMyWalletTipFeeCtrl" class="ng-cloak">
+
+	<!-- 小费对账 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20" style="min-height: 300px">
+		<div class="search">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="search_table search_term">
+				<tbody>
+					<tr>
+						<td width="80"><label class="term_label">下单时间：</label></td>
+						<td width="15%"><input style="width: 40% !important;"
+							my-Date-Picker='' ng-model="query.ordersBegin" id="ordersBegin"
+							readonly="readonly" class="form_term fl w_xjr" type="text">
+							<span class="search_span fl" style="width: 10% !important;">到</span>
+							<input readonly="readonly" style="width: 40% !important;"
+							ng-model="query.ordersEnd" my-Date-Picker='' id="ordersEnd"
+							class="form_term fl w_xjr" type="text"></td>
+						<td width="80"><label class="term_label">开单时间：</label></td>
+						<td width="15%"><input style="width: 40% !important;"
+							my-Date-Picker='' ng-model="query.billingBegin" id="billingBegin"
+							readonly="readonly" class="form_term fl w_xjr" type="text">
+							<span class="search_span fl" style="width: 10% !important;">到</span>
+							<input readonly="readonly" style="width: 40% !important;"
+							ng-model="query.billingEnd" my-Date-Picker='' id="billingEnd"
+							class="form_term fl w_xjr" type="text"></td>
+						<td width="80"><label class="term_label">开单网点：</label></td>
+						<td width="15%"><input class="input_box w_b90 "
+							ng-model="query.billingOrgName" maxlength="20" id="" type="text" />
+						</td>
+						<td width="80"></td>
+						<td width=""></td>
+						<td rowspan="3" width="12%"><div
+								class="bottom_search search_button" style="position: inherit;">
+								<a ng-click="doQuery();" ng-enter="" href="javascript:void(0);">查询</a><a
+									class="qink" href="javascript:void(0);"
+									ng-click="cleanQuery();">清空</a>
+							</div></td>
+					</tr>
+					<tr>
+						<td><label class="term_label">订单号：</label></td>
+						<td width=""><input class="input_box w_b90 "
+							ng-model="query.orderNo" maxlength="20" id="" type="text" /></td>
+						<td><label class="term_label">运单号：</label></td>
+						<td><input class="input_box w_b90 "
+							ng-model="query.orderNumber" maxlength="20" id="" type="text" />
+						</td>
+						<td><label class="term_label" ng-show="userType != 10">发货人：</label></td>
+						<td><input class="input_box w_b90 " ng-show="userType != 10"
+							ng-model="query.consignor" maxlength="20" id="" type="text" /></td>
+						<td><label class="term_label" ng-show="userType != 10">发货人电话：</label></td>
+						<td><input class="input_box w_b90 " ng-show="userType != 10"
+							ng-model="query.consignorPhone" maxlength="20" id="" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td><label class="term_label">拉包工：</label></td>
+						<td><input class="input_box w_b90 " ng-model="query.pullName"
+							maxlength="20" id="" type="text" /></td>
+						<td><label class="term_label" ng-show="userType != 10">开单人：</label>
+							<label class="term_label" ng-show="userType == 10">拉包工电话：</label>
+						</td>
+						<td><input class="input_box w_b90 " ng-show="userType != 10"
+							ng-model="query.createName" maxlength="20" id="" type="text" />
+							<input class="input_box w_b90 " ng-show="userType == 10"
+							ng-model="query.pullPhone" maxlength="20" id="" type="text" /></td>
+						<td><label class="term_label" ng-show="userType != 10">收货人：</label></td>
+						<td><input class="input_box w_b90 " ng-show="userType != 10"
+							ng-model="query.consignee" maxlength="20" id="" type="text" /></td>
+						<td><label class="term_label" ng-show="userType != 10">收货人电话：</label></td>
+						<td><input class="input_box w_b90 " ng-show="userType != 10"
+							ng-model="query.consigneePhone" maxlength="20" id="" type="text" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="position: relative;" class="search_nr clearfix mt_20">
+			<div class="bottom_nav pb_20 bottom_nav_search clearfix tableStyle">
+				<h2>查询结果</h2>
+				<a class="button fr ml_10 see_b" ng-click="seeAccount()"
+					href="javascript:void(0);"> <i
+					class="button_icon button_icon dw_see_b"></i>查看详情
+				</a> <a class="button fr ml_10 gangxianjs" ng-click="accountTip(1);"
+					ng-show="userType != 10" href="javascript:void(0);"> <i
+					class="button_icon button_icon dw_gangxianjs"></i>调账
+				</a> <a class="button fr ml_10 gangxianjs"
+					ng-click="page.downloadExcelFile()" href="javascript:void(0);">
+					<i class="button_icon button_icon dw_gangxianjs"></i>导出
+				</a>
+			</div>
+			<my-Table-Cm head="head" table="page" url="url" param="urlParam"
+				is-Show-Row="true" is-Filter="false" id="id"
+				table-Name="acMyWalletTipFee" ver="${ver}" after-Init-Fn="doQuery()"></my-Table-Cm>
+		</div>
+
+	</div>
+	<!-- 小费对账 结束 -->
+	<div class="xf_1_span_sf" style="left:{{clientX}}; top:{{clientY}};z-index:99999" ng-show="isConsignor">
+		<consignor-Show order-Id="orderId" consignor-Change="consignorChange"
+			ver="${ver}" />
+	</div>
+
+	<!-- 调账 弹窗 开始 -->
+	<div id="xf_dz" class="popup"
+		style="width: 440px; height: 220px; top: 20px; margin-left: -220px;"
+		ng-show="isAccount">
+		<div class="title">
+			<h2 class="popup_bt">调账</h2>
+			<i href="javascript:void(0)" class="list_xl_icon icon"
+				ng-click="accountTip(2)"></i>
+		</div>
+
+		<div class="clearfix xianlusz" style="margin: 35px 0 0 40px;">
+			<label class="list_label fl" style="width: 130px;">调整小费为：</label><input
+				class="input_box " ng-model="save.tipString" maxlength="20" id=""
+				my-Double-Val="keyup" type="text"> <span class="inp_sr"
+				style="border: 0">元</span>
+		</div>
+		<div class="popup_content">
+			<p class="popup_p" style="color: #ff0000;">拉包工：{{account.pullName}}
+				{{account.pullPhone}}</p>
+		</div>
+		<div class="bottom_nav1"
+			style="margin-top: 10px; border-top: 1px solid #E6E6E6; padding-top: 10px;">
+			<a class="button ml_10 baoc" href="javascript:void(0)"
+				ng-click="accountTip(3);"><i
+				class="button_icon button_icon dw_baoc"></i>保存</a> <a
+				href="javascript:void(0)" ng-click="accountTip(2);">取 消</a>
+		</div>
+	</div>
+	<!-- 调账 弹窗 结束 -->
+
+	<!-- 透明背景 -->
+	<div id="fade1_xz" class="popup_bj" ng-show="isShow"></div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/table/tableCommon.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../ord/ordDetail/ordDetailYQ.js?v=${ver}"></script>
+	<script type="text/javascript" src="acMyWalletTipFeeCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

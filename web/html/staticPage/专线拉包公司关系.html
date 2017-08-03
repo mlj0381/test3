@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmCarrierCompanyApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.ui-select select{}
+</style>
+
+</head>
+<body ng-controller="addCmCarrierCompanyCtrl" >
+
+	<!-- 拉包公司关系 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20"	style="min-height: 300px">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">拉包公司：</label>
+                   			</td>
+						<td width="200">
+							<input class="form_term ng-pristine ng-untouched ng-valid ng-valid-maxlength" style="width:90%" ng-model="queryParam.roleName" maxlength="20">
+                        </td>
+						<td width="100"><label class="term_label">专线公司：</label>
+                   			</td>
+						<td width="200">
+							<input class="form_term ng-pristine ng-untouched ng-valid ng-valid-maxlength" style="width:90%" ng-model="queryParam.roleName" maxlength="20">
+                        </td>
+						<td width="160" ><div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-enter="" href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="cleanQuery();">清空</a></div></td>
+						<td></td>
+					</tr>
+				</tbody>
+		</table>
+		<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	                <h2>查询结果</h2>
+	                <a href="javascript:void(0)" ng-click="addUser()">新增</a>
+	                <a href="javascript:void(0)" ng-click="updateUser()">修改</a>
+	                <a href="javascript:void(0)" ng-click="delUser()">删除</a>
+                </div>
+		<div style="position: relative;">
+			<div class="" style="width:100%;overflow:auto;">
+				<table class="search_lista" width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%;border-top: 1px solid #A1BBD1 ;">
+					<thead>
+						<tr>
+							<th width="80"></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">专线公司</span></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">拉包公司</span></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">拉包公司法人</span></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">拉包公司电话</span></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">专线法人</span></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">专线公司电话</span></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">创建时间</span></th>
+							<th style="text-align: left;" width="%"><span style=" padding: 0 5px;" class="ng-binding">创建人</span></th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background:#fff;">
+							<td>
+								<div class="controls"><input id="page.checkId52" value="52" class="none" type="checkbox" name="page.checkName"><label for="check-1"></label></div>
+							</td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">张三</span></td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">13800138000</span></td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">8</span></td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">张三</span></td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">13800138000</span></td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">8</span></td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">8</span></td>
+							<td style="text-align: left;"><span style=" padding: 0 5px;" class="ng-binding">8</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	<!-- 拉包公司关系 结束 -->
+	
+	<!-- 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20" style="min-height: 300px">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width: 300px;margin: 0 auto;">
+				    <tbody><tr>
+						<td width="95"><label class="term_label">选择拉包公司：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+						
+					</tr>
+					<tr>
+						<td><label class="term_label">归属专线：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+						
+					</tr>
+					
+				</tbody></table>
+			</div>
+		<div class="bottom_nav1" style="border-top:1px dashed #cee1f1; padding-top:20px; margin-top:15px;">
+			<a href="javascript:void(0)" ng-click="doSave()">提 交</a><a href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+	<!-- 新增 结束 -->
+	
+	
+	 
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmCarrierCompanyCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

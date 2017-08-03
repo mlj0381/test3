@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="matchManageApp">
+	<head>
+	    <title>匹配优先配置</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+<!-- <script type="text/javascript"  src="../../js/jscolor-2.0.4/jscolor.min.js"></script> -->
+</head>
+	<body ng-controller="matchManageCtrl" onload="setContentHeight()">
+	<!-- 内容块 -->
+        <div class="billing_1">
+			<div class="pp_youxian clearfix">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td valign="top"><div id="container" style="min-width:560px;height:400px;margin-left:10px;"></div></td>
+					<td valign="top"><div class="pp_yxy fr">
+									<h2 class="pp_yxy_h2"><span style="color:{{color}};">[{{name}}]</span>纬度配置</h2>
+									<ul class="pp_ul ng-cloak">
+										<!-- pp_1 控制颜色 数字变量, height:20% 控制 1个对100% 2个对50% 3个对33.333% 4个对25% 5个对20% ，pp_s1 2 3 4 5 控制渐变色  -->
+										<li  class="pp_1 ng-cloak" style="height:20%" ng-repeat="o in matchSimilar.items.slice().reverse()"  ><span class="fl pp_z">{{o.max}}</span><span ng-if="$index==matchSimilar.items.length-1" class="fl pp_z1">{{o.min}}</span><div class="pp_s{{$index+1}} fl pp_c" style="background:{{color}};opacity: {{(matchSimilar.items.length/10)-($index/10)}};"></div><span class="pp_ys fl pp_r">{{o.score}}</span></li>
+										
+									</ul>
+								</div>
+					</td>
+					<!-- <td><input class="jscolor {closable:true,closeText:'关闭'}" value=""></td> -->
+					<td width="40%" valign="top"><div style="margin-right:70px;">
+									<div style="text-align:right; margin-bottom:22px;"><a class="button ml_10 zengj" ng-show="isAdd" ng-click="addTable('table');" href="javascript:void(0);" ><i class="button_icon button_icon dw_zengj"></i>增加</a></div>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list" style="border-right:1px solid #f0f5fb;">
+									  <thead>
+										<tr>
+											
+											<th width="25">最小</th>
+											<th width="25">最大</th>
+											<th width="25">得分</th>
+											<th width="25">操作</th>
+											
+											
+									  </tr>
+									  </thead>
+									  </table>
+									  <div style="height:300px; overflow:auto">
+										<table width="100%" id="table" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list" style="border-right:1px solid #f0f5fb;">
+									  
+									  <tbody>
+									  <tr ng-class="{'waybill_table_listtr':$index%2==0}"
+												class="ng-cloak" 
+										ng-repeat="o in matchSimilar.items">
+										<td width="25"><label ng-hide="id==o.id"   id="{{o.id}}_label_min">{{o.min}}</label><input ng-show="id==o.id" maxlength="4" class="input_box"  onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 60px;margin: 0 auto;"  onafterpaste="this.value=this.value.replace(/\D/g,'')"  value="{{o.min}}"  id="{{o.id}}_input_min" type="text"></td>
+										<td width="25"><label ng-hide="id==o.id"   id="{{o.id}}_label_max">{{o.max}}</label><input ng-show="id==o.id" maxlength="4" class="input_box"  onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 60px;margin: 0 auto;"  onafterpaste="this.value=this.value.replace(/\D/g,'')"  value="{{o.max}}"  id="{{o.id}}_input_max" type="text"></td>
+										<td width="25"><label ng-hide="id==o.id"   id="{{o.id}}_label_score">{{o.score}}</label><input ng-show="id==o.id" maxlength="4" class="input_box"  onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 60px;margin: 0 auto;"  onafterpaste="this.value=this.value.replace(/\D/g,'')"  value="{{o.score}}"  id="{{o.id}}_input_score" type="text"></td>
+										<td width="25"><a ng-hide="id==o.id"  class="dhl_tjgd mr10" ng-click="modifyCrefit(o.id);" href="javascript:void(0)" >修改</a><a ng-show="id==o.id" class="dhl_tjgd mr10" ng-click="saveCrefit(o.id);" href="javascript:void(0)" >保存</a><a ng-show="id==o.id"  ng-click="cancer();" class="dhl_tjgd" href="javascript:void(0)" >取消</a></td>
+									  </tr>
+									  </tbody>
+								</table>
+								</div>
+								</div></td>
+				  </tr>
+				</table>
+
+				
+				
+				
+
+			</div>
+			 	
+			<!--配置项目 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl"><i class="icon title_icon fl"></i>配置项目</h2>
+				<div class="fr mt15_mr20">
+				<a class="button ml_10 baoc" ng-click="doSave();"
+						href="javascript:void(0);"><i class="button_icon button_icon dw_baoc"></i>保存</a>
+				<a class="button fr ml_10 quxiao" ng-click="modify();" href="javascript:void(0);">修改</a>
+				</div>
+			</div>
+			<div class="bj_map" style="margin-bottom:40px;">
+			<div style=" padding-right:17px; background:#f5f8fd;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list ">
+					  <thead>
+						<tr>
+						<th width="5%"><div class="input_z">
+									<input ng-click="selectAll();" id="checkbox"
+										class="none input_gx" name="checkbox" type="checkbox">
+									<label for="checkbox"></label>
+								</div></th>
+							<th width="15%">匹配项</th>
+							<th width="15%">占比(%)</th>
+							<!-- <th width="15%">饼图颜色</th> -->
+							<th>说明</th>
+					    </tr>
+					  </thead>
+					  </table>
+					  </div>
+					  <div style="height:400px; overflow:auto">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list ">
+					  
+					  <tbody>
+					  <tr  ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"  ng-click="selectOne(o.id);" ng-repeat="o in matchInfo.items" >
+							<td  width="5%"><div class="input_z">
+									<input id="checkbox{{o.id}}" value="{{o}}"
+										class="none input_gx" name="check-1" type="checkbox">
+									<label for="check-1"></label>
+								</div></td>
+						<td width="15%">{{o.chainName}}</td>
+						<td width="15%"><label id="{{o.id}}label">{{o.percent}}</label><input  class="input_dhl"  onkeyup="this.value=this.value.replace(/\D/g,'')" style="display: none;width: 100%;margin: 0 auto;background-color:#dedada"  onafterpaste="this.value=this.value.replace(/\D/g,'')"  value="{{o.percent}}"  id="{{o.id}}Input" type="text"></td>
+						<!-- <td width="15%"><input id="{{o.id}}_label_color" disabled="disabled" class="input_dhl" style="width:100%;background-color: {{o.color}}" value=""><input id="{{o.id}}_input_color" class="input_dhl jscolor {closable:true,closeText:'关闭'}" style="display: none;width:100%" value="{{o.color}}"></td> -->
+						<td style="white-space: inherit;"><div class="dhl_wz" style="text-align:left; padding:0 30px;">{{o.remark}}</div></td>
+					  </tr>
+					  </tbody>
+					  
+				</table>
+			</div>
+			
+
+			
+	
+			</div>
+			<!--配置项目 end-->
+			
+			
+		</div>
+	
+		
+	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" style="display:none;"></div>
+	<!--半透明黑色背景  结束-->
+	
+	<!--导航-->
+	
+	
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/highcharts/highcharts.js"></script>
+	<script type="text/javascript" src="matchManageCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

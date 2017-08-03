@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="billingManageApp"> 
+	<head>
+	    <title>众邦_中转外发管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+	</head>
+	<body ng-controller="billingManageCtrl" onload="setContentHegthDelay(800)" style="overflow: hidden;">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">开单日期：</label>
+                   			</td>
+						<td>
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr" type="text">
+                            </td>
+						<td width="100"><label class="term_label">订单状态：</label>
+                       	
+							</td>
+						<td><div class="form_select" >
+							<my-select id="query.orderState" filter="已删除" has-all="true" default-value=-1 code-type="ORDER_STATE" ></my-select>
+                           </div></td>
+						<td width="100"><label class="term_label">中转状态：</label>
+
+                    	</td>
+						<td><div class="form_select" >
+							<my-select id="query.transitOutgoingState" default-value=0 code-type="TRANSIT_OUTGOING_STATE" ></my-select>
+                        </div>
+						</td>
+						
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0)">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">运单号：</label>
+                    	</td>
+						<td>
+                        <input class="form_term" ng-model="query.trackingNum" type="text" maxlength="16" ng-change="upNum('query.trackingNum')">
+                        </td>
+						<td width="100"><label class="term_label">发货人手机：</label>
+						</td>
+						<td><input class="form_term" maxlength="11" ng-model="query.consignorBill" my-Num-Val type="text"></td>
+						<td width="100"><label class="term_label">收货人手机：</label></td>
+						<td><input class="form_term" maxlength="11" ng-model="query.consigneeBill" my-Num-Val type="text"></td>
+						
+						
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">发货方：</label>
+                        
+                    	</td>
+						<td>
+                        	<input class="form_term" maxlength="11" ng-model="query.consignorName" type="text">
+                        </td>
+						<td width="100"><label class="term_label">收货方：</label>
+						</td>
+						<td><input class="form_term" maxlength="11" ng-model="query.consigneeName" type="text"></td>
+						<td width="100"><label class="term_label">承运公司：</label>
+                       	</td>
+						<td><div class="form_select" >
+                       		<select ng-model="query.carrierCompanyId" ng-options="obj.id as obj.carrierName for obj in cmCarrCompanies" ng-change="changeCarrierCompany(transitOutgoing.carrierCompanyId);"></select>
+                        </div></td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+        
+                    <div class="search_nr clearfix mt_20">
+              		<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	              		<h2>查询结果</h2>
+	              		<a ng-click="toTransitOutgoingManage()" href="javascript:void(0)">中转外发录入</a>
+	              		<a ng-click="toModifyTransitOutgoingManage()" href="javascript:void(0)">中转外发修改</a>
+	              		<a ng-click="cancelTransitOutgoing()" href="javascript:void(0)">取消中转外发</a>
+	              		<a class="button ml_10 see_b" ng-click="toView();" href="javascript:void(0)" ><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+	              		<a ng-click="confirmReceived()" href="javascript:void(0)">现金已收/已付</a>
+	              		<a href="javascript:void(0);" ng-click="printTable();">打 印</a>
+              		</div>
+				<my-table>
+					<div id="size" class="zz_list table_height" style="overflow:auto;">
+					<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0" style="width: 2150px">
+							<thead id="tb1">
+								<tr>
+									<th width="79" style="border-right: 1px solid #fdc2c8;" class="search_list_border"></th>
+									<th width="1050" colspan="9" style="border-right: 1px solid #fdc2c8; border-bottom: 1px solid #fdc2c8;">原单信息</th>
+									<th width="920" colspan="7" style="border-bottom: 1px solid #fdc2c8;">中转信息</th>
+								</tr>
+								<tr>
+									<th width="79" style="border-right: 1px solid #fdc2c8;" class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                   <th width="120">运单号</th>
+                                   <th width="100">开单网点</th>
+                                   <th width="90">订单状态</th>
+                                   <th width="130">目的城市</th>
+                                   <th width="100">中转网点</th>
+                                   <th width="100">发货人手机</th>
+                                   <th width="100">收货人手机</th>
+                                   <th width="120">发货方</th>
+                                   <th width="120" style="border-right: 1px solid #fdc2c8;">收货方</th>
+                                   
+                                   <th width="120">承运公司</th>
+                                   <th width="120">外发单号</th>
+                                   <th width="120">外发费</th>
+                                   <th width="120">本地联系人</th>
+                                   <th width="120">联系电话</th>
+                                   <th width="120">提货电话</th>
+                                   <th width="118">提货地址</th>
+                               </tr>
+                             </thead>
+                        
+                             <tbody >
+                                 <tr ng-class="{'search_list_tr':$index%2==1}" class="ng-cloak" ng-click="selectOne(o.orderId);" ng-repeat="o in page.data.items" ng-dblclick="toView(o.trackingNum);">
+                                   <td width="79" class="search_list_border"><div class="controls"><input id="checkbox{{o.orderId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                   <td width="120">{{o.trackingNum}}</td>
+                                   <td width="100">{{o.orgIdName}}</td>
+                                   <td width="90">{{o.orderStateName}}</td>
+                                   <td width="130">{{o.destCityName}}</td>
+                                   
+                                   <td width="100">{{o.distributionOrgName}}</td>
+                                   <td width="100">{{o.consignorBill}}</td>
+                                   <td width="100">{{o.consigneeBill}}</td>
+                                   
+                                   <td width="120">{{o.consignorName}}</td>
+                                   <td width="120">{{o.consigneeName}}</td>
+                                   
+                                   <td width="120"><div class="wz_hh170" style="width: 120px;">{{o.carrierCompanyName}}</div></td>
+                                   <td width="120">{{o.outgoingTrackingNum}}</td>
+                                   <td width="120">{{o.outgoingFee!=''? o.outgoingFee/100 : o.outgoingFee}}</td>
+                                   <td width="120">{{o.linkerName}}</td>
+                                   <td width="120">{{o.linkerPhone}}</td>
+                                   <td width="120">{{o.deliveryPhone}}</td>
+                                   <td width="118" style="white-space:inherit;"><div class="wz_hh170" style="width: 120px;">{{o.deliveryAddress}}</div></td>
+                                 </tr>
+                             </tbody>
+                           </table>
+                          
+                      </div>
+               </my-table>
+		</div>
+		      <div id="printDiv" style="display: none;">
+ 			<table border=1 width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#000000">
+				<caption style="font-size: 30px; margin-bottom: 16px;">
+					<b>众邦物流有限公司中转清单（待中转）</b>
+					<br />
+					<span style="position: absolute; top:8; right: 0; width: 286px; height: 16px; font-size:16px;">打印时间: {{printTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+				</caption>
+ 				<tbody>
+ 					<tr style="height: 32px;">
+ 					    <td style="vertical-align:middle; text-align:center; width: 3%; font-size: 15;">序号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 5%; font-size: 15;">运单号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 5%; font-size: 15;">数量</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">总重量(kg)</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">总体积(方)</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">目的城市</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">付款方式</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">现付（元）</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">到付（元）</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">代收货款</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">收货人</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">收货人手机</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">配送方式</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 10%; font-size: 15;">收货详细地址</td>
+ 					</tr>
+ 					<tr ng-repeat="obj in outGoingData.items" style="height: 32px;">
+ 						<!-- 序号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{$index + 1}}</td>
+ 						<!-- 运单号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.trackingNum}}</td>
+						<!-- 件数 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.count}}</td>
+						<!-- 总重量 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.weight}}</td>
+						<!-- 总体积 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.volume}}</td>
+						<!--目的城市 -->
+						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">{{obj.destCityName}}</td>
+						<!-- 付款方式 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.paymentTypeName}}</td>
+						<!-- 现付（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.cashPayment/100}}</td>
+						<!--到付（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.freightCollect/100}}</td>
+						<!-- 代收货款-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.collectingMoney/100}}</td>
+						<!-- 收货人-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.consigneeName}}</td>
+						<!-- 收货人手机 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.consigneeBill}}</td>
+						<!--配送方式 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.deliveryTypeName == '自提' ? '自提' : '送货'}}</td>
+						<!--收货详细地址 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.address}}</td>
+					</tr>
+					<tr>
+					    <td style="vertical-align:middle; text-align:center; font-size: 15;">合计</td>
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!-- 件数 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodCount}}</td>
+						<!-- 总重量 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodWeight}}</td>
+						<!-- 总体积 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodvolum}}</td>
+						<!--目的城市 -->
+						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">&nbsp;</td>
+						<!-- 付款方式 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!-- 现付（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodCashPayment/100}}</td>
+						<!--到付（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodFreightCollect/100}}</td>
+						<!-- 代收货款-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodCollectingMoney/100}}</td>
+						<!-- 收货人-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!-- 收货人手机 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!--配送方式 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!--收货详细地址 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+					</tr>
+ 				</tbody>
+ 			</table>
+ 		</div>
+		
+		 <div id="outGoingDiv" style="display: none;">
+ 			<table border=1 width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#000000">
+				<caption style="font-size: 30px; margin-bottom: 16px;">
+					<b>众邦物流有限公司中转清单（已中转）</b>
+					<br />
+					<span style="position: absolute; top:8; right: 0; width: 286px; height: 16px; font-size:16px;">打印时间: {{printTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+					第<font tdata="PageNO" color="blue">##</font>页</span>共<font tdata="PageCount" color="blue">##</font></span>页 
+				</caption>
+ 				<tbody>
+ 					<tr style="height: 32px;">
+ 					    <td style="vertical-align:middle; text-align:center; width: 3%; font-size: 15;">序号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">运单号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">中转日期</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">承运单位</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">中转单号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">中转费</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">应付中转费（元）</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">应收回扣（元）</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">目的城市</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">收货人</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">收货人手机</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">配送方式</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 12%; font-size: 15;">收货详细地址</td>
+ 					</tr>
+ 					<tr ng-repeat="obj in outGoingData.items" style="height: 32px;">
+ 					<!-- 序号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{$index + 1}}</td>
+ 						<!-- 运单号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.trackingNum}}</td>
+						<!-- 中转日期 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.createDate}}</td>
+						<!--承运单位 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.carrierCompanyName}}</td>
+						<!-- 中转单号-->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.outgoingTrackingNum}}</td>
+						<!-- 中转费（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.outgoingFee/100}}</td>
+						<!--应付中转费（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.shouldReceivables/100}}</td>
+						<!-- 应收回扣-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.shouldPay/100}}</td>
+						<!--目的城市 -->
+						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">{{obj.destCityName}}</td>
+						<!-- 收货人-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.consigneeName}}</td>
+						<!-- 收货人手机 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.consigneeBill}}</td>
+						<!--配送方式 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.deliveryTypeName == '自提' ? '自提' : '送货'}}</td>
+						<!--收货详细地址 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{obj.address}}</td>
+					</tr>
+					<tr>
+					<!-- 运单号 -->
+					    <td style="vertical-align:middle; text-align:center; font-size: 15;">合计</td>
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!-- 中转日期 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!--承运单位 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!-- 中转单号-->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!-- 中转费（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodOutgoingFee/100}}</td>
+						<!--应付中转费（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodShouldReceivables/100}}</td>
+						<!-- 应收回扣-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{goodShouldPay/100}}</td>
+						<!--目的城市 -->
+						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">&nbsp;</td>
+						<!-- 收货人-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!-- 收货人手机 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!--配送方式 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+						<!--收货详细地址 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+					</tr>
+ 				</tbody>
+ 			</table>
+ 		</div>
+		
+        </div>
+        <script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/lodop/lodop-business.js?v=${ver}"></script>
+ 		<!--[if !IE]> -->
+		<script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="transitOutgoingManageCtrl.js?v=${ver}"></script>
+	</body>
+</html>

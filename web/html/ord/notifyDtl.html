@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"  ng-app="notifyDtlApp">
+	<head>
+	    <title>_运营管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"> 
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/lrtk.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+		<style type="text/css">
+			.list_xl .list_xl_tbody td {
+			    line-height: 34px;
+			    border-bottom: 1px dotted #dfdedf;
+			    color: #333;
+			    text-align:center;
+			    text-indent:0em;
+			    white-space: nowrap;}
+			.list_dhl .list_xl_thead th{text-indent:0;text-align:center;}
+			[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+			.yd_sr .no_top{border-top: 0}
+			.b_xianw{border-top: 0!important;}
+		</style>
+</head>
+	<body ng-controller="notifyDtlCtrl"  style="overflow:hidden">
+        <!-- 运单录入 -->
+        <div style="padding-bottom: 90px;">
+        	<div class="billing_1 clearfix mt_20" style="padding-top: 20px;border-top: 0;">
+        		<div class="billing_2 clearfix" style="margin: 0px 20px 20px;">
+        		<table border="0" cellspacing="0" cellpadding="0" class="yd_list yd_sr" width="100%">
+                  <tr>
+                    <td class="b_xianw no_top" width="100"><label class="yd_label fr bj_f83">电话接听人</label></td>
+                    <td class="br_00 no_top"><input type="text" ng-model="notify.receiveCall" class="form_input" placeholder="请输入接听人" maxlength="20" id="notifyDtlName1"> </td>
+                    <td class="b_xianw no_top" width="100"><label class="yd_label fr bj_f83">预约时间</label></td>
+                    <td class="br_00 no_top"><input type="text" class="form_input" ng-model="notify.schedulingDate" placeholder="请输入时间"  my-Date-Picker='{"minDate":"%y-%M-%d"}' id="notifyDtlName2"></td>
+                    <td class="b_xianw no_top" width="100"><label class="yd_label fr bj_f83">司机电话号</label></td>
+					<td class=" no_top" ><input onkeyup="this.value=this.value.replace(/\D/g,'')" type="text" class="form_input" placeholder="请输入电话号码" ng-model="notify.driverPhone" maxlength="11" id="notifyDtlName3"></td>
+				 </tr>
+				<tr>
+				   <td><label class="yd_label fr bj_f83">配送车牌号</label></td>
+                   <td class="ng-cloak br_00" style="position: relative;">
+                   		<input ng-model="notify.platenumber"  ng-click="doQueryVehile()" class="form_input" type="text" maxlength="7" id="notifyDtlName4">
+						<!--请选择客户 开始 -->
+	 	 				<div class="list_xl ng-cloak list_dhl" style="left: 0%;width: 650px;height: 500px;" ng-show="showPcum">
+					        <div class="clearfix">
+					        	<h2 style="float: left;">请选择车辆</h2>
+					        	<span style="font-size: 12px;font-family:宋体;float: left;padding: 6px 0 6px 10px;display: block;color: #ff0000;">单击一行选中</span>
+					        	<i class="list_xl_icon icon"><a class="gone" ng-click="showToFalse()" href="javascript:void(0)"></a></i>
+					        </div>
+				            
+				           <div style="background: #e8f1fa;width: 100%"> 
+				           	<table style="width: 630px;" width="100%" border="0" cellspacing="0" cellpadding="0" class="list_xl_thead">
+				            	<thead>
+				                	<tr>
+				                    	<th style="width: 90px;padding-left: 6px;">车牌号</th>
+				                        <th style="width: 90px;">车辆类型</th>
+				                        <th style="width: 80px;">司机名称</th>
+				                        <th style="width: 100px;">手机号码</th>
+				                        <th style="width: 70px;">体积</th>
+				                        <th  width="70px;">重量</th>
+				                    </tr>
+				                </thead>
+				            </table></div>
+					        <my-table>
+					            <div class="list_xl_tbody ng-cloak" style="height: 370px!important">
+					            	<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+					            	<tbody>
+					                  <tr ng-repeat="obj in page.data.items" ng-click="selectVehicle(obj)">
+					                    <td width="90px;" style="padding-left: 6px;" >{{obj.plateNumber}}</td>
+					                    <td width="90px;">{{obj.vehicleTypeName}}</td>
+					                    <td width="80px;">{{obj.name}}</td>
+					                    <td width="100px;">{{obj.bill}}</td>
+					                    <td width="70px;">{{obj.actualVolume.toFixed(1)}}</td>
+					                    <td  width="70px;">{{obj.actualWeight.toFixed(2)}}</td>
+					                   </tr>
+					                  </tbody>
+					            </table>
+					            </div>
+							</my-table>
+					    </div>
+   						<!--请选择客户 结束 -->
+					</td>
+				    <td ><label class="yd_label fr bj_f83">备注</label></td>
+				    <td colspan="5"><input type="text" style="background: #fff;" class="form_input" placeholder="请输入备注" ng-model="notify.notes" id="notifyDtlName5"></td>
+				</tr>
+			</table>
+			</div>
+				<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	                <h2>订单详情</h2>
+                </div>
+				<div class="ng-cloak">
+					<billing init-view="initView"/>
+				</div>
+			</div>
+			<div class="bottom_nav1">
+				<a href="javaScript:void(0)" ng-click="doSaveNotify(notify.orderId)">保存信息</a>
+				<a href="#" ng-click="closePage()">返  回</a>
+			</div>
+		</div>
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+        <script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+        <script type="text/javascript" src="../js/x.js"></script>
+        <script type="text/javascript" src="../js/md5.js"></script>
+        <script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="notifyDtlCtrl.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/billingCommon.js?v=${ver}"></script>
+</body>
+</html>
+

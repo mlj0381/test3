@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="cmDriverInfoApp">
+	<head>
+	    <title>众邦_车辆管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        
+</head>
+	<body ng-controller="cmDriverInfoCtrl" style="overflow: hidden;" onload="setContentHegthDelay()">
+        <!-- 问题处理-回显 -->
+        <div class="billing_1 clearfix pb_20 mt_20" >
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">车牌号：</label>
+                   			</td>
+						<td>
+                   			      <input  class="form_term " ng-model="data.plateNumber" maxlength="7"/>
+                        </td>
+						<td width="100"><label class="term_label">车辆类型：</label>
+							</td>
+						<td>
+                   		<div class="form_select ">
+						     <my-select id="data.vehicleType" code-type="VEHICLE_TYPE" has-all="true" url="" />
+					    </div>
+                        </td>
+						<td width="100"><label class="term_label">归属网点：</label>
+                    	</td>
+						<td><div class="form_select " >
+                               <select ng-model="data.orgId"
+									ng-options="obj.orgId as obj.orgName for  obj in orgInfo.items " >
+								</select>
+                        </div>
+						</td>
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<!-- <td width="100"><label class="term_label">车辆状态：</label>
+                   			</td>
+						<td><div class="form_select ">
+						     <my-select id="data.vehicleState" code-type="VEH_STATE" has-all="true" url="" />
+					    </div>
+                        </td> -->
+						<td width="100"><label class="term_label">经营方式：</label>
+							</td>
+						<td>
+                    	<div class="form_select w_b60 " >
+                              <my-select id="data.businessType" code-type="BUSINESS_TYPE" has-all="true" url="" />
+                        </div>
+                        </td>
+						<td width="100">
+                    	</td>
+						<td>
+						</td>
+					</tr>
+				</tbody>
+		</table>
+                 <div class="search_nr clearfix mt_20">
+	             <div class="bottom_nav pb_20 bottom_nav_search clearfix tableStyle">
+	                <h2>查询结果</h2>
+	                <a class="button ml_10 newly" href="javascript:void(0)" ng-click="toSave()"><i class="button_icon button_icon dw_newly"></i>新增</a>
+	                <a class="button ml_10 newly" href="javascript:void(0)" ng-click="toUpdate()"><i class="button_icon button_icon dw_delete"></i>修改</a>
+	                <a class="button ml_10 delete" href="javascript:void(0)" ng-click="doDel()"><i class="button_icon button_icon dw_delete"></i>删除</a>
+	                <a class="button ml_10 see_b" ng-click="toView(1);" href="javascript:void(0)" ><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+	                
+	                
+                </div>
+             <my-Table-Cm head="head" is-Show-Row="true" is-Multi-Select="true" table="table" after-Init-Fn="doQuery()" url="url" param="data" id="vehicleId" table-Name="cmVehicleInfo" ver="${ver}"></my-Table-Cm>
+		</div>
+        </div>
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type='text/javascript' src='../js/ngDraggable.js'></script>
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="cmVehicleInfoCtrl.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/table/tableCommon.js?v=${ver}"></script>	
+</body>
+</html>
+

@@ -1,0 +1,510 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="waitSignRepairTaskApp">
+<head>
+<title>调度任务-待签收任务</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运会" />
+<meta name="description" content="联运会" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master_open.css?v=${ver}">
+<style type="text/css">
+.w_b60{width: 147px!important;}
+</style>
+</head>
+<body ng-controller="waitSignRepairTaskCtrl" onload="setContentHeight()" style="overflow: hidden;">
+	<div class="billing_1" style="padding-bottom: 80px;">
+		<!--步骤 start-->
+		<div class="step">
+			<ul class="clearfix step_ul">
+				<li class="hover" style="width: 14%"><i
+					class="step_icon st_anzhuanfp"></i>
+					<p>安装分配</p></li>
+				<li class="hover"><i class="step_icon st_jiedan"></i>
+					<p>接单</p></li>
+				<li class="hover"><i class="step_icon st_tihu"></i>
+					<p>提货</p></li>
+				<li class="hover"><i class="step_icon st_yuyue"></i>
+					<p>预约</p></li>
+				<li class="hover"><i class="step_icon st_aanzhuan"></i>
+					<p>安装</p></li>
+				<li class="hover"><i class="step_icon st_hexiao"></i>
+					<p>核销</p></li>
+				<li class="" style="background: none; width: 13%; padding: 0"><i
+					class="step_icon st_qianshou"></i>
+					<p>签收</p></li>
+			</ul>
+			<div class="step_ul_width" style="width: 80%;"></div>
+			<!--注释：上面 width:100% 根据li上 hover个数 而变化. 1个=10%，2个=20%，3个=40%，4个=50%，5个=60%，6个=80%，7个=100%-->
+		</div>
+		<!--步骤 end-->
+
+		<ul class="waybill_tab clearfix disp_a ng-cloak">
+			<!-- <li  id="two1"><a class="a1"
+				href="repairTaskManage.html">待分配任务<span class="span_red">({{statisticsTaskCount.waitDistributed}})</span></a></li> -->
+			<li id="two2"><a class="a1" href="repairAITaskManage.html?v=${ver}">人工调度<span
+					class="span_red">({{statisticsTaskCount.rgDis}})</span></a></li>
+			<li id="two3"><a class="a1" href="acceptRepairTask.html?v=${ver}">待接单<span
+					class="span_red">({{statisticsTaskCount.waitAccept}})</span></a></li>
+					<li class="" id="two6"><a class="a1" href="waitYyRepairTask.html?v=${ver}">待预约<span
+					class="span_red">({{statisticsTaskCount.waitYy}})</span></a></li>
+			<li class="hover" id="two5"><a class="a1" href="waitSignRepairTask.html?v=${ver}">待签收<span
+					class="span_red">({{statisticsTaskCount.waitSignUp}})</span></a></li>
+			<li id="two4" ><a class="a1" href="doSignRepairTask.html?v=${ver}">已完成<span
+					class="span_red">({{statisticsTaskCount.doDeal}})</span></a></li>
+		</ul>
+
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+							<td width="100"><label class="control-label">收货地：</label></td>
+						<td>
+							 <span class="wdcy_input" my-city="des"></span>
+						</td>
+						<td width="100"><label class="control-label w_100">发货人：</label></td>
+						<td><input class="input_box" ng-model="query.clientName"
+							maxlength="20" id="" type="text" /></td>
+							<td width="100"><label class="control-label w_100">收货人：</label></td>
+						<td><input class="input_box" ng-model="query.receiveName"
+							maxlength="20" id="" type="text" /></td>
+					<td width="100"><label class="control-label w_100">订单来源：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.isTmall" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">天猫</option>
+								</select>
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">师傅名称：</label></td>
+						<td><input class="input_box" ng-model="query.sfName"
+							maxlength="20" id="" type="text" /></td>
+						 <td width="100"><label class="control-label w_100">师傅手机：</label></td>
+						<td ><input class="input_box" ng-model="query.sfPhone"
+							maxlength="20" id="" type="text" /></td>
+					</tr>
+				</table>
+			</div>
+
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2>
+				<div class="fr mt15_mr20">
+				<a class="button fr ml_10 rgfp" ng-click="openExc();" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>异常登记</a>
+					<a class="button fr ml_10 gangxianjs"  ng-click="openSign();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_gangxianjs"></i>签收</a>
+						<a class="button ml_10 sign" href="javascript:void(0);" ng-click="doModifyFee()"><i class="button_icon button_icon dw_sign"></i>更新费用</a>
+						<a class="button fr ml_10 rgfp" ng-click="cancerDis();" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>取消分配</a>
+						<a class="button ml_10 see_b" href="javascript:void(0)" ng-click="dealExc(1)"><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+				</div>
+			</div>
+			<div class="bj_map">
+				<my_table>
+				<div class="zz_list" style="overflow:auto;">
+                    <table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0">
+					<thead>
+						<tr>
+							<th width="4%"><div class="input_z">
+									<input ng-click="selectAll();" id="checkbox"
+										class="none input_gx" name="checkbox" type="checkbox">
+									<label for="checkbox"></label>
+								</div></th>
+							<th>运单号</th>
+							<th>服务类型</th>
+							<th>发货人</th>
+							<th>收货人</th>
+							<th>货品</th>
+							<th>安装件数</th>
+							<th>体积</th>
+							<th>重量</th>
+							<th>详细地址</th>
+							<th>接单时间</th>
+							<th>预约时间</th>
+							<th>上门时间</th>
+							<th>维修师傅</th>
+							<th>师傅帐号</th>
+							<th>维修费(元)</th>
+							<th>维修类型(元)</th>
+							<th>备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak" ng-click="selectOne(o.taskId);"
+							ng-repeat="o in page.data.items">
+							<td><div class="input_z">
+									<input id="checkbox{{o.taskId}}" value="{{o}}"
+										class="none input_gx" name="check-1" type="checkbox">
+									<label for="check-1"></label>
+								</div></td>
+							<td  title="{{o.wayBillId}}">{{o.wayBillId}}</td>
+							<td ng-class="{'tianm_icon':o.isTmail=='1'}" title="{{o.serverType}}">{{o.serverType}}</td>
+							<td title="{{o.clientName}}">{{o.clientName}}</td>
+							<td title="{{o.receiverName}}">{{o.receiverName}}</td>
+							<td class=""  title="{{o.products}}"  ><!--  ng-mouseover="showGoodsDetail(o.orderId)" -->{{o.products}}
+							<!-- <div id="product" class="d_bzj_js cplx">
+									<label>{{o.products}}</label> <span class="cplx_span_hp"
+										style="display: none;">
+										<div class="arrow-up"></div>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											class="cplx_list">
+											<tr class="cplx_tr">
+												<td>产品</td>
+												<td>包装</td>
+												<td>数量</td>
+												<td>重量</td>
+												<td>体积</td>
+												<td>计费方式</td>
+												<td>配安费</td>
+											</tr>
+											<tr ng-repeat="g in goodsInfo">
+												<td>{{g.goodsName}}</td>
+												<td>{{g.packingTypeName}}</td>
+												<td>{{g.goodsCount}}</td>
+												<td>{{g.weight}}</td>
+												<td>{{g.volume}}</td>
+												<td>{{g.billingTypeName}}</td>
+												<td>{{g.installCosts/100}}</td>
+											</tr>
+										</table>
+									</span>
+								</div> --></td>
+							<td title="{{o.count}}">{{o.count}}</td>
+							<td title="{{o.volumes}}">{{o.volumes}}</td>
+							<td title="{{o.weight}}">{{o.weight}}</td>
+							<td title="{{o.receAddr}}">{{o.receAddr}}</td>
+							<td title="{{o.sfName}}" class="overflow_inherit"  ng-mouseover="showCredit(o.sfUserId)"  >
+								<div id="sf" class="d_bzj_js cplx">
+									<label>{{o.sfName}}</label> <span class="cplx_span_sf"
+										style="display: none;">
+										<div class="arrow-up"></div>
+										<div class="search">
+											<table width="100%" border="0" cellpadding="0"
+												cellspacing="0" class="search_table com_liest cplx_list_sf">
+												<tbody>
+													<tr>
+														<td width="100"><label class="control-label">信用等级：</label></td>
+														<td width="20%">
+															<!--代码开始-->
+															<div class="xx_pj">
+																<div class="xx_a">
+																	<ul class="star" id="star">
+																		<li><a href="javascript:void(0)" class="one-star">1</a></li>
+																		<li><a href="javascript:void(0)"
+																			class="two-stars">2</a></li>
+																		<li><a href="javascript:void(0)"
+																			class="three-stars">3</a></li>
+																		<li><a href="javascript:void(0)"
+																			class="four-stars">4</a></li>
+																		<li><a href="javascript:void(0)"
+																			class="five-stars">5</a></li>
+																	</ul>
+																	<div class="current-rating" id="showb"
+																		style="width: 0px;"></div>
+																</div>
+																<!--评价文字-->
+																<!--<div class="description"></div>-->
+															</div> <!--代码结束-->
+														</td>
+														<td width="100"><label class="control-label">信用分数：</label></td>
+														<td>{{ca.creditValue}}</td>
+														<td><a class="button ml_10 xinybz"
+															onclick="document.getElementById('vehicle_1').style.display='block';document.getElementById('fade1_xz').style.display='block'"
+															href="javascript:void(0);"><i
+																class="button_icon button_icon dw_xinybz"></i>信用标准</a></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<ul class="dhl_credit_liest clearfix">
+											<li class="fl"
+												style="width: 31%; margin-left: 2%; height: 161px;">
+												<!--接单量 start-->
+												<div class="waybill_title">
+													<h2 class="title_h2">
+														<i class="icon title_icon fl"></i>接单量
+													</h2>
+												</div>
+												<table width="100%" border="0" cellspacing="0"
+													cellpadding="0" class="waybill_table_list dhl_credit_table">
+													<thead>
+														<tr>
+															<th></th>
+															<th>笔数</th>
+															<th>分数</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>接单数</td>
+															<td>{{cad.e_2001}}</td>
+															<td>{{cad.v_2001}}</td>
+														</tr>
+														<tr class="waybill_table_listtr">
+															<td>总数</td>
+															<td></td>
+															<td>{{cad.v_2000}}</td>
+														</tr>
+
+													</tbody>
+												</table> <!--接单量 end-->
+											</li>
+
+											<li class="fl" style="width: 31%; margin-left: 2%">
+												<!--预约及时率 start-->
+												<div class="waybill_title">
+													<h2 class="title_h2">
+														<i class="icon title_icon fl"></i>预约及时率
+													</h2>
+												</div>
+												<table width="100%" border="0" cellspacing="0"
+													cellpadding="0" class="waybill_table_list dhl_credit_table">
+													<thead>
+														<tr>
+															<th></th>
+															<th>笔数</th>
+															<th>分数</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>及时</td>
+															<td>{{cad.e_5001}}</td>
+															<td>{{cad.v_5001}}</td>
+														</tr>
+														<tr class="waybill_table_listtr">
+															<td>超时</td>
+															<td>{{cad.e_5002}}</td>
+															<td>{{cad.v_5002}}</td>
+														</tr>
+														<tr>
+															<td>总分</td>
+															<td></td>
+															<td>{{cad.v_5000}}</td>
+														</tr>
+													</tbody>
+												</table> <!--预约及时率 end-->
+											</li>
+											<li class="fl" style="width: 31%; margin-left: 2%">
+												<!--核销及时率 start-->
+												<div class="waybill_title">
+													<h2 class="title_h2">
+														<i class="icon title_icon fl"></i>核销及时率
+													</h2>
+												</div>
+												<table width="100%" border="0" cellspacing="0"
+													cellpadding="0" class="waybill_table_list dhl_credit_table">
+													<thead>
+														<tr>
+															<th></th>
+															<th>笔数</th>
+															<th>分数</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>及时</td>
+															<td>{{cad.e_6001}}</td>
+															<td>{{cad.v_6001}}</td>
+														</tr>
+														<tr class="waybill_table_listtr">
+															<td>超时</td>
+															<td>{{cad.e_6002}}</td>
+															<td>{{cad.v_6002}}</td>
+														</tr>
+														<tr>
+															<td>总分</td>
+															<td></td>
+															<td>{{cad.v_6000}}</td>
+														</tr>
+													</tbody>
+												</table> <!--核销及时率 end-->
+											</li>
+											<li class="fl" style="width: 31%; margin-left: 2%">
+												<!--服务满意 start-->
+												<div class="waybill_title">
+													<h2 class="title_h2">
+														<i class="icon title_icon fl"></i>服务满意
+													</h2>
+												</div>
+												<table width="100%" border="0" cellspacing="0"
+													cellpadding="0" class="waybill_table_list dhl_credit_table">
+													<thead>
+														<tr>
+															<th></th>
+															<th>笔数</th>
+															<th>分数</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>满意</td>
+															<td>{{cad.e_4001}}</td>
+															<td>{{cad.v_4001}}</td>
+														</tr>
+														<tr class="waybill_table_listtr">
+															<td>不满意</td>
+															<td>{{cad.e_4002}}</td>
+															<td>{{cad.v_4002}}</td>
+														</tr>
+														<tr>
+															<td>总分</td>
+															<td></td>
+															<td>{{cad.v_4000}}</td>
+														</tr>
+													</tbody>
+												</table> <!--服务满意 end-->
+											</li>
+											<li class="fl" style="width: 31%; margin-left: 2%">
+												<!--投诉 start-->
+												<div class="waybill_title">
+													<h2 class="title_h2">
+														<i class="icon title_icon fl"></i>投诉
+													</h2>
+												</div>
+												<table width="100%" border="0" cellspacing="0"
+													cellpadding="0" class="waybill_table_list dhl_credit_table">
+													<thead>
+														<tr>
+															<th></th>
+															<th>笔数</th>
+															<th>分数</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>重大投诉</td>
+															<td>{{cad.e_3001}}</td>
+															<td>{{cad.v_3001}}</td>
+														</tr>
+														<tr class="waybill_table_listtr">
+															<td>投诉</td>
+															<td>{{cad.e_3002}}</td>
+															<td>{{cad.v_3002}}</td>
+														</tr>
+														<tr>
+															<td>总分</td>
+															<td></td>
+															<td>{{cad.v_3000}}</td>
+														</tr>
+													</tbody>
+												</table> <!--投诉 end-->
+											</li>
+										</ul>
+
+									</span>
+								</div>
+							</td>
+							<td title="{{o.sfphone}}">{{o.sfPhone}}</td>
+							<td title="{{o.repairFee}}"><input style="width: 80px;" value="{{o.repairFee}}" id="{{o.taskId}}repair"
+								 placeholder="" ng-keyup="fixNumber(o.taskId,'repair');"
+								class="input_box dhl_map_input"   type="text"></td>
+							<td title="{{o.acceptTime}}">{{o.acceptTime}}</td>
+							<td title="{{o.upFixTime}}">{{o.upFixTime}}</td>
+							<td title="{{o.yyTime}}">{{o.yyTime}}</td>
+							<td title="{{o.repairType}}">{{o.repairType}}</td> 
+							<td title="{{o.remark}}">{{o.remark}}</td>
+						</tr>
+					</tbody>
+				</table>
+</div>
+				</my_table>
+			</div>
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+	<div id="vehicle_1" class="popup"
+		style="width: 700px; height: 470px; margin-left: -350px; margin-top: -235px; z-index: 1006; display: none;">
+		<div class="tx_tc">
+			<div style="min-height: 370px">
+				<dl class="dhl_credit_dl">
+					<dt>信用标准</dt>
+					<dd>
+						<b>1.信用体系规划：</b><br> 接单量、预约及时率、核销及时率、服务态度、投诉
+					</dd>
+					<dd>
+						<b>2.每项考核细则</b><br> 接单量：每接一单，得10分<br>
+						预约及时率：及时预约，得2分，超时扣2分<br> 核销及时率：及时核销，得2分，超时扣2分<br>
+						服务态度：满意，得2分，不满意，扣2分<br> 投诉：投诉一次扣10分，投诉3三次，取消资格<br>
+						重大投诉：取消资格
+					</dd>
+				</dl>
+			</div>
+			<div class="tx_tc_button">
+				<a class="search_button_cz" href="#"
+					onclick="document.getElementById('vehicle_1').style.display='none';document.getElementById('fade1_xz').style.display='none'">关闭</a>
+			</div>
+		</div>
+	</div>
+	<div id="vehicle_qs" class="popup" style="width: 800px; min-height: 570px; margin-left: -400px; margin-top: -300px; z-index: 1006; display: none;">
+			<div class="tx_tc">
+				<div style="min-height:350px; padding-top:20px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table" style="padding-top: 0">
+				  <tbody><tr>
+					<td width="100"><label class="control-label w_100">处理人：</label></td>
+					<td><input  ng-model="query.receiverName" class="input_box" maxlength="6" type="text" value=""></td>
+									  </tr>
+		<tr>
+						<td width="100" valign="top"><label class="control-label w_100">处理描述：</label></td>
+						<td colspan="4"><textarea maxlength="500" style="height:90px; width:92.4%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="query.handleResult" class="form-control"></textarea>
+						</td>
+						
+						
+					</tr>
+				</tbody></table>
+				<ul class="dd_cx clearfix">
+					<li><span my-File-Model="identityCard1" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard2" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard3" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard4" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard5" is-Close="true" ></span></li>
+				</ul>
+				</div>
+				<div class="tx_tc_button"><a class="search_button_ss" href="javascript:void(0);" ng-click="repairSign();">保存</a><a class="search_button_cz" href="javascript:void(0);" ng-click="closeSign();">取消</a></div>
+			</div>
+    	</div>
+	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" style="display: none;"></div>
+	<!--半透明黑色背景  结束-->
+
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="waitSignRepairTaskCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

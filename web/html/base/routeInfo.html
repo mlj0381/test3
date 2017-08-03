@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="routeInfoApp"> 
+	<head>
+	    <title>众邦_路由详情 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="routeInfoCtrl" style="overflow:hidden" onload="setContentHeight()">
+        <!-- 搜索 详细 -->
+         <div class="billing_1 clearfix pb_20 mt_20">
+            <!-- 搜索 详细 列表开始 -->
+            <div class="search_nr clearfix mt_20">
+              
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list">
+                                  <thead>
+                                    <tr>
+                                        <th>线路走向编号</th>
+                                        <th>开始网点</th>
+                                        <th>目的网点</th>
+                                        <th>路由编号</th>
+                                        <th>路由顺序</th>
+                                    </tr>
+                                  </thead>
+                        <tbody>
+                                      <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak"  ng-repeat="o in routeDetail.items">
+                                        <td>{{o.towardsId}}</td>
+                                        <td>{{o.beginOrgName}}</td>
+                                        <td>{{o.endOrgName}}</td>
+                                        <td>{{o.routingId}}</td>
+                                        <td>{{o.sequence}}</td>
+                                      </tr>
+                          </tbody>
+                    </table>
+                   
+            </div>
+            <!-- 搜索 详细 列表结束 -->
+            
+        </div>
+        <div class="bottom_nav1"><a href="javascript:void(0);" ng-click="close()">关 闭</a></div>
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="routeInfoCtrl.js?v=${ver}"></script>
+		
+</body>
+</html>

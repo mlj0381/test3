@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="onlineOrdersApp" xmlns="http://www.w3.org/1999/xhtml"  >
+	<head>
+	    <title>${title}_合作接单 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+        <style >
+	        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+		</style>
+	</head>
+	<body ng-controller="onlineOrdersCtrl" onload="setContentHeight()" style="overflow: hidden;">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+				<tbody>
+					<tr>
+						<td width="100"><label class="term_label">承运商运单：</label></td>
+						<td>
+							<input class="form_term" ng-model="queryParam.trackingNum" maxlength="10"/>
+	                    </td>
+						<td width="100"><label class="term_label">发货方：</label></td>
+						<td>
+							<div class="form_select ng-cloak">
+	                              <select ng-model="queryParam.carrierOrgId" ng-init="queryParam.carrierOrgId=-1">
+									<option value="-1" >所有</option>
+	                            	<option ng-repeat="obj in lineOrgIdList"  value="{{obj.carrierOrgId}}" >{{obj.carrierOrgName}}</option>
+								  </select>
+	                        </div>
+	                   </td> 
+						<td width="100"><label class="term_label">外发时间：</label></td>
+						<td>
+	                        <input class="form_term" id="createDate" readonly="readonly" ng-model="queryParam.createDate" maxlength="10"  my-Date-Picker='{"dateFmt":"yyyy-MM-dd"}'/>
+						</td>
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;">
+								<a ng-click="doQuery();" ng-Enter href="javascript:void(0)">查询</a>
+								<a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">订单状态：</label></td>
+						<td>
+	                         <div class="form_select">
+	                              <select ng-model="queryParam.singlesSts" ng-init="queryParam.singlesSts=-1">
+									<option value="-1" >所有</option>
+	                            	<option ng-repeat="obj in singlesStsList"  value="{{obj.codeValue}}" >{{obj.codeName}}</option>
+								  </select>
+	                         </div>
+	                       </td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+	        <div class="search_nr clearfix mt_20">
+	             <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+		             <h2>查询结果</h2>
+		             <a class="button ml_10 see_b" href="javascript:void()" ng-click="meetInfo()"><i class="button_icon button_icon dw_see_b"></i>运单详情</a>
+		             <a href="javascript:void()"  ng-click="turnWaybill()">订单转运单</a>
+		             <a href="javascript:void()" style="min-width: 60px;" ng-click="doMeet()">接单</a>
+		             <a class="button ml_10 delete" href="javascript:void()" ng-click="clearMeet()"><i class="button_icon button_icon dw_delete ml0"></i>取消接单</a>
+	             </div>
+	             <my-Adv-Table isShowSeq="false" width="2200px" isMultiSelect="true" isShowCheck="true" isFilter="true" isSum="true" id="SELLER_ORDER_ID"  
+	              		head='[{"name":"承运商运单","code":"TRACKING_NUM","width":"100"},
+	              		{"name":"接单状态","code":"SINGLES_STS_NAME","width":"100"},
+	              		{"name":"运单号","code":"outgoing_tracking_num","width":"100"},
+	              		{"name":"件数","code":"G_COUNT","isSum":"true","width":"100"},
+	              		{"name":"重量","code":"WEIGHT","isSum":"true","width":"100"},
+	              		{"name":"方数","code":"STERE","isSum":"true","width":"100"},
+	              		{"name":"外发时间","code":"OUTGOING_TIME","width":"100"},
+	              		{"name":"费用合计","code":"FEE_SUM","isSum":"true","width":"100"},
+	              		{"name":"支付方式1","code":"PAYMENT_TYPE_NAME","width":"100"},
+	              		{"name":"金额","code":"FEE1","isSum":"true","width":"100"},
+	              		{"name":"支付方式2","code":"PAYMENT_TYPE2_NAME","width":"100"},
+	              		{"name":"金额","code":"FEE2","isSum":"true","width":"100"},
+	              		{"name":"代收货款","code":"COLLECTING_MONEY","width":"100"},
+	              		{"name":"目的城市","code":"PROVINCE_CITY_COUNTY","width":"100"},
+	              		{"name":"备注","code":"ORG_REMARK","width":"100"},
+	              		{"name":"交接方式","code":"DELIVERY_TYPE_NAME","width":"100"},
+	              		{"name":"收货人","code":"RECEIVER_NAME","width":"100"},
+	              		{"name":"收货人电话","code":"RECEIVER_TEL","width":"100"},
+	              		{"name":"收货人地址","code":"RECEIVER_ADDRESS","width":"100"},
+	              		{"name":"发货人","code":"LINE_CONTRACTOR","width":"100"},
+	              		{"name":"发货人电话","code":"LINE_TEL","width":"100"}]'>
+              	</my-Adv-Table>
+	         </div>
+        	<!--  <div style="text-align: right; margin-top:15px;"></div> -->
+		</div>
+		<!--[if !IE]> -->
+		<script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+		<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+		<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="onlineOrders.js?v=${ver}"></script>
+	</body>
+</html>

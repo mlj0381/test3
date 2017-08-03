@@ -1,0 +1,33 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- 修改内容 开始 -->
+			<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>修改内容</h2></div>	
+			<div class="mkae" style=" position: relative;overflow: auto;">
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list ng-cloak">
+	                  <thead>
+	                                  <tr>
+	                                    <th width="20%">修改项</th>
+	                                    <th width="20%">修改前值</th>
+	                                    <th width="20%">修改后值</th>
+	                                    <th width="20%">修改人</th>
+	                                    <th width="20%">修改时间</th>
+	                                  </tr>
+	                  </thead>
+	                  <tbody>
+	                                  <tr ng-show="showData.ordUpdate.length==0">
+	                                    <td width="20%"></td>
+	                                    <td width="20%"></td>
+	                                    <td width="20%"></td>
+	                                    <td width="20%"></td>
+	                                    <td width="20%"></td>
+	                                  </tr>
+	                                   <tr ng-repeat="o in showData.ordUpdate">
+	                                    <td width="20%">{{o.fieldName}}</td>
+	                                    <td width="20%">{{o.oldValue}}</td>
+	                                    <td width="20%">{{o.newValue}}</td>
+	                                    <td width="20%">{{o.opName}}</td>
+	                                    <td width="20%">{{o.opDate}}</td>
+	                                  </tr>
+	                  </tbody>
+	             </table> 
+			</div>
+		<!-- 修改内容 结束 -->

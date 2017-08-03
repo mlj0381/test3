@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="trackDetailInfoApp">
+	<head>
+	 <title>运单详情</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运会" />
+<meta name="description" content="联运会" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="/image/$tenantId$/32x32.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}" />
+<style>
+.waybill_table td{ padding:0 5px; font-weight:normal; line-height:25px;}
+.waybill_table td:nth-child(1),.waybill_table_list td:nth-child(1),.waybill_table_list th:nth-child(1){ border-left:0!important}
+.bt_h2 .title_h2{color: #f83148;font-weight: bold; font-size:14px;padding: 19px 0 18px;}
+.bt_h2 .title_icon{margin: 0 12px 0 20px;
+    background: #9E9E9E;
+    width: 3px;
+    height: 16px;
+    margin-top: 2px;}
+   .dhl_ul2 li{float: left;font-size: 14px;font-weight: bold;color: #333;}
+		.dhl_ul2 li a{display:block;padding: 0 10px;line-height: 30px;color: #888;}
+		.dhl_ul2 .hover a{color: #f83148;}
+		.yc_message_span{line-height: 30px;display:block;padding-left: 20px;padding-bottom: 10px;font-weight:bold;font-size: 14px;}
+		.jb_tab td{line-height: 32px;}
+		.yd_div{height: 167px;overflow: auto;}
+		 @media(max-width:1700px){
+        .dhl_jbxx,.dhl_ydgz{width: 100%!important;margin: 0px!important;position: relative;}
+        .dhl_jbxx .dhl_pm1{width: 96%!important;}
+        .yd_div{height: auto;}
+        .yd_h22{padding-top: 13px!important;}
+        }
+        .myselect{border: 2px solid red;height: 22px;line-height: 22px;border-radius: 3px;}
+		.myselect select{width: 100%;border: 0;}
+</style>
+</head>
+	<body ng-controller="trackDetailInfoCtrl"  style="overflow: ;">
+		<div class="billing_1" style="padding-bottom:20px;margin-bottom: 20px;padding-top: 10px;">
+		        <div class="clearfix">
+		        	<!-- 基本信息开始 -->
+					<div class="ng-cloak fl dhl_jbxx"  style="width: 68%;">
+						<billing init-view="initView" orderno="orderNo"   tracking-Num="trackingNum" is-Show-Return="isShowReturn"   ver="${ver}"/>
+					</div>
+				    <!-- 基本信息结束 -->
+				    
+				    <!-- 运费信息开始 -->
+				    <div class="billing_3 clearfix ng-cloak  dhl_ydgz" >
+					    <fee-info orderno="orderNo"  tracking-Num="trackingNum" ver="${ver}"></fee-info>
+				    </div>
+				     <!-- 运费信息结束 -->
+				     <!-- 子运单信息开始 -->
+				    <div class="billing_3 clearfix ng-cloak  dhl_ydgz"  >
+					    <consignor-info tracking-Num="trackingNum" ver="${ver}"></consignor-info>
+				    </div>
+					 <!-- 子运单信息结束 -->
+					 <!-- 跟踪信息开始 -->
+					<div class="billing_3 clearfix ng-cloak fr dhl_ydgz" style="width: 30%;">
+						<track-show orderno="orderNo" ver="${ver}"></track-show>
+					</div>
+					 <!-- 跟踪信息结束-->	
+					   <!-- 配载信息开始 -->
+					 <div class="billing_3 clearfix ng-cloak  dhl_ydgz"  >
+					    <depart-info tracking-Num="trackingNum" ver="${ver}"></depart-info>
+				    </div>	
+				      <!-- 配载信息开始 -->
+				     <!-- 签收信息开始 -->
+				    <div  class="billing_3 clearfix ng-cloak  dhl_ydgz" >
+					     <sign-show orderno="orderNo" tracking-Num="trackingNum" signup="signUp" orderid="orderId" showsign="showSign"  type="type" ver="${ver}"></sign-show>
+				    </div>
+					  <!-- 签收信息结束 --> 
+				</div>
+				
+				<!-- <div ng-if="signUp!=1" class="tx_tc_button"  style=" padding:20px 0;"><a class="search_button_cz" href="javascript:void(0);" ng-click="close()">关闭</a></div> -->
+		</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript"
+		src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/angucomplete.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/angular-touch.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="trackDetailInfoCtrl.js?v=${ver}"></script>
+	<script type="text/javascript" src="../tracks/trackDetail/billingCommon.js?v=${ver}"></script>
+	<script type="text/javascript" src="../tracks/trackDetail/trackDetail.js?v=${ver}"></script>
+	</body>
+</html>
+

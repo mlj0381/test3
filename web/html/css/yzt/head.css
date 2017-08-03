@@ -1,0 +1,80 @@
+@charset "gb2312";
+body{ background:#f0f5fb;}
+/*header css定义*/
+.header{ height:90px; background:#027ccf; position:relative;}
+.header .logo{ padding:18px 0 0 4%;}
+.header .user{ font-size:12px; color:#fff; line-height:22px;display: inline-block;white-space: nowrap; float:right; padding:20px 5% 0 34px;background-position:-499px 15px; height:70px;}
+.header .user img{ width:40px; border:2px solid #f9f9f9; margin-right:15px;}
+.header .user p{ color:#fff;}
+
+.block{ display:block; height:43px;}
+
+#ddimagetabs a.nav_li_a:hover {background: url(../../image/yzt/nav_sj.png) no-repeat center bottom;;}
+#ddimagetabs a.current,#ddimagetabs a.nav_li_a:hover,.current{background: url(../../image/yzt/nav_sj.png) no-repeat center bottom;-webkit-transition: all .0s ease-out!important;
+    -moz-transition: all .0s ease-out!important;
+    -o-transition: all .0s ease-out!important;
+    transition: all .0s ease-out!important;}
+#ddimagetabs a.nav_li_a span{ font-size:16px; color:#fff; line-height:26px; position:relative;height: 28px;display: block;}
+
+
+
+/*header 注销 css定义*/
+.cancel{ color:#0272be; background:#fff;border-radius:20px;font-size:14px; height:23px; width:77px; display:block; text-align:center; line-height:23px; margin:5px auto 0;}
+.cancel:hover{ text-decoration:none; background:#e0f3ff; color:#0272be;}
+
+
+
+
+/*header nav css定义*/
+.header_nav{ width:68%;z-index:1002; padding:11px 0 0 0; position:absolute; margin:0 auto;margin-left: -31%;left: 50%;}
+.header_nav li.nav_li{ float:left;text-align:center; width:12%; height:79px;}
+.header_nav li.nav_li a.nav_li_a{text-decoration:none;
+
+        text-decoration: none;
+    display: block;
+    margin: 0 auto;
+    height: 79px;}
+
+
+.icon_down{background-position:-414px 0px; width:13px; height:7px; display:block; position:absolute; right:-18px; bottom:5px;}
+
+.header_nav li.gray:hover a.nav_li_a{ pointer-events:none; border-bottom: none;}
+.gray .submenu{display:none}
+/*header submenu css定义动作*/
+.header_nav li:hover a.nav_li_a, .header_hover a.nav_li_a {background: url(../../image/yzt/nav_sj.png) no-repeat center bottom;
+    -webkit-transition: all .0s ease-out!important;
+    -moz-transition: all .0s ease-out!important;
+    -o-transition: all .0s ease-out!important;
+    transition: all .0s ease-out!important;}
+    
+
+.submenu{ width:100%; left: 0;position: fixed;top:90px;z-index:9999;height:39px; background:#fff; padding-top:11px; text-align:center;
+}
+.submenu a{ color:#4a5f6d;line-height:28px; font-size:14px; padding:0 16px; height:28px; display:inline-block; margin:0 9px;}
+.submenu a:hover{ text-decoration:none; background:#1089da;border-radius:20px; color:#fff;}
+
+
+.red{ color:#f7314a!important}
+
+.submenu{opacity: 1;
+    -webkit-transform: rotateY(90deg);
+    -moz-transform: rotateY(90deg);
+    -ms-transform: rotateY(90deg);
+    -o-transform: rotateY(90deg);
+    transform: rotateY(90deg);
+
+    -webkit-transition: opacity .1s, -webkit-transform .2s;
+    -moz-transition: opacity .1s, -moz-transform .2s;
+    -ms-transition: opacity .1s, -ms-transform .2s;
+    -o-transition: opacity .1s, -o-transform .2s;
+    transition: opacity .20s, transform .50s;
+}
+
+.header_nav li:hover .submenu{opacity:1;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+}
+

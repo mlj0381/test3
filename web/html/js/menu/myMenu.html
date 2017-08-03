@@ -1,0 +1,21 @@
+<li  ng-repeat="obj in menuData.childMenus" class="nav_li">
+	<a href="#" ng-mouseover="menuShow(obj.menuId)" class="nav_li_a">
+		<i class="block">
+			<img alt="" ng-src="{{obj.menuIcon}}" />
+		</i>
+		<span>{{obj.menuName}}<i class="icon_down icon"></i></span>
+	</a>
+	<span class="submenu clearfix"   ng-show="obj.show" >
+		<dl class="clearfix nav_z" style="min-height: 37px" ng-repeat="childObj in obj.checkedObj">
+			<dt class="fl" style="width: 90px;text-align: left;">{{childObj.name}}<i class="nav_i"></i></dt>
+			<dd class="fl" style="margin-left: 110px;">
+					<p ng-repeat="menu in childObj.data">
+						<a href="javascript:void(0)" ng-click="menuClick(menu.menuId,menu.menuName,menu.menuPath,childObj.menuId)">{{menu.menuName}}</a>
+					</p>
+			</dd>
+		</dl>
+	</span>
+</li>
+
+
+

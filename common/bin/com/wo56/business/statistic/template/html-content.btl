@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+	<title>${html.title}</title>
+	<%
+		for(var i = 0; i < html.css.~size;i++){
+	%>
+			${html.css[i]}
+	<%	
+		}
+	%>
+
+</head>
+<body>
+	<%
+		for(var i = 0; i < html.content.~size;i++){
+	%>
+			${html.content[i]}
+	<%	
+		}
+	%>
+	<div align="center" style="margin-top: 10px; color: red;">
+		<div style="font-style: normal; font-size: 16px;">${autoSendTip}</div>
+		<div style="font-style: normal; font-size: 12px; padding: 5px;">${htmlCreateDateTip}</div>
+	</div>
+</body>
+</html>

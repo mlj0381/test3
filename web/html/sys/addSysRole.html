@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addSysRoleApp">
+<head>
+<title>众邦_角色新增</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+
+</head>
+<body ng-controller="addSysRoleCtrl" >
+
+	<!-- 网点设置 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 300px">
+		<form>
+			<div class="billing_list xianlusz">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>角色名称：</label></td>
+						<td class="list_td">
+						    <div >
+						       <input maxlength="11" ng-model="data.roleName" class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							</div>
+						</td>
+					</tr>
+					<!-- <tr>
+						<td class="list_td"><label class="list_label"><em>*</em>所属组织：</label></td>
+						<td class="list_td">
+							<div class="ui-select" >
+	                               <select ng-model="data.orgId"
+										ng-options="obj.orgId as obj.orgName for  obj in orgInfo">
+									</select>
+	                        </div>
+						</td>
+					</tr> -->
+					<tr>
+						<td class="list_td"><label class="list_label">说明：</label></td>
+						<td class="list_td">
+						  <div >
+					        <input maxlength="11" ng-model="data.remark" class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+					      </div>
+					    </td>
+					</tr>
+					<!-- <tr>
+						<td class="list_td"><label class="list_label"><em>*</em>配送费用类型：</label></td>
+						<td class="list_td">
+					       <div class="form_select_c fl " style="min-width:140px">
+						         <my-select id="data.costType" code-type="COST_TYPE"  url="" />
+					       </div>
+					    </td>
+					</tr> -->
+				</table>
+			</div>
+		</form>
+	</div>
+	<div class="bottom_nav1">
+		<a href="javascript:void(0)" ng-click="doSave()">保 存</a><a
+			href="javascript:void(0)" ng-click="close()">取 消</a>
+	</div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addSysRoleCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

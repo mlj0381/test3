@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AddInstallUserApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>查看师傅资料</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+		<!-- <script type="text/javascript" src="../js/x.js?v=${ver}"></script> -->
+		
+		<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script><!--百度地图 测试-->
+
+</head>
+	<body  onload="setContentHeight()" ng-controller="AddInstallUserCtrl">
+			<!-- 新增安装师傅   start -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="140"><label class="term_label">师傅名称：</label></td>
+						<td><input class="form_term" ng-model="params.name" maxlength="10"/></td>
+						<td width="140"><label class="term_label">籍贯：</label></td>
+						<td><input class="form_term" ng-model="params.native_" maxlength="10"/></td>
+						<td width="140"></td>
+						<td></td>
+						
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">师傅手机：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-blur="checkPhone();" ng-model="params.phone" maxlength="11"/>
+						</td>
+						
+						<td><label class="term_label">服务省：</label></td>
+						<td><div class="search_select">
+								<select name="select" class="xl_z" id="provinceId"  ng-model="params.provinceId" ng-change="queryCity()"  ng-options="province.id as province.name for  province in provinces">
+								<option value="">请选择服务省</option>
+								</select>
+								<input id="provinceName" value="" ng-model="params.provinceName" type="hidden" />
+							</div></td>
+						
+						<td><label class="term_label">服务市：</label></td>
+						<td><div class="search_select">
+								<select name="select" class="xl_z" id="cityId" ng-model="params.cityId"  ng-click="selectCity()" ng-options="objCon.id as objCon.name for  objCon in citys">
+								<option value="">请选择服务市</option>
+								</select>
+							</div></td>
+					</tr>
+					<tr>
+						<td><label class="term_label">合作方式：</label></td>
+						<td><div class="search_select">
+								<my-select id="params.cooperationType"  has-all="false" default-value=""
+									code-type="COOPERATION_TYPE" url-param='' />
+							</div></td>
+						<td>
+							<label class="term_label">账户类型：</label>
+						</td>
+						<td>
+							<div class="search_select">
+		 						<my-select id="params.receiType"  has-all="false" default-value=""
+									code-type="ACCT_RECC_TYPE" url-param='' />
+                            </div>
+						</td>
+						<td><label class="term_label">持卡人/帐户名：</label></td>
+						<td><input class="form_term" ng-model="params.accountName" maxlength="11"/></td>
+					</tr>
+					<tr>
+						<td ng-show="params.receiType==1"><label class="term_label">归属银行：</label></td>
+						<td  ng-show="params.receiType==1"><div class="search_select">
+		 						<my-select id="params.bankType"  has-all="false" default-value=""
+									code-type="BANK_TYPE" url-param='' />
+                            </div></td>
+						<td>
+							<label class="term_label">卡号/帐号：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-model="params.bankAccount" maxlength="20"/>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">身份证正面：</label>
+						</td>
+						<td>
+						<div>
+						<ul class="dd_cx clearfix">
+							<li><span my-File-Model="imageCounter" is-Close="true" ></span></li>
+						</ul>
+						</div>
+						</td>
+						<td>
+							<label class="term_label">身份证背面：</label>
+						</td>
+						<td>
+						<div>
+						<ul class="dd_cx clearfix">
+							<li><span my-File-Model="imagePositive" is-Close="true" ></span></li>
+						</ul>
+						</div>
+						</td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">仓库地址：</label>
+						</td>
+						<td colspan="5">
+						<input class="form_term" style="width: 95%" ng-model="params.storeAddr" maxlength="200"/>
+						</td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+        <div class="tx_tc_button">
+					<a class="search_button_ss" href="javascript:void(0);">保存</a>
+					<a class="search_button_cz" href="javascript:void(0);">取消</a></div>
+        	
+        </div>
+        <!-- 新增安装师傅  end -->
+			
+			
+		</div>
+<script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap(){
+        createMap();//创建地图
+        setMapEvent();//设置地图事件
+        addMapControl();//向地图添加控件
+    }
+    
+    //创建地图函数：
+    function createMap(){
+        var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+        var point = new BMap.Point(113.457667,23.169877);//定义一个中心点坐标
+        map.centerAndZoom(point,17);//设定地图的中心点和坐标并将地图显示在地图容器中
+        window.map = map;//将map变量存储在全局
+    }
+    
+    //地图事件设置函数：
+    function setMapEvent(){
+        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+        map.enableKeyboard();//启用键盘上下左右键移动地图
+    }
+    
+    //地图控件添加函数：
+    function addMapControl(){
+        //向地图中添加缩放控件
+	var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+	map.addControl(ctrl_nav);
+        //向地图中添加缩略图控件
+	var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+	map.addControl(ctrl_ove);
+        //向地图中添加比例尺控件
+	var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+	map.addControl(ctrl_sca);
+    }
+    
+    
+    initMap();//创建和初始化地图
+</script>
+	
+
+	<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="toModifyInstallUser.js?v=${ver}"></script>
+		
+	</body>
+</html>
+

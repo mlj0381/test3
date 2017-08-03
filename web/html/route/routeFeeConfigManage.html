@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="routeFeeConfigManageApp"> 
+	<head>
+	    <title>线路费用管理</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+</head>
+	<body ng-controller="routeFeeConfigManageCtrl" onload="setContentHegthDelay(800)"  style="overflow:hidden">
+        <div class="billing_1 clearfix pb_20 mt_20">
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">起始网点：</label>
+                	
+                   			
+                   			</td>
+						<td>
+						<div class="form_select" >
+		                      <select ng-model="query.startOrgid" ng-options="obj.orgId as obj.orgName for  obj in orgInfo  ">
+		                      </select>
+                    	</div>
+                        </td>
+						<td width="100"><label class="term_label">到达网点：</label>
+					
+							
+							</td>
+						<td><div class="form_select " >
+		                      <select ng-model="query.endOrgid" ng-options="obj.orgId as obj.orgName for  obj in orgInfo  ">
+		                      </select>
+                    	</div></td>
+						<td width="100">
+                    	
+                        
+                    	</td>
+						<td>
+						</td>
+						
+						<td >
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					
+					
+					
+				</tbody>
+		</table>
+                
+                
+                     <div class="search_nr clearfix mt_20">
+                     <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	                     <h2>查询结果</h2>
+	                     <a class="button ml_10 newly" ng-click="toAdd();" href="javascript:void(0)"><i class="button_icon button_icon dw_newly"></i>新增</a>
+	                    
+	                     <a class="button ml_10 see_b" ng-click="toDtl();" href="javascript:void(0)"><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+	                     
+                     </div>
+                  	<my-table>
+                  	<div id="size" class="zz_list table_height" style="overflow:auto;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"  class="search_lista">
+                               <thead id="tb1">
+                                	<tr >
+	                                    <th style="width:50px" class="search_list_border">
+			                                  <div class="controls">
+				                                <input class="none" id="checkbox" type="checkbox"  ng-click="selectAll();" name="checkbox">
+				                                <label for="checkbox"></label>
+			                                  </div>
+		                                </th>
+                                		<th width="20%">路由ID</th>
+                                		<th width="25%">起始网点</th>
+                                		<th width="25%">到达网点</th>
+                                		<th width="25%">应收网点</th>
+                                	
+                                	</tr>
+                              </thead>
+                         
+                              <tbody>
+                                  <tr select ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne($index);" ng-repeat="o in page.data.items">
+                                    <td style="width:50px" class="search_list_border">
+					                      <div class="controls"><input id="checkbox{{$index}}" class="none" attr="{{$index}}" value="{{o}}" type="checkbox" ng-click="selectOne($index)" name="check-1" >
+					                          <label for="check-1"></label>
+					                      </div>
+			                        </td>
+                                  	<td width="20%">{{o.routeId}}</td>
+                                  	<td width="25%">{{o.startOrgidName}}</td>
+                                  	<td width="25%">{{o.endOrgidName}}</td>
+                                  	<td width="25%">{{o.receiOrgidName}}</td>
+            
+                                  </tr>
+                              </tbody>
+                            </table>
+						</div>
+				
+                </my-table>
+                           
+		</div>
+        
+        </div>
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="routeFeeConfigManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="excQueryApp">
+<head>
+<title>调度任务-异常查询</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"	href="../../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="excQueryCtrl"  style="overflow:hidden">
+	<div class="billing_1 clearfix pb_20 mt_20" >
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"	class="search_table search_term">
+					<tr>
+						<td width="100"><label class="control-label">省份：</label></td>
+						<td>
+							<div class="search_select">
+								<select ng-change="selectCity(query.provinceId);"
+									ng-model="query.provinceId"
+									ng-options="obj.id as obj.name for  obj in provinceData.items "
+									name="select" class="xl_z">
+								</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label w_100">城市：</label></td>
+						<td><div class="search_select fl">
+								<select ng-change="selectDistrict(query.cityId);"
+									ng-model="query.cityId"
+									ng-options="obj.id as obj.name for  obj in cityData.items "
+									name="select" class="xl_z">
+								</select>
+							</div></td>
+						<td width="100"><label class="control-label w_100">县区：</label></td>
+						<td><div class="search_select">
+								<select ng-model="query.countyId"
+									ng-options="obj.id as obj.name for  obj in districtData.items "
+									name="select" class="xl_z">
+								</select>
+							</div></td>
+						
+						<td rowspan="3">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">异常状态：</label></td>
+						<td><div class="search_select">
+								<my-select id="query.excState"  has-all="true" default-value=""
+									code-type="DEAL_STATE" url-param='' />
+							</div></td>
+						<td width="100"><label class="control-label w_100">收货人：</label></td>
+						<td><input class="input_box" ng-model="query.receiveName"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">收货人手机：</label></td>
+						<td><input class="input_box" ng-model="query.receivePhone"
+							maxlength="12" id="" type="text" /></td>
+						
+					</tr>
+					
+					<tr>
+						<td width="100"><label class="control-label w_100">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId"
+							maxlength="20" id="" type="text" /></td>
+							<td width="100"><label class="control-label w_100">异常类型：</label></td>
+						<td><div class="search_select">
+								<my-select id="query.excType"  has-all="true" default-value=""
+									code-type="EXCEPTION_TYPE" url-param='' />
+							</div></td>
+						<td width="100"></td>
+						<td></td>
+							
+					</tr>
+				</table>
+			
+		<div class="bj_map">
+			<!--任务列表 start-->
+			<div class="clearfix" style="border-top: 1px solid #f0f5fb;">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2>
+				<div class="fr mt15_mr20">
+				<a class="button ml_10 see_b" href="javascript:void(0)" ng-click="queryExceinfo()"><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+				<a class="button fr ml_10 rgfp" ng-click="openExc();" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>异常登记</a>
+				<a style="width: 95px;" class="button fr ml_10 yiccl" ng-click="dealExc();" href="javascript:void(0);"><i class="button_icon button_icon dw_yiccl"></i>异常处理</a>
+				</div>
+			</div>
+			
+				 <my-adv-table isShowSeq="false" width="2055px" isMultiSelect="false"  isShowCheck="true"  isFilter="true" id="excId" 
+				 head='[{"name":"异常编号","code":"excId","width":"110"},
+			                {"name":"运单号","code":"wayBillId","width":"110"},
+			                {"name":"服务类型","code":"serverType","width":"100"},
+			                {"name":"异常描述","code":"notes","width":"100"},
+			                {"name":"异常责任方","code":"dutyObjName","width":"110"},
+			                {"name":"异常金额","code":"repairFee","width":"110","number":"2"},
+			                {"name":"异常类型","code":"excTypeName","width":"110"},
+			                {"name":"异常状态","code":"excStateName","width":"110"},
+			                {"name":"异常创建人","code":"creatorName","width":"110"},
+			                {"name":"创建人联系方式","code":"creatorPhone","width":"100"},
+			                {"name":"异常创建日期","code":"createTime","width":"140"},
+			                {"name":"收货人","code":"receiveName","width":"120"},
+			                {"name":"收货人电话","code":"receivePhone","width":"110"},
+			                {"name":"收货城市","code":"cityName","width":"110"},
+			                {"name":"安装师傅","code":"sfName","width":"110"},
+			                {"name":"安装师傅电话","code":"sfPhone","width":"110"},
+			                {"name":"任务状态","code":"taskStateName","width":"110"}
+			                ]'>
+                </my-adv-table>
+			</div>
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+	
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="excQueryCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

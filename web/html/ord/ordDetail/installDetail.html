@@ -1,0 +1,46 @@
+<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>安装信息</h2></div>
+				
+			<div class="mkae" style=" position: relative;overflow: auto;">
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list ng-cloak">
+	                                <thead>
+	                                  <tr>
+	                                    <th width="100">师傅名字</th>
+	                                    <th width="100">师傅电话</th>
+	                                    <th width="120">分配时间</th>
+	                                    <th width="150">分配人</th>
+	                                    <th width="120">接单时间</th>
+	                                    <th width="120">提货时间</th>
+	                                    <th width="120">预约时间</th>
+	                                    <th width="120">预约上门时间</th>
+	                                    <th width="120">签收时间</th>
+	                                   
+	                                   
+	                                  </tr>
+	                                </thead>
+	                                <tbody>
+	                                  <tr  class="ng-scope"  ng-show="showData.taskInfo.length==0">
+	                                    <td width="100"></td>
+	                                    <td width="100"></td>
+	                                    <td width="120"></td>
+	                                    <td width="150"></td>
+	                                    <td width="120"></td>
+	                                    <td width="120"></td>
+	                                    <td width="120"></td>
+	                                    <td width="120"></td>
+	                                    <td width="120"></td>
+	                                  </tr>
+	                                     <tr ng-repeat="o in showData.taskInfo" >
+	                                    <td width="100">{{o.doObjName}}</td>
+	                                    <td width="100">{{o.doTel}}</td>
+	                                    <td width="120">{{o.distributionTime}}</td>
+	                                    <td width="150">{{o.disUserNmae}}</td>
+	                                    <td width="120">{{o.acceptTime}}</td>
+	                                    <td width="120">{{o.pickTime}}</td>
+	                                    <td width="120">{{o.upFixTime}}</td>
+	                                    <td width="120">{{o.yyTime|limitTo:10}}&nbsp;{{o.ipFixTime}}</td>
+	                                    <td width="120">{{o.signTime}}</td>
+	                                  </tr>
+	                                </tbody>
+	                              </table> 
+			</div>
+

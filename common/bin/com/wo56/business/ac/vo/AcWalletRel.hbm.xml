@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-21 9:53:59 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ac.vo.AcWalletRel" table="ac_wallet_rel">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID" not-null="true" length="20">
+			</column>
+		</property>
+		<property name="userId" type="java.lang.Long">
+			<column name="USER_ID" not-null="true" length="20">
+			</column>
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME" not-null="true">
+			</column>
+		</property>
+		<property name="pullTenantId" type="java.lang.Long">
+			<column name="PULL_TENANT_ID" not-null="true" length="20">
+			</column>
+		</property>
+		<property name="showFee" type="java.lang.Long">
+			<column name="SHOW_FEE" length="20">
+			</column>
+		</property>
+		<property name="tenantName" type="java.lang.String">
+			<column name="tenant_Name">
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

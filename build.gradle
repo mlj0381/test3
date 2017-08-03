@@ -1,0 +1,59 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+allprojects {
+	apply plugin: 'java'
+	
+	group = 'com.wo56.yq'
+	version = '1.0.0-SNAPSHOT'
+	ext {
+		title='云企'
+	}
+	
+	tasks.withType(JavaCompile) {
+	    options.encoding = "UTF-8"
+	}
+
+	configurations {
+		runtime.exclude module: 'servletapi'
+	}
+
+	dependencies {
+        compile fileTree(dir:'../libs', include:'*.jar', exclude:['runtime.jar'])
+        testCompile files('../libs/junit-4.12.jar')
+        runtime files('../libs/runtime.jar')
+	}
+	
+	jar {
+	    manifest {
+	        attributes 'Implementation-Title': project.name,
+	                   'Implementation-Version': version,
+	                   'Created-By': 'sacred02@163.com',
+	                   'Date': new Date()
+	    }
+	}
+	
+	def env = System.getProperty("env") ?: "dev"
+	
+	sourceSets {
+	    main {
+	        resources {
+	            srcDirs = ["src/main/java", "src/main/resources"]
+	        }
+	    }
+	    test {
+	        resources {
+	            srcDirs = ["src/main/resources"]
+	        }
+	    }
+	}
+	
+	processResources {
+		filter(ReplaceTokens, tokens: loadEnvConfig(env))
+	}
+
+}
+
+def loadEnvConfig(env) {
+    def configFile = file('config.groovy')
+    new ConfigSlurper(env).parse(configFile.toURL()).toProperties()
+}

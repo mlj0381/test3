@@ -1,0 +1,49 @@
+<!--发货信息 start-->
+				<div class="waybill_title bt_h2"><h2 class="title_h2"><i class="icon title_icon fl"></i>子运单信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>子运单</th>
+						<th>状态</th>
+						<th>库存网点</th>
+						<th>跟踪信息</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				    <tr class="waybill_table_listtr" ng-repeat="childTrack in consignorInfo" ng-if="consignorInfo.length>0">
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{childTrack.childOrderName}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{childTrack.childOrderState}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{childTrack.stockOrgName}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word"><a ng-click="trackChildOrderInfo(childTrack.childOrderName)" class="text_m">详情</a></td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--发货信息 end-->
+				
+				<div class="popup" style="width: 600px; margin-top: -100px; margin-left: -300px;" ng-show="yy">
+						<!-- 子运单运单跟踪 开始 -->
+	                 <div class="waybill_title bt_h2"><h2 class="title_h2 yd_h22" style="padding-top: 0;"><i class="icon title_icon fl"></i>跟踪信息</h2><i href="javascript:void(0)" ng-click="close()"  class="list_xl_icon icon" ></i></div>
+						<div class="yd_div">
+						<table width="100%"  border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list" style="border-left: 1px solid #b7d3e7;">
+						  <thead>
+							<tr>
+								<th>操作</th>
+								<th>操作内容</th>
+								<th>操作时间</th>
+								<th>操作人</th>
+						  </tr>
+						  </thead>
+						  <tbody>
+						 <tr ng-repeat="o in showData">
+		                                    <td width="40" style="text-align: center;">{{o.opTypeName}}</td>
+		                                    <td  width="300" style="text-align: center;white-space: inherit; word-break: inherit;text-align: left;" title="{{o.opContent}}">{{o.opContent}}</td>
+		                                    <td width="120" style="text-align: center;font-size: 12px;">{{o.createDate}}</td>
+		                                    <td width="100">{{o.opName}}</td>
+		                                  </tr>
+						  </tbody>
+						</table>
+				</div>
+		<!-- 子运单跟踪 结束 -->
+				</div>
+				
+				<div class="popup_bj" ng-show="yy"></div>

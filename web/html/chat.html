@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Chart</title>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/websocket/swfobject.js"></script>
+<script type="text/javascript" src="js/websocket/web_socket.js"></script>
+<script type="text/javascript" src="js/websocket/reconnecting-websocket.js"></script>
+<script type="text/javascript">
+WEB_SOCKET_SWF_LOCATION = "js/websocket/WebSocketMain.swf";
+WEB_SOCKET_DEBUG = true;
+
+var ws = null;
+function startWebSocket() {
+	if (!window.WebSocket) alert("WebSocket not supported by this browser!");
+	// 创建WebSocket
+	var url = document.location.toString().replace('http://', '');
+	var ip;
+	if (url.indexOf(":") > 0) {
+		ip = url.substring(0, url.indexOf(":"));
+	} else {
+		ip = url.substring(0, url.indexOf("/"));
+	}
+	url = "ws://" + ip + ":12002/ws";
+	try {
+		ws = new ReconnectingWebSocket(url, null, {debug: false, reconnectInterval: 5000, maxReconnectInterval: 120000});
+	} catch (e) {
+		ws = new WebSocket(url);
+	}
+	// 收到消息时在消息框内显示
+	ws.onmessage = function(evt) {
+		$('#msgBox').append(evt.data);
+		$('#msgBox').append('</br>');
+	};
+	// 断开时会走这个方法
+	ws.onclose = function() { 
+		console.log("close~~");
+	};
+	// 连接上时走这个方法
+	ws.onopen = function() {   
+		console.log("open~~");
+	};
+}
+  
+// 发送消息
+function sendMsg() {
+	var data = document.getElementById('msgSendBox').value;
+	ws.send(data);
+	document.getElementById('msgSendBox').value = '';
+	
+}
+</script>
+</head>
+<body onload="startWebSocket();">
+<div id="msgBox" style="width:400px;height:300px;border:1px solid #000000">
+</div>
+<textarea id="msgSendBox" rows="5" cols="32"></textarea>
+<input type="button" value="send" onclick="sendMsg()"></input>
+</body>
+</html>

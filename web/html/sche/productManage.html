@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="productManageApp">
+<head>
+<title>调度任务-货品管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="productManageCtrl"  onload="setContentHegthDelay(800)" style="overflow: hidden;">
+	<div class="billing_1">
+		<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="120"><label class="control-label">总类别：</label></td>
+						<td>
+							<div class="search_select w_146">
+								<select  ng-change="selectChildCategory(query.rootCatalogId);" ng-model="query.rootCatalogId" ng-options="obj.prodId as obj.name for  obj in categoryData.items " name="select" class="xl_z">
+								<option value="">全部</option>
+																</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label w_100">子类别：</label></td>
+						<td><div class="search_select w_146 fl">
+								<select  ng-model="query.secondCatalogId"  ng-options="obj.prodId as obj.name for  obj in childCategory.items " name="select" class="xl_z">
+									<option value="">全部</option>
+								</select>
+							</div></td>
+						<td width="100"><label class="control-label w_100">货品名称：</label></td>
+						<td><input class="input_box" ng-model="query.prodName" maxlength="10" id="" type="text"></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a
+									class="search_button_cz" ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>列表展示
+				</h2>
+			</div>
+			  <my-table>
+			<div id="size" class="zz_list table_height" style="overflow:auto;">
+			<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0" >
+				<thead  id="tb1">
+					<tr>
+						<!-- <th><div class="input_z">
+								<input ng-click="selectAll();" id="checkbox" class="none input_gx" name="checkbox"
+									type="checkbox"> <label for="checkbox"></label>
+							</div></th> -->
+						<th width="10%">总类</th>
+						<th width="10%">类别</th>
+						<th width="10%">货品名称</th>
+						<th width="20%">安装价格(元)</th>
+						<th width="10%">单位</th>
+						<th width="15%">操作时间</th>
+						<th width="10%">操作人</th>
+						<th width="15%">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class="{'waybill_table_listtr':$index%2==0}" class="ng-cloak"  ng-repeat="o in page.data.items">
+						<!-- <td><div class="input_z">
+								<input  id="checkbox{{o.prodId}}"  value="{{o}}"  class="none input_gx" name="check-1"
+									type="checkbox"> <label for="check-1"></label>
+							</div></td> -->
+						<td width="10%">{{o.rootName}}</td>
+						<td width="10%">{{o.parentName}}</td>
+						<td width="10%">{{o.name}}</td>
+						<td width="20%"><label ng-show="prodId!=o.prodId">{{o.price/100}}</label><input ng-show="prodId==o.prodId" class="input_box"  ng-keyup="fixNumber(o.prodId);"  value="{{o.price/100}}"  id="{{o.prodId}}" type="text"></td>
+						<td width="10%">{{o.unit}}</td>
+						<td width="15%">{{o.opDate}}</td>
+						<td width="10%">{{o.opName}}</td>
+						<td width="15%" style="text-align:center;">  
+						<a
+						ng-show="prodId!=o.prodId" class="button ml_10 tixiansp2" href="javascript:void(0);"
+						ng-click="modify(o.prodId);">修改价格</a>
+						<a ng-show="prodId==o.prodId" ng-click="doSave();" style="width: 60px;text-align: center!important;" class="button ml_10 newly" href="javascript:void(0);">保存</a>
+						<a ng-show="prodId==o.prodId"
+						class="button ml_10 tixiansq" href="javascript:void(0);"
+						ng-click="cancer();">取消</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			</my-table>
+			<!--任务列表 end-->
+		</div>
+	</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="productManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

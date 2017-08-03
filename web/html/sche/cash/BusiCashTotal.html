@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="GeneralApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>师傅流水查询</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css?v=${ver}">
+<style type="text/css">
+.dhl_tj{position: relative;margin-top: -110px;margin-bottom: 60px;}
+.waybill_table_list { position:relative; z-index:1;}
+*{  
+            scrollbar-face-color:#F3F3F3; /*面子*/  
+            scrollbar-arrow-color:#C0C0C0; /*箭头*/  
+            scrollbar-3dlight-color:#C0C0C0; /*最外左*/  
+            scrollbar-highlight-color:#FFFFFF; /*左二*/  
+            scrollbar-shadow-color:#FFFFFF; /*右二*/  
+            scrollbar-darkshadow-color:#C0C0C0; /*右一*/  
+            scrollbar-track-color:#F3F3F3; /*滑道*/  
+        }  
+        /*滚动条整体*/  
+        ::-webkit-scrollbar{  
+            width:14px; /*滚动条宽度*/ 
+        }  
+        /*滚动条按钮*/  
+        ::-webkit-scrollbar-button { }  
+        ::-webkit-scrollbar-track{  
+            background-color:#fff;  /*滑道全部*/  
+        }  
+        ::-webkit-scrollbar-track-piece{  
+            background-color:#fff;  /*滑道*/  
+            border-bottom: 1px solid #f0f5fb;border-top: 0px solid #f0f5fb;
+        }  
+        ::-webkit-scrollbar-thumb{  
+            background-color:#f0f5fb; /*滑动条表面*/  
+            border:solid 1px #e5effa; /*滑动条边框*/     
+        }  
+        /*横竖滚动条交角*/  
+        ::-webkit-scrollbar-corner {  
+            background-color: #F3F3F3;  
+        }   
+       /*鼠标滑过滑动条*/  
+        ::-webkit-scrollbar-thumb:hover{  
+            background-color:#e5effa;  
+        }  
+</style>
+
+
+</head>
+<body ng-controller="GeneralCtrl" onload="setContentHeight()" >
+	<div class="billing_1">
+		<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+					    <td width="150"><label class="control-label">签收开始时间：</label></td>
+						<td><input my-Date-Picker class="input_box" ng-model="query.signTimeBegin"
+							type="text" /></td>
+						<td width="100"><label class="control-label">签收结束时间：</label></td>
+						<td><input my-Date-Picker class="input_box" ng-model="query.signTimeEnd"
+							type="text" /></td>
+						<td width="100"><label class="control-label">提现状态：</label></td>
+						<td><div class="search_select w_146">
+								<my-select id="query.state" code-type="CASH_APPLICATION@STATE"
+									has-all="true" default-value="-1" url="" />
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" href="javaScript:void(0)" ng-Enter
+									ng-click="doQuery()">搜索</a> <a class="search_button_cz"
+									href="javaScript:void(0)" ng-click="clear();">重置</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix"><div class="title_h2 fl sf_ls"><i class="icon title_icon fl"></i><span class="sf_zh">账户余额：{{sf.waitCash}}</span><span class="sf_zh">申请提现：{{sf.getCash}}</span><span class="sf_zh">已提现：{{sf.hasCash}}</span></div></div>
+			<my-table>
+			<!-- <table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list">
+				<thead>
+					<tr>
+						<th>公司账号</th>
+						<th>公司名称</th>
+						<th>师傅账号</th>
+						<th>安装师傅</th>
+						<th>运单号</th>
+						<th>金额</th>
+						<th>签收时间</th>
+						<th>提现状态</th>
+						<th>申请时间</th>
+						<th>申请人</th>
+						<th>审批时间</th>
+						<th>审批人</th>
+						<th>打款人</th>
+						<th>核销码</th>
+						<th>核销金额</th>
+						<th>提现编号</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class="{'search_list_tr':$index%2==1}" class="ng-cloak"	ng-repeat="o in page.data.items">
+						<td title="{{o.belongTel}}">{{o.belongTel}}</td>
+						<td title="{{o.belongObjName}}">{{o.belongObjName}}</td>
+						<td title="{{o.doTel}}">{{o.doTel}}</td>
+						<td title="{{o.doObjName}}">{{o.doObjName}}</td>
+						<td title="{{o.bussId}}">{{o.bussId}}</td>
+						<td title="{{o.totalMoney}}">{{o.totalMoney}}</td>
+						<td title="{{o.signTime}}" style="white-space: inherit;"><div class="dhl_wz">{{o.signTime}}</div></td>
+						<td title="{{o.stateName}}">{{o.stateName}}</td>
+						<td title="{{o.createDate}}" style="white-space: inherit;"><div class="dhl_wz">{{o.createDate}}</div></td>
+						<td title="{{o.createName}}">{{o.createName}}</td>
+						<td title="{{o.auditDate}}" style="white-space: inherit;"><div class="dhl_wz">{{o.auditDate}}</div></td>
+						<td title="{{o.auditMan}}">{{o.auditMan}}</td>
+						<td title="{{o.verifyPerson}}">{{o.verifyPerson}}</td>
+						<td title="{{o.verifyId}}">{{o.verifyId}}</td>
+						<td title="{{o.verifyMoney}}">{{o.verifyMoney}}</td>
+						<td title="{{o.appId}}">{{o.appId}}</td>
+					</tr>
+				</tbody>
+			</table>-->
+			
+			<div style="position: relative;">
+                    <div id="hDiv" style="overflow:hidden;position:relative;width:100%;" >
+                         <table id="tb0" class="waybill_table_list" border="0" cellspacing="0" cellpadding="0" style=" display:block;width:1900px;">
+                               <thead>
+									<tr>
+										<th width="139">公司账号</th>
+										<th width="149">公司名称</th>
+										<th width="139">安装师傅账号</th>
+										<th width="99">安装师傅</th>
+										<th width="119">运单号</th>
+										<th width="99">金额</th>
+										<th width="149">签收时间</th>
+										<th width="99">提现状态</th>
+										<th width="149">申请时间</th>
+										<th width="99">申请人</th>
+										<th width="149">审批时间</th>
+										<th width="99">审批人</th>
+										<th width="99">打款人</th>
+										<th width="99">核销码</th>
+										<th width="99">核销金额</th>
+										<th width="99">提现编号</th>
+									</tr>
+							</thead>
+						</table>
+					</div>
+				 	<div id="dDiv" style="min-height:150px; width:100%;overflow:auto;" >
+                        <table id="tb1" class="waybill_table_list" border="0" cellspacing="0" cellpadding="0" style="width:1900px;">
+                              <tbody>
+								<tr ng-class="{'search_list_tr':$index%2==1}" class="ng-cloak"	ng-repeat="o in page.data.items">
+									<td width="139" title="{{o.belongTel}}">{{o.belongTel}}</td>
+									<td width="149" title="{{o.belongObjName}}">{{o.belongObjName}}</td>
+									<td width="139" title="{{o.doTel}}">{{o.doTel}}</td>
+									<td width="99" title="{{o.doObjName}}">{{o.doObjName}}</td>
+									<td width="119" title="{{o.bussId}}">{{o.bussId}}</td>
+									<td width="99" title="{{o.totalMoney}}">{{o.totalMoney}}</td>
+									<td width="149" title="{{o.signTime}}">{{o.signTime}}</td>
+									<td width="99" title="{{o.stateName}}">{{o.stateName}}</td>
+									<td width="149" title="{{o.createDate}}">{{o.createDate}}</td>
+									<td width="99" title="{{o.createName}}">{{o.createName}}</td>
+									<td width="149" title="{{o.auditDate}}">{{o.auditDate}}</td>
+									<td width="99" title="{{o.auditMan}}">{{o.auditMan}}</td>
+									<td width="99" title="{{o.verifyPerson}}">{{o.verifyPerson}}</td>
+									<td width="99" title="{{o.verifyId}}">{{o.verifyId}}</td>
+									<td width="99" title="{{o.verifyMoney}}">{{o.verifyMoney}}</td>
+									<td width="99" title="{{o.appId}}">{{o.appId}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div> 
+			
+			</my-table>
+			<!--任务列表 end-->
+		</div>
+	</div>
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="BusiCashTotalCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

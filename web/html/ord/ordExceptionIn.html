@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordExceptionInApp">
+<head>
+<title>众邦_异常处理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="ordExceptionInCtrl" onload="setContentHeight()">
+	<!-- 异常处理 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 400px">
+		<ul class="yic_n clearfix fl yic_sx">
+			<li class="yic_li fl" ng-show="idShow"><label class="yic_label">异常单号：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.id" ng-disabled="all"
+						type="text" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label"><em>*</em>运单号：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.trackingNum" my-Num-Val ng-disabled="all" ng-blur="getOrderInfo(data.trackingNum)"
+						type="text" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label"><em>*</em>责任部门：</label>
+				<div class="form_select_c fl " style="min-width:140px">
+                                <select ng-model="data.dutyOrgId" ng-disabled="showDutyOrg"  ng-options="obj.orgId as obj.orgName for  obj in orgInfo ">
+                            	</select>
+                            </div></li>
+			<li class="yic_li fl"><label class="yic_label">责任车辆：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.plateNumber" ng-disabled="all"
+						type="text" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">品名：</label>
+				<div class="fl">
+					<input class="yic_input fl"  ng-model="orderInfo.goodsName" ng-disabled="orderShow" type="text" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">责任司机：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.dutyDriverName" ng-disabled="all" type="text" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">件数：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="orderInfo.count" ng-disabled="orderShow" type="text" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label"><em>*</em>异常类型：</label>
+				<div class="form_select_c fl"  style="min-width:140px">
+					<select class="yic_input" ng-disabled="all" ng-model="data.type" ng-options="objCon.codeValue as objCon.codeName for objCon in exceptionTypeData.items" >
+					</select>
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">重量：</label>
+				<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="orderInfo.weight" ng-disabled="orderShow" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">体积：</label>
+				<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="orderInfo.volume" ng-disabled="orderShow" />
+				</div></li>
+			<li class="yic_li fl" style="display: block;"><label
+				class="yic_label">收货人：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="orderInfo.consigneeLinkmanName" ng-disabled="orderShow" type="text" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">收货联系电话：</label>
+				<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="orderInfo.consigneeTelephone" ng-disabled="orderShow" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label" >手机号：</label>
+				<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="orderInfo.consigneeBill" ng-disabled="orderShow" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">交接方式：</label>
+				<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="orderInfo.deliveryTypeName" ng-disabled="orderShow" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">收货所在地区：</label>
+				<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="orderInfo.descRegionName" ng-disabled="orderShow" />
+				</div></li>
+		</ul>
+
+		<ul class="yic_n clearfix fl w_b415">
+			<li class="yic_li"><label class="yic_label">异常图片：</label>
+				<div class="controls">
+					<span my-File-Model="img" is-Close="false" defined-Img="../image/$tenantId$/b.jpg"></span>
+				</div></li>
+		</ul>
+		<ul class="yic_n clearfix fl w_b50">
+			<li class="yic_li"><label class="yic_label"><em>*</em>异常描述：</label>
+				<div class="fl w_b70">
+					<textarea class="yic_text" maxlength="40" ng-model="data.notes" ng-disabled="all"></textarea>
+				</div></li>
+			<li class="yic_li" ng-show="ideaShow"><label class="yic_label"><em>*</em>责任部门意见：</label>
+				<div class="fl w_b70">
+					<textarea class="yic_text" maxlength="40" ng-disabled="isDeal" ng-model="data.auditIdea"></textarea>
+				</div></li>
+			<!-- <li class="yic_li"><label class="yic_label">处理意见：</label>
+				<div class="fl w_b70">
+					<textarea class="yic_text" maxlength="40" ng-model="data.handleIdea" ng-disabled="all"></textarea>
+				</div></li>
+			<li class="yic_li"><label class="yic_label">处理结果：</label>
+				<div class="fl w_b70">
+					<textarea class="yic_text" maxlength="40" ng-disabled="all"></textarea>
+				</div></li> -->
+		</ul>
+
+	</div>
+
+	<div class="bottom_nav1">
+		<a href="javascript:void(0)" ng-click="doSave()" ng-show="showSave">保 存</a><a href="javascript:void(0)" ng-click="close()">取
+			消</a>
+	</div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="ordExceptionInCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

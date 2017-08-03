@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AddContractCompApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>修改合同公司资料</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+		<!-- <script type="text/javascript" src="../js/x.js?v=${ver}"></script> -->
+		
+		<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script><!--百度地图 测试-->
+
+</head>
+	<body ng-controller="AddContractCompCtrl">
+		<div class="billing_1" style="padding-bottom:80px;">
+		<form>
+			<!--新增师傅 start-->
+			<div style=" padding:40px 90px 0;">
+				
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table addition_table">
+				  <tr>
+					<td width="100"><label class="control-label w_100">合作公司：</label></td>
+					<td><input class="input_box"  maxlength="20" ng-model="contractComp.contractCompanyName" type="text"></td>
+					<td width="100"><label class="control-label w_100">合作帐号：</label></td>
+					<td><input class="input_box"  maxlength="11" ng-model="contractComp.contractTenantCode" type="text"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100">团队人数：</label></td>
+					<td><input class="input_box" my-num-val ng-model="contractComp.membersNums" maxlength="8" type="text"></td>
+					<td width="100"><label class="control-label w_100">最大接单：</label></td>
+					<td><input class="input_box" my-num-val ng-model="contractComp.largestAcceptOrder" maxlength="8" type="text"></td>
+					<td width="100"><label class="control-label w_100">失效时间：</label></td>
+					<td><div class="search_select w_146">
+								<input my-Date-Picker ng-model="contractComp.endingDate" readonly="readonly" class="input_box" id="" type="text" />
+							</div></td>
+					<td width="100"><label class="control-label w_100">车辆数量：</label></td>
+					<td><input class="input_box" my-num-val style="min-width: 148px;width: 100%;" maxlength="8" ng-model="contractComp.vehicleNums" type="text"></td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100">服务省份：</label></td>
+					<td><div class="search_select w_146">
+								<select name="select" class="xl_z"  ng-model="contractComp.provinceId" ng-change="queryCity()" ng-disabled="all" ng-options="province.id as province.name for  province in provinces">
+								<option value="">请选择服务省</option>
+								</select>
+								<input id="provinceName" value="" ng-model="contractComp.provinceName" type="hidden" />
+							</div></td>
+					<td width="100"><label class="control-label w_100">服务城市：</label></td>
+					<td><div class="search_select w_146">
+								<select name="select" class="xl_z" ng-model="contractComp.cityId" ng-disabled="all" ng-change="selectCity()" ng-options="objCon.id as objCon.name for  objCon in citys">
+								</select>
+							</div></td>
+					<td width="100"><label class="control-label w_100">服务区域：</label></td>
+					<td colspan="3">
+						<input class="input_box search_select" id="districts" ng-click="queryDistrict()" ng-model="contractComp.districtNames" style="min-width: 148px;width: 100%;" type="text" />
+						<!-- 下拉选择-->
+						<div id="selectItem" class="drop_down" style=" width:397px;min-height:200px;" ng-show="isAreaShow">
+							<div class="drop_down_1 clearfix" style="min-height:198px;">
+								<h2>选择服务区域(可多选)</h2>
+								<div class="drop_down_nr" ng-repeat="district in districts">
+								<a href="#" ng-click="selDistrict(this)" ng-class="districtIds.district_{{district.id}}" >{{district.name}}</a>
+								</div>
+								<div class="drop_down_ann"><!-- <a class="drop_down_a" href="#" ng-click="districtMapList={}">清除</a> --><a class="drop_down_a" href="#" ng-click="districtConfirm()">确定</a><a class="drop_down_a" href="#" ng-click="isAreaShow=false">关闭</a></div>
+						</div>
+					</div>
+					</td>
+
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100">仓库容积：</label></td>
+					<td><input class="input_box" my-num-val maxlength="8" ng-model="contractComp.storeSquare" type="text"></td>
+					<td width="100"><label class="control-label w_100">仓库地址：</label></td>
+					<td colspan="5">
+						<div style="position:relative;border: 1px solid #dae2ef;border-radius: 5px;padding-right: 37px;">
+							<div class="search_sdt btn"></div>
+							<input  maxlength="30" type="text" style="border:0" id="desPlaceDtl" placeholder="推荐填写，精准计算里程" name="desPlaceDtl" onkeyup="desPlaceDtlAutoComplete.start(event) " onblur="setBlurDesPlaceDtl();" ng-model="contractComp.storeAddr" class="input_box addition_input"  />
+                      		<div class="" id="desPlaceDtlDiv" style="background: #fff;padding: 8px;border: 1px solid #f4f4f4;position: absolute;z-index: 1;">
+								<!--自动完成 DIV-->
+							</div>
+							<input id="storeEand" value="" ng-model="contractComp.storeEand" type="hidden" />
+							<input id="storeNand" value="" ng-model="contractComp.storeNand" type="hidden" />
+							<!-- <input class="input_box addition_input" ng-readonly="setReadOnly" ng-model="cmSfUser.storeAddr" type="text" /> -->
+						</div>
+					</td>
+				  </tr>
+				  <tr>
+					<td colspan="8">
+						<div style="margin-top:30px;">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							  <tr>
+								<td width="100"><label class="control-label w_100">常规服务：</label></td>
+								<td>
+								<div class="search_select w_146 fl mr_20">
+								<select name="select" class="xl_z" ng-model="contractComp.commonServiceId" ng-change="queryChildServiceType()" ng-disabled="all" ng-options="productService.prodId as productService.name for  productService in oneLevelProductItmes">
+								<option value="">请选择服务</option>
+								</select>
+								<input  ng-model="contractComp.commonServiceName" type="hidden" />
+								</div>
+								<div id='info_box'>
+									<div id='Cont_1'>
+										<div class="search_select w_146 search_select_bs fl">
+											<select name="select" class="xl_z" ng-model="contractComp.commonChildServiceId" ng-change="selChildService(this)" ng-disabled="all" ng-options="productService.prodId as productService.name for  productService in childServiceItmes">
+											<option value="">请选择服务子类</option>
+											<input  class="none input_gx" name="" ng-model="contractComp.commonChildServiceName"  type="hidden" />
+											</select>
+										</div>
+									</div>
+									<div id='Cont_2'  ng-class="showServiceType">
+										<ul class="addition_gx clearfix fl" style="margin-left:20px;">
+											<li>
+												<div class="input_z fl addition_gx_input">
+													<input id="check-7"  name="" ng-model="serviceType.sendAndInstallValue" ng-true-value="13" ng-false-value="''" type="checkbox" ng-click="selSfServices()" />
+													<label for="check-7" class="input_for" >配送到家并安装</label>
+												</div>
+											</li>
+											<li>
+												<div class="input_z fl addition_gx_input">
+													<input id="check-8"  name="" ng-model="serviceType.sendValue" ng-true-value="12" type="checkbox" ng-false-value="''" ng-click="selSfServices()">
+													<label for="check-8" class="input_for">配送到家</label>
+												</div>
+											</li>
+											<li>
+												<div class="input_z fl addition_gx_input">
+													<input id="check-9" name="" ng-model="serviceType.installValue" ng-true-value="14" type="checkbox" ng-false-value="''" ng-click="selSfServices()">
+													<label for="check-9" class="input_for">纯安装</label>
+												</div>
+											</li>
+										</ul>
+										<a class="search_button_ss fr" style="margin:0; height:42px; line-height:42px;" href="#" ng-click="comfirmSfServices()">确定</a>
+									</div>
+								</div>
+								</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td>
+									<div class="addition_div">
+										<div class="addition_1" id="addition_1" ng-show="showServiceTitle">请在上边选择类目，进行常规服务的配置，常规服务的配置，可以反复选择，配置多条记录！</div>
+										<div class="addition_2" id="addition_2" ng-show="showServiceInfo">
+											<dl class="clearfix" id="addition_3" ng-repeat=" serObj in contractComp.showSfServices"><div ng-if="serObj!=''"><dt>{{serObj.serChildName}}：</dt><dd>{{serObj.installName}}</dd><dd>{{serObj.sendName}}</dd><dd>{{serObj.sendAndInstallName}}</dd><dd><a class="addition_2_a mt_10" href="#"  ng-click="delSelService(serObj.serChildId)"></a></dd><dd class="fr"><a class="ad_fz fr" href="#" ng-Click="setProdPrice(serObj)">配置货品（0）</a></dd></div></dl>
+										</div>
+									</div>
+								</td>
+							  </tr>
+							</table>
+						</td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100">增值服务：</label></td>
+					<td colspan="7">
+						<ul class="addition_gx clearfix">
+							<li>
+								<div class="input_z fl addition_gx_input">
+									<input id="check-1" class="none input_gx" ng-model="contractComp.valueService.maintain" ng-true-value="1" ng-false-value="-1" type="checkbox">
+									<label for="check-1" class="input_for">维修</label>
+								</div>
+								<!-- 维修 勾选显示  开始-->
+								<ul class="addition_gx_z clearfix fl">
+									<li><div class="triangle-left"></div></li>
+									<li>
+										<div class="input_z fl addition_gx_input">
+											<input id="check-4" class="none input_gx" ng-model="contractComp.valueService.maintainAttr.skin" ng-true-value="1" ng-false-value="-1" type="checkbox">
+											<label for="check-4" class="input_for">皮革</label>
+										</div>
+									</li>
+									<li>
+										<div class="input_z fl addition_gx_input">
+											<input id="check-5" class="none input_gx" ng-model="contractComp.valueService.maintainAttr.wood" ng-true-value="2" ng-false-value="-1" type="checkbox">
+											<label for="check-5" class="input_for">板材</label>
+										</div>
+									</li>
+									<li>
+										<div class="input_z fl addition_gx_input">
+											<input id="check-6" class="none input_gx" ng-model="contractComp.valueService.maintainAttr.other" ng-true-value="3" ng-false-value="-1" type="checkbox">
+											<label for="check-6" class="input_for">其他</label>
+										</div>
+									</li>
+								</ul>
+								<!-- 维修 勾选显示  结束-->
+							</li>
+							<li>
+								<div class="input_z fl addition_gx_input">
+									<input id="check-2" class="none input_gx" ng-model="contractComp.valueService.yanghu"  ng-true-value="3" ng-false-value="-1" type="checkbox">
+									<label for="check-2" class="input_for">养护</label>
+								</div>
+							</li>
+							<li>
+								<div class="input_z fl addition_gx_input">
+									<input id="check-3" class="none input_gx" ng-model="contractComp.valueService.returnGoods" ng-true-value="2" ng-false-value="-1" type="checkbox">
+									<label for="check-3" class="input_for">返货</label>
+								</div>
+							</li>
+						</ul>
+					</td>
+					
+				  </tr>
+				</table>
+
+				<div class="tx_tc_button" style="margin-top:50px;">
+					<a class="search_button_ss" href="javascript:void(0);" ng-click="doSave()">保存</a>
+					<a class="search_button_cz" href="javascript:void(0);" ng-click="doClose()">关闭</a></div>
+			</div>
+			<!--新增师傅 end-->
+			</form>
+		</div>
+		<!-- 价格开始 -->
+		<div id="vehicle_1" class="popup" style="width: 800px; height: 640px; margin-left: -400px; margin-top: -300px;z-index: 1006;" ng-show="showProductPricePage">
+			<div class="tx_tc">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table addition_table">
+				  <tr>
+					<td width="100"><label class="control-label w_100">货品类别：</label></td>
+					<td>
+					<div class="search_select w_146">
+					<select name="select" class="xl_z" ng-model="prodPriceTemp.curProductCalalogId" ng-change="queryLevel4Products()" ng-disabled="all" ng-options="productService.prodId as productService.name for  productService in level3Products">
+								<option value="">请选择类别</option>
+					</select>
+					</div>
+					</td>
+					<td width="100"><label class="control-label w_100">货品目录：</label></td>
+					<td>
+					<div class="search_select w_146">
+					<select name="select" class="xl_z" ng-model="prodPriceTemp.productId" ng-disabled="all" ng-options="productService.prodId as productService.name for  productService in level4Products">
+								<option value="">请选择货品</option>
+					</select>
+					</div>
+					</td>
+					</tr>
+					<tr>
+					<td width="100"><label class="control-label w_100">支线费(元)：</label></td>
+					<td><input class="input_box"  maxlength="11" ng-readonly="setReadOnly"  ng-model="prodPriceTemp.branchLinePrice" type="text"></td>
+					<td width="100"><label class="control-label w_100">安装费(元)：</label></td>
+					<td><input class="input_box"  maxlength="11" ng-readonly="setReadOnly"  ng-model="prodPriceTemp.installPrice" type="text"></td>
+				  </tr>
+				  </table>
+			<div class="waybill_title clearfix">
+							<h2 class="title_h2 fl"><i class="icon title_icon fl"></i>货品价格列表</h2>
+					 <a class="button fr ml_10 tixiansp2" href="#" ng-click="saveProdPrice()"><i class="button_icon button_icon dw_tixiansp2"></i>新增</a>
+					 <a class="button fr ml_10 tixiansp" href="#" ng-click="showProductPricePage=false"><i class="button_icon button_icon dw_tixiansp"></i>关闭</a>
+					<!-- <a class="button fr ml_10 tixiansq" href="#" ng-click="toModify()"><i class="button_icon button_icon dw_tixiansq"></i>修改</a> -->
+			</div>		
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list" style="border-right:1px solid #f5f5f5;">
+				  <thead>
+				  	<tr>
+						<th width="33%">货品</th>
+						<th width="33%">支线费(元)</th>
+						<th>安装费(元)</th>
+				  </tr>
+				  </thead>
+				  </table>
+				  <div style=" overflow:auto; height:300px; margin-bottom:20px;">
+				  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list" style="border-right:1px solid #f5f5f5;">
+				  <tbody>
+				  <tr ng-repeat="pobj in contractComp.prodPrices">
+				  	<td width="33%">{{pobj.productName}}</td>
+				  	<input class="input_box b_none" ng-model="pobj.productId"  type="hidden" />
+				  	<input class="input_box b_none" ng-model="pobj.productName" type="hidden" />
+					<td width="33%"><input class="input_box b_none" maxlength="8" ng-model="pobj.branchLinePrice" type="text" /></td>
+					<td width="33%"><input class="input_box b_none" maxlength="8" ng-model="pobj.installPrice"  type="text" /></td>
+				  </tr>
+				  </tbody>
+			</table>
+				</div>
+			</div>
+    	</div>
+    	<!-- 价格结束 -->
+    	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" ng-show="showProductPricePage==true"></div>
+<!--半透明黑色背景  结束-->
+	
+
+	<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="toModifyContractCompany.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	    <script type="text/javascript" src="../js/jquery/autoComplete.js?v=${ver}"></script>
+	</body>
+</html>
+

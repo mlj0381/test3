@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordSignApp"> 
+	<head>
+	    <title>众邦_送货签收 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="ordSignCtrl" style="overflow:hidden" onload="setContentHeight(800)">
+        <!-- 送货签收  -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+                    	<td  width="100"><label class="term_label">发车时间：</label></td>
+                    	<td><input my-Date-Picker ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker id="endTime" class="form_term fl w_xjr" type="text"></td>
+                       <!--  <li class="term_li"><label class="term_label">当前网点：</label><div class="form_select w_b60">
+                                <select class="ng-cloak">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select>
+                                 <select name="select" class="xl_z" ng-model="query.currOrgId"  ng-disabled="all" ng-options="obj.beginOrgId as obj.beginOrgName for obj in currOrgData" ng-change="changeData(query.currOrgId)">
+								       <option value="">所有</option>
+						        </select>
+                            </div></li>
+                        <li class="term_li"><label class="term_label">目的网点：</label>
+                        <div class="form_select w_b60 " >
+                                 <my-select id="query.descOrgId"  has-all="false"  url="routeBO.ajax?cmd=queryRoateRuting" show_name="endOrgName" show_value="endOrgId"  url-param='{"addType":2,"collectType":3}'/>
+                                <select name="select" class="xl_z" ng-model="query.descOrgId"  ng-disabled="all" ng-options="obj.endOrgId as obj.endOrgName for obj in desOrgData" >
+								    <option value="">所有</option>
+						        </select>
+                            </div></li> -->
+                        <td class="term_li"><label class="term_label">批次号：</label></td>
+                        <td><input id="id1"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term" maxlength="16" ng-model="query.batchNum" type="text"></td>
+                        <td class="term_li"><label class="term_label">签收状态：</label></td>
+                        <td><div class="form_select">
+                            <my-select selectid="id='id2'" id="query.signState"  has-all="true"  has-all="true"  code-type="SIGN_STATUS"/>
+                            </div>
+                        </td>
+                         <td class="term_li fr"><div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0)">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div></td>
+                    </tr>
+                    </tbody>
+                    </table>
+                     <div class="search_nr clearfix mt_20">
+		              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+				              <h2>查询结果--<span class="f14">双击查看运单详情</span></h2>
+				            <!--   <a  ng-click="doSave()" href="javaScript:void(0)">新增送货信息</a>
+				               <a  ng-click="confirmMatchVehi();" href="javaScript:void(0)" >发车确认</a>
+				              <a  href="javaScript:void(0)" ng-click="toView();">查看送货信息</a>
+				              <a  ng-click="deleteDepart();" href="javaScript:void(0)">删除送货信息</a>
+				              <a  ng-click="doModify()" href="javaScript:void(0)">修改送货信息</a>
+				              <a style="cursor: pointer;" ng-click="page.downloadExcelFile()" id="selectExport">导出所有</a>
+				              <a ng-click="toView();" href="javaScript:void()">打印送货信息</a> -->
+				              <a ng-click="toSaveSign();" href="javaScript:void()">签收录入</a>
+		              </div>
+                    <my-table showtotal="false">
+                    <div id="size" class="zz_list table_height" style="overflow:auto;">
+                    <table class="search_lista" border="0" cellspacing="0" cellpadding="0" style=" display:block;width:1900px;table-layout: auto;">
+                               <thead id="tb1">
+                                <tr>
+                                    <th width="79" class="search_list_border"><!-- <div class="controls"><input class="none" type="checkbox" name="checkbox2"  ><label for="checkbox" ></label></div> --></th>
+                                    <th width="80">发车批次</th>
+                                    <th width="120">发车时间</th>
+                                    <th width="110">运单号</th>
+                                    <th width="120">收货人</th>
+                                    <th width="100">收货人手机</th>
+                                    <th width="80">车牌号</th>
+                                    <th width="100">司机姓名</th>
+                                    <th width="100">司机手机</th>
+                                    <th width="100">配送方式</th>
+                                    <th width="100">货物名称 </th>
+                                    <th width="100">数量</th>
+                              <!--       <th width="120">总重量</th>
+                                    <th width="120">总体积</th> -->
+                                    <th width="100">回单号</th>
+                                    <th width="60">回单份数</th>
+                                    <th width="100">到付</th>
+                                    <th width="100">代收货款</th>
+                                    <th width="280">收货地址</th>
+                                </tr>
+                              </thead>
+                               
+                              <tbody >
+                              	<tr ng-class="{'search_list_tr':$index%2==1}"  ng-repeat="obj in page.data.items" ng-click="selectOne(obj.orderId)" ng-dblclick="toView2(obj.trackingNum)">
+                                  	<td width="79" class="search_list_border" ><div class="controls"><input class="none" id="checkbox{{obj.orderId}}" value="{{obj}}" value="{{obj.orderId}}" type="checkbox"  name="checkbox2" ng-click="selectOne(obj.orderId)"><label for="check-1"></label></div></td>
+                                    <td width="80">{{obj.batchNum}}</td>
+                                    <td width="120">{{obj.departTime}}</td>
+                                    <td width="110">{{obj.trackingNum}}</td>
+                                    <td width="120">{{obj.consigneeLinkmanName}}</td>
+                                    <td width="100">{{obj.consigneeBill}}</td>
+                                    <td width="80">{{obj.plateNumber}}</td>
+                                    <td width="100">{{obj.driverName}}</td>
+                                    <td width="100">{{obj.driverBill}}</td>
+                                    <td width="100">{{obj.deliveryTypeName}}</td>
+                                    <td width="100">{{obj.goodsName}}</td>
+                                    <td width="100">{{obj.count}}</td>
+                                  <!--   <td width="120">{{obj.weight.toFixed(1)}}</td>
+                                    <td width="120">{{obj.volume.toFixed(2)}}</td> -->
+                                    <td width="100">{{obj.receiptNum}}</td>
+                                    <td width="60">{{obj.receiptCount}}</td>
+                                    <td width="100">{{obj.freightCollect/100}}</td>
+                                    <td width="100">{{obj.collectingMoney/100}}</td>
+                                    <td width="280">{{obj.address}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                           
+                     </div>
+          </my-table>
+        </div>
+        </div>
+		
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="ordSignOtherCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

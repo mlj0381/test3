@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AcProveManageApp"> 
+	<head>
+	    <title>联运汇_物流对账 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="AcProveManageCtrl"   style="overflow:hidden">
+        <!-- 核销管理 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">开单时间：</label>
+                   		</td>
+						<td>
+							<input my-Date-Picker ng-model="query.beginDate" id="beginDate" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endDate"  my-Date-Picker id="endDate" class="form_term fl w_xjr" type="text">
+                        </td>
+				
+                         
+						<td width="100"><label class="term_label">科目：</label>
+                       		
+                        
+                    	</td>
+						<td><div class="form_select">
+                                <my-select id="query.feeType"  code-type="WEB_SJ_SHOW_AC_FEE_CONFIG@FEE_TYPE"  has-all="true" default-value="-1" />
+                            </div>
+						</td>
+						<td width="100"><label class="term_label">核销状态：</label>
+                       		
+                        
+                    	</td>
+						<td>
+                        <div class="form_select">
+                                <my-select id="query.checkSts"  code-type="AC_CASH_PROVE@CHECK_STS" has-all="true" default-value="-1" url="" />
+                            </div>
+                        </td>
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						
+						<td width="100"><label class="term_label">运单号：</label></td>
+						<td><input class="form_term" ng-model="query.trackingNum" maxlength="16" type="text"></td>
+						<td width="100"><label class="term_label">收支类型：</label></td>
+						<td>
+							<div class="form_select">
+                                <my-select id="query.payType"  code-type="AC_CASH_PROVE@INOUT_STS"  has-all="true" default-value="-1" />
+                            </div>
+						</td>
+					    <td width="100"><label class="term_label">专线公司：</label>
+                        
+                    	</td>
+						<td>
+                        	<div class="form_select">
+                                <select ng-model="query.tenantId" 
+									ng-options="obj.tenantId as obj.orgName for  obj in orgIds " 
+									ng-change="selectChange()">
+								</select>
+                            </div>
+                        </td>
+						
+					</tr>
+	
+					
+				</tbody>
+		</table>
+        
+                
+                     <div class="search_nr clearfix mt_20">
+              
+                            
+                  <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+                  	<h2>查询结果</h2>
+                  	<a  ng-click="page.downloadExcelFile();" href="javascript:void(0)">导出</a>
+                  </div>
+                 <!-- 	{"name":"付款方式","code":"payModeName","width":"100"}, -->
+                      	<my-Adv-Table 
+                      	isShowSeq="false" 
+                      	isShowCheck="false" 
+                      	isFilter="true" 
+                      	isSum="true" 
+                      	width="1885px"
+                      	id="checkedId"
+			                head='[
+			                {"name":"专线公司","code":"tenantIdName","width":"150"},
+			                {"name":"开单网点","code":"orgIdName","width":"150"},
+			                {"name":"运单号","code":"trackingNum","width":"150"},
+			                {"name":"科目","code":"feeTypeName","width":"150"},
+			                {"name":"金额","code":"feeDouble","width":"150","number":"2","isSum":"true"},
+							{"name":"收支类型","code":"payTypeName","width":"150"},
+							{"name":"核销状态","code":"checkStsName","width":"150"},
+							{"name":"开单时间","code":"createDate","width":"150"},
+							{"name":"核销时间","code":"checkDate","width":"150"},
+							{"name":"核销人","code":"opIdName","width":"150"},
+							{"name":"备注","code":"remark","width":"200"}
+			                ]'>
+	                </my-Adv-Table>
+                        <!--  
+                      <my-table>
+                       <div class="zz_list" style="overflow:auto;">
+                         <table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0">
+                               <thead>
+                                <tr >
+                                    <th width="79" class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                    <th width="100">开单网点</th>
+                                    <th width="100">开单网点帐号</th>
+                                    <th width="100">发货商家名称</th>
+                                    <th width="100">发货商家账号</th>
+                                    <th width="100">运单号</th>
+                                    <th width="100">科目</th>
+                                    <th width="100">金额</th>
+                                    <th width="100">收支类型</th>
+                                    <th width="100">付款方式</th>
+                                    <th width="100">核销状态</th>
+                                    <th width="130">创建时间</th>
+                                    <th width="130">审批时间</th>
+                                    <th width="100">审批人</th>
+                                    <th width="100">打款人</th>	
+                                    <th width="130">打款时间</th>
+                                    <th width="202">备注</th>
+                                </tr>
+                              </thead>
+                              
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.checkedId);" ng-repeat="o in page.data.items">
+                                  	<td width="79" class="search_list_border"><div class="controls"><input id="checkbox{{o.checkedId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="100">正佳物流</td>
+                                    <td width="100">zjwl</td>
+                                    <td width="100">天美商家</td>
+                                    <td width="100">tmwl</td>
+                                    <td width="100">1ZT001</td>
+                                    <td width="100">支线费</td>
+                                    <td width="100">300</td>
+                                    <td width="100">支出</td>
+                                    <td width="100">现金</td>
+                                    <td width="100">已核销</td>
+                                    <td width="130">2016-09-05 14:00:48</td>
+                                    <td width="130">2016-09-06 14:00:48</td>
+                                    <td width="100">{{o.consignorLinkmanName}}</td>
+                                    <td width="100">{{o.consignorBill}}</td>
+                                    <td width="130">2016-09-06 14:00:48</td>
+                                    <td width="202"><div class="wz_hh" style="width: 200px;">{{o.sysRemark}}</div></td>
+                                  </tr>
+                              </tbody>
+                            </table>
+					
+				</div>
+                </my-table> -->
+                  
+                           
+		</div>
+        
+        </div>
+		 
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="logisticsRecnciliation.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,14 @@
+@charset "gb2312";
+
+
+/*icon css定义*/
+.icon{ background: url(../../image/yzt/icon.png) no-repeat;}
+
+/*button_icon css定义*/
+.button_icon{ background: url(../../image/yzt/button.png) no-repeat;}
+
+/*index search css定义*/
+.index_search{background: url(../../image/yzt/index_search.jpg) repeat;}
+
+/*步骤 css定义*/
+.step_icon{ background: url(../../image/yzt/step.png) no-repeat;}

@@ -1,0 +1,37 @@
+<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>签收信息</h2></div>
+				
+			<div class="mkae" style=" position: relative;overflow: auto;">
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list ng-cloak">
+	                                <thead>
+	                                  <tr>
+	                                    <th width="10%">签收人</th>
+	                                    <th width="20%">签收时间</th>
+	                                    <th width="10%">签收状态</th>
+	                                    <th width="60%">签收描述</th>
+	                                   
+	                                   
+	                                  </tr>
+	                                </thead>
+	                                <tbody>
+	                                
+	                                  <tr >
+	                                    <td width="10%" class="ng-binding">{{showData.signer}}</td>
+	                                    <td width="20%" class="ng-binding">{{showData.signTime}}</td>
+	                                    <td width="10%" class="ng-binding">{{showData.signStateName}}</td>
+	                                    <td width="60%" class="ng-binding">{{showData.exceptionDec1}}</td>
+	                                    
+	                                    
+	                                  </tr>
+	                                </tbody>
+	                              </table> 
+			</div>
+			
+				<!-- 图片 开始 -->
+		<ul class="dd_cx clearfix" style=" margin:30px 0 10px 98px;">
+					<li><span my-File-Model="idenCard1"  is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard2" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="idenCard3" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="idenCard4" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="idenCard5" is-Close="false" is-Show="false"></span></li>
+		</ul>
+		<!-- 图片 结束 -->

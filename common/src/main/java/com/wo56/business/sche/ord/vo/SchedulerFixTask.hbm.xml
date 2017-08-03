@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-1 15:00:34 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.wo56.business.sche.ord.vo.SchedulerFixTask" table="scheduler_fix_task">
+        <id name="fixId" type="java.lang.Long">
+            <column name="FIX_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="trackingNum" type="java.lang.Long">
+            <column name="TRACKING_NUM" not-null="true">
+            </column>
+        </property>
+        <property name="orderId" type="java.lang.Long">
+            <column name="ORDER_ID" not-null="true">
+            </column>
+        </property>
+        <property name="taskId" type="java.lang.Long">
+            <column name="TASK_ID">
+            </column>
+        </property>
+        <property name="exceId" type="string">
+            <column name="EXCE_ID" length="20">
+            </column>
+        </property>
+        <property name="imagePath" type="string">
+            <column name="IMAGE_PATH">
+            </column>
+        </property>
+        <property name="imageId" type="string">
+            <column name="IMAGE_ID" length="200">
+            </column>
+        </property>
+        <property name="typeName" type="string">
+            <column name="TYPE_NAME" length="200">
+            </column>
+        </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="TYPE">
+            </column>
+        </property>
+        <property name="state" type="int">
+            <column name="STATE" not-null="true">
+            </column>
+        </property>
+        <property name="notes" type="string">
+            <column name="NOTES" length="500">
+            </column>
+        </property>
+        <property name="creatorId" type="java.lang.Long">
+            <column name="CREATOR_ID">
+            </column>
+        </property>
+        <property name="creatorName" type="string">
+            <column name="CREATOR_NAME" length="50">
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="CREATE_DATE" length="19">
+            </column>
+        </property>
+        <property name="fixImagePath" type="string">
+            <column name="FIX_IMAGE_PATH">
+            </column>
+        </property>
+        <property name="fixImageId" type="string">
+            <column name="FIX_IMAGE_ID" length="200">
+            </column>
+        </property>
+        <property name="dealer" type="java.lang.Long">
+            <column name="DEALER">
+            </column>
+        </property>
+        <property name="dealerName" type="string">
+            <column name="DEALER_NAME" length="50">
+            </column>
+        </property>
+        <property name="dealDate" type="timestamp">
+            <column name="DEAL_DATE" length="19">
+            </column>
+        </property>
+        <property name="maintainAttr" type="java.lang.Integer">
+            <column name="MAINTAIN_ATTR">
+            </column>
+        </property>
+         <property name="handleResult" type="java.lang.String">
+            <column name="handle_Result">
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

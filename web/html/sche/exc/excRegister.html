@@ -1,0 +1,889 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="excRegisterApp">
+<head>
+<title>调度任务-异常登记</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="excRegisterCtrl"  style="overflow: hidden;" onload="setContentHegthDelay()">
+	<div class="billing_1 ng-cloak" style="padding-bottom:80px;">
+			<ul class="waybill_tab clearfix" id="tags">
+				<li class="hover" ng-if="isShow==1"  id="two5"><a class="a1" ng-click="tabShow('two',5,6)"  href="javascript:void(0)">异常登记</a></li>
+				<li class="hover" ng-if="isShow==2"  id="two5"><a class="a1" ng-click="tabShow('two',5,6)"  href="javascript:void(0)">异常处理</a></li>
+				<li id="two1"><a class="a1" ng-click="tabShow('two',1,6)"  href="javascript:void(0)">基本信息</a></li>
+                <li id="two2"><a class="a1" ng-click="tabShow('two',2,6)"  href="javascript:void(0)">轨迹信息</a></li>
+				<li id="two3"><a class="a1" ng-click="tabShow('two',3,6)"  href="javascript:void(0)">异常信息</a></li>
+				<li id="two4"><a class="a1" ng-click="tabShow('two',4,6)"  href="javascript:void(0)">签收信息</a></li>
+				<li id="two6"><a class="a1" ng-click="tabShow('two',6,6)"  href="javascript:void(0)">维修签收信息</a></li>
+			</ul>
+			<!--异常登记 start-->
+			<div  ng-if="isShow==1" id="con_two_5">
+				<div class="search" style="margin: 0 35px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId" ng-disabled="isView==1"ng-blur="toView()" maxlength="20" type="text"></td>
+						<!-- <td width="100"><a class="search_ydcx" ng-if="isView==''||isView==null||isView==undefined" ng-click="doQueryOrd();" ng-Enter
+ 							href="javascript:void(0);">查找运单</a></td> -->
+ 						<td width="100"><a class="search_ydcx" ng-if="isView==''||isView==null||isView==undefined" ng-click="doQueryOrd();"
+ 							href="javascript:void(0);">查找运单</a></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+						
+					  </tr>
+					  <tr>
+					  	<td width="10%"><label class="control-label">异常类型：</label></td>
+						<td width="23.33%"><div class="search_select">
+								<my-select id="query.excType"  has-all="" default-value=""
+									code-type="EXCEPTION_TYPE" url-param='' />
+							</div></td>
+						
+						<td width="10%"><label class="control-label">异常件数：</label></td>
+						<td width="23.33%"><input class="input_box" ng-disabled="isView==1" ng-model="query.count" type="text"></td>
+						<td width="10%"></td>
+						<td width="23.33%"></td>
+					  </tr>
+					  
+					  
+					  <tr>
+						<td valign="top"><label class="control-label">异常描述：</label></td>
+						<td colspan="5"><textarea maxlength="500" ng-disabled="isView==1" ng-model="query.notes" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+						</td>
+						
+						</tr>
+					  
+					  <tr ng-show="isHide&&userData.userType==userTypeData.CHAIN">
+						<td><label class="control-label">处理状态：</label></td>
+						<td width="23.33%">
+							<div class="search_select">
+								<my-select id="query.excState"  has-all="" default-value=""
+									code-type="DEAL_STATE" url-param='' />
+									<!-- <select ng-model="query.excState" name="select" class="xl_z" ng-options="obj.codeValue as obj.sfName for  obj in sfInfo ">
+									<option></option> 
+								</select>-->
+							</div>					</td>
+						<td><label class="control-label w_100">异常责任方：</label></td>
+						<td><div class="search_select">
+								<select ng-model="query.dutyObjId" name="select" class="xl_z" ng-options="obj.id as obj.name for  obj in orgInfo.items ">
+									
+								</select>
+							</div></td>
+						<td><label class="control-label">异常金额：</label></td>
+						<td><input  class="input_box" ng-disabled="isView==1" ng-model="query.exceFee"   type="text"></td>
+						
+					  </tr>
+					  
+					</tbody></table>
+				</div>
+				
+				
+				<div class="search" style="margin: 0 35px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table  tx_tc_table dhl_r">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label w_100">上传图片：</label></td>
+						<td colspan="5"><ul class="dd_cx clearfix">
+						<li><span my-File-Model="exceImage1" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage2" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage3" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage4" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage5" is-Close="true" ></span></li>
+					</ul></td>
+					  </tr>
+					</tbody></table>
+				</div>	
+				<div class="search" style=" margin: 0 35px; ">
+					<div  ng-show="isHide&&(userData.userType==userTypeData.MASTER_PARTNERS||userData.userType==userTypeData.CHAIN)" class="bottom_nav1 " style="text-align:left;margin: 20px 0 0 100px;width: auto;padding: 0">
+						<a href="javascript:void(0)" ng-click="showTask(1);" class="hover">生成维修任务</a>
+						<a href="javascript:void(0)" ng-click="hideTask(1)" class="">取消维修任务</a>
+						<span  ng-show="userData.userType==userTypeData.MASTER_PARTNERS" >
+						<a href="javascript:void(0)" ng-click="showTask(2);" class="hover">生成异常金额</a>
+						<a href="javascript:void(0)" ng-click="hideTask(2)" class="">取消异常金额</a>
+						</span>
+					</div>
+					</div>
+					<!-- 点击显示 开始 -->
+					<div ng-show="isTaskShowRepair" style="margin-top: 20px;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r" style="padding-top: 0;">
+						  <tbody>
+						  <tr>
+							<td width="100"><label class="control-label">维修类别：</label></td>
+							<td width="200">
+							<div class="search_select">
+								<my-select id="query.maintainType"  has-all="" default-value=""
+										code-type="SCHE_VALUE_SERVICE_ATTR" url-param='' />
+								</div>
+							</td>
+							<td width="100"><label class="control-label">师傅账号：</label></td>
+							<td width="200"><input ng-disabled="isView==1" ng-blur="querySf(1);" class="input_box" ng-model="query.sfPhone" maxlength="20" type="text"></td>
+							<td width="100"><label class="control-label">师傅：</label></td>
+							<td width="200"><input class="input_box" disabled="disabled" ng-model="query.sfName"  maxlength="20" type="text"></td>
+							<td><a class="search_ydcx"  ng-click="querySfOrService(1);" href="javascript:void(0);">找师傅</a></td>
+							
+						  </tr>
+						  <tr>
+						  	<td width="100"><label class="control-label">维修费：</label></td>
+							<td><input  class="input_box" ng-model="query.repairFee"  ng-disabled="isView==1"  type="text"></td>
+							
+							<td><label class="control-label">上门地址：</label></td>
+							<td colspan="4"><input class="input_box"   disabled="disabled" value="{{showData.ordOrderInfo.destProvinceName}}{{showData.ordOrderInfo.destCityName}}{{showData.ordOrderInfo.destCountyName}}{{showData.ordOrderInfo.destStreetName}}{{showData.ordOrderInfo.address}}"  type="text"></td>
+						  
+						  </tr>
+						  
+						  
+						  <tr>
+							<td width="100" valign="top"><label class="control-label">任务备注：</label></td>
+							<td colspan="5"><textarea maxlength="500" ng-disabled="isView==1" ng-model="query.remark" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+							</td>
+							<td></td>
+						  </tr>
+						  
+						</tbody>
+						</table>
+					</div>
+					<!-- 点击显示 结束 -->
+					
+					<!-- 点击异常 开始 -->
+					<div ng-show="isTaskShowExc" style="margin-top: 20px;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r" style="padding-top: 0;">
+						  <tbody>
+						  <tr>
+						  	 <td><label class="control-label">异常费：</label></td>
+							<td><input  class="input_box" ng-model="query.excRepairFee"  ng-disabled="isView==1"  type="text"></td>
+							<td width="100"><label class="control-label">师傅账号：</label></td>
+							<td width="200"><input ng-disabled="isView==1" ng-blur="querySf(2);" class="input_box" ng-model="query.excSfPhone" maxlength="20" type="text"></td>
+							<td width="100"><label class="control-label">师傅：</label></td>
+							<td width="200"><input class="input_box" disabled="disabled" ng-model="query.excSfName"  maxlength="20" type="text"></td>
+							<td><a class="search_ydcx"  ng-click="querySfOrService(2);" href="javascript:void(0);">找师傅</a></td>
+							
+						  </tr>
+						  <tr>
+							<td valign="top"><label class="control-label">任务备注：</label></td>
+							<td colspan="5"><textarea maxlength="500" ng-disabled="isView==1" ng-model="query.excRemark" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+							</td>
+							<td></td>
+						  </tr>
+						  
+						</tbody>
+						</table>
+					</div>
+					<!-- 点击显示 结束 -->
+				<div class="tx_tc_button" style="margin:20px 0">
+					<a class="search_button_ss" ng-click="doSave();" href="javascript:void(0);">保存</a>
+					<a class="search_button_cz" href="javascript:void(0);" ng-click="close();">取消</a>
+				</div>
+	
+			
+			<!--异常登记 end-->
+			</div>
+			<!--异常登记 end-->
+				
+			<!--异常处理 start-->
+			<div id="con_two_5" ng-show="isShow==2">
+					<div class="search" style="margin: 0 35px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId" ng-disabled="1==1"  maxlength="20" type="text"></td>
+						<td width="100"><!-- <a class="search_ydcx" ng-click="doQueryOrd();" ng-if="isView==''||isView==null||isView==undefined"
+ href="javascript:void(0);">查找运单</a> --></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+						
+					  </tr>
+					  <tr>
+					  	<td width="10%"><label class="control-label">异常类型：</label></td>
+						<td width="23.33%"><span>{{query.excTypeName}}</span><!-- <div ng-if="isView!=1" class="search_select">
+								<my-select id="query.excType"  has-all="" default-value=""
+									code-type="EXCEPTION_TYPE" url-param='' />
+							</div> --></td>
+						
+						<td width="10%"><label class="control-label">异常件数：</label></td>
+						<td width="23.33%"><input class="input_box" ng-disabled="1==1" ng-model="query.count" type="text"></td>
+						<td width="10%"></td>
+						<td width="23.33%"></td>
+					  </tr>
+					  
+					  
+					  <tr>
+						<td valign="top"><label class="control-label">异常描述：</label></td>
+						<td colspan="5"><textarea maxlength="500" ng-disabled="1==1" ng-model="query.notes" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+						</td>
+						
+						</tr>
+					   
+					  <tr>
+						<td valign="top"><label class="control-label">处理意见：</label></td>
+						<td colspan="5"><textarea maxlength="500" ng-disabled="isView==1" ng-model="query.handleResult" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;"  class="form-control"></textarea>
+						</td>
+						</tr>
+					  <tr>
+						<td><label class="control-label">处理状态：</label></td>
+						<td width="23.33%">
+							<div class="search_select">
+								<my-select id="query.excState"  has-all="" default-value=""
+									code-type="DEAL_STATE" url-param='' />
+									<!-- <select ng-model="query.excState" name="select" class="xl_z" ng-options="obj.codeValue as obj.sfName for  obj in sfInfo ">
+									<option></option> 
+								</select>-->
+							</div>					</td>
+						<td><label class="control-label w_100">异常责任方：</label></td>
+						<td><span ng-if="isView==1">{{query.dutyObjName}}</span><div ng-if="isView!=1" class="search_select">
+								<select ng-model="query.dutyObjId" name="select" class="xl_z" ng-options="obj.id as obj.name for  obj in orgInfo.items ">
+									
+								</select>
+							</div></td>
+						<td><label class="control-label">异常金额：</label></td>
+						<td><input  class="input_box" ng-disabled="isView==1&&query.creatorType==userTypeData.MASTER" ng-model="query.exceFee"   type="text"></td>
+						
+					  </tr>
+					  
+					</tbody></table>
+				</div>
+				
+				
+				<div class="search" style="margin: 0 35px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table  tx_tc_table dhl_r">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label w_100">上传图片：</label></td>
+						<td colspan="5"><ul class="dd_cx clearfix">
+						<li><span my-File-Model="exceImage1" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage2" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage3" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage4" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage5" is-Close="true" ></span></li>
+					</ul></td>
+					  </tr>
+					</tbody></table>
+				</div>	
+				<div class="search" style=" margin: 0 35px; ">
+					<div  ng-if="isView!=1&&(userData.orgId==query.inputOrgId)||(dutyType==9&&userData.userType==userTypeData.MASTER_PARTNERS)" class="bottom_nav1 " style="text-align:left;margin: 20px 0 0 100px;width: auto;padding: 0">
+						<!-- 当前网点是开单网点或者责任方是合作商，才能生存维修任务 -->
+						<span ng-if="(userData.orgId==query.inputOrgId)||(dutyType==9&&userData.userType==userTypeData.MASTER_PARTNERS)"><a href="javascript:void(0)" ng-click="showTask(1);" class="hover">生成维修任务</a></span>
+						<a href="javascript:void(0)" ng-click="hideTask(1)" class="">取消维修任务</a>
+						<span  ng-show="dutyType==9&&userData.userType==userTypeData.MASTER_PARTNERS" >
+						<!-- 当前网点是责任方是合作商，才能生存异常任务进行提现 -->
+						<a href="javascript:void(0)" ng-click="showTask(2);" class="hover">生成异常金额</a>
+						<a href="javascript:void(0)" ng-click="hideTask(2)" class="">取消异常金额</a>
+						</span>
+					</div>
+					<!-- 点击显示 开始 -->
+					<div ng-show=isTaskShowRepair style="margin-top: 20px;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r" style="padding-top: 0;">
+						  <tbody>
+						  <tr>
+							<td width="100"><label class="control-label">维修类别：</label></td>
+							<td width="200">
+							<div class="search_select">
+								<my-select id="query.maintainType"  has-all="" default-value=""
+										code-type="SCHE_VALUE_SERVICE_ATTR" url-param='' />
+								</div>
+							</td>
+							<td width="100"><label class="control-label">师傅账号：</label></td>
+							<td width="200"><input ng-disabled="isView==1" ng-blur="querySf();" class="input_box" ng-model="query.sfPhone" maxlength="20" type="text"></td>
+							<td width="100"><label class="control-label">师傅：</label></td>
+							<td width="200"><input class="input_box" disabled="disabled" ng-model="query.sfName"  maxlength="20" type="text"></td>
+							<!-- <td><a class="search_ydcx"  ng-click="querySfOrService()" ng-Enter href="javascript:void(0);">找师傅</a></td> -->
+							<td><a class="search_ydcx"  ng-click="querySfOrService(1)"  href="javascript:void(0);">找师傅</a></td>
+						  </tr>
+						  <tr>
+						  	<td><label class="control-label">维修费：</label></td>
+							<td><input  class="input_box" ng-model="query.repairFee"  ng-disabled="isView==1"  type="text"></td>
+							
+							<td><label class="control-label">上门地址：</label></td>
+							<td colspan="4"><input class="input_box"  disabled="disabled" value="{{showData.ordOrderInfo.destProvinceName}}{{showData.ordOrderInfo.destCityName}}{{showData.ordOrderInfo.destCountyName}}{{showData.ordOrderInfo.destStreetName}}{{showData.ordOrderInfo.address}}"  type="text"></td>
+						  </tr>
+						  
+						  
+						  <tr>
+							<td valign="top"><label class="control-label">任务备注：</label></td>
+							<td colspan="5"><textarea maxlength="500" ng-disabled="isView==1" ng-model="query.remark" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+							</td>
+							<td></td>
+						  </tr>
+						  
+						</tbody>
+						</table>
+					</div>
+					<!-- 点击显示 结束 -->
+					<!-- 点击异常 开始 -->
+					<div ng-show="isTaskShowExc" style="margin-top: 20px;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r" style="padding-top: 0;">
+						  <tbody>
+						  <tr>
+						  	 <td><label class="control-label">异常费：</label></td>
+							<td><input  class="input_box" ng-model="query.excRepairFee"  ng-disabled="isView==1"  type="text"></td>
+							<td width="100"><label class="control-label">师傅账号：</label></td>
+							<td width="200"><input ng-disabled="isView==1" ng-blur="querySf(2);" class="input_box" ng-model="query.excSfPhone" maxlength="20" type="text"></td>
+							<td width="100"><label class="control-label">师傅：</label></td>
+							<td width="200"><input class="input_box" disabled="disabled" ng-model="query.excSfName"  maxlength="20" type="text"></td>
+							<td><a class="search_ydcx"  ng-click="querySfOrService(2);" href="javascript:void(0);">找师傅</a></td>
+							
+						  </tr>
+						  <tr>
+							<td valign="top"><label class="control-label">任务备注：</label></td>
+							<td colspan="5"><textarea maxlength="500" ng-disabled="isView==1" ng-model="query.excRemark" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+							</td>
+							<td></td>
+						  </tr>
+						  
+						</tbody>
+						</table>
+					</div>
+					<!-- 点击显示 结束 -->
+				</div>
+				<!--提货信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>异常处理历史信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th width="20%">异常责任方</th>
+						<th width="10%">异常金额</th>
+						<th width="10%">处理人</th>
+						<th width="10%">处理时间</th>
+						<th width="50%">处理意见</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr  ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in hisExc">
+					<td>{{o.dutyObjName}}</td>
+					<td>{{o.exceFee/100|number:2}}</td>
+					<td>{{o.handleOpIdName}}</td>
+					<td>{{o.handleDate}}</td>
+					<td>{{o.handleResult}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--提货信息 end-->
+				<!--提货信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>任务信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th width="5%">任务编号</th>
+						<th width="8%">师傅</th>
+						<th width="7%">师傅账号</th>
+						<th width="7%">维修类别</th>
+						<th width="7%">维修费用</th>
+						<th width="26%">任务备注</th>
+						<th width="10%">接单时间</th>
+						<th width="10%">预约时间</th>
+						<th width="10%">预约上门时间</th>
+						<th width="10%">签收时间</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr  ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in taskList">
+					<td>{{o.taskId}}</td>
+					<td>{{o.sfName}}</td>
+					<td>{{o.sfPhone}}</td>
+					<td>{{o.mainType}}</td>
+					<td>{{o.repairFee}}</td>
+					<td title="{{o.remark}}">{{o.remark}}</td>
+					<td>{{o.acceptTime}}</td>
+					<td>{{o.yyTime}}</td>
+					<td>{{o.upFixTime}}</td>
+					<td>{{o.signTime}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--提货信息 end-->
+				<div class="tx_tc_button" style="margin:20px 0">
+					<a class="search_button_ss" ng-if="isView!=1" ng-click="doSave();" href="javascript:void(0);">保存</a>
+					<a class="search_button_cz" href="javascript:void(0);" ng-click="close();">取消</a>
+				</div>
+	
+			</div>
+			<!--异常处理 end-->
+				<!--基本信息 start-->
+			<div id="con_two_1" style="display: none;">
+				<!--运单信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>运单信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table">
+				  <tr>
+					<td class="waybill_table_r" width="12%">运单号</td>
+					<td width="13%">{{showData.ordOrderInfo.trackingNum}}</td>
+					<td class="waybill_table_r" width="12%">开单员</td>
+					<td width="13%">{{showData.ordOrderInfo.inputUserName}}</td>
+					<td class="waybill_table_r" width="12%">开单时间</td>
+					<td width="13%">{{showData.ordOrderInfo.createDate}}</td>
+					<td class="waybill_table_r" width="12%">开单网点</td>
+					<td width="13%">{{showData.ordOrderInfo.orgIdName}}</td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">发货人</td>
+					<td>{{showData.ordOrderInfo.consignorName}}</td>
+					<td class="waybill_table_r">发货人电话</td>
+					<td>{{showData.ordOrderInfo.consignorTelephone}}</td>
+					<td class="waybill_table_r">发货人手机</td>
+					<td>{{showData.ordOrderInfo.consignorBill}}</td>
+					<td class="waybill_table_r"></td>
+					<td></td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">收货人</td>
+					<td>{{showData.ordOrderInfo.consigneeName}}</td>
+					<td class="waybill_table_r">收货地</td>
+					<td>{{showData.ordOrderInfo.destProvinceName}}{{showData.ordOrderInfo.destCityName}}{{showData.ordOrderInfo.destCountyName}}{{showData.ordOrderInfo.destStreetName}}{{showData.ordOrderInfo.address}}</td>
+					<td class="waybill_table_r">收货人电话</td>
+					<td>{{showData.ordOrderInfo.consigneeTelephone}}</td>
+					<td class="waybill_table_r">收货人手机</td>
+					<td>{{showData.ordOrderInfo.consigneeBill}}</td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">到付</td>
+					<td>{{showData.ordFee.freightCollect!=null?showData.ordFee.freightCollect/100:""}}</td>
+					<td class="waybill_table_r">现付</td>
+					<td>{{showData.ordFee.cashPayment!=null?showData.ordFee.cashPayment/100:""}}</td>
+					<td class="waybill_table_r">回单付</td>
+					<td>{{showData.ordFee.receiptPayment!=null?showData.ordFee.receiptPayment/100:""}}</td>
+					<td class="waybill_table_r">月结</td>
+					<td>{{showData.ordFee.monthlyPayment!=null?showData.ordFee.monthlyPayment/100:""}}</td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">其他费用</td>
+					<td>{{showData.ordFee.otherFee!=null?showData.ordFee.otherFee:""}}</td>
+					<td class="waybill_table_r">合计金额</td>
+					<td>{{showData.ordFee.sumFee!=null?showData.ordFee.sumFee:""}}</td>
+					<td class="waybill_table_r">回单号</td>
+					<td>{{showData.ordOrderInfo.receiptNum}}</td>
+					<td class="waybill_table_r">回单份数</td>
+					<td>{{showData.ordOrderInfo.receiptCount}}</td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">详细地址</td>
+					<td colspan="3">{{showData.ordOrderInfo.address}}</td>
+					<td class="waybill_table_r">运单备注</td>
+					<td colspan="3">{{showData.ordOrderInfo.remarks}}</td>
+				  </tr>
+				</table>
+				<!--运单信息 end-->
+				
+				<!--货物信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>货物信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>产品</th>
+						<th>包装</th>
+						<th>数量</th>
+						<th>重量</th>
+						<th>体积</th>
+						<th>计费方式</th>
+						<!-- <th>单价</th> -->
+						<!-- <th>服务类型</th>
+						<th>保价费</th>
+						<th>代收货款</th>
+						<th>运费</th>
+						<th>配安费</th>
+						<th>上楼费</th>
+						<th>卸货费</th>
+						<th>包装费</th>
+						<th>提货费</th>
+						<th>回扣</th> -->
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr  ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in showData.productInfo">
+					<td>{{o.goodsName}}</td>
+					<td>{{o.packingTypeName}}</td>
+					<td>{{o.goodsCount}}</td>
+					<td>{{o.weight}}</td>
+					<td>{{o.volume}}</td>
+					<td>{{o.billingTypeName}}</td>
+					<!-- <td>{{o.goodsPrice/100}}</td> -->
+					<!-- <td>{{o.deliveryTypeName}}</td>
+					<td>{{o.offer/100}}</td>
+					<td>{{o.collectingMoney/100}}</td>
+					<td>{{o.freight/100}}</td>
+					<td>{{o.installCosts/100}}</td>
+					<td>{{o.upstairsFee/100}}</td>
+					<td>{{o.handingCosts/100}}</td>
+					<td>{{o.packingCosts/100}}</td>
+					<td>{{o.pickingCosts/100}}</td>
+					<td>{{o.discount/100}}</td> -->
+				  </tr>
+				  </tbody>
+				</table>
+				<!--货物信息 end-->
+					<!--提货信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>提货信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>提货手机</th>
+						<th>提货地址</th>
+						<th>提货码</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr 
+							class="waybill_table_listtr">
+					<td>{{showData.ordOrderInfo.pickTel}}</td>
+					<td>{{showData.ordOrderInfo.pickAddr}}</td>
+					<td>{{showData.ordOrderInfo.pickCode}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--提货信息 end-->
+			</div>
+			<!--基本信息 end-->
+			
+			<!--轨迹信息 start-->
+			<div id="con_two_2" style="display:none">
+				<!--日志记录 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>日志记录</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>网点名称</th>
+						<th>运单号</th>
+						<th>日志类型</th>
+						<th  width="40%">操作信息</th>
+						<th>操作人</th>
+						<th>操作时间</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in showData.opLog">
+					<td>{{o.orgIdName}}</td>
+					<td>{{o.trackingNum}}</td>
+					<td>{{o.opTypeName}}</td>
+					<td title="{{o.opContent}}">{{o.opContent}}</td>
+					<td>{{o.opName}}</td>
+					<td>{{o.createDate}}</td>
+					
+				  </tr>
+				  </tbody>
+				</table>
+				<!--日志记录 end-->
+			</div>
+			<!--轨迹信息 end-->
+			
+			<!--异常信息 start-->
+			<div id="con_two_3" style="display:none;min-height: 350px;">
+				<!--异常信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>异常信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>运单号</th>
+						<th>异常类型</th>
+						<th>异常件数</th>
+						<th>处理意见</th>
+						<th>异常状态</th>
+						<th>处理时间</th>
+						<th>处理人</th>
+						<th>创建人</th>
+						<th>创建时间</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				   <tr ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in showData.exceptionInfo">
+					<td>{{o.trackingNum}}</td>
+					<td>{{o.excTypeName}}</td>
+					<td>{{o.count}}</td>
+					<td>{{o.handleResult}}</td>
+					<td>{{o.excStateName}}</td>
+					<td>{{o.handleDate}}</td>
+					<td>{{o.handleOpIdName}}</td>
+					<td>{{o.opIdName}}</td>
+					<td>{{o.createTime}}</td>
+					
+				  </tr>
+				  </tbody>
+				</table>
+				<!--异常信息 end-->
+			</div>
+			<!--异常信息 end-->
+			<div id="con_two_4" style="display: none;">
+				<div class="tx_tc">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table">
+					  <tbody><tr>
+						<td width="10%"><label class="control-label w_100">签收人：</label></td>
+						<td width="40%"><input disabled="disabled"  class="input_box input_bbj" type="text" value="{{showData.signInfo.signer}}"></td>
+						<td width="10%"><label class="control-label w_100">签收状态：</label></td>
+						<td width="40%"><div class="search_select w_146">
+									<select name="select" class="xl_z">
+										<option selected="selected">{{showData.signInfo.signStateName}}</option>
+									</select>
+								</div>
+						</td>
+					  </tr>
+					  <tr>
+						<td width="10%"><label class="control-label w_100">证件类型：</label></td>
+						<td><div class="search_select w_146">
+									<select name="select" class="xl_z">
+										<option selected="selected">{{showData.signInfo.idTypeName}}</option>
+									</select>
+								</div></td>
+						<td width="10%"><label class="control-label w_100">证件号：</label></td>
+						<td><input class="input_box" id="" value="{{showData.signInfo.idNo}}" type="text"></td>
+						
+					  </tr>
+					  <tr>
+						<td width="10%" valign="top"><label class="control-label w_100">签收描述：</label></td>
+						<td colspan="3"><textarea maxlength="500" disabled="disabled"  style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;"  class="form-control">{{showData.signInfo.exceptionDes1}}</textarea>
+						</td>
+						
+						
+					  </tr>
+			
+					</tbody></table>
+					
+					<ul class="dd_cx clearfix" style=" margin:30px 0 40px 98px;">
+						<li><span my-File-Model="idenCard1" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard2" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard3" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard4" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard5" is-Close="false" ></span></li>
+					</ul>
+				</div>
+			</div>
+			<div id="con_two_6" style="display: none;">
+			<div class="tx_tc">
+				<div style="min-height:350px; padding-top:20px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table" style="padding-top: 0">
+				  <tbody><tr>
+					<td width="100"><label class="control-label w_100">处理人：</label></td>
+					<td><input  ng-model="showData.repairSign.dealerName" class="input_box" maxlength="6" type="text" value=""></td>
+									  </tr>
+		<tr>
+						<td width="100" valign="top"><label class="control-label w_100">处理描述：</label></td>
+						<td colspan="4"><textarea maxlength="500" style="height:90px; width:92.4%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="showData.repairSign.handleResult" class="form-control"></textarea>
+						</td>
+						
+						
+					</tr>
+				</tbody></table>
+				<ul class="dd_cx clearfix">
+					<li><span my-File-Model="identityCard1" is-Close="false" ></span></li>
+					<li><span my-File-Model="identityCard2" is-Close="false" ></span></li>
+					<li><span my-File-Model="identityCard3" is-Close="false" ></span></li>
+					<li><span my-File-Model="identityCard4" is-Close="false" ></span></li>
+					<li><span my-File-Model="identityCard5" is-Close="false" ></span></li>
+				</ul>
+				</div>
+			</div>
+    	</div>			
+		
+		</div>
+		
+	
+	<!--查找运单 开始 --> 
+  <div  id="exc_1" style="position:fixed; top:20px;left:50%; width:850px; height:600px; margin-left:-440px; z-index:99996;display: none">
+   		<a class="tc_x" href="javascript:void(0)" ng-click="closeView();">x</a>
+   		
+   		<div class="billing_1 clearfix pb_20" style="margin: 0!important" >
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_qkd kz_fx" >
+					<tbody><tr>
+                	<td width="110"><label class="term_label">运单号：</label></td>
+                	<td><input ng-model="form.trackingNum" class="form_term" type="text" maxlength="22"></td>
+                    <td width="90"><label class="term_label">发货方：</label></td>
+                    <td><input ng-model="form.consignorName"     class="form_term" type="text"  maxlength="22"></td>
+                    <td width="90"><label class="term_label">发货人：</label></td>
+                    <td><input ng-model="form.consignorLinkmanName"     class="form_term" type="text"  maxlength="22"></td>
+                    
+                    <td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQueryOrd();" href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clearModel();">清空</a></div>
+					</td>
+					</tr>
+					<tr>
+                    <td><label class="term_label">发货人手机：</label></td>
+                    <td><input ng-model="form.consignorBill"  class="form_term" type="text"  maxlength="22"></td>
+                    <td><label class="term_label">中转单号：</label></td>
+                    <td><input  ng-model="form.outgoingTrackingNum"   class="form_term" type="text"  maxlength="22"></td>
+                    <td><label class="term_label">收货方：</label></td>
+                    <td><input ng-model="form.consigneeName"     class="form_term" type="text"  maxlength="22"></td>
+                    </tr>
+                    <tr>
+					<td><label class="term_label">收货人：</label></td>
+					<td><input  ng-model="form.consigneeLinkmanName"    class="form_term" type="text"  maxlength="22"></td>
+					<td><label class="term_label">收货人手机：</label></td>
+					<td><input ng-model="form.consigneeBill"  class="form_term" type="text"  maxlength="22"></td>
+					</tr>
+                   </tbody>
+                </table>
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果--<!-- <span class="f14">双击查看详情</span> --></h2><a ng-click="selectOrder()" href="javascript:void(0);">确定</a></div>
+				<div class="kz_fx_list">
+				 <my-Adv-Table width="2512px" isautohide="false" doubleclick="" name="orderInfo" isShowSeq="false" isMultiSelect="false" isShowCheck="true" isFilter="true" isSum="false" id="trackingNum" 
+	                           head='[
+	                           {"name":"运单号","code":"trackingNum","width":"100"}
+	                           ,{"name":"受理日期","code":"createDateString","width":"100"}
+	                           ,{"name":"件数","code":"count","isSum":"true","width":"60"}
+	                           ,{"name":"品名","code":"products","width":"80"}
+	                           ,{"name":"发货方","code":"consignorName","width":"100"}
+	                           ,{"name":"发货方电话","code":"consignorTelephone","width":"100"}
+	                           ,{"name":"发货人","code":"consignorLinkmanName","width":"100"}
+	                           ,{"name":"发货人手机","code":"consignorBill","width":"100"}
+	                           ,{"name":"收货方","code":"consigneeName","width":"100"}
+	                           ,{"name":"收货方电话","code":"consigneeTelephone","width":"100"}
+	                           ,{"name":"收货人","code":"consigneeLinkmanName","width":"100"}
+	                           ,{"name":"收货人手机","code":"consigneeBill","width":"100"}
+	                           ,{"name":"状态","code":"orderStateName","width":"100"}
+	                           ,{"name":"受理网点","code":"orgIdName","width":"100"}
+	                           ,{"name":"到站","code":"distributionOrgName","width":"100"}
+	                           ,{"name":"收货地址","code":"address","width":"180"}
+	                           ,{"name":"付款方式","code":"paymentTypeName","width":"80"}
+	                           ,{"name":"承运公司","code":"carrierCompanyName","width":"100"}
+	                           ,{"name":"外发单号","code":"outgoingTrackingNum","width":"100"}
+	                           ,{"name":"外发费","code":"outgoingFee","width":"100","isSum":"true"} 
+	                           ,{"name":"本地联系人","code":"linkerName","width":"100"} 
+	                           ,{"name":"联系电话","code":"linkerPhone","width":"100"} 
+	                           ,{"name":"提货电话","code":"deliveryPhone","width":"100"} 
+	                           ,{"name":"提货地址","code":"deliveryAddress","width":"100"} 
+	                           ]'>
+	                   </my-Adv-Table> 
+	                   </div>
+		</div>
+   </div> 
+<!--查找运单 结束 --> 
+       
+<!--找师傅 开始 --> 
+   <div  id="exc_2" style="position:fixed; top:50%;left:50%; width:850px; height:600px; margin-left:-440px;margin-top:-307px; z-index:99996;display: none">
+   		<a class="tc_x" href="javascript:void(0)" onclick="document.getElementById('exc_2').style.display='none';document.getElementById('alertMsgIsShow').style.display='none';document.getElementById('sfName').value='';document.getElementById('phone').value=''">x</a>
+   		
+   		<div class="billing_1 clearfix pb_20" style="margin: 0!important" >
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_qkd kz_fx">
+					<tbody> <tr>
+					<td><label class="control-label">师傅名称：</label></td>
+					<td><input class="input_box" id="sfName" ng-model="params.sfUserName" type="text" /></td>
+					<td width="100"><label class="control-label w_100">师傅账号：</label></td>
+					<td><input class="input_box" ng-model="params.sfUserAcct" id="phone" type="text" /></td>
+                    <td rowspan="3">
+							<!-- <div class="bottom_search search_button" style="position:inherit;"><a ng-click="querySfOrService();" ng-Enter href="javascript:void(0);">查询</a></div> -->
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="querySfOrService();"  href="javascript:void(0);">查询</a></div>
+					</td>
+				  </tr>
+                   </tbody>
+                </table>
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果--<!-- <span class="f14">双击查看详情</span> --></h2><a ng-click="selectSf();" href="javascript:void(0);" >确定</a></div>
+			  <div class="kz_fx_list">
+			  <my-Adv-Table isShowSeq="false" width="1200px" isMultiSelect="false"  isShowCheck="true" doubleclick="toDetailAllInfo" isFilter="true" isSum="true" id="sfUserId" head='[
+			                {"name":"省","code":"provinceName","width":"80"},{"name":"市","code":"cityName","width":"100"},{"name":"师傅名称","code":"name","width":"80"},
+			                {"name":"师傅账号","code":"phone","width":"100"},{"name":"收款方式","code":"receiTypeName","width":"80"},{"name":"卡名","code":"bankName","width":"80"},
+			                {"name":"账户名","code":"accountName","width":"90"},{"name":"账号/卡号","code":"bankAccount","width":"90"},
+			                {"name":"认证状态","code":"auditStateName","width":"80"},
+			                {"name":"合作方式","code":"cooperationTypeName","width":"80"}]'>
+                </my-Adv-Table>
+                </div>
+		</div>
+   </div>
+<!--找师傅 结束 --> 
+
+
+       
+<!--服务商 开始 --> 
+   <div  id="master" style="position:fixed; top:50%;left:50%; width:850px; height:600px; margin-left:-440px;margin-top:-307px; z-index:99996;display: none">
+   		<a class="tc_x" href="javascript:void(0)" ng-click="closeMaster();">x</a>
+   		
+   		<div class="billing_1 clearfix pb_20" style="margin: 0!important" >
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_qkd kz_fx">
+					<tbody><tr>
+						<td width="100"><label class="term_label">合作商名称：</label></td>
+						<td><input class="form_term" ng-model="user.name"/></td>
+						<td width="100"><label class="term_label">联系人：</label></td>
+						<td><input class="form_term" ng-model="user.linkMan"/></td>
+						<td width="100"><label class="term_label">联系电话：</label></td>
+						<td><input class="form_term" ng-model="user.linkPhone" maxlength="11"/></td>
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;">
+								<a ng-click="doQueryMaster();" href="javascript:void(0);">查询</a>
+								<a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a>
+								
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">主营业务：</label></td>
+						<td><input class="form_term" ng-model="user.busiNotes"/></td>
+						<td width="100"><label class="term_label">省份：</label></td>
+						<td>
+						<div class="form_select">
+                                <select class="ng-cloak" ng-change="selectCity(user.provinceId);" ng-model="user.provinceId" ng-options="obj.id as obj.name for  obj in provinceData.items ">
+                                </select>
+                            </div>
+						</td>
+						<td width="100"><label class="term_label">城市：</label></td>
+						<td><div class="form_select">
+                                <select class="ng-cloak"  ng-model="user.regionId"  ng-options="obj.id as obj.name for  obj in cityData.items ">
+                                </select>
+                            </div></td>
+					</tr>
+                   </tbody>
+                </table>
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果--<!-- <span class="f14">双击查看详情</span>--></h2><a ng-click="selectMaster();" href="javascript:void(0);" >确定</a></div>
+			  <div class="kz_fx_list">
+			  <my-Adv-Table 
+                isShowSeq="false" 
+                isMultiSelect="false" 
+                isShowCheck=true 
+                isFilter="false" 
+                width="100%"
+                isSum="false" 
+                id="tenantId" 
+                name="masterInfo"
+                head='[
+                {"name":"师傅合作商编码","code":"tenantCode","width":"15%"},
+                {"name":"师傅合作商名称","code":"name","width":"15%"},
+                {"name":"服务城市","code":"address","width":"15%"},
+                {"name":"联系人","code":"linkMan","width":"15%"},
+                {"name":"联系电话","code":"linkPhone","width":"15%"},
+                {"name":"主营业务","code":"busiNotes","width":"19%"}
+                ]'>
+                </my-Adv-Table>
+                </div>
+		</div>
+   </div>
+<!--服务商 结束 --> 
+
+	   <div id="alertMsgIsShow" class="popup_bj"  style="display: none;z-index:99995"></div>
+	   
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->`
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="excRegisterCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

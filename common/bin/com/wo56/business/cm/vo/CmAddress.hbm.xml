@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-8 16:39:51 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmAddress" table="cm_address">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="linkman" type="java.lang.String">
+			<column name="LINKMAN" length="100" not-null="true">
+				<comment>联系人</comment>
+			</column>
+		</property>
+		<property name="Bill" type="java.lang.String">
+			<column name="BILL" length="15" not-null="true">
+				<comment>联系电话</comment>
+			</column>
+		</property>
+		<property name="province" type="java.lang.Long">
+			<column name="PROVINCE">
+				<comment>省份ID</comment>
+			</column>
+		</property>
+		<property name="provinceName" type="java.lang.String">
+			<column name="PROVINCE_NAME" length="50">
+				<comment>省份名称</comment>
+			</column>
+		</property>
+		<property name="city" type="java.lang.Long">
+			<column name="CITY">
+				<comment>城市ID</comment>
+			</column>
+		</property>
+		<property name="cityName" type="java.lang.String">
+			<column name="CITY_NAME" length="50">
+				<comment>城市名称</comment>
+			</column>
+		</property>
+		<property name="district" type="java.lang.Long">
+			<column name="DISTRICT">
+				<comment>区域ID</comment>
+			</column>
+		</property>
+		<property name="districtName" type="java.lang.String">
+			<column name="DISTRICT_NAME" length="50">
+				<comment>区域名称</comment>
+			</column>
+		</property>
+		<property name="street" type="java.lang.Long">
+			<column name="STREET" length="50">
+				<comment>街道</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS" length="200">
+				<comment>详细地址</comment>
+			</column>
+		</property>
+		<property name="merchantAddressType" type="java.lang.Integer">
+			<column name="MERCHANT_ADDRESS_TYPE" length="15">
+				<comment>货方地址类型：1：发货地址，2.收货地址</comment>
+			</column>
+		</property>
+		<property name="orgId" type="java.lang.Long">
+			<column name="ORG_ID">
+				<comment>归属网点</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID">
+				<comment>租户ID</comment>
+			</column>
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="OP_ID">
+				<comment>创建人ID</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.sql.Timestamp">
+			<column name="CREATE_TIME">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="nand" type="java.lang.String">
+			<column name="NAND">
+				<comment>地址纬度</comment>
+			</column>
+		</property>
+		<property name="eand" type="java.lang.String">
+			<column name="EAND">
+				<comment>地址经度</comment>
+			</column>
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE" not-null="true">
+				<comment>状态 0：失效 1：有效</comment>
+			</column>
+		</property>
+		<property name="adderssDefault" type="java.lang.Integer">
+			<column name="ADDERSS_DEFAULT" not-null="true">
+				<comment>是否默认地址(0：否1：是)</comment>
+			</column>
+		</property>
+		<property name="userId" type="java.lang.Long">
+			<column name="USER_ID">
+				<comment>用户id</comment>
+			</column>
+		</property>
+		
+		<property name="commonAddress" type="java.lang.Integer">
+			<column name="COMMON_ADDRESS">
+				<comment>是否常用地址（1：是，0：否）</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

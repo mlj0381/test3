@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="departManageApp"> 
+	<head>
+	    <title>${title}_干线发车 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="departManageCtrl" style="overflow:hidden">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">发车时间：</label></td>
+						<td><input my-Date-Picker ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term w_xjr fl"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker id="endTime" class="form_term w_xjr fl" type="text"></td>
+						<td width="100"><label class="term_label">当前网点：</label>
+                        	
+                        </td>
+                       		
+						<td><div class="form_select">
+                                <select name="select" class="xl_z" ng-model="query.currOrgId"  ng-disabled="all" ng-options="obj.beginOrgId as obj.beginOrgName for obj in currOrgData" >
+								       <option value="">所有</option>
+						        </select>
+                            </div></td>
+						<td width="100"><label class="term_label">目的网点：</label>
+                       	</td>
+						<td><div class="form_select " >
+                                 <select name="select" class="xl_z" ng-model="query.descOrgId"  ng-disabled="all" ng-options="obj.endOrgId as obj.endOrgName for obj in desOrgData" >
+								    <option value="">所有</option>
+						        </select>	
+                            </div></td>
+						
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">批次号：</label>
+                        
+                       		</td>
+						<td><input  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term" maxlength="16" ng-model="query.batchNum" type="text"></td>
+						<td width="100"><label class="term_label">运单号：</label></td>
+						<td>
+							<input  onkeyup="value=value.replace(/[^\d]/g,'')"  class="form_term" maxlength="16" ng-model="query.trackingNum" type="text">
+						</td>
+						<td width="100"></td>
+						<td></td>
+						
+					</tr>
+					
+				</tbody>
+		</table>
+                
+                     <div class="search_nr clearfix mt_20">
+              <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果</h2>
+              <a class="button ml_10 tixiansp2" href="javaScript:void(0)" ng-click="transferOfMakeup()"><i class="button_icon button_icon dw_tixiansp2"></i>中转补录</a>
+              	<a class="button ml_10 newly" style="width: auto;"  ng-click="addTrans()" href="javascript:void(0)">新增中转信息</a>
+              	<a class="button ml_10 see_b" href="javascript:void(0)" ng-click="toView();"><i class="button_icon button_icon dw_see_b"></i>查看中转信息</a>
+              	<a class="button ml_10 see_b" href="javascript:void(0)" ng-click="doModify();"><i class="button_icon button_icon dw_see_b"></i>修改中转信息</a>
+              	<a class="button ml_10 delete" style="width: auto;"   ng-click="deleteDepart();" href="javascript:void(0)"><i class="button_icon button_icon dw_delete ml0"></i>取消中转信息</a>
+              	<a href="javascript:void(0)" id="exportId" ng-click="page.downloadExcelFile()">导  出</a><a ng-click="toView();" href="javascript:void(0)">打印配载信息</a>
+              	<a class="button ml_10 tixiansp2" href="javaScript:void(0)" ng-click="tranSign()"><i class="button_icon button_icon dw_tixiansp2"></i>中转签收</a></div>
+              	
+                <!--   <my-table>
+                  <div  id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0" >
+                               <thead class="fixed-thead" id="tb1">
+                                <tr >
+                                    <th width="80" class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                    <th width="10%">中转批次</th>
+                                    <th width="10%">中转时间</th>
+                                    <th width="10%">总票数</th>
+                                    <th width="15%">总重量</th>
+                                    <th width="15%">总体积</th>
+                                    <th width="15%">中转网点</th>
+                                    <th width="21%">承运网点</th>
+                                </tr>
+                              </thead>
+                              
+                              <tbody class="fixed-tbody">
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.batchNum);" ng-repeat="o in page.data.items">
+                                  	<td width="80" class="search_list_border"><div class="controls"><input id="checkbox{{o.batchNum}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="10%">{{o.batchNum}}</td>
+                                    <td width="10%" style="white-space: inherit;">{{o.createDate}}</td>
+                                    <td width="10%">{{o.orderNum}}</td>
+                                    <td width="15%">{{o.weight.toFixed(1)}}</td>
+                                    <td width="15%">{{o.volume.toFixed(2)}}</td>
+                                    <td width="15%">{{o.sourceOrgIdName}}</td>
+                                    <td width="21%">{{o.descOrgIdName}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                           
+                   </div>
+                </my-table> -->
+						<my-Adv-Table  isMultiSelect="false"  isShowCheck="true" isFilter="true" isSum="true"     id="batchNum" 
+			                head='[
+			                {"name":"中转批次","code":"batchNum","width":"100"},
+			                {"name":"运输合同","code":"transportContract","width":"120"},
+			                {"name":"创建时间","code":"createDate","width":"130"},
+			                {"name":"中转网点","code":"sourceOrgIdName","width":"110"},
+			                {"name":"承运网点","code":"descOrgIdName","width":"110"},
+			                {"name":"总票数","code":"orderNum","isSum":"true","width":"70"},
+			                {"name":"总体积","code":"volume","isSum":"true","number":"2","width":"70"},
+			                {"name":"总重量","code":"weight","isSum":"true","number":"1","width":"70"}
+			                 ]'>
+			              
+		                </my-Adv-Table>
+                
+                
+        </div>
+		
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="transferBatch.js?v=${ver}"></script>
+</body>
+</html>
+

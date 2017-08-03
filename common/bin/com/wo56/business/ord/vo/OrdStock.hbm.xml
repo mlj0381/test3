@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrdStock" table="ord_stock">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="orderId" type="java.lang.Long">
+			<column name="ORDER_ID" not-null="true">
+				<comment>运单表的主键</comment>
+			</column>
+		</property>
+		<property name="stockInTime" type="java.sql.Timestamp">
+			<column name="STOCK_IN_TIME" length="19" not-null="true">
+				<comment>入库时间</comment>
+			</column>
+		</property>
+		<property name="stockInType" type="java.lang.Integer">
+			<column name="STOCK_IN_TYPE" not-null="true">
+				<comment>入库类型：0 开单 1 到车</comment>
+			</column>
+		</property>
+		<property name="stockOutTime" type="java.sql.Timestamp">
+			<column name="STOCK_OUT_TIME" length="19">
+				<comment>出库时间</comment>
+			</column>
+		</property>
+		<property name="stockOutType" type="java.lang.Integer">
+			<column name="STOCK_OUT_TYPE">
+				<comment>出库类型 0 发车 1 中转 2 送货上门</comment>
+			</column>
+		</property>
+		<property name="orgId" type="java.lang.Long">
+			<column name="ORG_ID" not-null="true">
+				<comment>网点</comment>
+			</column>
+		</property>
+		<property name="stockInOpId" type="java.lang.Long">
+			<column name="STOCK_IN_OP_ID" not-null="true">
+				<comment>入库的操作人</comment>
+			</column>
+		</property>
+		<property name="stockOutOpId" type="java.lang.Long">
+			<column name="STOCK_OUT_OP_ID">
+				<comment>出库的操作人</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID">
+				<comment>租户</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

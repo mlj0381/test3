@@ -1,0 +1,493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="billApp">
+<head>
+	<title>众邦_第三方开单</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="keywords" content="众邦" />
+	<meta name="description" content="众邦" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+	<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+		<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+	</object>
+	<style type="text/css">
+		.arrow-down {width:0;height:0; border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #dedede;margin:0 auto}
+		.ng-cloak {display: none;}
+	</style>
+</head>
+<body style="/*overflow: hidden*/" ng-controller="billCtrl" onload="setContentHeight(80)" >
+	<div class="ng-cloak">
+		<!-- 运单录入-->
+		<div class="billing_2 clearfix ">
+			<div class="yd_text clearfix">
+				<div class="fl yd_logo"><img src="/image/$tenantId$/yd_logo.jpg" alt="" width="212" height="54"></div>
+				<h2 class="fl yd_h2">第三方开单--{{pageTitle}}</h2>
+				<div class="fr yd_test_span">
+					<span class="fl" style="font-size: 14px;">运单号：</span>
+					<input id="_trackingNum" class="form_input fl" style="width: 230px; margin-top: 23px; margin-right:10px; text-indent:0;" type="text" ng-disabled="all" ng-model="form.orderInfo.trackingNum" maxlength="16" required ng-change="upNum('form.orderInfo.trackingNum');" ng-blur="checkTrackingNumUsedState();">
+				</div>
+			</div>
+			
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="yd_list">
+				<tr>
+					<td width="100"><label class="yd_label fr bj_f83">到达城市</label></td>
+					<td class="br_00">
+						<div my-City="source" style="width: 280px;" classvalue="form_input" input-id="_source"></div>
+						<!-- 
+						<div class="yd_select">
+                             <select id="_provinceId" ng-disabled="all" ng-model="form.orderInfo.provinceId" ng-options="obj.id as obj.name for obj in provinceData.items" ng-change="loadCityByProvinceId(form.orderInfo.provinceId);"></select>
+                        </div>
+						 -->
+					</td>
+					<!-- 
+					<td width="100"><label class="yd_label fr bj_f83">到达城市</label></td>
+					<td class="br_00">
+						<div class="yd_select">
+                             <select id="_destCity" ng-disabled="all" ng-model="form.orderInfo.destCity" ng-options="obj.id as obj.name for obj in cityData.items"></select>
+                        </div>
+					</td>
+					 -->
+					<td width="100"><label class="yd_label fr bj_f83" style="text-align: center; padding: 0; width: 100px;">收货详细地址</label></td>
+					<td colspan="9">
+						<input id="_address" class="form_input" ng-readonly="all" type="text" maxlength="50" ng-model="form.orderInfo.address">
+					</td>
+				</tr>
+				<tr>
+					<td width="100"><label class="yd_label fr ">发货方</label></td>
+					<td class="br_00">
+						<input type="text" class="form_input co_35a" maxlength="11" ng-disabled="all" value="发货联系方" id="pName" ng-model="form.goodsDetail.pName" ng-blur="showToFalse()" ng-focus="queryCustomer(1,form.goodsDetail.pName)" ng-change="queryCustomer(1,form.goodsDetail.pName)"/>
+						<!--请选择客户 开始 -->
+    					<div class="list_xl ng-cloak" ng-show="showPcum">
+        					<h2>请选择客户</h2>
+            				<i class="list_xl_icon icon"><a class="gone" href="javascript:(void)"></a></i>
+            				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list_xl_thead">
+            					<thead>
+                					<tr>
+                    					<th style="width:25%">发货方</th>
+                        				<th style="width:24%">联系人</th>
+                        				<th style="width:24%">联系电话</th>
+                        				<th style="width:24%">手机号码</th>
+                    				</tr>
+				                </thead>
+            				</table>
+							<div class="list_xl_tbody">
+								<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            						<tbody>
+            							<tr ng-repeat="obj in customerData.items" ng-click="selectPcustomer(obj)">
+											<td class="ng-clock" style="width:25%">{{obj.name}}</td>
+                    						<td class="ng-cloak" style="width:25%">{{obj.linkmanName}}</td>
+                    						<td class="ng-cloak" style="width:25%">{{obj.telephone}}</td>
+                    						<td class="ng-cloak" style="width:25%">{{obj.bill}}</td>
+										</tr>
+                  					</tbody>
+            					</table>
+            				</div>
+    					</div>
+    					<!--请选择客户 结束 -->
+    					<input class="form_billing" type="hidden" id="pId" ng-model="form.goodsDetail.pId" value="0">
+					</td>
+					<td width="100"><label class="yd_label fr bj_f83">联系人</label></td>
+					<td class="br_00">
+						<input class="form_input" type="text" ng-disabled="all" id="pLinkmanName" maxlength="11" ng-model="form.goodsDetail.pLinkmanName" ng-change="queryCustomer(0,0)">
+					</td>
+					<td width="100"><label class="yd_label fr">联系电话</label></td>
+					<td class="br_00">
+						<input id="_linkbilling" class="form_input" type="text" ng-readonly="all"  maxlength="14" ng-model="form.goodsDetail.pTelephone" ng-change="queryCustomer(0,0)">
+					</td>
+					<td width="100"><label class="yd_label fr bj_f83">手机号码</label></td>
+					<!-- 
+						<td class="br_00">
+					 -->
+					<td>
+						<input id="_pBill"  class="form_input" type="text" ng-readonly="all" maxlength="11" ng-model="form.goodsDetail.pBill" ng-change="queryCustomer(0,0)">
+					</td>
+					<td colspan="5" style="display:none;">
+						<!-- TODO 后续处理  -->
+						<div class="controls" style="margin-left: 80px;>
+							<input class="none" id="check-2" type="checkbox" name="check-2" />
+							<label for="check-2">VIP客户</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100"><label class="yd_label fr ">收货方</label></td>
+					<td class="br_00">
+						<input id="_rName" class="form_input co_35a" ng-disabled="all" maxlength="11" type="text" ng-model="form.goodsDetail.rName" ng-blur="showToFalse()" ng-focus="queryRecCustomer(1,form.goodsDetail.rName)" ng-change="queryRecCustomer(1,form.goodsDetail.rName)"/>
+    					<!--请选择客户 开始 -->
+						<div class="list_xl ng-cloak" ng-show="showRcum">
+        					<h2>请选择客户</h2>
+            				<i class="list_xl_icon icon"></i>
+            				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list_xl_thead">
+            					<thead>
+                					<tr>
+                    					<th style="width:25%">收货方</th>
+                        				<th style="width:24%">联系人</th>
+                        				<th style="width:24%">联系电话</th>
+                        				<th style="width:24%">手机号码</th>
+                    				</tr>
+                				</thead>
+            				</table>
+            				<div class="list_xl_tbody">
+            					<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            						<tbody>
+                  						<tr ng-repeat="obj in recCustomerData.items" ng-click="selectRcustomer(obj)">
+                    						<td class="ng-clock" style="width:25%">{{obj.name}}</td>
+                    						<td class="ng-cloak" style="width:25%">{{obj.linkmanName}}</td>
+                    						<td class="ng-cloak" style="width:25%">{{obj.telephone}}</td>
+                    						<td class="ng-cloak" style="width:25%">{{obj.bill}}</td>
+                    					</tr>
+                					</tbody>
+            					</table>
+            				</div>
+						</div>
+    					<!--请选择客户 结束 -->
+    					<input class="form_billing" type="hidden" id="rId" ng-model="form.goodsDetail.rId" value="0">
+					</td>
+					<td width="100"><label class="yd_label fr bj_f83">联系人</label></td>
+					<td class="br_00">
+						<input id="_rLinkmanName" class="form_input" ng-disabled="all" type="text" maxlength="11" ng-model="form.goodsDetail.rLinkmanName" ng-change="queryRecCustomer(0,0)">
+    					<input class="form_gbilling" type="hidden" ng-model="rId">
+					</td>
+					<td width="100"><label class="yd_label fr">联系电话</label></td>
+					<td class="br_00">
+						<input id="_rTelephone" class="form_input" ng-readonly="all" maxlength="14" type="text" ng-model="form.goodsDetail.rTelephone" ng-change="queryRecCustomer(0,0)">
+					</td>
+					<td width="100"><label class="yd_label fr bj_f83">手机号码</label></td>
+					<!-- 
+						<td class="br_00">
+					 -->
+					<td>
+						<input id="_rBill" class="form_input" ng-readonly="all" maxlength="11" type="text" ng-model="form.goodsDetail.rBill" ng-change="queryRecCustomer(0,0)">
+					</td>
+					<td width="100" style="display: none;"></td>
+					<td style="display: none;"></td>
+				</tr>
+				<tr>
+					<td width="100"><label class="yd_label fr ">交接方式</label></td>
+					<td class="br_00">
+						<div class="yd_select">
+                             <select id="_deliveryType" ng-model="form.orderInfo.deliveryType" ng-disabled="all" ng-options="objCon.codeValue as objCon.codeName for objCon in deliveryTypeData.items" ng-change="doQueryArea()"></select>
+                        </div>
+					</td>
+					<td width="100" ng-show="form.orderInfo.deliveryType == 3"><label class="yd_label fr">有无电梯</label></td>
+					<td class="br_00" ng-show="form.orderInfo.deliveryType == 3">
+						<div class="yd_select">
+							<select name="select" id="_isExistsElevator" ng-model="form.orderInfo.isLift">
+								<option selected="selected" value="0">楼梯</option>
+								<option value="1">电梯</option>
+							</select>
+						</div>
+					</td>
+					<td width="100" ng-show="form.orderInfo.deliveryType == 3"><label class="yd_label fr">楼层</label></td>
+					<td class="br_00" ng-show="form.orderInfo.deliveryType == 3">
+						<div class="yd_select">
+							<select id="_floor" ng-model="form.orderInfo.floor" ng-disabled="all">
+		                     	<option value="2">二楼</option>
+		                     	<option value="3">三楼</option>
+		                     	<option value="4">四楼</option>
+		                     	<option value="5">五楼</option>
+		                     	<option value="6">六楼</option>
+		                     	<option value="7">七楼</option>
+		                     	<option value="8">八楼</option>
+		                     	<option value="9">九楼</option>
+		                     </select>
+						</div>
+					</td>
+					<!-- 用于隐藏“有无电梯”和“楼层”时，进行表格填充 -->
+					<td width="100" ng-show="!(form.orderInfo.deliveryType == 3)">
+					<td class="br_00" ng-show="!(form.orderInfo.deliveryType == 3)">
+					<td width="100" ng-show="!(form.orderInfo.deliveryType == 3)">
+					<td class="br_00" ng-show="!(form.orderInfo.deliveryType == 3)">
+					
+					<td width="100" style="display: none;"><label class="yd_label fr">安装车辆</label></td>
+					<td class="br_00" style="display: none;">
+						<div class="yd_select">
+							<select id="_isInstallVehicle" ng-model="form.orderInfo.vehicleId" ng-disabled="isInstall" ng-options="objCon.vehicleId as objCon.plateNumber for objCon in vehicleData.items" ng-change="selectDriver()"></select>
+						</div>
+					</td>
+					<td width="100" style="display: none;"><label class="yd_label fr">随车司机</label></td>
+					<td style="display: none;">
+						<input id="_driverName" class="form_input" readOnly ng-disabled="all" ng-model="form.orderInfo.driverName" type="text" />
+					</td>
+					<td width="100"></td>
+					<td></td>
+				</tr>
+			</table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="yd_table_list">
+				<tr class="list_header">
+					<td class="bj_f83" style="width: 7%">品名</td>
+					<td class="bj_f83" style="width: 7%">件数</td>
+					<td class="bj_f83" style="width: 5%">包装</td>
+					<td class="bj_f83" style="width: 6%">重量(千克)</td>
+					<td class="bj_f83" style="width: 6%">体积(方)</td>
+					<td class="bj_f83" style="width: 6%">运费</td>
+					<td style="width: 6%">回扣</td>
+					<td style="width: 6%">送货费</td>
+					<td style="width: 6%">代收货款</td>
+					<td style="width: 6%">代收手续费</td>
+					<td style="width: 6%">申明价值</td>
+					<td style="width: 6%">保险费</td>
+					<td style="width: 5%">装卸费</td>
+					<td style="width: 5%">包装费</td>
+					<td style="width: 5%">提货费</td>
+					<td style="width: 5%">上楼费</td>
+					<td style="border-right: 0; width: 7%;">计费类型</td>
+				</tr>
+				<tr>
+					<!-- 品名 -->
+					<td>
+						<input id="_goodsName0" maxlength="255" type="text" ng-disabled="all" class="form_input input_td co_35a" ng-model="form.goodsDetail.goods_0.goodsName" ng-focus="showOrHideGoodsNameSelect(0, 1);" ng-blur="showOrHideGoodsNameSelect(0, 0);"/>
+						<div class="list_xl ng-cloak" style="margin-left: 1px; margin-top: 6px; height: 220px; width: 280px;" ng-show="showGoodsName0">
+        					<h2>请选择常见品名</h2>
+            				<i class="list_xl_icon icon"><a class="gone" href="javascript:void(0)" ng-click="showOrHideGoodsNameSelect(0, 0);"></a></i>
+							<div class="list_xl_tbody">
+								<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            						<tbody>
+            							<tr ng-repeat="obj in commonGoodsName.items" ng-click="selectGoodsName(0,obj)">
+                    						<td class="ng-cloak" style="width:100%; border-right: 0px;">{{obj.codeValue}}</td>
+										</tr>
+                  					</tbody>
+            					</table>
+            				</div>
+    					</div>
+					</td>
+					<!-- 件数 -->
+					<td><input id="_goodsCount0" type="text" class="form_input input_td" ng-disabled="all" maxlength="11" ng-model="form.goodsDetail.goods_0.goodsCount" ng-change="upNum('form.goodsDetail.goods_0.goodsCount'); updateCount(); updateGoodsDetailAmount();"/></td>
+					<!-- 包装 -->
+					<td><div class="yd_select"><select id="_packingType0" class="xl_z" style="padding: 0 10px 0 13px;" ng-model="form.goodsDetail.goods_0.packingType" ng-disabled="all" ng-options="objCon.codeValue as objCon.codeName for  objCon in packTypeData.items"></select></div></td>
+					<!-- 重量 -->
+					<td><input id="_weight0" type="text" class="form_input input_td" ng-blur="checkPrice(false, false);" ng-disabled="all" maxlength="11" ng-model="form.goodsDetail.goods_0.weight" my-double-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 体积 -->
+					<td><input id="_volume0" type="text" class="form_input input_td" ng-blur="checkPrice(false, false);" ng-disabled="all"  maxlength="11" ng-model="form.goodsDetail.goods_0.volume" my-double-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 运费 -->
+					<td><input id="_freight0" ng-disabled="all" ng-blur="updateGoodsDetailAmount();" type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.freight" ng-keyup="upCosts('form.goodsDetail.goods_0.freight')" ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 回扣 -->
+					<td><input id="_discount0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();" my-num-val='keyup' type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.discount" ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 送货费 -->
+					<td><input id="_deliveryCosts0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.deliveryCosts"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 代收货款 -->
+					<td><input id="_collectingMoney0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.collectingMoney"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 代收手续费 -->
+					<td><input id="_procedureFee0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.procedureFee"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 申明价值 -->
+					<td><input id="_goodsPrice0" ng-disabled="all" my-num-val='keyup' ng-blur="updateTotalCosts(); updateGoodsDetailAmount();" type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.goodsPrice" ng-keyup="upCosts('form.goodsDetail.goods_0.goodsPrice')" ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 保险费 -->
+					<td><input id="_offer0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.offer" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 装卸费 -->
+					<td><input id="_handingCosts0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td"	maxlength="11" ng-model="form.goodsDetail.goods_0.handingCosts" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 包装费 -->
+					<td><input id="_packingCosts0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();" type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.packingCosts" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 提货费 -->
+					<td><input id="_pickingCosts0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.pickingCosts" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 上楼费 -->
+					<td><input id="_upstairsFee0" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_0.upstairsFee"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 计费类型 -->
+					<td style="border-right: 0"><div class="yd_select"><select id="_billingType0" ng-disabled="all || billingTypeIsEnable" class="xl_z" ng-model="form.goodsDetail.goods_0.billingType" ng-options="objCon.codeValue as objCon.codeName for  objCon in billingTypeData.items"></select></td>
+				</tr>
+				<tr>
+					<!-- 品名 -->
+					<td>
+						<input id="_goodsName1" maxlength="255" type="text" ng-disabled="all" class="form_input input_td co_35a" ng-model="form.goodsDetail.goods_1.goodsName" ng-focus="showOrHideGoodsNameSelect(1, 1);" ng-blur="showOrHideGoodsNameSelect(1, 0);"/>
+						<div class="list_xl ng-cloak" style="margin-left: 1px; margin-top: 6px; height: 220px; width: 280px;" ng-show="showGoodsName1">
+        					<h2>请选择常见品名</h2>
+            				<i class="list_xl_icon icon"><a class="gone" href="javascript:void(0)" ng-click="showOrHideGoodsNameSelect(1, 0);"></a></i>
+							<div class="list_xl_tbody">
+								<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            						<tbody>
+            							<tr ng-repeat="obj in commonGoodsName.items" ng-click="selectGoodsName(1,obj);">
+                    						<td class="ng-cloak" style="width:100%; border-right: 0px;">{{obj.codeValue}}</td>
+										</tr>
+                  					</tbody>
+            					</table>
+            				</div>
+    					</div>
+					</td>
+					<!-- 件数 -->
+					<td><input id="_goodsCount1" type="text" class="form_input input_td" ng-disabled="all" maxlength="11" ng-model="form.goodsDetail.goods_1.goodsCount" ng-change="upNum('form.goodsDetail.goods_1.goodsCount'); updateCount(); updateGoodsDetailAmount();"/></td>
+					<!-- 包装 -->
+					<td><div class="yd_select"><select id="_packingType1" class="xl_z" style="padding: 0 10px 0 13px;" ng-model="form.goodsDetail.goods_1.packingType" ng-disabled="all" ng-options="objCon.codeValue as objCon.codeName for  objCon in packTypeData.items"></select></div></td>
+					<!-- 重量 -->
+					<td><input id="_weight1" type="text" class="form_input input_td" ng-blur="checkPrice(false, false);" ng-disabled="all" maxlength="11" ng-model="form.goodsDetail.goods_1.weight" my-double-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 体积 -->
+					<td><input id="_volume1" type="text" class="form_input input_td" ng-blur="checkPrice(false, false);" ng-disabled="all" maxlength="11" ng-model="form.goodsDetail.goods_1.volume" my-double-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 运费 -->
+					<td><input id="_freight1" ng-disabled="all" ng-blur="updateGoodsDetailAmount();" type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.freight" ng-keyup="upCosts('form.goodsDetail.goods_1.freight')" ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 回扣 -->
+					<td><input id="_discount1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();" my-num-val='keyup' type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.discount" ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 送货费 -->
+					<td><input id="_deliveryCosts1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.deliveryCosts"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 代收货款 -->
+					<td><input id="_collectingMoney1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.collectingMoney"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 代收手续费 -->
+					<td><input id="_procedureFee1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.procedureFee"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 申明价值 -->
+					<td><input id="_goodsPrice1" ng-disabled="all" my-num-val='keyup' ng-blur="updateTotalCosts(); updateGoodsDetailAmount();" type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.goodsPrice" ng-keyup="upCosts('form.goodsDetail.goods_1.goodsPrice')" ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 保险费 -->
+					<td><input id="_offer1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.offer" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 装卸费 -->
+					<td><input id="_handingCosts1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td"	maxlength="11" ng-model="form.goodsDetail.goods_1.handingCosts" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 包装费 -->
+					<td><input id="_packingCosts1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();" type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.packingCosts" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 提货费 -->
+					<td><input id="_pickingCosts1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.pickingCosts" my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 上楼费 -->
+					<td><input id="_upstairsFee1" ng-disabled="all" ng-blur="updateTotalCosts(); updateGoodsDetailAmount();"  type="text" class="form_input input_td" maxlength="11" ng-model="form.goodsDetail.goods_1.upstairsFee"  my-num-val='keyup' ng-change="updateGoodsDetailAmount();"/></td>
+					<!-- 计费类型 -->
+					<td style="border-right: 0"><div class="yd_select"><select id="_billingType1" ng-disabled="all || billingTypeIsEnable" class="xl_z" ng-model="form.goodsDetail.goods_1.billingType" ng-options="objCon.codeValue as objCon.codeName for  objCon in billingTypeData.items"></select></td>
+				</tr>
+				<tr>
+					<td>合计</td>
+					<td>{{goodsDetailAmount.goodsCount == 0 ? '' : goodsDetailAmount.goodsCount}}</td>
+					<td>&nbsp;</td>
+					<td>{{goodsDetailAmount.weight == 0 ? '' : goodsDetailAmount.weight.toFixed(1)}}</td>
+					<td>{{goodsDetailAmount.volume == 0 ? '' : goodsDetailAmount.volume.toFixed(2)}}</td>
+					<td>{{goodsDetailAmount.freight == 0 ? '' : goodsDetailAmount.freight}}</td>
+					<td>{{goodsDetailAmount.discount == 0 ? '' : goodsDetailAmount.discount}}</td>
+					<td>{{goodsDetailAmount.deliveryCosts == 0 ? '' : goodsDetailAmount.deliveryCosts}}</td>
+					<td>{{goodsDetailAmount.collectingMoney == 0 ? '' : goodsDetailAmount.collectingMoney}}</td>
+					<td>{{goodsDetailAmount.procedureFee == 0 ? '' : goodsDetailAmount.procedureFee}}</td>
+					<td>{{goodsDetailAmount.goodsPrice == 0 ? '' : goodsDetailAmount.goodsPrice}}</td>
+					<td>{{goodsDetailAmount.offer == 0 ? '' : goodsDetailAmount.offer}}</td>
+					<td>{{goodsDetailAmount.handingCosts == 0 ? '' : goodsDetailAmount.handingCosts}}</td>
+					<td>{{goodsDetailAmount.packingCosts == 0 ? '' : goodsDetailAmount.packingCosts}}</td>
+					<td>{{goodsDetailAmount.pickingCosts == 0 ? '' : goodsDetailAmount.pickingCosts}}</td>
+					<td>{{goodsDetailAmount.upstairsFee == 0 ? '' : goodsDetailAmount.upstairsFee}}</td>
+					<td style="border-right: 0">&nbsp;</td>
+				</tr>
+			</table>
+			
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="yd_list">
+				<tr>
+					<td width="100"><label class="yd_label fr bj_f83">付款方式</label></td>
+					<td class="br_00"><div class="yd_select"><select id="_paymentType" class="xl_z" ng-disabled="all" ng-model="form.ordFee.paymentType" ng-options="objCon.codeValue as objCon.codeName for  objCon in paymentTypeData.items" ng-change="paymentChange(form.ordFee.paymentType)"></select></div></td>
+					<td width="100"><label class="yd_label fr">现付</label></td>
+					<td class="br_00"><input id="_cashPayment" class="form_input fl" style="width: 70%" type="text" maxlength="11" ng-model="form.ordFee.cashPayment" ng-disabled="form.ordFee.paymentType != 5" my-num-val='keyup'><span class="fl yd_span">元</span></td>
+					<td width="100"><label class="yd_label fr">提付</label></td>
+					<td class="br_00"><input id="_freightCollect" class="form_input fl" style="width: 70%" type="text" maxlength="11" ng-model="form.ordFee.freightCollect" ng-disabled="form.ordFee.paymentType != 5" my-num-val='keyup'><span class="fl yd_span">元</span></td>
+					<td width="100"><label class="yd_label fr">回单付</label></td>
+					<td class="br_00"><input id="_receiptPayment" class="form_input fl" style="width: 70%" type="text" maxlength="11" ng-model="form.ordFee.receiptPayment" ng-disabled="form.ordFee.paymentType != 5" my-num-val='keyup' ><span class="fl yd_span">元</span></td>
+					<td width="100"><label class="yd_label fr">月结</label></td>
+					<td><input id="_monthlyPayment" class="form_input fl" style="width: 70%" type="text" maxlength="11" ng-model="form.ordFee.monthlyPayment" ng-disabled="form.ordFee.paymentType != 5" my-num-val='keyup'><span class="fl yd_span">元</span></td>
+				</tr>
+				<tr>
+					<td width="100"><label class="yd_label fr ">回单号码</label></td>
+					<td class="br_00"><input id="_receiptNum" class="form_input co_35a" ng-disabled="all"  type="text" ng-model="form.orderInfo.receiptNum"></td>
+					<td width="100"><label class="yd_label fr">回单数量</label></td>
+					<td class="br_00"><input id="_receiptCount" class="form_input fl" style="width: 70%;" ng-disabled="all" type="text" maxlength="11" ng-model="form.orderInfo.receiptCount" ng-change="upNum('form.orderInfo.receiptCount')"><span class="fl yd_span">份</span></td>
+					<td colspan="7"></td>
+				</tr>
+				<tr>
+					<td width="100"><label class="yd_label fr ">备注</label></td>
+					<td class="br_00" colspan="5"><input id="_remarks" class="form_input co_35a" ng-disabled="all" style="margin-right:10px;" type="text" maxlength="200" ng-model="form.orderInfo.remarks"></td>
+					<td colspan="4">
+						<div class="controls fl" style="margin-left: 40px;">
+							<input id="check-3" class="none" type="checkbox" ng-disabled="all"  name="check-3" ng-model="isPayDiscount" ng-click="updateChecked()"/>
+							<label for="check-3" class="yd_span">回扣已返</label>
+						</div>
+						<div class="controls fl" style="margin-left: 30px;">
+							<input id="check-4" class="none" type="checkbox" ng-if="form.ordFee.paymentType==1" ng-disabled="all" name="check-4"  ng-model="isPayCash" ng-click="updateChecked()"/>
+							<label ng-if="form.ordFee.paymentType==1" for="check-4" class="yd_span">现付尚欠</label>
+						</div>
+						<div class="controls fl" style="margin-left: 30px;">
+							<!-- 等同于“等放货通知” -->
+							<input class="none" id="check-1" type="checkbox" name="check-1"  ng-disabled="all" ng-model="releaseNote"  ng-click="updateChecked()"/>
+							<label for="check-1" class="yd_span">要求控货</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100"><label class="yd_label fr ">开单人员</label></td>
+					<td class="br_00">{{userName}}
+						<!-- <div class="yd_select">
+							<select id="_inputUserId" class="xl_z" ng-model="form.orderInfo.inputUserId" ng-disabled="all"  ng-options="objCon.userId as objCon.userName for  objCon in userInfoData.items | filter:{userType:3}">
+						</div> -->
+					</td>
+					<td width="100"><label class="yd_label fr">开单网点</label></td>
+					<td class="br_00" colspan="3">{{currOrgName}}</td>
+					<td colspan="4">
+						<div class="controls fl" style="margin-left: 40px;">
+							<input id="check-5" class="none" type="checkbox" name="check-5" checked="checked" ng-disabled="all"/><label for="check-5" class="yd_span">打印运单</label>
+						</div>
+						<div class="controls fl" style="margin-left: 30px;">
+							<input id="check-7" class="none"  type="checkbox" name="check-7" checked="checked" ng-disabled="all"/><label for="check-7" class="yd_span">打印回单</label>
+						</div>
+						<div class="controls fl" style="margin-left: 30px;">
+							<input id="check-6" class="none" type="checkbox" name="check-6" checked="checked" ng-disabled="all"/><label for="check-6" class="yd_span">打印标签</label>
+						</div>
+						<div class="fl">
+							<input id="_totalCount" class="form_input fl co_35a" type="text" style="width: 40px; padding-left: 10px; height: auto; line-height: 22px; text-indent: 0;" ng-model="totalCount" />
+							<span class="fl yd_span">份</span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100"><label class="yd_label fr bj_f83">中转网点</label></td>
+					<td class="br_00">
+						<div class="yd_select" style="width: 100px;">
+                             <select style="width: 160px;" id="_distributionOrgId" ng-disabled="all" ng-model="form.orderInfo.distributionOrgId" ng-options="objCon.endOrgId as objCon.endOwnerName for objCon in roateData.items" ng-change="changeDistributionOrgId(form.orderInfo.distributionOrgId);"></select>
+                        </div>
+					</td>
+					<td width="100"><label class="yd_label fr bj_f83">中转城市</label></td>
+					<td class="br_00" colspan="3">
+						<input class="form_input" type="text" readonly="readonly" placeholder="" ng-model="form.orderInfo.hubName">
+					</td>
+					<td width="100"><label class="yd_label fr">线路路由</label></td>
+					<td colspan="4"><input class="form_input" type="text" readonly="readonly" ng-model="routeTowardsDtl" /></td>
+				</tr>
+			</table>
+		</div>
+		<div class="bottom_nav1">
+			<a class="button ml_10 baoc" href="javascript:void(0)" ng-show="view" ng-click="submit()"><i class="button_icon button_icon dw_baoc"></i>保 存</a>
+			
+			<a href="javascript:void(0)" ng-show="pageType==1" ng-click="resetData();">重新开单</a>
+			<a href="javascript:void(0)" ng-click="saveAndPrintExpressInfo();">{{pageType == 2 ? '打印运单' : '保存并打印运单'}}</a>
+			<a href="javascript:void(0)" ng-click="printEnvelopeInfo();">打印回单</a>
+			<a href="javascript:void(0)" ng-click="printStickerInfo();">打印标签</a>
+			<a href="javascript:void(0)" ng-click="close();">返回</a>
+			<span style="position: relative; display:inline-block;" ng-hide="isFbzxOperator">
+				<div style="position:absolute; bottom:34px; left:0; margin-left:-130px/* margin-left值=下面div宽502(500+2) - 按钮宽度 /2 */;" ng-show="priceShow">
+					<div style="width:400px; height:60px; background:#fff; border:1px solid #dedede;border-radius:4px;">
+						<span style="cursor:pointer; position: absolute; top: 0; right: 0; width: 20px; height: 10px;" href="javascript:void(0)" ng-click="hidePrice();">X</span>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+							<tr>
+								<td style="text-align: center;" class="w_b11 list_1_td" ng-repeat="obj in allCost.costList">{{obj.feeName}}</td>
+			              	</tr>
+			              <tr >
+								<td style="text-align: center;" class="list_1_td " ng-repeat="obj in allCost.costList">{{obj.costAmount!=undefined ? obj.costAmount/100 : ''}}</td>
+			              </tr>
+			            </table>
+					</div>
+					<div class="arrow-down"></div>
+				</div>
+				<a class="button ml_10 see_b" href="javascript:void(0)" ng-click="checkPrice(false,true);"><i class="button_icon button_icon dw_see_b"></i>查看出货成本</a>
+				
+			</span>
+		</div>
+	</div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/lodop/lodop-business.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/autoCompleteDiv.js?v=${ver}"></script>
+	<script type="text/javascript" src="thridPatryBillingCtrl.js?v=${ver}"></script>
+</body>
+</html>

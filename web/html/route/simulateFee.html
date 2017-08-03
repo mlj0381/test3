@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="simulateFeeApp">
+	<head>
+	    <title>众邦_运营管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css"/>
+        <script type="text/javascript" src="js/jquery.js?v=${ver}"></script>
+</head>
+	<body ng-controller="simulateFeeCtrl">
+    	     
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 plr_20" >
+                <ul class="search_term clearfix">
+                <li class="term_li"><label class="term_label"><em>*</em>交接方式：</label><div class="form_select w_b62 fl">
+                                 <select id="_deliveryType" ng-model="data.deliveryType" 
+                                  ng-options="objCon.codeValue as objCon.codeName for objCon in deliveryTypeData.items"
+                                  ng-change="changeType(data.deliveryType)">
+                                 </select>
+                            </div>
+                    </li>
+                	<li class="term_li">
+                	  <label class="term_label"><em>*</em>开单网点：</label>
+                            <div class="form_select w_b62 fl" >
+                               <select ng-model="data.beginOrgId"
+									ng-options="obj.orgId as obj.orgName for  obj in orgInfo" ng-change="queryRoateRuting(data.beginOrgId)">
+								</select>
+                        </div>
+                     </li>
+                    <li class="term_li"><label class="term_label"><em>*</em>配送网点：</label>
+	                    <div class="form_select w_b62 fl">
+	                                <select ng-model="data.endOrgId"
+									        ng-options="obj.endOrgId as obj.endOwnerName for obj in roateData.items" ng-change="doQueryArea(data.endOrgId)">
+								    </select>
+	                      </div>
+                     </li>
+                    <li class="term_li">
+	                    <label class="term_label"><em>*</em>体积(方)：</label>
+	                    <input  class="form_term w_b62" type="text"  maxlength="11" ng-model="data.volume" my-double-val='keyup'/>
+                    </li>
+                    <li class="term_li">
+	                    <label class="term_label"><em>*</em>重量(千克)：</label>
+	                    <input  class="form_term w_b62" type="text" maxlength="11" ng-model="data.weight" my-double-val='keyup'/>
+                    </li>
+                    
+                    <li class="term_li" ng-show="data.deliveryType==3">
+                               <label class="term_label">有无电梯：</label>
+                               <div class="form_select w_b62 fl">
+	                                <select name="select" id="_isExistsElevator" ng-model="data.isLift">
+											<option selected="selected" value="0">楼梯</option>
+											<option value="1">电梯</option>
+								    </select>
+                               </div>
+                    </li>
+					<li class="term_li" ng-show="data.deliveryType==3"><label class="term_label">楼层：</label>
+					<div class="form_select w_b62 fl">
+	                             <select id="_floor" ng-model="data.floor" >
+			                     	<option value="2">二楼</option>
+			                     	<option value="3">三楼</option>
+			                     	<option value="4">四楼</option>
+			                     	<option value="5">五楼</option>
+			                     	<option value="6">六楼</option>
+			                     	<option value="7">七楼</option>
+			                     	<option value="8">八楼</option>
+			                     	<option value="9">九楼</option>
+			                     </select>
+                            </div>
+                      </li>
+				      <li class="term_li" ><label class="term_label">收取装卸费：</label><div class="form_select w_b62 fl">
+                            <select name="select" id="_isExistsElevator" ng-model="data.isCalHandling">
+										<option selected="selected" value="1">是</option>
+										<option value="2">否</option>
+							    </select>
+                            </div>
+                      </li>
+					<li class="term_li" ng-show="data.deliveryType!=1">
+						<label class="term_label">配送区域：</label>
+						<div class="form_select w_b62 fl">
+	                         <select id="_descRegion" ng-model="data.descRegion" ng-options="objCon.areaId as objCon.areaName for objCon in areaData.items" ></select>
+	                    </div>
+                    </li>
+                    <li class="term_li fr" style="width:auto;"><div class="bottom_search"><a href="javaScript:void(0)" ng-click="checkPrice()">算费</a><a href="javaScript:void(0)" ng-click="clean()">清空</a></div></li>
+                    
+                </ul> 
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix ng-cloak"><h2 style="font-weight: bold;font-size: 14px; font-family:Microsoft YaHei; color:#333;">线路费用</h2></div>
+				<div style="position: relative;border:1px solid #e0e5e9; border-bottom:0;">
+                	<table border="0" cellspacing="0" cellpadding="0" class="search_list" width="100%">
+                                <thead>
+                                  <tr>
+                                    <th>路由顺序</th>
+                                    <th>发车网点</th>
+                                    <th>到达网点</th>
+                                    <th>收入网点</th>
+                                    <th>计费类型</th>
+                                    <th>金额</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="o in routeData">
+                                    <td>{{o.sequence}}</td>
+                                    <td>{{o.startOrgName}}</td>
+                                    <td>{{o.endOrgName}}</td>
+                                    <td>{{o.receiOrgName}}</td>
+                                    <td>{{billingType}}</td>
+                                    <td>{{o.costAmount/100}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                </div>
+				<div class="bottom_nav pb_20 bottom_nav_search clearfix ng-cloak"  style="border-top:0;"><h2 style="font-weight: bold;font-size: 14px; font-family:Microsoft YaHei; color:#333;">网点费用</h2></div>
+				<div style="position: relative;border:1px solid #e0e5e9; border-bottom:0;">
+                	<table border="0" cellspacing="0" cellpadding="0" class="search_list" width="100%">
+                                <thead>
+                                  <tr>
+                                    <th>收入网点</th>
+                                    <th>科目</th>
+                                    <th>计费类型</th>
+                                    <th>金额</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="o in orgData">
+                                    <td>{{o.orgName}}</td>
+                                    <td>{{o.feeName}}</td>
+                                    <td>{{billingType}}</td>
+                                    <td>{{o.costAmount/100}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                </div>
+		</div>
+			<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="simulateFeeCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

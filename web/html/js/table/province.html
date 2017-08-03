@@ -1,0 +1,69 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<input type="text" id="isFocus" 
+ng-click="inputClick()" 
+ng-model="value" 
+ng-change="changeValue()" 
+readonly="readonly"
+ng-blur="blurOut()"
+class = "{{tableClass}}"
+ng-disabled="tableDisabled == true"
+></input>
+<div class="ng-hide my_zy" ng-mouseenter="mouseIn()" ng-mouseleave="mouseOut()" ng-show="isShow" style="position: absolute; z-index: 999999;">
+	<div class="content">
+		<div class="m JD-stock">
+			<span>
+				<div class="dx_a">
+					您的筛选条件：
+					<span>{{chooseProvinceName}}<em></em></span>
+					<span>{{chooseCityName}}<em></em></span>
+					<span>{{chooseCountyName}}<em></em></span>
+				</div>
+			</span>
+			<div class="mt">
+				<ul class="tab">
+					<li data-index="0" ng-click="changeTab(1)" ng-class="{curr:tabShowIndex==1}">
+						<a href="javascript:void(0);" ng-class="{hover:tabShowIndex==1}"><em>省份</em><i></i></a>
+					</li>
+					<li data-index="1" ng-click="changeTab(2)" ng-class="{curr:tabShowIndex==2}">
+						<a href="javascript:void(0);" ng-class="{hover:tabShowIndex==2}"><em>地市</em><i></i></a>
+					</li>
+					<li data-index="2" ng-click="changeTab(3)" ng-class="{curr:tabShowIndex==3}">
+						<a href="javascript:void(0);" ng-class="{hover:tabShowIndex==3}"><em>县区</em><i></i></a>
+					</li>
+				</ul>
+				<div class="stock-line"></div>
+			</div>
+			<div class="mc" ng-show="tabShowIndex==1">
+				<ul class="area-list">
+					<li ng-click="provinceClick(p.id,p.name)" ng-repeat="p in province">
+					<a ng-class="{bh:chooseProvinceId==p.id}" href="javascript:void(0);">{{p.name}}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="mc" ng-show="tabShowIndex==2">
+				<ul class="area-list">
+					<li ng-click="cityClick(c.id,c.name)" ng-repeat="c in city">
+					<a ng-class="{bh:chooseCityId==c.id}" href="javascript:void(0);">{{c.name}}</a></li>
+				</ul>
+			</div>
+			<div class="mc" ng-show="tabShowIndex==3">
+				<ul class="area-list">
+					<li ng-click="countyClick(c.id,c.name)" ng-repeat="c in county">
+					<a ng-class="{bh:chooseCountyId==c.id}" href="javascript:void(0);">{{c.name}}</a></li>
+				</ul>
+			</div>
+			<div class="titleCity">
+				<h3>选择地市信息</h3>
+			</div>
+			<div class="close_m">
+				<a class="ui-city-close" href="javascript:void(0);" ng-click="close()">x</a>
+			</div>
+			<div class="qc_q">
+				<a class="ui-city-clos" href="javascript:void(0);" ng-click="clear()">清除</a>
+			</div>
+			<div class="qr_q">
+				<a class="ui-city-clos" href="javascript:void(0);" ng-click="confirm()">确认</a>
+			</div>
+		</div>
+	</div>
+</div>

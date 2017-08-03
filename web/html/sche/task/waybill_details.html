@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="wayBillDetailApp">
+	<head>
+	    <title>运单详情</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运会" />
+<meta name="description" content="联运会" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+</head>
+	<body ng-controller="wayBillDetailCtrl"  style="overflow: hidden;">
+		<div class="billing_1 ng-cloak" style="padding-bottom:20px;margin-bottom: 20px;">
+			<ul class="waybill_tab clearfix" id="tags">
+				<li class="hover"  id="two0"><a class="a1" ng-click="tabShow('two',0,5)"  href="javascript:void(0)">安装信息</a></li>
+				<li id="two1"><a class="a1" ng-click="tabShow('two',1,5)"  href="javascript:void(0)">基本信息</a></li>
+                <li id="two2"><a class="a1" ng-click="tabShow('two',2,5)"  href="javascript:void(0)">轨迹信息</a></li>
+				<li id="two3"><a class="a1" ng-click="tabShow('two',3,5)"  href="javascript:void(0)">异常信息</a></li>
+				<li id="two4"><a class="a1" ng-click="tabShow('two',4,5)"  href="javascript:void(0)">签收信息</a></li>
+			</ul>
+				<!--安装信息 start-->
+			<div id="con_two_0">
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>安装信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table">
+				  <tr>
+					<td class="waybill_table_r" width="12%">货品</td>
+					<td width="13%">{{showData.ordOrderInfo.products}}</td>
+					<td class="waybill_table_r" width="12%">运单号</td>
+					<td width="13%">{{showData.ordOrderInfo.trackingNum}}</td>
+					<td class="waybill_table_r" width="12%">服务类型</td>
+					<td width="13%">{{showData.ordOrderInfo.deliveryTypeName}}</td>
+					<td class="waybill_table_r" width="12%">发货网点</td>
+					<td width="13%">{{showData.ordOrderInfo.orgIdName}}</td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">收货人省份</td>
+					<td>{{showData.ordOrderInfo.destProvinceName}}</td>
+					<td class="waybill_table_r">收货人城市</td>
+					<td>{{showData.ordOrderInfo.destCityName}}</td>
+					<td class="waybill_table_r">收货人区县</td>
+					<td colspan="3">{{showData.ordOrderInfo.destCountyName}}</td>
+					
+				  </tr>
+				   <tr>
+					<td class="waybill_table_r" width="12%">详细地址</td>
+					<td colspan="3">{{showData.ordOrderInfo.address}}</td>
+					<td class="waybill_table_r" width="12%">收货人</td>
+					<td width="13%">{{showData.ordOrderInfo.consigneeName}}</td>
+					<td class="waybill_table_r" width="12%">收货人手机</td>
+					<td>{{showData.ordOrderInfo.consigneeBill}}</td>
+				  </tr>
+				  
+				   <tr>
+					<td class="waybill_table_r">安装师傅账号</td>
+					<td>{{showData.installInfo.phone}}</td>
+					<td class="waybill_table_r">安装师傅</td>
+					<td>{{showData.installInfo.name}}</td>
+					<td class="waybill_table_r">配安费</td>
+					<td colspan="3">{{showData.installInfo.branchAndInstallFee}}</td>
+					
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">备注</td>
+					<td colspan="7">{{showData.installInfo.remark}}</td>
+					
+					
+				  </tr>
+				  
+				</table>
+				
+				
+				<!--时间节点 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>时间节点</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>运单号</th>
+						<th>干线开始时间</th>
+						<th>干线结束时间</th>
+						<th>接单时间</th>
+						<th>提货时间</th>
+						<th>预约时间</th>
+						<th>预约上门时间</th>
+						<th>签收时间</th>						
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr class="waybill_table_listtr">
+					<td>{{showData.ordOrderInfo.trackingNum}}</td>
+					<td>{{showData.taskInfo[0].gxStartTime}}</td>
+					<td>{{showData.taskInfo[0].gxEndTime}}</td>
+					<td>{{showData.taskInfo[0].acceptTime}}</td>
+					<td>{{showData.taskInfo[0].pickTime}}</td>
+					<td>{{showData.taskInfo[0].upFixTime}}</td>
+					<td>{{showData.taskInfo[0].yyTime|limitTo:10}}&nbsp;{{showData.taskInfo[0].ipFixTime}} </td>
+					<td>{{showData.taskInfo[0].signTime}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--时间节点 end-->
+				
+				<!--任务信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>任务信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>任务编号</th>
+						<th>分配人</th>
+						<th>分配时间</th>
+						<th>接收人</th>
+						<th>联系方式</th>
+						<th>配安费</th>
+						<th>任务类型</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr   ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in showData.taskInfo">
+					<td>{{o.taskId}}</td>
+					<td>{{o.belongObjName}}</td>
+					<td>{{o.distributionTime}}</td>
+					<td>{{o.doObjName}}</td>
+					<td>{{o.doTel}}</td>
+					<td>{{o.branchAndInstallFee}}</td>
+					<td>{{o.taskTypeName}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--任务信息 end-->
+			</div>
+			<!--安装信息 end-->
+			<!--基本信息 start-->
+			<div id="con_two_1" style="display: none;">
+				<!--运单信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>运单信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table">
+				  <tr>
+					<td class="waybill_table_r" width="12%">运单号</td>
+					<td width="13%">{{showData.ordOrderInfo.trackingNum}}</td>
+					<td class="waybill_table_r" width="12%">开单员</td>
+					<td width="13%">{{showData.ordOrderInfo.inputUserName}}</td>
+					<td class="waybill_table_r" width="12%">开单时间</td>
+					<td width="13%">{{showData.ordOrderInfo.createDate}}</td>
+					<td class="waybill_table_r" width="12%">开单网点</td>
+					<td width="13%">{{showData.ordOrderInfo.orgIdName}}</td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">发货人</td>
+					<td>{{showData.ordOrderInfo.consignorName}}</td>
+					<td class="waybill_table_r">发货人电话</td>
+					<td>{{showData.ordOrderInfo.consignorTelephone}}</td>
+					<td class="waybill_table_r">发货人手机</td>
+					<td>{{showData.ordOrderInfo.consignorBill}}</td>
+					<td class="waybill_table_r"></td>
+					<td></td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">收货人</td>
+					<td>{{showData.ordOrderInfo.consigneeName}}</td>
+					<td class="waybill_table_r">收货地</td>
+					<td>{{showData.ordOrderInfo.destProvinceName}}{{showData.ordOrderInfo.destCityName}}{{showData.ordOrderInfo.destCountyName}}{{showData.ordOrderInfo.destStreetName}}{{showData.ordOrderInfo.address}}</td>
+					<td class="waybill_table_r">收货人电话</td>
+					<td>{{showData.ordOrderInfo.consigneeTelephone}}</td>
+					<td class="waybill_table_r">收货人手机</td>
+					<td>{{showData.ordOrderInfo.consigneeBill}}</td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">到付</td>
+					<td>{{showData.ordFee.freightCollect != undefined ? showData.ordFee.freightCollect/100 : ""}}</td>
+					<td class="waybill_table_r">现付</td>
+					<td>{{showData.ordFee.cashPayment != undefined ? showData.ordFee.cashPayment/100 : ""}}</td>
+					<td class="waybill_table_r">回单付</td>
+					<td>{{showData.ordFee.receiptPayment != undefined ? showData.ordFee.receiptPayment/100 : ""}}</td>
+					<td class="waybill_table_r">月结</td>
+					<td>{{showData.ordFee.monthlyPayment != undefined ? showData.ordFee.monthlyPayment/100 : ""}}</td>
+				  </tr>
+				  <tr>
+					<!-- <td class="waybill_table_r">其他费用</td>
+					<td>{{showData.ordFee.freight != undefined ? showData.ordFee.freight/100
+					+showData.ordFee.discount/100+
+					showData.ordFee.deliveryCosts/100+
+					showData.ordFee.packingCosts/100+
+					showData.ordFee.handingCosts/100+
+					showData.ordFee.pushMoney/100+
+					showData.ordFee.collectingMoney/100+
+					showData.ordFee.procedureFee/100+
+					showData.ordFee.offer/100+
+					showData.ordFee.upstairsFee/100 : ""}}</td> -->
+					<td class="waybill_table_r">合计金额</td>
+					<td>{{showData.ordOrderInfo.totalFee/100 | number:2}}</td>
+					<td class="waybill_table_r">回单号</td>
+					<td>{{showData.ordOrderInfo.receiptNum}}</td>
+					<td class="waybill_table_r">回单份数</td>
+					<td>{{showData.ordOrderInfo.receiptCount}}</td>
+						<td class="waybill_table_r"></td>
+					<td></td>
+				  </tr>
+				  <tr>
+					<td class="waybill_table_r">详细地址</td>
+					<td colspan="3">{{showData.ordOrderInfo.address}}</td>
+					<td class="waybill_table_r">运单备注</td>
+					<td colspan="3">{{showData.ordOrderInfo.remarks}}</td>
+				  </tr>
+				</table>
+				<!--运单信息 end-->
+				
+				<!--货物信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>货物信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>产品</th>
+						<th>包装</th>
+						<th>数量</th>
+						<th>重量</th>
+						<th>体积</th>
+						<th>计费方式</th>
+						<th ng-hide="showData.type==1">单价</th>
+						<th>服务类型</th>
+						<th ng-hide="showData.type==1">保价费</th>
+						<th ng-hide="showData.type==1">代收货款</th>
+						<th ng-hide="showData.type==1">运费</th>
+						<th ng-hide="showData.type==1">配安费</th>
+						<th ng-hide="showData.type==1">上楼费</th>
+						<th ng-hide="showData.type==1">卸货费</th>
+						<th ng-hide="showData.type==1">包装费</th>
+						<th ng-hide="showData.type==1">提货费</th>
+						<th ng-hide="showData.type==1">回扣</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr  ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in showData.productInfo">
+					<td>{{o.goodsName}}</td>
+					<td>{{o.packingTypeName}}</td>
+					<td>{{o.packageCounts}}</td>
+					<td>{{o.weight}}</td>
+					<td>{{o.volume}}</td>
+					<td>{{o.billingTypeName}}</td>
+					<td ng-hide="showData.type==1">{{o.goodsPrice != undefined ? o.goodsPrice/100 : ""}}</td>
+					<td>{{showData.ordOrderInfo.serviceTypeName}}</td>
+					<td ng-hide="showData.type==1">{{o.offer != undefined ? o.offer/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.collectingMoney != undefined ? o.collectingMoney/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.freight != undefined ? o.freight/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.installCosts  != undefined ? o.installCosts/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.upstairsFee != undefined ? o.upstairsFee/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.handingCosts != undefined ? o.handingCosts/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.packingCosts != undefined ? o.packingCosts/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.pickingCosts != undefined ? o.pickingCosts/100 : ""}}</td>
+					<td ng-hide="showData.type==1">{{o.discount != undefined ? o.discount/100 : ""}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--货物信息 end-->
+					<!--提货信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>提货信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>提货手机</th>
+						<th>提货地址</th>
+						<th>提货码</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr  class="waybill_table_listtr">
+						<td>{{showData.ordOrderInfo.pickTel}}</td>
+					<td>{{showData.ordOrderInfo.pickAddr}}</td>
+					<td>{{showData.ordOrderInfo.pickCode}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--提货信息 end-->
+			</div>
+			<!--基本信息 end-->
+			
+			<!--轨迹信息 start-->
+			<div id="con_two_2" style="display:none">
+				<!--日志记录 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>日志记录</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>网点名称</th>
+						<th>运单号</th>
+						<th>日志类型</th>
+						<th  width="40%">操作信息</th>
+						<th>操作人</th>
+						<th>操作时间</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in showData.opLog">
+					<td>{{o.orgIdName}}</td>
+					<td>{{o.trackingNum}}</td>
+					<td>{{o.opTypeName}}</td>
+					<td title="{{o.opContent}}">{{o.opContent}}</td>
+					<td>{{o.opName}}</td>
+					<td>{{o.createDate}}</td>
+					
+				  </tr>
+				  </tbody>
+				</table>
+				<!--日志记录 end-->
+			</div>
+			<!--轨迹信息 end-->
+			
+			<!--异常信息 start-->
+			<div id="con_two_3" style="display:none;min-height: 350px;">
+				<!--异常信息 start-->
+				<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>异常信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>运单号</th>
+						<th>异常类型</th>
+						<th>异常件数</th>
+						<th>处理意见</th>
+						<th>异常状态</th>
+						<th>处理时间</th>
+						<th>处理人</th>
+						<th>创建人</th>
+						<th>创建时间</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				   <tr ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak"
+							ng-repeat="o in showData.exceptionInfo">
+					<td>{{o.trackingNum}}</td>
+					<td>{{o.excTypeName}}</td>
+					<td>{{o.count}}</td>
+					<td>{{o.handleIdea}}</td>
+					<td>{{o.excStateName}}</td>
+					<td>{{o.handleDate}}</td>
+					<td>{{o.handleOpIdName}}</td>
+					<td>{{o.opIdName}}</td>
+					<td>{{o.createTime}}</td>
+					
+				  </tr>
+				  </tbody>
+				</table>
+				<!--异常信息 end-->
+			</div>
+			<!--异常信息 end-->
+			<div id="con_two_4" style="display: none;">
+				<div class="tx_tc">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table">
+					  <tbody><tr>
+						<td width="10%"><label class="control-label w_100">签收人：</label></td>
+						<td width="40%"><input disabled="disabled"  class="input_box input_bbj" type="text" value="{{showData.signInfo.signer}}"></td>
+						<td width="10%"><label class="control-label w_100">签收状态：</label></td>
+						<td width="40%"><div class="search_select w_146">
+									<select name="select" class="xl_z">
+										<option selected="selected">{{showData.signInfo.signStateName}}</option>
+									</select>
+								</div>
+						</td>
+					  </tr>
+					  <tr>
+						<td width="10%"><label class="control-label w_100">证件类型：</label></td>
+						<td><div class="search_select w_146">
+									<select name="select" class="xl_z">
+										<option selected="selected">{{showData.signInfo.idTypeName}}</option>
+									</select>
+								</div></td>
+						<td width="10%"><label class="control-label w_100">证件号：</label></td>
+						<td><input class="input_box" id="" value="{{showData.signInfo.idNo}}" type="text"></td>
+						
+					  </tr>
+					  <tr>
+						<td width="10%" valign="top"><label class="control-label w_100">签收描述：</label></td>
+						<td colspan="3"><textarea maxlength="500" disabled="disabled"  style="height:90px; width:100%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;"  class="form-control">{{showData.signInfo.exceptionDec1}}</textarea>
+						</td>
+						
+						
+					  </tr>
+			
+					</tbody></table>
+					
+					<ul class="dd_cx clearfix" style=" margin:30px 0 40px 98px;">
+						<li><span my-File-Model="idenCard1" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard2" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard3" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard4" is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard5" is-Close="false" ></span></li>
+					</ul>
+				</div>
+			</div>
+					<div class="tx_tc_button" style=" border-top: 1px solid #f0f5fb; padding:20px 0;"><a class="search_button_cz" href="javascript:void(0);" ng-click="close()">关闭</a></div>
+		
+		</div>
+		
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="wayBillDetailCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

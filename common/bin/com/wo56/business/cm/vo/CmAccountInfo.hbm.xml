@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-8 16:39:51 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmAccountInfo" table="cm_account_info">
+		<id name="accountId" type="long">
+			<column name="ACCOUNT_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="userId" type="long">
+			<column name="USER_ID" not-null="true">
+				<comment>&#231;&#148;&#168;&#230;&#136;&#183;ID</comment>
+			</column>
+		</property>
+		<property name="accountPwd" type="string">
+			<column name="ACCOUNT_PWD" length="50">
+				<comment>&#232;&#180;&#166;&#230;&#136;&#183;&#229;&#175;&#134;&#231;&#160;&#129;</comment>
+			</column>
+		</property>
+		<property name="modPwdTime" type="timestamp">
+			<column name="MOD_PWD_TIME" length="19">
+				<comment>&#228;&#191;&#174;&#230;&#148;&#185;&#229;&#175;&#134;&#231;&#160;&#129;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+			</column>
+		</property>
+		<property name="balance" type="long">
+			<column name="BALANCE" not-null="true">
+				<comment>&#232;&#180;&#166;&#230;&#136;&#183;&#228;&#189;&#153;&#233;&#162;&#157;</comment>
+			</column>
+		</property>
+		<property name="accountType" type="int">
+			<column name="ACCOUNT_TYPE" not-null="true">
+				<comment>&#229;&#184;&#144;&#230;&#136;&#183;&#231;&#177;&#187;&#229;&#158;&#139;
+					1&#227;&#128;&#129;&#229;&#133;&#172;&#229;&#143;&#184;&#232;&#180;&#166;&#230;&#136;&#183;
+					2&#227;&#128;&#129;&#231;&#189;&#145;&#231;&#130;&#185;&#232;&#180;&#166;&#230;&#136;&#183;
+					3&#227;&#128;&#129;&#231;&#148;&#168;&#230;&#136;&#183;&#232;&#180;&#166;&#230;&#136;&#183;</comment>
+			</column>
+		</property>
+		<property name="remark" type="string">
+			<column name="REMARK" not-null="true">
+				<comment>&#229;&#164;&#135;&#230;&#179;&#168;</comment>
+			</column>
+		</property>
+		<property name="orgId" type="long">
+			<column name="ORG_ID" not-null="true">
+				<comment>&#231;&#189;&#145;&#231;&#130;&#185;ID</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="long">
+			<column name="TENANT_ID" not-null="true">
+				<comment>&#231;&#167;&#159;&#230;&#136;&#183;ID</comment>
+			</column>
+		</property>
+		<property name="opId" type="long">
+			<column name="OP_ID" not-null="true">
+				<comment>&#230;&#147;&#141;&#228;&#189;&#156;&#229;&#145;&#152;ID</comment>
+			</column>
+		</property>
+		<property name="createTime" type="timestamp">
+			<column name="CREATE_TIME" length="19" not-null="true">
+				<comment>&#229;&#136;&#155;&#229;&#187;&#186;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

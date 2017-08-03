@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-12 11:55:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrderInfoChild" table="order_info_child">
+		<id name="childOrderId" type="java.lang.Long">
+			<column name="child_Order_Id" />
+			<generator class="identity" />
+		</id>
+		<property name="orderId" type="java.lang.Long">
+			<column name="ORDER_ID" not-null="true">
+				<comment>订单ID</comment>
+			</column>
+		</property>
+		<property name="trackingNum" type="java.lang.String">
+			<column name="TRACKING_NUM" length="50">
+				<comment>运单号</comment>
+			</column>
+		</property>
+		<property name="childTrackingNum" type="java.lang.String">
+			<column name="CHILD_TRACKING_NUM" length="50">
+				<comment>子运单号</comment>
+			</column>
+		</property>
+		<property name="childOrderState" type="java.lang.Integer">
+			<column name="CHILD_ORDER_STATE">
+				<comment>子运单状态</comment>
+			</column>
+		</property>
+		<property name="dispatchingOrgId" type="java.lang.Long">
+			<column name="DISPATCHING_ORG_ID">
+				<comment>配送网点</comment>
+			</column>
+		</property>
+		<property name="currentOrgId" type="java.lang.Long">
+			<column name="CURRENT_ORG_ID">
+				<comment>当前网点</comment>
+			</column>
+		</property>
+		<property name="createId" type="java.lang.Long">
+			<column name="CREATE_ID">
+				<comment>创建人id</comment>
+			</column>
+		</property>
+		<property name="createName" type="java.lang.String">
+			<column name="CREATE_NAME">
+				<comment>创建人名称</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="OP_ID">
+				<comment>操作人id</comment>
+			</column>
+		</property>
+		<property name="opName" type="java.lang.String">
+			<column name="OP_NAME">
+				<comment>操作人名称</comment>
+			</column>
+		</property>
+		<property name="opTime" type="java.util.Date">
+			<column name="OP_TIME">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID">
+				<comment>租户id</comment>
+			</column>
+		</property>
+		
+		<property name="childTrackingNumAli" type="java.lang.String">
+			<column name="CHILD_TRACKING_NUM_ALI">
+				<comment>子运单别名</comment>
+			</column>
+		</property>
+		
+		<property name="dispatchingId" type="java.lang.Long">
+			<column name="DISPATCHING_ID">
+				<comment>配送人id</comment>
+			</column>
+		</property>
+		
+		<property name="dispatchingName" type="java.lang.String">
+			<column name="DISPATCHING_NAME">
+				<comment>配送人</comment>
+			</column>
+		</property>
+		
+		<property name="dispatchingTime" type="java.util.Date">
+			<column name="DISPATCHING_TIME">
+				<comment>配送时间</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

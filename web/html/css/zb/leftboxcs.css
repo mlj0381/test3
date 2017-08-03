@@ -1,0 +1,34 @@
+@charset "gb2312";
+/*--side_nav css定义--*/
+.sidebar{ width:150px; max-height:100%; position:fixed; background:#303942}
+
+.side_top{ height:33px; border-bottom:1px solid #1b222c;}
+	.side_top a{ width:50px; height:33px; display:block; background:#212832; position:relative}
+	.side_top a:hover{ background:#34cc99}
+	.icon_bars{background-position:-435px 0px; width:18px; height:12px; display:block; position:absolute; top:11px; left:16px;}
+
+.side_search{ height:39px; padding-top:11px; background:#272f38; padding-right:25px;}
+	.form_control{ width:80px;height: 28px;background: 0;border: 0px;display: block;line-height: 22px;color: #999999;border-radius: 4px; font-size:14px; margin-left:15px;}
+	.form_control::-webkit-input-placeholder { /* WebKit browsers */color:#5e646b;}
+	.form_control::-moz-placeholder { /* Mozilla Firefox 4 to 18 */color:#5e646b;}
+	.form_control::-moz-placeholder { /* Mozilla Firefox 19+ */color:#5e646b;}
+	.form_control::-ms-input-placeholder { /* Internet Explorer 10+ */color:#5e646b;}
+	
+	.btn_inverse{ position:absolute; background:#272f38; border:0; width:28px; height:28px;cursor:pointer;}
+	.sida_search_icon{background-position:-458px 0px; width:16px; height:16px; display:block; cursor:pointer; margin:0 auto;}
+
+.side_nav{}
+	.side_nav li.li{ line-height:48px; border-bottom:1px solid #28313a; border-top:1px solid #3b444d; position:relative}
+	.side_nav li.li a{ color:#fff; font-size:14px; height:48px; display:block; padding-right:25px;}
+	.side_nav li.li  a:hover,.side_nav .hover a{ background:#212832; border-left:3px solid #32cc98; text-decoration:none; position:relative}
+	.side_nav li.li a span{ position:absolute; left:56px;}
+	.navicon_1,.navicon_2,.navicon_3,.navicon_4,.navicon_5,.navicon_6{ position:absolute; left:26px; top:18px;}
+	.navicon_1{background-position:-349px -56px; width:16px; height:16px; display:block;}
+	.navicon_2{background-position:-370px -56px; width:16px; height:16px; display:block}
+	.navicon_3{background-position:-393px -56px; width:16px; height:16px; display:block}
+	.navicon_4{background-position:-413px -56px; width:16px; height:16px; display:block}
+	.navicon_5{background-position:-433px -56px; width:16px; height:16px; display:block}
+	.navicon_6{background-position:-452px -56px; width:16px; height:16px; display:block}
+	
+/*--body 背景 css定义--*/
+.whole_bj{ background:#303942}

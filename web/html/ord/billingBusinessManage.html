@@ -1,0 +1,229 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="billingBusinessManageApp"> 
+	<head>
+	    <title>众邦_运单管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <style type="text/css">
+          .hideString{
+		        white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+		    }
+        </style>
+</head>
+	<body ng-controller="billingBusinessManageCtrl"  onload="setContentHegthDelay(800)" style="overflow: hidden;">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">开单日期：</label>
+                   			</td>
+						<td>
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr" type="text">
+                            </td>
+						<td width="100"><!-- <label class="term_label">开单网点：</label> -->
+							</td>
+						<td><!-- <div class="form_select">
+                                <select class="ng-cloak">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select>
+                                <select ng-model="query.orgId" ng-options="obj.orgId as obj.orgName for  obj in orgData " ng-change="queryOrg()">
+                                </select>
+                            </div> --></td>
+						<td width="100"><!-- <label class="term_label">配送网点：</label> -->
+                        
+                    	</td>
+						<td><!-- <div class="form_select" >
+                                <select ng-model="query.descOrgId" ng-options="obj.endOrgId as obj.endOwnerName for  obj in orgInfo.items ">
+                                </select>
+                            </div> -->
+						</td>
+						
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">运单状态：</label>
+                        
+                    	</td>
+						<td>
+                        <div class="form_select" >
+                                <my-select id="query.orderState" selectid="id='id4'" has-all="true" default-value=-1 code-type="APP_ORDER_STATE"  showName="codeName" showValue="codeId" filter="已删除"></my-select>
+                            </div>
+                        </td>
+						<td width="100"><label class="term_label">运单号：</label></td>
+						<td><input class="form_term" ng-model="query.trackingNum" type="text" maxlength="16" ng-change="upNum('query.trackingNum')"></td>
+						<td width="100"><label class="term_label">发货人手机：</label></td>
+						<td><input class="form_term" maxlength="11" ng-model="query.consignorBill" my-Num-Val type="text"></td>
+						
+						
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">收货人手机：</label>
+                        
+                    	</td>
+						<td>
+                        	<input class="form_term" maxlength="11" ng-model="query.consigneeBill" my-Num-Val type="text">
+                        </td>
+						<td width="100"><label class="term_label">收货方：</label></td>
+						<td><input class="form_term" maxlength="11" ng-model="query.consigneeName"  type="text"></td>
+						<td width="100"><label class="term_label">发货方：</label></td>
+						<td><input class="form_term" maxlength="11" ng-model="query.consignorName" type="text"></td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+		
+                <!--<ul class="search_term clearfix">
+                    	<li class="term_li"><label class="term_label">开单日期：</label><input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term w_b25 fl"  type="text"><span class="search_span w_b10 fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term w_b25 fl" type="text"></li>
+                        <li class="term_li"><label class="term_label">开单网点：</label><div class="form_select w_b60">
+                                <select class="ng-cloak">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select> 
+                                <select ng-model="query.orgId" ng-options="obj.orgId as obj.orgName for  obj in orgData " ng-change="queryOrg()">
+                                </select>
+                            </div></li>
+                        <li class="term_li"><label class="term_label">配送网点：</label>
+                        <div class="form_select w_b60 " >
+                                <select ng-model="query.descOrgId" ng-options="obj.endOrgId as obj.endOwnerName for  obj in orgInfo.items ">
+                                </select>
+                            </div></li>
+                             <li class="term_li"><label class="term_label">订单状态：</label>
+                        <div class="form_select w_b60 " >
+                                <my-select id="query.orderState"  filter="已删除" has-all="true" default-value=1 code-type="ORDER_STATE" ></my-select>
+                              
+                            </div></li>
+                        <li class="term_li"><label class="term_label">运单号：</label><input class="form_term w_b60" ng-model="query.trackingNum" type="text" maxlength="16" ng-change="upNum('query.trackingNum')"></li>
+                        <li class="term_li"><label class="term_label">发货人手机：</label><input class="form_term w_b60" maxlength="11" ng-model="query.consignorBill" my-Num-Val type="text"></li>
+                        <li class="term_li"><label class="term_label">收货人手机：</label><input class="form_term w_b60" maxlength="11" ng-model="query.consigneeBill" my-Num-Val type="text"></li>
+                            <li class="term_li"><label class="term_label">收货方：</label><input class="form_term w_b60" maxlength="11" ng-model="query.consigneeName"  type="text"></li>
+                        <li class="term_li"><label class="term_label">发货方：</label><input class="form_term w_b60" maxlength="11" ng-model="query.consignorName" type="text"></li>
+                        <li class="term_li fr" style="width:auto;"><div class="bottom_search" style="position:inherit;"><a ng-click="doQuery();" href="javascript:void(0)">查询</a><a href="javascript:void(0);" ng-click="clear();">清空</a></div></li>
+                    </ul>-->
+                     <div class="search_nr clearfix mt_20">
+              		<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	              		   <h2>查询结果</h2>
+	              		    <!-- <a ng-click="addView();" href="javascript:void(0)" ng-show="isShow">运单录入</a> -->
+	              		    <!--<a ng-click="toAudit();" href="javascript:void(0)" ng-show="isShow" id="auditId">运单审核</a>-->
+		              		<!-- <a class="button ml_10 modify" href="javascript:void(0)" ng-click="toEdit();" ng-show="isShow"><i class="button_icon button_icon dw_modify ml0"></i>运单修改</a>
+		              		<a class="button ml_10 delete" ng-click="toDel();" href="javascript:void(0)"　ng-show="isShow" id="delOrder"><i class="button_icon button_icon dw_delete ml0"></i>运单删除</a> -->
+		              		<a class="button ml_10 see_b" ng-click="toView(1);" href="javascript:void(0)" ><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+		              		<a href="javascript:void(0)" id="exportId" ng-click="commonExport()">导  出</a>
+	              		    <a ng-click="toView(2);" href="javascript:void()" >打印</a>
+              		</div>
+                <!--   <my-table>
+                  <div class="zz_list" style="overflow:auto;">
+                    
+                         <table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0">
+                               <thead>
+                                <tr>
+                                    <th width="77" class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                    <th width="110">运单号</th>
+                                    <th width="110">开单网点</th>
+                                    <th width="80">订单状态</th>
+                                    <th width="80">数量</th>
+                                    <th width="80">总重量</th>
+                                    <th width="80">总体积</th>
+                                    <th width="90">目的城市</th>
+                                    <th width="90">配送网点</th>
+                                    <th width="98">回单号</th>
+                                    <th width="80">回单份数</th>
+                                    <th width="80">付款方式1</th>
+                                    <th width="80">金额</th>
+                                    <th width="80">付款方式2</th>
+                                    <th width="80">金额</th>
+                                    <th width="80">收货人</th>
+                                    <th width="">收货人手机</th>
+                                    <th width="">配送方式</th>
+                                    <th width="182">收货地址</th>
+                                    <th width="170">备注</th>
+                                </tr>
+                              </thead>
+                         
+                              <tbody>
+                              	
+                                  <tr ng-class="{'search_list_tr':$index%2==1}" class="ng-cloak" ng-click="selectOne(o.orderId);" ng-repeat="o in page.data.items" ng-dblclick="toDetailAllInfo(o.trackingNum);">
+                                  	<td width="77" class="search_list_border"><div class="controls"><input id="checkbox{{o.orderId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="110">{{o.trackingNum}}</td>
+                                    <td width="110">{{o.orgIdName}}</td>
+                                    <td width="80">{{o.orderStateName}}</td>
+                                    <td width="80">{{o.count}}</td>
+                                    <td width="80">{{o.weight.toFixed(1)}}</td>
+                                    <td width="80">{{o.volume.toFixed(2)}}</td>
+                                    <td width="90">{{o.destCityName}}</td>
+                                    <td width="90">{{o.distributionOrgName}}</td>
+                                    <td width="98">{{o.receiptNum}}</td>
+                                    <td width="80">{{o.receiptCount}}</td>
+                                    <td width="80">{{o.paymentTypeName}}</td>
+                                    <td width="80">{{o.cashPayment/100}}</td>
+                                    <td width="80">{{o.paymentType2Name}}</td>
+                                    <td width="90">{{o.cashPayment2/100}}</td>
+                                    <td width="80">{{o.consigneeName}}</td>
+                                    <td width="80">{{o.consigneeBill}}</td>
+                                    <td width="80">{{o.deliveryTypeName}}</td>
+                                    <td width="182" class="hideString" title="{{o.address}}">{{o.address}}</td>
+                                    <td width="170" class="hideString" title="{{o.remarks}}">{{o.remarks}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                        
+                </div>
+                </my-table> -->
+                <my-Adv-Table isShowSeq="false" width="1905px" isMultiSelect="true"  isShowCheck="true" doubleclick="toDetailAllInfo" isFilter="true" isSum="true" id="orderId" head='
+                [{"name":"运单号","code":"trackingNum","width":"110"},
+			                {"name":"开单网点","code":"orgIdName","width":"110"},
+			                {"name":"开单时间","code":"createDate","width":"100"},
+			                {"name":"运单状态","code":"seeOrderStateName","width":"80"},
+			                {"name":"数量","code":"count","isSum":"true","width":"80"},
+			                {"name":"总重量(kg)","code":"weight","isSum":"true","number":"1","width":"80"},
+			                {"name":"总体积(方)","code":"volume","isSum":"true","number":"2","width":"80"},
+			                {"name":"目的城市","code":"destCityName","width":"90"},
+			                {"name":"配送网点","code":"distributionOrgIdName","width":"90"},
+			                {"name":"回单号","code":"receiptNum","width":"100"},
+			                {"name":"回单份数","code":"receiptCount","width":"80"},
+			                {"name":"付款方式1","code":"paymentTypeName","width":"80"},
+			                {"name":"金额(元)","code":"cashMoneyDouble","isSum":"true","width":"80"},
+			                {"name":"付款方式2","code":"paymentType2Name","width":"80"},
+			                {"name":"金额(元)","code":"cashMoney2Double","isSum":"true","width":"80"},
+			                {"name":"收货人","code":"consigneeName","width":"80"},
+			                {"name":"收货人手机","code":"consigneeBill","width":"80"},
+			                {"name":"配送方式","code":"deliveryTypeName","width":"80"},
+			                {"name":"收货地址","code":"address","width":"80"},
+			                {"name":"备注","code":"remarks","width":"170"}]'>
+                </my-Adv-Table>
+		</div>
+        
+        </div>
+
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="billingBusinessManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

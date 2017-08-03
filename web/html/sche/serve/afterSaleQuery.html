@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="afterSaleQueryApp">
+<head>
+<title>调度任务-待签收任务</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="afterSaleQueryCtrl" onload="setContentHegthDelay()"
+	style="overflow: hidden">
+	<div class="billing_1" style="padding-bottom: 20px;">
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="100"><label class="control-label">目的区域：</label></td>
+						<td>
+							<input class="input_box" ng-model="query.recRegion" maxlength="12" id="" type="text"  />
+						</td>
+						<td width="100"><label class="control-label w_100">售后类型：</label></td>
+						<td>
+						<div class="search_select w_146">
+							<my-select id="query.salesType" code-type="SALES_TYPE" has-all="true" />
+						</div>
+						</td>
+						<td width="100"><label class="control-label w_100">下次跟踪时间：</label></td>
+						<td>
+							<input my-Date-Picker='{"minDate":"","maxDate":""}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr" type="text" style="width:85px!important">
+							<span class="search_span fl">到</span>
+							<input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"","maxDate":""}' id="endTime" class="form_term fl w_xjr" type="text" style="width:85px!important">
+						</td>
+						<td width="100"><label class="control-label w_100">运单状态：</label></td>
+						<td>
+						<div class="search_select w_146">
+							<my-select id="query.orderState" code-type="APP_ORDER_STATE" has-all="true" filter="已删除"/>
+						</div>
+						</td>
+						<td rowspan="3">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a> <a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">收货人：</label></td>
+						<td><input class="input_box" ng-model="query.receiveName"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">收货人电话：</label></td>
+						<td>
+							<input class="input_box" ng-model="query.receivePhone" maxlength="18" id="" type="text" />
+						</td>
+						<td width="100"><label class="control-label w_100">运单号码：</label></td>
+						<td><input class="input_box" ng-model="query.trackingNum"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">售后状态：</label></td>
+						<td>
+						<div class="search_select w_146">
+							<my-select id="query.salesState" code-type="SALES_STATE" has-all="true" />
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100">
+						<label class="control-label w_100">登记时间：</label>
+						</td>
+						<td>
+							<input my-Date-Picker='{"minDate":"","maxDate":""}'  ng-model="query.createTimeR" id="createTimeR" readonly="readonly" class="form_term fl w_xjr"  type="text" style="width:85px!important">
+							<span class="search_span fl">到</span>
+							<input readonly="readonly" ng-model="query.createTimeE"  my-Date-Picker='{"minDate":"","maxDate":""}' id="createTimeE" class="form_term fl w_xjr" type="text" style="width:85px!important">
+						</td>
+						<td width="100"></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2>
+				<div class="fr mt15_mr20">
+					<a class="button fr ml_10 rgfp" ng-click="afterSaleTracking();" href="javascript:void(0);">售后跟踪
+					</a>
+					<a class="button fr ml_10 rgfp" ng-click="afterSale();" href="javascript:void(0);">售后登记
+					</a>
+					<a class="button fr ml_10 rgfp" ng-click="queryOrdSale()" href="javascript:void(0);">查看详情
+					</a>
+					<a class="button fr ml_10 rgfp" ng-click="ordSales.downloadExcelFile()" href="javascript:void(0);">导出
+					</a>
+				</div>
+			</div>
+			<my-Adv-Table name="ordSales" isShowSeq="false" width="2505px" doubleclick="toDetailAllInfo"  isMultiSelect="true"  isShowCheck="true"  isFilter="true" isSum="true" id="id" 
+							head='[
+                			{"name":"运单号","code":"trackingNumString","width":"110"},
+                			{"name":"售后编号","code":"salesNum","width":"110"},
+                			{"name":"售后类型","code":"salesTypeString","width":"80"},
+			                {"name":"售后状态","code":"salesStateString","width":"80"},
+			                {"name":"运单状态","code":"orderStateString","width":"80"},
+			                {"name":"下次跟踪时间","code":"trackDateString","width":"125"},
+			                {"name":"家装服务","code":"serviceTypeString","width":"70"},
+			                {"name":"登记时间","code":"createDateString","width":"125"},
+			                {"name":"收货人","code":"consigneeName","width":"80"},
+			                {"name":"收货人电话","code":"consigneeTelephone","width":"90"},
+			                {"name":"目的区域","code":"descRegionString","width":"120"},
+			                {"name":"承担方1","code":"bearPartyOneIdName","width":"110"},
+			                {"name":"金额1","code":"bearPartyOneMoneyString","isSum":"true","number":"2","width":"80"},
+			                {"name":"承担方2","code":"bearPartyTwoIdName","width":"110"},
+			                {"name":"金额2","code":"bearPartyTwoMoneyString","isSum":"true","number":"2","width":"80"},
+			                {"name":"承担方3","code":"bearPartyThreeIdName","width":"110"},
+			                {"name":"金额3","code":"bearPartyThreeMoneyString","isSum":"true","number":"2","width":"80"},
+			                
+			                {"name":"跟踪备注","code":"trackRemark","width":"150"}
+			                ]'>
+                </my-Adv-Table>
+			<!--任务列表 end-->
+			<!-- {"name":"安装师傅账号","code":"masterUser","width":"110"},
+			                {"name":"安装师傅","code":"masterName","width":"110"}, -->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="afterSaleQueryCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordExceptionApp">
+	<head>
+	    <title>众邦_异常处理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        
+</head>
+	<body ng-controller="ordExceptionCtrl" onload="setContentHeight()" style="overflow: hidden;">
+           <!-- 异常处理 -->
+        <!-- 异常处理-查询 -->
+        <div class="billing_1 clearfix pb_20 mt_20 plr_20" >
+                <ul class="search_term clearfix">
+                	<li class="term_li">
+                	  <label class="term_label">登记时间：</label><input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term w_b25 fl"  type="text"><span class="search_span w_b10 fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term w_b25 fl" type="text">
+                    <li class="term_li"><label class="term_label">登记网点：</label>
+                   			<div class="form_select w_b60 " >
+                                <select ng-model="query.orgId" ng-options="obj.orgId as obj.orgName for  obj in orgInfo  ">
+                            	</select>
+                            </div></li>
+                    <li class="term_li"><label class="term_label">责任网点：</label>
+							<div class="form_select w_b60">
+                                <!-- <select class="ng-cloak" ng-model="query.dutyOrgId">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select> -->
+                                 <select ng-model="query.dutyOrgId" ng-options="obj.orgId as obj.orgName for  obj in orgExceptionInfo  ">
+                            	</select>
+                            </div>
+					</li>
+                    <li class="term_li"><label class="term_label">状态：</label>
+                    	<div class="form_select w_b60 " >
+                    	<my-select id="query.status" code-type="EXCEPTION_STATE" has-all="true"  ></my-select>
+                        </div></li>
+                    <li class="term_li"><label class="term_label">运单号：</label><input class="form_term w_b62" my-Num-Val ng-model="query.trackingNum" maxlength="20"  my-Number-Val type="text"></li>
+                    <li class="term_li fr" style="width:auto;"><div class="bottom_search"><a href="javascript:void(0)" ng-Enter ng-click="doQuery()">查询</a><a href="javascript:void(0)" ng-click="clear()">清空</a></div></li>
+                    
+                </ul> 
+                  <div class="search_nr clearfix mt_20">
+                  		<div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>--查询结果--</h2><a href="javascript:void(0)" ng-click="toDeal()">处理异常</a><a href="javascript:void(0)" ng-click="toView()">查看详细</a></div>
+                <my-table>
+                <div style="min-height: 318px; position: relative;border:1px solid #e0e5e9;">
+                  	 <div style="padding-right: 17px;background: #f4f7f8;">
+                		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_list search_list_dhl" >
+                                <tbody>
+                                  <tr>
+                                    <td style="width:50px" class="search_list_border"><div class="controls"><input class="none" id="checkbox" type="checkbox"  ng-click="selectAll();" name="checkbox"><label for="checkbox"></label></div></td>
+                                    <td width="9%">异常编号</td>
+                                    <td width="11%">运单号</td>
+                                    <td width="8%">登记网点</td>
+                                    <td width="8%">登记人</td>
+                                    <td width="8%">异常类型</td>
+                                    <td width="8%">登记时间</td>
+                                    <td width="8%">状态</td>
+                                    <td width="8%">责任车辆</td>
+                                    <td width="8%">责任网点</td>
+                                    <td width="8%">处理人</td>
+                                    <td width="7%">处理意见</td>
+                                    
+                                  </tr>
+                                </tbody>
+                           </table>
+                      </div>
+                      <div style="min-height:270px; width:100%;overflow:scroll;">
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_list"  >
+                                <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.id);" ng-repeat="o in page.data.items">
+                                    <td style="width:50px" class="search_list_border"><div class="controls"><input id="checkbox{{o.id}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="9%">{{o.id}}</td>
+                                    <td width="11%">{{o.trackingNum}}</td>
+                                    <td width="8%">{{o.orgIdName}}</td>
+                                    <td width="8%">{{o.opIdName}}</td>
+                                    <td width="8%">{{o.typeName}}</td>
+                                    <td width="8%" style="white-space: inherit;"><div class="wz_hh">{{o.createDate}}</div></td>
+                                    <td width="8%">{{o.statusName}}</td>
+                                    <td width="8%">{{o.plateNumber}}</td>
+                                    <td width="8%">{{o.dutyOrgIdName}}</td>
+                                    <td width="8%">{{o.handleOpIdName}}</td>
+                                    <td width="7%"><div class="cc_yc">{{o.handleIdea}}</div></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                       </div>
+                </div>
+             </my-table>
+                </div>
+		</div>
+
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="ordExceptionCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

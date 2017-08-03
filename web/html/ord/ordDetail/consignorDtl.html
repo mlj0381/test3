@@ -1,0 +1,22 @@
+<!-- 发货人列表 begin-->
+		<i class="arrow-up"></i>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="xf_table">
+				<tbody>
+				<tr class="cplx_tr">
+					<td>发货人</td>
+					<td>发货人电话</td>
+					<td>预计提货时间</td>
+					<td>品名</td>
+					<td>提货地址</td>
+					<td>件数</td>
+				</tr>
+				<tr ng-repeat="g in goodsInfo.items" class="ng-scope">
+					<td class="ng-binding">{{g.consignorName}}</td>
+					<td class="ng-binding">{{g.consignorBill}}</td>
+					<td class="ng-binding">{{g.planPickTime}}</td>
+					<td class="ng-binding">{{g.product}}</td>
+					<td class="ng-binding">{{g.pickAddress}}</td>
+					<td class="ng-binding">{{g.count}}</td>
+				</tr>
+			</tbody></table>
+ <!-- 发货人列表 end-->	

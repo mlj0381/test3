@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html  ng-app="MyApp">
+<head>
+	<title>车源统计图表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- bootstrap -->
+    <link href="../../css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="../../css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet">
+
+    <!-- global styles -->
+    <link rel="stylesheet" type="text/css" href="../../css/compiled/layout.css">
+    <link rel="stylesheet" type="text/css" href="../../css/compiled/elements.css">
+    <link rel="stylesheet" type="text/css" href="../../css/compiled/icons.css">
+
+    <!-- libraries -->
+    <link href="../../css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+    
+    <!-- this page specific styles -->
+    <link rel="stylesheet" href="../../css/compiled/user-list.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/compiled/index.css" type="text/css" media="screen" />
+    <!-- open sans font -->
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" defer="defer"></script>
+</head>
+<body>
+	<!-- navbar -->
+	<simple-navbar id="simpleNavbarId"></simple-navbar>
+    <!-- end navbar -->
+    <!-- sidebar start -->
+    <simple-menu id="simpleMenuId" loadurl="sysMenu.ajax?cmd=loadMenu" currenturl="/logbi/statistic/cars.html"></simple-menu>
+    <!-- sidebar end-->
+    
+   <!-- statistics chart built with jQuery Flot -->
+	<div class="content">
+		<div>
+			<div class="users-list">
+				<div class="bt_n">
+					<h2>车源统计图表</h2>
+				</div>
+				<div class="cl_zlgl">
+					<div class="table-products section">
+						<div class="chart">
+							<div class="col-md-121">
+								<h4 class="clearfix">
+									车源数据统计
+									<div class="btn-group pull-right">
+										<button class="glow left" onclick="dayRedraw();">天</button>
+										<button class="glow middle active" onclick="monthRedraw();">月</button>
+									</div>
+								</h4>
+							</div>
+							<div class="col-md-121">
+								<div id="statsChart"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end statistics chart -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- scripts -->
+	<script src="../../js/jquery/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery-ui-1.10.2.custom.min.js"></script>
+    <!-- knob -->
+    <script src="../../js/jquery.knob.js"></script>
+    <!-- flot charts -->
+    <script src="../../js/jquery.flot.js"></script>
+    <script src="../../js/jquery.flot.stack.js"></script>
+    <script src="../../js/jquery.flot.resize.js"></script>
+    <script src="../../js/theme.js"></script>
+	<!--[if !IE]> -->
+	<script src="../../js/angular/angular.min.js"></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+	<script src="../../js/angular-1.2.19/angular.min.js"></script>
+	<![endif]-->
+	<!--[if !lte IE 8 ]>
+	<script src="../../js/angular/angular.min.js"></script>
+	<![endif]-->
+	<script src="../../js/common.js?v=2.2.1"></script>
+	<script src="cars.js"></script>
+</body>
+</html>

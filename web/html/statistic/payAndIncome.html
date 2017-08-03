@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="payAndIncomeApp"> 
+	<head>
+	    <title>应收应付报表</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <style type="text/css">
+	          .search_page {
+						    top: 160px;
+						    width: 90%;
+						    position: absolute;
+			   }
+			   .total{text-align:center!important;color: #ff0000!important;}
+			   .totals{color: #ff0000!important;}
+        </style>
+	</head>
+	<body ng-controller="payAndIncomeCtrl" onload="setContentHeight(100)" style="overflow: hidden;">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20 plr_20" ng-show="showData">
+	                <ul class="search_term clearfix">
+	                    <li class="term_li"><label class="term_label">分析纬度:</label>
+	                       	<div class="form_select w_b60" >
+								<!-- <my-select id="query.orderState" filter="已删除" has-all="true" default-value=-1 code-type="ORDER_STATE" ></my-select> -->
+	                            <select ng-model="param.selectDate" ng-change="changeSelectedLatitudeId(this);">
+	                            <option value="1" selected="selected">开单月份</option>
+	                            <option value="2">开单时间</option>
+	                            <option value="3">核销时间</option>
+	                            </select>
+	                        </div>
+						</li>
+						
+						<li class="term_li" ng-show="selectedLatitudeType==false"><label class="term_label">月份：</label><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月',minDate:'2015-01',maxDate:'%y-%M'})" class="form_term w_b60 fl" id="selectedLatitudeTypeDate2"/></li>
+						<li class="term_li">
+							<label class="term_label">网点：</label>
+	                       	<div class="form_select w_b60">
+								 <select ng-model="orgSelect" ng-options="obj.orgId as obj.orgName for obj in orgInfo"></select>
+							</div>
+						</li>
+						<li class="term_li">
+							<label class="term_label">核销状态：</label>
+							<div class="form_select w_b60">
+<!-- 									<my-select selectid="id='id3'" id="param.checkSts" code-type="AC_CASH_PROVE@CHECK_STS" has-all="true" default-value="1" url="" />
+ -->						<select id="param.checkSts" ng-model="param.checkSts" ng-disabled="isAble"
+									ng-options="objCon.codeValue as objCon.codeName for objCon in businessData.items"></select>	
+                            </div>
+						</li>
+					   <li class="term_li" ng-show="selectedLatitudeType"><label class="term_label">开始时间：</label><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月dd日',minDate:'2016-07-01',maxDate:'%y-%M-%d'})" class="form_term w_b60 fl" id="selectedLatitudeTypeDate4"/></li>
+					   <li class="term_li" ng-show="selectedLatitudeType"><label class="term_label">结束时间：</label><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月dd日',minDate:'2016-07-01',maxDate:'%y-%M-%d'})" class="form_term w_b60 fl" id="selectedLatitudeTypeDate5"/></li>
+	                    <li class="term_li fr" style="width:auto;">
+		                    <div class="bottom_search" style="position:inherit;">
+		                        <a ng-click="doQuery();" href="javascript:void(0)">开始分析</a>
+		                    </div>
+	                    </li>
+					</ul>
+                    <div class="search_nr clearfix mt_20">
+                    <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+                        <h2>双击可以查看详情</h2>
+	            		<a href="javascript:void(0);" ng-click="commonExport()" id="exportId">导 出</a>
+	           		</div>
+					<div style="min-height: 348px; position: relative;border:1px solid #e0e5e9;">
+					   <div style=" width:100%;height:auto!important;overflow:auto;position:relative; background:#f4f7f8;">
+							<table class="search_listc" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+								<thead>
+									<tr>
+										<!-- <th width="79" class="search_list_border" style="display: block;float: left;">&nbsp;</th> -->
+										<th width="240" colspan="2" style="border-right: 1px solid #fdc2c8; border-bottom: 1px solid #fdc2c8;">费用项目</th>
+										<th width="480" colspan="4" style="border-right: 1px solid #fdc2c8; border-bottom: 1px solid #fdc2c8;">应收汇总</th>
+										<th width="479" colspan="4" style="border-bottom: 1px solid #fdc2c8;">应付汇总</th>
+									</tr>
+									<tr>
+									  <!--  <th width="79" class="search_list_border" style="display: block;float: left;"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th> -->
+	                                   <th width="120">账户类型</th>
+	                                   <th width="120">项目</th>
+	                                   <th width="120">金额</th>
+	                                   <th width="120">已收</th>
+	                                   <th width="120">未收</th>
+	                                   <th width="120">票数</th>
+	                                   <th width="120">金额</th>
+	                                   <th width="120">已付</th>
+	                                   <th width="120">未付</th>
+	                                   <th width="120">票数</th>
+	                               </tr>
+	                             </thead>
+	                        
+                             <tbody >
+      
+                                 <tr ng-class="{'search_list_tr':$index%2==1}" class="ng-cloak"  ng-dblclick="toView(obj.feeType,obj.feeName,obj.isSysDo);"ng-repeat="obj in orgTotalFee">
+                                   <td width="120" ng-class="{'total':obj.feeType==98}">{{obj.typeName}}</td>
+                                   <td width="120" ng-class="{'total':obj.feeType==98}">{{obj.feeName}}</td>
+                                   <td width="120" title="{{obj.incomeAmount}}" ng-class="{'total':obj.feeType==98}">{{obj.incomeAmount==0?"":obj.incomeAmount}}</td>
+                                   <td width="120" ng-class="{'total':obj.feeType==98}">{{obj.isIncomeAmount==0?"":obj.isIncomeAmount}}</td>
+                                   <td width="120" ng-class="{'total':obj.feeType==98}">{{obj.noIncomeAmount==0?"":obj.noIncomeAmount}}</td>
+                                   <td width="120" ng-class="{'total':obj.feeType==98}">{{obj.incomeCount==0?"":obj.incomeCount}}</td>
+                                   <td width="120" ng-class="{'total':obj.feeType==98}">{{obj.payAmount==0?"":obj.payAmount}}</td>
+                                   <td width="120" ng-class="{'total':obj.feeType==98}">{{obj.isPayAmount==0?"":obj.isPayAmount}}</td>
+                                   <td width="120" style="white-space:inherit;" ng-class="{'total':obj.feeType==98}">{{obj.noPayAmount==0?"":obj.noPayAmount}}</td>
+                                   <td width="100" ng-class="{'total':obj.feeType==98}">{{obj.payCount==0?"":obj.payCount}}</td>
+                                 </tr>
+                             </tbody>
+                           </table>
+                       </div>
+                    </div>
+		      </div>
+        </div>
+        <!-- 应收应付汇总明细 开始 -->
+		<div  ng-show="isShow" class="billing_1 clearfix ng-cloak mt_20" style="padding: 0px;" >
+		    <span class="yc_message_span fl" style="line-height: normal;padding-bottom: 0;padding-top: 15px;}">【{{orgName}}】 {{titleMessage}}</span>
+		    <a style="margin-top: 15px;font-size:16px;margin-left: 20px;color: #ff0000;cursor: pointer;text-decoration: none;" class="clearfix fl" ng-click="closeView()" title="关闭">X</a>
+		     <div class="bottom_nav pb_20 bottom_nav_search clearfix" style="border-top: 0;" >
+	              <a href="javascript:void(0);"  ng-click="commonDtlExport()" id="selectId">导 出</a>
+	          </div>
+			<my-table>
+				<div class="mkae" style=" position: relative;border-top:1px solid #e0e5e9;">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list">
+	                  <thead>
+	                    <tr>
+	                      <th width="9%" ng-show="query.feeType!=24">运单号</th>
+	                      <th width="9%" ng-show="query.feeType==24">批次号</th>
+	                      <th width="9%" >收支类型</th>
+	                      <th width="9%" >金额</th>
+	                      <th width="9%" ng-show="query.feeType!=24">开单日期</th>
+	                      <th width="9%" ng-show="query.feeType==24">发车日期</th>
+	                      <th width="9%" >核销状态</th>
+	                      <th width="9%" >现金状态</th>
+	                      <th width="9%" ng-show="query.feeType!=24">发货方</th>
+	                      <th width="9%" ng-show="query.feeType!=24">发货人</th>
+	                      <th width="9%" ng-show="query.feeType!=24">发货手机</th>
+	                      <th width="9%" ng-show="query.feeType!=24">品名</th>
+	                      <th width="9%" ng-show="query.feeType!=24">件数</th>
+	                      <th width="9%" ng-show="query.feeType!=24" >重量</th>
+	                      <th width="9%" ng-show="query.feeType!=24">体积</th>
+	                      <th width="9%" ng-show="query.feeType==24">发车网点</th>
+	                      <th width="9%" ng-show="query.feeType==24">到达网点</th>
+	                      <th width="9%" ng-show="query.feeType==24">车牌号</th>
+	                      <th width="9%" ng-show="query.feeType==24">司机名称</th>
+	                      <th width="9%" ng-show="query.feeType==24">司机手机</th>
+	                    </tr>
+	                  </thead>
+	                  <tbody>
+	                   <tr ng-repeat="o in page.data.items"  class="ng-scope">
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType!=24">{{o.trackingNum}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType==24">{{o.batchNum}}</td>
+	                     <td width="9%" class="ng-binding">{{o.inoutStsName}}</td>
+	                     <td width="9%" class="ng-binding hideString"   title="{{o.incomeAmount}}">{{o.incomeAmount==0?"":o.incomeAmount}}</td>
+	                     <td width="9%" class="ng-binding">{{o.createDateString}}</td>
+	                     <td width="9%" class="ng-binding">{{o.checkStsName}}</td>
+	                     <td width="9%" class="ng-binding hideString"   title="{{o.cashStsName}}">{{o.cashStsName}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType!=24">{{o.consignorName}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType!=24">{{o.consignorLinkmanName}}</td>
+	                     <td width="9%" class="ng-binding hideString"  title="{{o.consignorBill}}" ng-show="query.feeType!=24">{{o.consignorBill}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType!=24">{{o.goodsName}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType!=24">{{o.count}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType!=24">{{o.weightString}}</td>
+	                     <td width="9%" class="ng-binding"ng-show="query.feeType!=24">{{o.volumeString}}</td>
+	                     
+	                     <td width="9%" class="ng-binding hideString"   title="{{o.consignorBill}}" ng-show="query.feeType==24">{{o.sourceOrgName}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType==24">{{o.descOrgName}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType==24">{{o.plateNumber}}</td>
+	                     <td width="9%" class="ng-binding" ng-show="query.feeType==24">{{o.driverName}}</td>
+	                     <td width="9%" class="ng-binding"ng-show="query.feeType==24">{{o.driverBill}}</td>
+	                     
+	                    </tr>
+	                  </tbody>
+	                </table>
+				</div>
+			</my-table>
+		</div>
+		<!-- 应收应付汇总明细 结束 -->
+        <script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/lodop/lodop-business.js?v=${ver}"></script>
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="payAndIncomeCtrl.js?v=${ver}"></script>
+	</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="masterManageAddApp"> 
+	<head>
+	    <title>${title}_商家管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+
+</head>
+	<body ng-controller="masterManageAddCtrl" style="overflow:hidden" onLoad="setContentHegthDelay()">
+		<!-- 新增  start -->
+        <div class="billing_1 clearfix pb_20 mt_20 plr_20" style="min-height: 430px">
+		<form class="ng-pristine ng-valid ng-valid-maxlength">
+			<div class="billing_list xianlusz">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table com_liest">
+					<tbody>
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>师傅合作商编码：</label></td>
+						<td class="list_td"><input maxlength="11" ng-blur="check()" ng-model="user.tenantCode" class="form_billing_x " /></td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>师傅合作商名称：</label></td>
+						<td class="list_td"><input maxlength="11" ng-blur="check()" ng-model="user.name" class="form_billing_x" /></td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>登录账号：</label></td>
+						<td class="list_td"><input maxlength="11"  ng-model="user.loginAcct" class="form_billing_x" ng-disabled="isDisabled"/>
+					    </td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label">联系人：</label></td>
+						<td class="list_td"><input maxlength="10"  ng-model="user.linkMan" class="form_billing_x" />
+					    </td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label">联系号码：</label></td>
+						<td class="list_td"><input maxlength="11"  ng-blur="check()" ng-model="user.linkPhone" type="text"  class="form_billing_x" />
+						</td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>省份：</label></td>
+						<td><div class="form_select">
+                                <select class="ng-cloak" ng-change="selectCity(user.provinceId);" ng-model="user.provinceId" ng-options="obj.id as obj.name for  obj in provinceData.items ">
+                                </select>
+                            </div>
+                         </td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>城市：</label></td>
+						<td>
+                        	<div class="form_select">
+                                <select class="ng-cloak"  ng-model="user.regionId"  ng-options="obj.id as obj.name for  obj in cityData.items ">
+                                </select>
+                            </div>
+                        </td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label">提货地址：</label></td>
+						<td class="list_td"><input maxlength="80" ng-model="user.depaetmentAdderss" type="text" class="form_billing_x" />
+						</td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label">主营业务：</label></td>
+						<td class="list_td"><input maxlength="10" ng-model="user.busiNotes" type="text" class="form_billing_x" />
+						</td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label">师傅合作商简介：</label></td>
+						<td class="list_td"><textarea maxlength="200" style="height:90px; width:100%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="user.sellerNotes" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+							
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+		</form>
+		<div class="bottom_nav1">
+		<a class="button ml_10 baoc" href="javascript:void(0)" ng-click="doSave()"><i class="button_icon button_icon dw_baoc"></i>保存</a>
+		<a href="javascript:void(0)" ng-click="close()">取 消</a>
+	</div>	
+	</div>
+    
+    <!-- 新增  end -->
+ 			
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="masterManageAddCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

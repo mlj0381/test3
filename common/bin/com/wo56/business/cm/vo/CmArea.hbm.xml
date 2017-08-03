@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmArea" table="cm_area">
+		<id name="id" type="long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="clothCityName" type="java.lang.String">
+			<column name="CLOTH_CITY_NAME" >
+				<comment>服装城名称</comment>
+			</column>
+		</property>
+		<property name="province" type="java.lang.Long">
+			<column name="PROVINCE" >
+				<comment>省</comment>
+			</column>
+		</property>
+		<property name="city" type="java.lang.Long">
+			<column name="CITY" >
+				<comment>市</comment>
+			</column>
+		</property>
+		<property name="district" type="java.lang.Long">
+			<column name="DISTRICT" >
+				<comment>区</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS" >
+				<comment>详细地址</comment>
+			</column>
+		</property>
+		<property name="keyWords" type="java.lang.String">
+			<column name="KEY_WORDS" >
+				<comment>关键字</comment>
+			</column>
+		</property>
+		<property name="longitude" type="java.lang.String">
+			<column name="LONGITUDE" >
+				<comment>经度</comment>
+			</column>
+		</property>
+		<property name="latitude" type="java.lang.String">
+			<column name="LATITUDE" >
+				<comment>纬度</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID" >
+				<comment>租户</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

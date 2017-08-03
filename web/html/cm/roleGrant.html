@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="menuApp">
+<head>
+<meta name="description" content="ng trrview example">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+<link href="../css/bootstrap/awesome.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+<link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+ 
+  <title>${title}角色赋权</title>
+   
+<style type="text/css">
+.fa-plus{background: url(../../image/zb/role_1.png) no-repeat 0 7px ;width: 13px;height: 19px;display: inline-block;}
+.fa-minus{background: url(../../image/zb/role_1.png) no-repeat 0 -10px ;width: 13px;height: 19px;display: inline-block;}
+.fa-plus::before,.fa-minus::before,.fa-leaf::before{display: none;}
+.text-field{color: #000;}
+.tree-view li ul{padding-left: 0;background: url(../../image/zb/role_3.png) no-repeat 23px bottom;}
+.tree-view li ul li{padding-left: 40px;background: url(../../image/zb/role_2.png) no-repeat 23px 0;}
+.tree-view li,.tree-view li ul li{line-height: 30px;}
+
+
+.fa-leaf{background: url(../../image/zb/page.gif) no-repeat 0 7px;margin-top: -6px;width: 13px;height: 19px;display: inline-block;}
+
+</style>
+</head>
+<body >
+     <div ng-controller="menuCtrl" class="container">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">角色名称：</label>
+                   			</td>
+						<td>
+						<input class="form_term" ng-model="roleName" maxlength="10"/>
+                            </td>
+						<td width="100"><label class="term_label">角色类别：</label>
+							</td>
+						<td><div class="form_select">
+                               <input   ng-disabled="true" class="form_term" value="公司管理员" maxlength="10"/>
+                            </div>
+                         </td>
+						<td width="100"><label class="term_label">菜单类型：</label>
+							</td>
+						<td><div class="form_select">
+						
+                         <select ng-model="menuType" 
+									ng-options="obj.codeValue as obj.codeName for  obj in menuTypeInfo " ng-change="menuTypeChange()">
+						</select>
+                         </div></td>
+						
+					</tr>
+					
+				</tbody>
+		</table>
+		 <div class="clearfix">
+       <div class="fl row" style="margin-right: 60px;" ng-repeat=" menu in treeData">
+           <h2></h2>
+           <my-tree tree-data="menu" text-field="menuName" value-field='menuId'  can-checked="true" ></my-tree>
+       </div>
+       </div>
+	
+	
+	<div class="row bottom_nav" style="text-align: center;">
+	  <a href="javascript:void(0)"  ng-click="toSave()">保存</a>  
+	   <a href="javascript:void(0)"  ng-click="toClose()">取消</a>  
+	</div>	
+	</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		< ![endif]-->
+  <script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+  <script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+  <script type="text/javascript" src="../js/tree/tree.js?v=${ver}"></script>
+  <script type="text/javascript" src="roleGrantCtrl.js?v=${ver}"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<% /** 对应模版的样式，一封邮件中可能有多个模版，对应的模版中的html标签存在样式，则在对应的模版文件目录下定义一个${template}Css的文件即可，例如table.btl文件，对应的模版样式文件tableCss.btl 
+	*  
+	*  本模版统计“昨日增量”、“当月增量”、“上月增量”和“系统总量”
+	*/
+%>
+<style type="text/css">
+.caption1 {
+	padding: 0;
+	margin: 0;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 8px;
+	margin-top: 18px;
+}
+
+table {
+	padding: 0;
+	border-collapse: collapse;
+	border: 1px #525152 solid;
+	width: 98%;
+	margin: 0 auto;
+}
+
+th {
+	padding: 0;
+	border: 1px #525152 solid;
+	text-align: center;
+	font-size: 12px;
+	line-height: 30px;
+	background: #D6D3D6;
+}
+
+td {
+	padding: 0;
+	text-align: center;
+	font-size: 12px;
+	line-height: 30px;
+}
+
+.tr_odd {
+	background: #C6C7C6;
+}
+
+.out1 {
+	border-top: 62px #D6D3D6 solid;
+	width: 0px;
+	height: 0px;
+	border-left: 220px #BDBABD solid;
+	position: relative;
+}
+
+.b1 {
+	font-style: normal;
+	display: block;
+	position: absolute;
+	top: -62px;
+	left: -120px;
+}
+
+.em1 {
+	font-style: normal;
+	display: block;
+	position: absolute;
+	top: -30px;
+	left: -150px;
+}
+
+.td_border_right {
+	border: 0px;
+	border-right: 1px #525152 solid;
+}
+
+.td_border_bottom {
+	border: 0px;
+	border-bottom: 1px #525152 solid;
+}
+
+.td_border_bottom_right {
+	border: 0px;
+	border-bottom: 1px #525152 solid;
+	border-right: 1px #525152 solid;
+}
+
+.td_no_border {
+	border: 0px;
+}
+</style>

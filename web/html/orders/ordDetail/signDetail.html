@@ -1,0 +1,89 @@
+
+	<!--签收信息 start-->
+				<div class="waybill_title bt_h2"><h2 class="title_h2"><i class="icon title_icon fl"></i>签收信息</h2></div>
+				<table ng-if="signup!=2" width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>签收人</th>
+						<th>签收人手机号</th>
+						<th>证件类型</th>
+						<th>证件号码</th>
+						<th>签收备注</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr>
+						  <td width="10%" class="ng-binding">{{showData.signName}}</td>
+                            <td width="20%" class="ng-binding">{{showData.ext1}}</td>
+                             <td width="20%" class="ng-binding">{{showData.certificateTypeString}}</td>
+                            <td width="20%" class="ng-binding">{{showData.certificateNo}}</td>
+                            <td width="30%" class="ng-binding">{{showData.signDesc}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--签收信息 end-->
+				
+				<!--上传图片 start-->
+				<table ng-if="signup!=2"  width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table  tx_tc_table dhl_r" style="border-bottom: 1px solid #b7d3e7; padding-bottom:15px;">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label w_100">签收图片：</label></td>
+						<td colspan="5">
+						<ul class="dd_cx clearfix" style=" margin:30px 0 10px 98px;">
+					<li><span my-File-Model="idenCard1"  is-Close="false" ></span></li>
+					<li><span my-File-Model="idenCard2" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="idenCard3" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="idenCard4" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="idenCard5" is-Close="false" is-Show="false"></span></li>
+		</ul>
+						</td>
+					  </tr>
+					</tbody></table>
+				<!--上传图片 start-->
+				
+<table ng-if="signup==2" width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>签收人</th>
+						<th>签收人手机号</th>
+						<th>证件类型</th>
+						<th>证件号码</th>
+						<th>签收备注</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr>
+						  <td width="10%" class="ng-binding"><input  ng-model="form.signName" class="form_billing  " style="width: 100%;border: 2px solid red;"></td>
+                            <td width="20%" class="ng-binding"><input maxlength="11" ng-model="form.ext1" class="form_billing  " style="width: 100%;border: 3px solid red;"></td>
+                           <td width="20%" class="ng-binding">
+                           <div class="myselect">
+                            <my-select id="form.certificateType" selectid="" has-all="true"  code-type="CERTIFICATE_TYPE"  showName="codeName" defaultValue="-1" showValue="codeId" filter="" ></my-select>
+                          </div>
+                           </td>
+                            <td width="20%" class="ng-binding"><input  ng-model="form.certificateNo" class="form_billing  "  style="width: 100%;border: 2px solid red;"></td>
+                            <td width="30%" class="ng-binding"><input  ng-model="form.signDesc" class="form_billing  "  style="width: 100%;border: 2px solid red;"></td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--签收信息 end-->
+				
+				<!--上传图片 start-->
+				<table ng-if="signup==2"  width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table  tx_tc_table dhl_r" style="border-bottom: 1px solid #b7d3e7; padding-bottom:15px;">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label w_100">签收图片：</label></td>
+						<td colspan="5">
+						<ul class="dd_cx clearfix" style=" margin:30px 0 10px 98px;">
+					<li><span my-File-Model="orderPicCard1"  is-Close="false" ></span></li>
+					<li><span my-File-Model="orderPicCard2" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="orderPicCard3" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="orderPicCard4" is-Close="false" is-Show="false"></span></li>
+					<li><span my-File-Model="orderPicCard5" is-Close="false" is-Show="false"></span></li>
+		</ul>
+						</td>
+					  </tr>
+					</tbody></table>
+					
+					<div class="tx_tc_button" ng-if="signup==2" style=" padding:20px 0;"><a class="search_button_cz" href="javascript:void(0);" ng-click="doSavePic();">保存</a><a class="search_button_cz" href="javascript:void(0);" ng-click="close()">关闭</a></div>

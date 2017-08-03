@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-1 17:28:05 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.wo56.business.route.vo.RouteIntroduce" table="route_introduce">
+        <id name="cfgId" type="java.lang.Long">
+            <column name="CFG_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="sourceProvinceId" type="java.lang.Long">
+            <column name="SOURCE_PROVINCE_ID">
+                <comment>起始省份ID</comment>
+            </column>
+        </property>
+        <property name="sourceProvinceName" type="java.lang.String">
+            <column name="SOURCE_PROVINCE_NAME" length="20">
+                <comment>起始省份名</comment>
+            </column>
+        </property>
+        <property name="sourceCityId" type="java.lang.Long">
+            <column name="SOURCE_CITY_ID">
+                <comment>起始城市ID</comment>
+            </column>
+        </property>
+        <property name="sourceCityName" type="java.lang.String">
+            <column name="SOURCE_CITY_NAME" length="20">
+                <comment>起始城市名</comment>
+            </column>
+        </property>
+        <property name="sourceCountyId" type="java.lang.Long">
+            <column name="SOURCE_COUNTY_ID">
+                <comment>起始县区ID</comment>
+            </column>
+        </property>
+        <property name="sourceCountyName" type="java.lang.String">
+            <column name="SOURCE_COUNTY_NAME" length="20">
+                <comment>起始县区名</comment>
+            </column>
+        </property>
+        <property name="sourceTownId" type="java.lang.Long">
+            <column name="SOURCE_TOWN_ID">
+                <comment>起始乡/镇/街道/ID</comment>
+            </column>
+        </property>
+        <property name="sourceTownName" type="java.lang.String">
+            <column name="SOURCE_TOWN_NAME" length="20">
+                <comment>起始乡/镇/街道名称</comment>
+            </column>
+        </property>
+        <property name="desProvinceId" type="java.lang.Long">
+            <column name="DES_PROVINCE_ID">
+                <comment>目的省份ID</comment>
+            </column>
+        </property>
+        <property name="desProvinceName" type="java.lang.String">
+            <column name="DES_PROVINCE_NAME" length="20">
+                <comment>目的省份名</comment>
+            </column>
+        </property>
+        <property name="desCityId" type="java.lang.Long">
+            <column name="DES_CITY_ID">
+                <comment>目的城市ID</comment>
+            </column>
+        </property>
+        <property name="desCityName" type="java.lang.String">
+            <column name="DES_CITY_NAME" length="20">
+                <comment>目的城市名</comment>
+            </column>
+        </property>
+        <property name="desCountyId" type="java.lang.Long">
+            <column name="DES_COUNTY_ID">
+                <comment>目的县区ID</comment>
+            </column>
+        </property>
+        <property name="desCountyName" type="java.lang.String">
+            <column name="DES_COUNTY_NAME" length="20">
+                <comment>目的县区名</comment>
+            </column>
+        </property>
+        <property name="desTownId" type="java.lang.Long">
+            <column name="DES_TOWN_ID">
+                <comment>目的乡/镇/街道/ID</comment>
+            </column>
+        </property>
+        <property name="desTownName" type="java.lang.String">
+            <column name="DES_TOWN_NAME" length="20">
+                <comment>目的乡/镇/街道名称</comment>
+            </column>
+        </property>
+        <property name="orgId" type="java.lang.Long">
+            <column name="ORG_ID">
+                <comment>归属组织ID</comment>
+            </column>
+        </property>
+        <property name="tenantId" type="java.lang.Long">
+            <column name="TENANT_ID" not-null="true">
+                <comment>租户ID</comment>
+            </column>
+        </property>
+        <property name="tenantCode" type="java.lang.String">
+            <column name="TENANT_CODE" length="20" not-null="true">
+                <comment>租户CODE</comment>
+            </column>
+        </property>
+        <property name="sourceDetail" type="java.lang.String">
+            <column name="SOURCE_DETAIL" length="200">
+                <comment>起始地区简介</comment>
+            </column>
+        </property>
+        <property name="desDetail" type="java.lang.String">
+            <column name="DES_DETAIL" length="200">
+                <comment>目的地区简介</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

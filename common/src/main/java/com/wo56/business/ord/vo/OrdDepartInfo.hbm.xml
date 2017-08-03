@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-15 16:26:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrdDepartInfo" table="ord_depart_info">
+		<id name="batchNum" type="long">
+			<column name="BATCH_NUM" />
+			<generator class="native" />
+		</id>
+		<property name="sourceOrgId" type="long">
+			<column name="SOURCE_ORG_ID" not-null="true">
+				<comment>&#229;&#143;&#145;&#232;&#189;&#166;&#231;&#189;&#145;&#231;&#130;&#185;</comment>
+			</column>
+		</property>
+		<property name="descOrgId" type="long">
+			<column name="DESC_ORG_ID" not-null="true">
+				<comment>&#231;&#155;&#174;&#230;&#160;&#135;&#231;&#189;&#145;&#231;&#130;&#185;</comment>
+			</column>
+		</property>
+		<property name="plateNumber" type="string">
+			<column name="PLATE_NUMBER" not-null="true">
+				<comment>&#232;&#189;&#166;&#231;&#137;&#140;&#229;&#143;&#183;</comment>
+			</column>
+		</property>
+		<property name="driverId" type="java.lang.Long">
+			<column name="DRIVER_ID">
+				<comment>&#229;&#143;&#184;&#230;&#156;&#186;id</comment>
+			</column>
+		</property>
+		<property name="driverName" type="string">
+			<column name="DRIVER_NAME" not-null="true">
+				<comment>&#229;&#143;&#184;&#230;&#156;&#186;&#229;&#144;&#141;&#231;&#167;&#176;</comment>
+			</column>
+		</property>
+		<property name="driverBill" type="string">
+			<column name="DRIVER_BILL" not-null="true">
+				<comment>&#229;&#143;&#184;&#230;&#156;&#186;&#230;&#137;&#139;&#230;&#156;&#186;&#229;&#143;&#183;&#231;&#160;&#129;</comment>
+			</column>
+		</property>
+		<property name="loader" type="string">
+			<column name="LOADER">
+				<comment>&#232;&#163;&#133;&#232;&#180;&#167;&#228;&#186;&#186;</comment>
+			</column>
+		</property>
+		<property name="loaderId" type="java.lang.Long">
+			<column name="LOADER_ID">
+				<comment>&#232;&#163;&#133;&#232;&#180;&#167;&#228;&#186;&#186;id</comment>
+			</column>
+		</property>
+		<property name="state" type="int">
+			<column name="STATE" not-null="true">
+				<comment>&#231;&#138;&#182;&#230;&#128;&#129;</comment>
+			</column>
+		</property>
+		<property name="vehicleId" type="java.lang.Long">
+			<column name="VEHICLE_ID">
+				<comment>&#232;&#189;&#166;&#232;&#190;&#134;id</comment>
+			</column>
+		</property>
+		<property name="freight" type="java.lang.Long">
+			<column name="FREIGHT">
+				<comment>运费</comment>
+			</column>
+		</property>
+		<property name="orderNum" type="int">
+			<column name="ORDER_NUM" not-null="true">
+				<comment>&#232;&#174;&#162;&#229;&#141;&#149;&#231;&#165;&#168;&#230;&#149;&#176;</comment>
+			</column>
+		</property>
+		<property name="volume" type="double">
+			<column name="VOLUME" precision="22" scale="0" not-null="true">
+				<comment>&#230;&#137;&#185;&#230;&#172;&#161;&#230;&#128;&#187;&#228;&#189;&#147;&#231;&#167;&#175;</comment>
+			</column>
+		</property>
+		<property name="weight" type="double">
+			<column name="WEIGHT" precision="22" scale="0" not-null="true">
+				<comment>&#230;&#137;&#185;&#230;&#172;&#161;&#230;&#128;&#187;&#233;&#135;&#141;&#233;&#135;&#143;</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID" not-null="true">
+				<comment>租户id</comment>
+			</column>
+		</property>
+		<property name="freightPayDot" type="java.lang.Long">
+			<column name="FREIGHT_PAY_DOT">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="payState" type="java.lang.Integer">
+			<column name="PAY_STATE">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="stevedoring" type="java.lang.Long">
+			<column name="STEVEDORING">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="stevedoringPayDot" type="java.lang.Long">
+			<column name="STEVEDORING_PAY_DOT">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="stevedoringPayState" type="java.lang.Integer">
+			<column name="STEVEDORING_PAY_STATE">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="remarks" type="string">
+			<column name="REMARKS">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="loadOpId" type="java.lang.Long">
+			<column name="LOAD_OP_ID">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="loadOpName" type="string">
+			<column name="LOAD_OP_NAME">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="loadTime" type="timestamp">
+			<column name="LOAD_TIME" length="19">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="departOpId" type="java.lang.Long">
+			<column name="DEPART_OP_ID">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="departOpName" type="string">
+			<column name="DEPART_OP_NAME">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="departTime" type="timestamp">
+			<column name="DEPART_TIME" length="19">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalVehOpId" type="java.lang.Long">
+			<column name="ARRIVAL_VEH_OP_ID">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalVehOpName" type="string">
+			<column name="ARRIVAL_VEH_OP_NAME">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalVehTime" type="timestamp">
+			<column name="ARRIVAL_VEH_TIME" length="19">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalOpId" type="java.lang.Long">
+			<column name="ARRIVAL_OP_ID">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalOpName" type="string">
+			<column name="ARRIVAL_OP_NAME">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalTime" type="timestamp">
+			<column name="ARRIVAL_TIME" length="19">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="transportContract" type="java.lang.String">
+			<column name="TRANSPORT_CONTRACT" length="45">
+				<comment>运输合同</comment>
+			</column>
+		</property>
+		<property name="batchNumAlias" type="java.lang.String">
+			<column name="BATCH_NUM_ALIAS" length="20">
+				<comment>自定义批次号</comment>
+			</column>
+		</property>
+		<property name="isShort" type="java.lang.Integer">
+			<column name="IS_SHORT">
+				<comment></comment>
+			</column>
+		</property>
+		
+		<property name="number" type="java.lang.Integer">
+			<column name="NUMBER">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="totalFee" type="java.lang.Long">
+			<column name="TOTAL_FEE">
+				<comment></comment>
+			</column>
+		</property>
+		
+		<property name="collectMoney" type="java.lang.Long">
+			<column name="COLLECT_MONEY">
+				<comment></comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

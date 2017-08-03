@@ -1,0 +1,67 @@
+@charset "gb2312";
+/*header css定义*/
+.header{ height:90px; background:#3a434c; position:relative;}
+.header .logo{ padding:18px 0 0 4%;}
+.header .user{ font-size:14px; color:#f83148; line-height:22px;display: inline-block;white-space: nowrap; float:right; padding:21px 5% 0 0}
+.header .user img{ width:40px; border:2px solid #f9f9f9; margin-right:15px;}
+.header .user p{ color:#fff;}
+
+/*header header_nav css定义*/
+.header_nav{ width:60%;z-index:9999; padding:18px 0 0 0; position:absolute; margin:0 auto;margin-left: -29%;left: 50%;}
+.header_nav li.nav_li{ float:left;text-align:center; width:12%}
+.header_nav li.nav_li a.nav_li_a{text-decoration:none; height:69px; display:block; width:100px; margin:0 auto;}
+.header_nav li.nav_li a.nav_li_a span{ font-size:14px; color:#fff; line-height:26px; position:relative;}
+.block{ display:block; height:34px;}
+.icon_down{background-position:-414px 0px; width:13px; height:7px; display:block; position:absolute; right:-18px; bottom:5px;}
+.gray{filter:grayscale(100%); 
+-webkit-filter:grayscale(100%); 
+-moz-filter:grayscale(100%); 
+-ms-filter:grayscale(100%); 
+-o-filter:grayscale(100%); 
+filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); 
+-webkit-filter:grayscale(1);}
+.header_nav li.gray:hover a.nav_li_a{ pointer-events:none; border-bottom: none;}
+.gray .submenu{display:none}
+/*header submenu css定义动作*/
+.header_nav li:hover a.nav_li_a,.header_hover a.nav_li_a{ border-bottom: 3px solid #C4302B;color: #C4302B;}
+
+.submenu{background: url(../../image/$tenantId$/menu_bj.jpg) no-repeat right bottom #fff; width:100%; height: auto;left: 0;position: fixed;top:90px;z-index:9999; padding-bottom:30px;
+-webkit-box-shadow: 0 6px 6px rgba(100,100,100,0.3);
+-moz-box-shadow: 0 6px 6px rgba(100,100,100,0.3);
+box-shadow: 0 6px 6px rgba(100,100,100,0.3);}
+.submenu dl.submenu1 { width:140px; text-align:left;min-height:200px;margin-right:74px;}
+.submenu dl.submenu1 dt,.submenu dl.submenu2 dt,.submenu dl.submenu3 dt,.submenu dl.submenu4 dt,.submenu dl.submenu5 dt{ color:#8d8d8d; border-bottom:1px solid #f2f2f2; line-height:50px; font-size:14px; margin-bottom:4px;}
+.submenu dl.submenu1 dd,.submenu dl.submenu2 dd,.submenu dl.submenu3 dd,.submenu dl.submenu4 dd,.submenu dl.submenu5 dd{ float:left; width:140px;}
+.submenu dl.submenu1 dd a,.submenu dl.submenu2 dd a,.submenu dl.submenu3 dd a,.submenu dl.submenu3 dd a,.submenu dl.submenu4 dd a,.submenu dl.submenu5 dd a{ line-height:36px; font-size:14px}
+
+.submenu dl.submenu2 { width:320px; text-align:left; margin-right:74px;min-height:200px}
+.submenu dl.submenu3 { width:460px; text-align:left; margin-right:74px;min-height:200px}
+.submenu dl.submenu4 { width:580px; text-align:left; margin-right:74px;min-height:200px}
+.submenu dl.submenu5 { width:720px; text-align:left; margin-right:74px;min-height:200px}
+
+
+.red{ color:#f7314a!important}
+
+.submenu{opacity: 1;
+    -webkit-transform: rotateY(90deg);
+    -moz-transform: rotateY(90deg);
+    -ms-transform: rotateY(90deg);
+    -o-transform: rotateY(90deg);
+    transform: rotateY(90deg);
+
+    -webkit-transition: opacity .20s, -webkit-transform .50s;
+    -moz-transition: opacity .20s, -moz-transform .50s;
+    -ms-transition: opacity .20s, -ms-transform .50s;
+    -o-transition: opacity .20s, -o-transform .50s;
+    transition: opacity .10s, transform .50s;
+}
+.header_nav li:hover .submenu{opacity: 1;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+}
+
+.sign{ position:absolute; right:1%; top:30px; color:#fff; background:#000;border-radius:3px; padding:3px 10px}
+.sign:hover{ text-decoration:none; background:#e81209; color:#fff;}

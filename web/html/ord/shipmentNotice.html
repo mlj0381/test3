@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="shipmentNoticeApp" xmlns="http://www.w3.org/1999/xhtml"  >
+	<head>
+	    <title>${title}_运营管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+        <style >
+	        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+    	</style>
+</head>
+	<body ng-controller="shipmentNoticeCtrl" onload="setContentHegthDelay()" style="overflow:hidden">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+				<tbody><tr>
+					<td width="100"><label class="term_label">开单日期：</label>
+                  			</td>
+					<td>
+						<input class="form_term w_xjr fl" type="text"  my-Date-Picker='{"maxDate":"%y-%M-%d"}' ng-model="query.beginTime" id="beginTime">
+						<span class="search_span fl">到</span>
+						<input class="form_term fl w_xjr" type="text" ng-model="query.endTime" id="endTime" my-Date-Picker='{"maxDate":"%y-%M-%d"}'>
+                    </td>
+					<td width="100"><label class="term_label">开单网点：</label></td>
+					<td>
+						<div class="form_select ng-cloak">
+                            <select ng-model="query.orgId" >
+                                <option  value="{{currOrgId}}" ng-selected="query.orgId==currOrgId">{{currOrgName}}</option>
+                            </select>
+                        </div>
+                    </td> 
+					<td width="100"><label class="term_label">到达网点：</label></td>
+					<td>
+                         <div class="form_select" >
+                         	<select ng-model="query.distributionOrgId"  ng-init="query.distributionOrgId=-1">
+                         		<option value="-1">所有</option>
+                                <option ng-repeat="o in distriOrgIdList" value="{{o.endOrgId}}" >{{o.endOwnerName}}</option>
+                            </select>
+                         </div>
+					</td>
+					<td rowspan="3">
+						<div class="bottom_search search_button" style="position:inherit;">
+							<a ng-click="doQuery();" ng-Enter href="javascript:void(0)">查询</a>
+							<a class="qink" href="javascript:void(0);" ng-click="clearn();">清空</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100"><label class="term_label">交接方式：</label></td>
+					<td>
+                         <div class="form_select">
+                              <select ng-model="query.deliveryType"  ng-init="query.deliveryType=-1">
+                         		<option value="-1">所有</option>
+                                <option ng-repeat="o in deliveryTypeList" value="{{o.codeValue}}" >{{o.codeName}}</option>
+                              </select>
+                         </div>
+                       </td>
+					<td width="100"><label class="term_label">运单号：</label>
+					</td>
+					<td><input  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term" maxlength="16"  type="text" ng-model="query.trackingNum" maxlength="16"></td>
+					<td width="100"><label class="term_label">发货人手机：</label></td>
+					<td><input class="form_term" type="text" ng-model="query.consignorBill" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')"></td>
+				</tr>
+				<tr>
+					<td width="100"><label class="term_label">收货人手机：</label>
+                   	</td>
+					<td>
+                       <input class="form_term" type="text" ng-model="query.consigneeBill" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                       </td>
+					<td width="100"><label class="term_label">等放货通知：</label></td>
+					<td> 
+						<div class="form_select">
+                            <select ng-model="query.shipmentNotice"  ng-init="query.shipmentNotice=-1">
+                         		<option value="-1">所有</option>
+                                <option ng-repeat="o in shipmentNoticeList" value="{{o.codeValue}}"  ng-selected="o.codeValue==1">{{o.codeName}}</option>
+                            </select>
+                        </div>
+                    </td>
+					<td width="100"></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+        <div class="search_nr clearfix mt_20">
+             <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	             <h2>查询结果</h2>
+	             <a href="javaScript:void(0)" ng-click="informGood()" >通知放货</a>
+             </div>
+             <my-table showtotal="false">
+             <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+                  <table width="100%" class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0" style="width:1900px;">
+                        <thead id="tb1">
+                         <tr>
+                             <th width="80" class="search_list_border"><div class="controls"><label for="checkbox" ></label></div></th>
+                             <th width="150">运单号</th>
+                             <th width="110">收货人</th>
+                             <th width="120">收货人手机</th>
+                             <th width="120">配送方式</th>
+                             <th width="120">等放货通知</th>
+                             <th width="120">货物名称 </th>
+                             <th width="120">数量</th>
+                           <!--   <th>数量</th> -->
+                             <th width="110">总重量</th>
+                             <th width="110">总体积</th>
+                             <th width="120">回单号</th>
+                             <th width="110">回单份数</th>
+                             <th width="110">到付</th>
+                             <th width="130">代收货款</th>
+                             <th width="270">收货地址</th>
+                         </tr>
+                       </thead>
+                       
+                       <tbody>
+                           <tr ng-class="{'search_list_tr':$index%2==1}" repeat-Finish ng-repeat="obj in page.data.items" ng-click="selectOne(obj.orderId)" class="ng-cloak">
+                           	<td width="80" class="search_list_border" ><div class="controls"><input class="none" id="checkbox{{obj.orderId}}" attr="{{obj}}" value="{{obj.orderId}}" type="checkbox"  name="checkbox2" ng-click="selectOne(obj.orderId)"><label for="check-1"></label></div></td>
+                             <td width="150">{{obj.trackingNum}}</td>
+                             <td width="110">{{obj.consigneeLinkmanName}}</td>
+                             <td width="120">{{obj.consigneeBill}}</td>
+                             <td width="120">{{obj.deliveryTypeName}}</td>
+                             <td width="120">{{obj.shipmentNoticeName}}</td>
+                             <td width="120">{{obj.goodsName}}</td>
+                             <td width="120">{{obj.goodsCount}}</td>
+                             <td width="110">{{obj.weight.toFixed(1)}}</td>
+                             <td width="110">{{obj.volume.toFixed(2)}}</td>
+                             <td width="120">{{obj.receiptNum}}</td>
+                             <td width="110">{{obj.receiptCount}}</td>
+                             <td width="110">{{obj.freightCollect/100}}</td>
+                             <td width="130">{{obj.collectingMoney/100}}</td>
+                             <td width="270">{{obj.address}}</td>
+                           </tr>
+                       </tbody>
+                     </table>
+                 </div>
+             </my-table>
+         </div>
+        <!-- <div style="text-align: right; margin-top:15px;"></div> -->
+	</div>
+	 <!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+	<script src='../js/angular-1.2.19/angular.min.js'></script>
+	<![endif]-->
+	<!--[if !lte IE 8 ]>
+	<script src='../js/angular/angular.min.js'></script>
+	<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="shipmentNoticeCtrl.js?v=${ver}"></script>
+</body>
+
+</html>
+

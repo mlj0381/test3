@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-31 11:23:42 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmUserInfo" table="cm_user_info">
+		<id name="userId" type="long">
+			<column name="USER_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="userType" type="java.lang.Integer">
+			<column name="USER_TYPE">
+				<comment>&#211;&#195;&#187;&#167;&#192;&#224;&#208;&#205;
+					1&#161;&#162;&#178;&#217;&#215;&#247;&#212;&#177;
+					2&#161;&#162;&#210;&#181;&#206;&#241;&#212;&#177;
+					3&#161;&#162;&#191;&#170;&#181;&#165;&#212;&#177;,4&#161;&#162;&#202;&#166;&#184;&#181;</comment>
+			</column>
+		</property>
+		<property name="loginAcct" type="string">
+			<column name="LOGIN_ACCT" length="50">
+				<comment>&#181;&#199;&#194;&#188;&#213;&#202;&#186;&#197;</comment>
+			</column>
+		</property>
+		<property name="loginPwd" type="string">
+			<column name="LOGIN_PWD" length="50">
+				<comment>&#181;&#199;&#194;&#188;&#195;&#220;&#194;&#235;</comment>
+			</column>
+		</property>
+		<property name="userName" type="string">
+			<column name="USER_NAME" length="50">
+				<comment>&#208;&#213;&#195;&#251;</comment>
+			</column>
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE">
+				<comment>&#215;&#180;&#204;&#172;
+					1&#161;&#162;&#201;&#250;&#208;&#167;
+					2&#161;&#162;&#202;&#167;&#208;&#167;</comment>
+			</column>
+		</property>
+		<property name="loginType" type="java.lang.Integer">
+			<column name="LOGIN_TYPE">
+				<comment>1 登录web，app 2 登录app 3 登录web</comment>
+			</column>
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="OP_ID">
+				<comment>&#178;&#217;&#215;&#247;&#212;&#177;ID</comment>
+			</column>
+		</property>
+		<property name="createTime" type="timestamp">
+			<column name="CREATE_TIME" length="19">
+				<comment>&#180;&#180;&#189;&#168;&#202;&#177;&#188;&#228;</comment>
+			</column>
+		</property>
+		<property name="dataSource" type="string">
+			<column name="data_source" length="20">
+				<comment>&#202;&#253;&#190;&#221;&#192;&#180;&#212;&#180;&#163;&#168;TMS,DDPT&#163;&#169;</comment>
+			</column>
+		</property>
+		<property name="userPic" type="string">
+			<column name="USER_PIC" length="20">
+				<comment>用户头像</comment>
+			</column>
+		</property>
+		<property name="openId" type="string">
+			<column name="OPEN_ID" length="200">
+				<comment>微信用户唯一标识</comment>
+			</column>
+		</property>
+		<property name="channelType" type="java.lang.Integer">
+			<column name="CHANNEL_TYPE">
+				<comment>渠道类型</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

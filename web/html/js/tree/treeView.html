@@ -1,0 +1,15 @@
+
+
+<i ng-click="itemExpended(treeData, $event);" class="{{getItemIcon(treeData)}}"></i>
+
+<input type="checkbox" parentId="{{treeData.parentId}}"
+	ng-model="treeData.$$isChecked" 
+	value="{{treeData.entityId}}"  class="check-box"
+	ng-if="canChecked"
+	ng-click="warpCallback('itemCheckedChanged', treeData, $event)">
+<span class='text-field'
+	ng-click="warpCallback('itemClicked', treeData, $event);">{{treeData[textField]}}</span>
+
+<ul class="tree-view ml_20" ng-if="!isLeaf(treeData)" ng-show="treeData.$$isExpend">
+               <li ng-repeat="item in treeData.childMenus" ng-include="itemTemplateUrl || '/js/tree/treeItem.html'" ></li>
+</ul>

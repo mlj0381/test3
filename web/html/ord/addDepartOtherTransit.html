@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="addDepartOtherApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>众邦_新增中转送货上门</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+
+<link rel="stylesheet" type="text/css"	href="../css/$tenantId$/master.css?v=${ver}">
+<link rel="stylesheet" type="text/css"	href="../css/$tenantId$/master_open.css?v=${ver}">
+
+<style type="text/css">
+.list_xl .list_xl_tbody td {
+    line-height: 34px;
+    border-bottom: 1px dotted #dfdedf;
+    color: #333;
+    text-align:center;
+    text-indent:0em;
+    white-space: nowrap;}
+.list_dhl .list_xl_thead th{text-indent:0;text-align:center;}
+.dhl_hd td{padding-bottom: 10px;}
+</style>
+</head>
+<body ng-controller="addDepartOtherCtrl" onLoad="setContentHeight()">
+	<my-table name="order" ng-show="false"></my-table>
+	<div class="billing_1 clearfix pb_20 mt_20" style="border: 0">
+	<!-- 新增送货上门信息 -->
+	<div class="added_warp clearfix" >
+		<div class="added_stowage clearfix fl ml_5b" style="min-height: 500px">
+			<!-- 搜索 -->
+			<div class="added_top">
+				<!-- <h2 class="added_h2"  class="hover">&nbsp;&nbsp;待配载 </h2>-->
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="added_top_list">
+					<tr>
+						<td><label class="added_label">当前网点：</label></td>
+						<td>
+							
+<!-- 								<select  disabled="disabled" >
+								     <option selected="selected" ng-model="currOrgId" class="ng-cloak">{{currOrgName}}</option>
+							    </select> -->
+							    <input class="form_term" style="width: 200px;" ng-model="currOrgName" readonly="readonly">
+							
+						</td>
+						
+						<td><label class="added_label">&nbsp;&nbsp;<!--到 达网点： --></label></td>
+						<td>
+							<!-- <div class="form_select w180 fl">
+								<select ng-model="form.descOrgId" ng-change="changeDescOrg(form.descOrgId)" ng-options="obj.endOrgId as obj.endOrgName for  obj in orgInfo.items "></select>
+							</div> -->
+						</td>
+					</tr>
+				</table>
+			
+			</div>
+			
+			<!-- 快搜    ng-keydown="($event.which === 13)?search():0" -->
+			<div class="added_ks">
+				<label class="added_label fl">快找：</label>
+					<input class="added_input" width="50" ng-model="selectData.trackingNums" ng-maxlength="20" type="text" placeholder="运单号" ng-keydown="($event.which === 13)?checkData():0" ng-blur="checkData()">
+					<input class="added_input" ng-model="selectData.gtWeight" ng-maxlength="20" type="text" placeholder="重量大于"    ng-keydown="($event.which === 13)?checkData():0" ng-blur="checkData()">
+					<input class="added_input" ng-model="selectData.gtVolume" ng-maxlength="20" type="text" placeholder="体积大于"    ng-keydown="($event.which === 13)?checkData():0" ng-blur="checkData()">
+					<input class="added_input" ng-model="selectData.gtCount" ng-maxlength="20" type="text" placeholder="件数大于"     ng-keydown="($event.which === 13)?checkData():0" ng-blur="checkData()">
+			</div>
+
+			<!-- 列表 -->
+			<div style="min-height: 318px; position: relative; border: 1px solid #e1effa; margin: 0 20px;">
+				<div class="pf" style="width: 100%; min-height: 318px; overflow: auto;">
+					<table name="MyTable" class="search_listc added_list" border="0" cellspacing="0" cellpadding="0" style="display: block; width: 1613px; left: 0px;">
+						<thead>
+							<tr>
+								<th width="25px" style="padding-left: 14px;"><a class="pcar_j icon" ng-click="selectAll(order.data)" tips="全选添加到配载信息列表" style="cursor: pointer;"></a></th>
+								<th width="100px">运单号</th>
+								<th width="180px">预约时间</th>
+								<th width="100px">回单号</th>
+								<th width="100px">回单份数</th>
+								<th width="100px">重量</th>
+								<th width="100px">体积</th>
+								<th width="100px">目的地</th>
+								<th width="100px">配送网点</th>
+								<th width="100px">件数</th>
+								<th width="100px">到付金额</th>
+								<th width="100px">收货人</th>
+								<th width="100px">收货人手机</th>
+								<th width="180px">备注</th>
+								<th width="100px" style="border-right: 0">收货方式</th>
+							</tr>
+						</thead>
+						<tbody>
+								<tr class="cloak ng-scope" ng-class="{'search_list_bj':o.orderState==5}" ng-repeat="o in order.data.items">
+								<td valign="top" width="25px" style="padding-left: 14px;"><a ng-click="select(o);" class="pcar_j icon" tips="添加到配载信息列表"></a></td>
+								<td width="100px">{{o.trackingNum}}</td>
+								<td width="180px">{{o.schedulingDate}}</td>
+                                <td width="100px">{{o.receiptNum}}</td>
+                                <td width="100px">{{o.receiptCount}}</td>
+                                <td width="100px">{{o.weight.toFixed(1)}}</td>
+                                <td width="100px">{{o.volume.toFixed(2)}}</td>
+                                <td width="100px">{{o.destCityName}}</td>
+                                <td width="100px">{{o.distributionOrgName}}</td>
+                                <td width="100px">{{o.count}}</td>
+                                <td width="100px">{{o.freightCollect/100}}</td>
+                                <td width="100px">{{o.consigneeLinkmanName}}</td>
+                                <td width="100px">{{o.consigneeBill}}</td>
+								<td width="180px" style="white-space: inherit;"><div class="wz_hh170 ng-binding">{{o.remarks}}</div></td>
+                                <td width="100px" style="border-right: 0">{{o.deliveryTypeName}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- 统计 -->
+			<table width="" border="0" cellspacing="0" cellpadding="0"
+				class="added_top_list" style="margin: 30px auto;">
+				<tr>
+					<td width="50"><label class="added_label">到付：</label></td>
+					<td width="110">
+						<input ng-model="freightCollectWait" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+					</td>
+					<td width="50"><label class="added_label">贷付：</label></td>
+					<td width="110">
+						<input ng-model="collectingMoneyWait" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+					</td>   
+					<td width="50"><label class="added_label">体积：</label></td>
+					<td width="110">
+						<input ng-model="actualVolumeWait" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+					</td>
+					<td width="50"><label class="added_label">重量：</label></td>
+					<td width="110">
+						<input ng-model="actualWeightWait" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="added_stowage clearfix fl" style="min-height: 500px; position: relative; margin-left: 20px;">
+			<div class="added_top clearfix">
+					<ul class="added_h2">
+					   <li id="one1" class="hover"><a  onclick="setTab('one',1,2)" class="hover">第一步：配载清单</a></li>
+					   <li id="one2"><a onClick="setTab('one',2,2)" >第二步：选车辆并完成</a></li>
+					</ul>
+				</div>
+          <div id="con_one_1"> 
+			<!-- 快搜 -->
+			<div class="added_ks">
+				<label class="added_label fl">快找：</label> 
+				<input class="added_input"id="" ng-model="selectData.geTrackingNums" ng-maxlength="20" ng-model="selectData.trackingNumber" type="text" placeholder="运单号"  ng-keydown="($event.which === 13)?isCheckData():0" ng-blur="isCheckData()">
+				<input class="added_input" id="" ng-model="selectData.geWeight" ng-maxlength="20" type="text" placeholder="重量大于"  ng-keydown="($event.which === 13)?isCheckData():0" ng-blur="isCheckData()"> 
+				<input class="added_input" id="" ng-model="selectData.geVolume" ng-maxlength="20" type="text"  placeholder="体积大于"  ng-keydown="($event.which === 13)?isCheckData():0" ng-blur="isCheckData()"> 
+				<input class="added_input" id="" ng-model="selectData.geCount" ng-maxlength="20" type="text" placeholder="件数大于"  ng-keydown="($event.which === 13)?isCheckData():0" ng-blur="isCheckData()">
+			</div>
+
+			<div style="min-height: 318px; position: relative; border: 1px solid #e1effa; margin: 0 20px; overflow: auto;">
+				<div class="pf" style="width: 100%; min-height: 318px; overflow: auto;">
+					<table class="search_listc added_list" border="0" cellspacing="0" cellpadding="0" style="display: block; width: 1613px; left: 0px;">
+						<thead>
+							<tr>
+								<th width="25px" style="padding-left: 14px;">
+									<a class="pcar_m icon " ng-click="selectClear();" tips="全选移除到待发货列表" style="cursor: pointer;"></a>
+								</th>
+								<th width="100px">运单号</th>
+								<th width="180px">预约时间</th>
+								<th width="100px">回单号</th>
+								<th width="100px">回单份数</th>
+								<th width="100px">重量</th>
+								<th width="100px">体积</th>
+								<th width="100px">目的地</th>
+								<th width="100px">配送网点</th>
+								<th width="100px">件数</th>
+								<th width="100px">到付金额</th>
+								<th width="100px">收货人</th>
+								<th width="100px">收货人手机</th>
+								<th width="180px">备注</th>
+								<th width="100px" style="border-right: 0">收货方式</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cloak ng-scope" ng-class="{'search_list_tr':$index%2==1}" ng-repeat="o in list">
+								<td valign="top" width="25px" style="padding-left: 14px;">
+									<a class="pcar_m icon" ng-click="clear(o);" tips="全选移除到待发货列表" style="cursor: pointer;"></a>
+								</td>
+				                <td width="100px">{{o.trackingNum}}</td>
+				                <td width="180px">{{o.schedulingDate}}</td>
+	                            <td width="100px">{{o.receiptNum}}</td>
+	                            <td width="100px">{{o.receiptCount}}</td>
+	                            <td width="100px">{{o.weight.toFixed(1)}}</td>
+	                            <td width="100px">{{o.volume.toFixed(2)}}</td>
+	                            <td width="100px">{{o.destCityName}}</td>
+	                            <td width="100px">{{o.distributionOrgName}}</td>
+	                            <td width="100px">{{o.count}}</td>
+	                            <td width="100px">{{o.freightCollect/100}}</td>
+	                            <td width="100px">{{o.consigneeLinkmanName}}</td>
+	                            <td width="100px">{{o.consigneeBill}}</td>
+	                            <td width="180px" style="white-space: inherit;"><div class="wz_hh170 ng-binding">{{o.remarks}}</div></td>
+	                            <td width="100px" style="border-right: 0">{{o.deliveryTypeName}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- 统计 -->
+				<table width="" border="0" cellspacing="0" cellpadding="0"
+					class="added_top_list" style="margin: 30px auto;">
+					<tr>
+						<td width="50"><label class="added_label">到付：</label></td>
+						<td width="110">
+							<input ng-model="freightCollect" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+						</td>
+						<td width="50"><label class="added_label">贷付：</label></td>
+						<td width="110">
+							<input ng-model="collectingMoney" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+						</td>   
+						<td width="50"><label class="added_label">体积：</label></td>
+						<td width="110">
+							<input ng-model="actualVolume" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+						</td>
+						<td width="50"><label class="added_label">重量：</label></td>
+						<td width="110">
+							<input ng-model="actualWeight" class="added_input" ng-maxlength="20" type="text" placeholder="0" disabled="disabled">
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="con_one_2" style="display:none">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="added_list_2">
+					 <tr>
+						<td><label class="added_label">经营方式：</label></td>
+						<td>
+						    <div class="form_select w_b62 fl" style="min-width:140px" >
+						     <my-select id="form.businessType" default-Value="1"  code-type="BUSINESS_TYPE"  ng-click="vehicleChange(form.businessType)" url="" />
+			                </div>
+						</td>
+					  </tr>
+					
+					  <tr>
+						<td width="30%"><label class="added_label">车牌号码：</label></td>
+						<td width="70%">
+							     <input class="form_term w_b62"
+						         ng-model="form.plateNumber" maxlength="7" ng-model="form.plateNumber"  ng-focus="showTotrue()"  ng-keyup="doQueryVehile(form.plateNumber)" class="form_billing" type="text"/>
+								    <div class="list_xl ng-cloak list_dhl" ng-show="showPcum && form.businessType!=3">
+								        	<div><h2 style="float: left;">请选择车辆</h2><span style="font-size: 12px;font-family:宋体;float: left;padding: 6px 0 6px 10px;display: block;color: #ff0000;">单击一行选中</span></div>
+								            <i class="list_xl_icon icon"><a class="gone" ng-click="showToFalse()" href="javascript:void(0)"></a></i>
+								            <table style="width: 500px;" width="100%" border="0" cellspacing="0" cellpadding="0" class="list_xl_thead">
+								            	<thead>
+								                	<tr>
+								                    	<th style="width: 70px;padding-left: 6px;">车牌号</th>
+								                        <th style="width: 70px">车辆类型</th>
+								                        <th style="width: 65px">车辆状态</th>
+								                        <th style="width: 64px">司机名称</th>
+								                        <th style="width: 85px">手机号码</th>
+								                        <th style="width: 70px">可配置体积</th>
+								                        <th>可配置重量</th>
+								                    </tr>
+								                </thead>
+								            </table>
+								            <my-table>
+								            <div class="list_xl_tbody ng-cloak" style="height: 100px!important">
+								            	<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+								            	<tbody>
+								                  <tr ng-repeat="obj in page.data.items" ng-click="selectVehicle(obj)">
+								                    <td width="70" style="padding-left: 6px;" >{{obj.plateNumber}}</td>
+								                    <td width="70">{{obj.vehicleTypeName}}</td>
+								                    <td width="65" >{{obj.vehicleStateName}}</td>
+								                    <td width="64">{{obj.name}}</td>
+								                    <td width="85">{{obj.bill}}</td>
+								                    <td width="70">{{obj.actualVolume.toFixed(1)}}</td>
+								                    <td >{{obj.actualWeight.toFixed(2)}}</td>
+								                   </tr>
+								                  </tbody>
+								            </table>
+								            </div>
+											</my-table>
+								    </div>					
+				        </td>
+					  </tr>
+					  <tr>
+						<td><label class="added_label">司机姓名：</label></td>
+						<td><input ng-model="form.driverName" class="form_term w_b62" type="text"></td>
+					  </tr>
+					  <tr>
+						<td><label class="added_label">司机手机：</label></td>
+						<td><input ng-model="form.driverBill" class="form_term w_b62" type="text"></td>
+					  </tr>
+					  <tr>
+						<td><label class="added_label">车辆类型：</label></td>
+						<td><div class="form_select w_b62 fl">
+						       <my-select id="form.vehicleType" code-type="VEHICLE_TYPE" url="" />
+                            </div>
+                        </td>
+					  </tr>
+					  <tr>
+						<td><label class="added_label">可配重量：</label></td>
+						<td><input ng-model="form.weight" class="form_term w_b62" type="text"></td>
+					  </tr>
+					  <tr>
+						<td><label class="added_label">可配体积：</label></td>
+						<td><input ng-model="form.voluem" class="form_term w_b62" type="text"></td>
+					  </tr>
+					  <tr>
+						<td><label class="added_label">运费：</label></td>
+						<td><input ng-model="form.freight"  my-double-val='keyup' class="form_term w_b62" type="text"></td>
+					  </tr>
+					  <tr>
+						<td></td>
+						<td>
+							<span ng-show="form.businessType==3" class="tdspan fl"><input name="identity" type="radio" value="1" id="checkBox_1" style="vertical-align:middle" />未付</span>
+							<span ng-show="form.businessType==3" class="tdspan fl"><input name="identity" type="radio" value="2" id="checkBox_2" style="vertical-align:middle" />已付</span>
+							<span ng-show="form.businessType!=3" class="tdspan fl">自有车辆无需支付</span>
+						</td>
+					  </tr>
+					  <tr>
+					  	<td></td>
+						<td><div class="bottom_nav1" style="text-align:left;"><a href="javascript:void(0);" ng-click="doSave()">保存配载信息</a><a ng-click="close();" href="javascript:void(0);">返 回</a></div></td>
+					  </tr>
+					</table>
+				</div>
+		</div>
+	   </div>
+</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/x.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="addDepartOtherTransitCtrl.js?v=${ver}"></script>
+<script>
+function setTab(name,cursel,n){
+ for(i=1;i<=n;i++){
+  var menu=document.getElementById(name+i);
+  var con=document.getElementById("con_"+name+"_"+i);
+  menu.className=i==cursel?"hover":"";
+  con.style.display=i==cursel?"block":"none";
+ }
+}
+//-->
+		
+</script>
+</body>
+</html>
+

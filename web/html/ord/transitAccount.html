@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="transitAccountApp">
+<head>
+<title>众邦_中转跟踪</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+<style type="text/css">
+.form_term{width: 130px!important;}
+</style>
+</head>
+<body ng-controller="transitAccountCtrl"  style="overflow: hidden;">
+	<!-- 运单录入 -->
+	<div class="billing_1 clearfix pb_20 mt_20">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">开单日期：</label>
+                   		</td>
+						<td>
+							<input  style="width: 110px!important" my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' ng-model="query.beginTime" id="beginTime" readonly="readonly"	class="form_term fl w_xjr" type="text" >
+				<span class="search_span fl">到</span>
+				<input readonly="readonly" ng-model="query.endTime"
+				my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'
+				id="endTime" class="form_term fl w_xjr"  style="width: 110px!important" type="text"	>
+				
+                        </td>
+                         
+						<td width="100">
+						    <label class="term_label">订单状态：</label>
+                    	</td>
+						<td>
+                            <div class="form_select" style="width: 130px!important">
+								<my-select id="query.orderState" filter="已删除" has-all="true"
+									default-value="-1" code-type="ORDER_STATE"></my-select>
+							</div>                         
+						</td>
+						<td width="100"><label class="term_label">运单号：</label>
+                       	</td>
+						<td>
+	                        
+	                        <input
+				class="form_term" ng-model="query.trackingNum" type="text"
+				maxlength="16" ng-change="upNum('query.trackingNum')">
+                        </td>
+						<td width="100">
+						    <label class="term_label">发货人手机：</label>
+                    	</td>
+						<td>
+                            <input
+				class="form_term" maxlength="11"
+				ng-model="query.consignorBill" my-Num-Val type="text">                   
+						</td>
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter  href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">收货人手机：</label></td>
+						<td><input
+				class="form_term" maxlength="11"
+				ng-model="query.consigneeBill" my-Num-Val type="text"></td>
+					    <td width="100"><label class="term_label">发货方：</label></td>
+						<td><input
+				class="form_term" maxlength="11"
+				ng-model="query.consignorName" type="text"></td>
+						<td width="100">
+						    <label class="term_label">收货方：</label>
+                    	</td>
+						<td>
+                            <input
+				class="form_term" maxlength="11"
+				ng-model="query.consigneeName" type="text">               
+						</td>
+						
+						<td width="100"><label class="term_label">承运公司：</label></td>
+						<td><div class="form_select " style="width: 130px!important">
+					<select ng-model="query.carrierCompanyId"
+						ng-options="obj.orgId as obj.orgName for obj in cmCarrCompanies"></select>
+				</div></td>
+					</tr>
+					<tr>
+					    <td width="100"><label class="term_label">中转日期：</label></td>
+						<td><input style="width: 110px!important"
+				my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'
+				ng-model="query.transitTimeS" id="transitTimeS" readonly="readonly"
+				class="form_term fl w_xjr" type="text">
+				<span class="search_span fl">到</span>
+				<input readonly="readonly" ng-model="query.transitTimeE"  style="width: 110px!important"
+				my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'
+				id="transitTimeE" class="form_term fl w_xjr" type="text"></td>
+						<td width="100"><label class="term_label">是否已到货：</label></td>
+						<td><div class="form_select " style="width: 130px!important">
+					<select ng-model="query.isTransferGoods" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">是</option>
+									<option  value="2">否</option>
+								</select>
+				</div></td>
+				<td width="100"><label class="term_label">是否二次中转：</label></td>
+						<td><div class="form_select " style="width: 130px!important">
+					<select ng-model="query.isSecondTransfer" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">是</option>
+									<option  value="2">否</option>
+								</select>
+				</div></td>
+					</tr>
+					
+	
+					
+				</tbody>
+		</table>
+		
+		<div class="search_nr clearfix mt_20">
+			<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+				<h2>查询结果(双击查看详情)</h2>
+				<!-- <a class="button ml_10 tixiansp2" href="javaScript:void(0)" ng-click="openTransferArriveGoods();"><i class="button_icon button_icon dw_tixiansp2"></i>中转到货</a>
+				<a class="button ml_10 newly" style="width: auto;" ng-click="openSecondTransfer();" href="javascript:void(0)"><i class="button_icon button_icon dw_newly ml0"></i>二次中转</a>
+				<a ng-click="modifyInfo();" href="javascript:void(0)">保存</a> -->
+				<!--<a class="button ml_10 newly" ng-click="addTracking();" href="javascript:void(0)"
+					ng-show="isShow"><i class="button_icon button_icon dw_newly"></i>新增跟踪信息</a>
+				<a class="button ml_10 see_b" ng-click="selectTracking();"
+					href="javascript:void(0)" ng-show="isShow"><i class="button_icon button_icon dw_see_b"></i>查看跟踪信息</a>-->
+					<a ng-click="p.downloadExcelFile()" href="javascript:void(0)" >导出</a>
+				<!-- <a ng-click="addTracking();" href="javascript:void(0)"
+					ng-show="isShow">新增跟踪信息</a> <a ng-click="selectTracking();"
+					href="javascript:void(0)" ng-show="isShow">查看跟踪信息</a> -->
+
+			</div>
+			
+	                <my-diy-Table  isShowSeq="false" width="2505px" doubleclick="toDetailAllInfo"  isMultiSelect="true"  isShowCheck="true" doubleclick="toDetailAllInfo" isFilter="true" isSum="true" id="orderId" name="p" head='[
+	                       {"name":"运单号","code":"trackingNum","width":"120"},
+	                       {"name":"中转时间","code":"transitTimeString","width":"130"},
+	                       {"name":"承运商","code":"carrOrgIdName","width":"120"},
+	                       {"name":"外发单号","code":"outgoingTrackingNumString","width":"120"},
+	                       {"name":"外发费用(元)","code":"outgoingFeeDouble","width":"100","isSum":"true"},
+			               {"name":"本地联系人","code":"linkerName","width":"80"},
+				           {"name":"本地电话","code":"linkerPhone","width":"100"},
+				           {"name":"提货电话","code":"deliveryPhone","width":"100"},
+				           {"name":"提货地址","code":"deliveryAddress","width":"130"},
+				           {"name":"中转到货时间","code":"transferArriveGoodsTime","width":"100"},
+				           {"name":"二次中转时间","code":"secondTransferTime","width":"100"},
+				           {"name":"现付(元)","code":"cashPaymentDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"到付(元)","code":"freightCollectDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"回单付(元)","code":"receiptPaymentDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"月结(元)","code":"monthlyPaymentDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"转账(元)","code":"transPaymentDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"免费补发(元)","code":"freeReplacementDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"回扣(元)","code":"discountDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"代收货款(元)","code":"collectingMoneyDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"费用合计(元)","code":"totalFeeDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"配安费(元)","code":"installCostsDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"运费(元)","code":"freightDouble","width":"100","isSum":"true","number":"2"},
+				           {"name":"开单网点","code":"orgIdName","width":"80"},
+				           {"name":"运单状态","code":"orderStateName","width":"80"},
+				           {"name":"开单时间","code":"billingTimeString","width":"130"},
+			               {"name":"目的城市","code":"destCityName","width":"80"},
+			               {"name":"目的区域","code":"destCityNameAnddestCountyName","width":"80"},
+			               {"name":"中转网点","code":"carrOrgIdName","width":"80"},
+			               {"name":"收货人","code":"consigneeName","width":"80"},
+			               {"name":"收货人电话","code":"consigneeBill","width":"100"},
+			               {"name":"货品","code":"products","width":"80"},
+			               {"name":"件数","code":"count","width":"100","isSum":"true"},
+			               {"name":"总体积(方)","code":"volume","width":"100","isSum":"true","number":"2"},
+			               {"name":"总重量(kg)","code":"weight","width":"100","isSum":"true","number":"2"},
+			               {"name":"货号","code":"goodsNumber","width":"100"},
+			               {"name":"备注","code":"remarks","width":"130"},
+			               {"name":"是否核销","code":"isVerificationName","width":"100"},
+			               {"name":"是否控货","code":"releaseNoteName","width":"100"},
+			               {"name":"收货地址","code":"address","width":"130"},
+			               {"name":"发货人手机","code":"consignorBill","width":"100"},
+			               {"name":"发货人","code":"consignorName","width":"80"}
+			               ]'>
+	                </my-diy-Table>
+	                </div>
+		
+
+	</div>
+	
+	
+	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" style="display: none;"></div>
+	<!--半透明黑色背景  结束-->
+	<script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/lodop/lodop-business.js?v=${ver}"></script>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="transitAccountCtrl.js?v=${ver}"></script>
+</body>
+</html>

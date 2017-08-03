@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="deliveryApp"> 
+	<head>
+	    <title>众邦_配载详情 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css?v=${ver}">
+</head>
+	<body ng-controller="deliveryCtrl" style="overflow:hidden">
+        <!-- 搜索 详细 -->
+         <div id="print" class="billing_1 clearfix pb_20 mt_20">
+        
+            <!-- 搜索 详细 搜索开始 -->
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term ng-cloak">
+					<tbody>
+					<tr>
+                    <td width="100"><label class="term_label">发车批次：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.batchNum}}"  readonly="readonly"></td>
+                    <td width="120"><label class="term_label">安装师傅：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.list[0].sfName}}" readonly="readonly"></td>
+                    <td width="120"><label class="term_label">联系方式：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.list[0].sfPhone}}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                    <td><label class="term_label">车牌号码：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.plateNumber}}" readonly="readonly"></td>
+                    <td><label class="term_label">司机姓名：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.driverName}}" readonly="readonly"></td>
+                    <td><label class="term_label">司机手机：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.driverBill}}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                    <td><label class="term_label">车辆类型：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.vehicleTypeName}}" readonly="readonly"></td>
+                    <td><label class="term_label">可配重量：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.weight}}" readonly="readonly"></td>
+                    <td><label class="term_label">可配体积：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.volume}}" readonly="readonly"></td>
+                    </tr>
+                    
+                    <tr>
+                    <td><label class="term_label">送货货时间：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.loadTime}}" readonly="readonly"></td>
+                    <td><label class="term_label">运费：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.freight/100|number:2}}" readonly="readonly"><span ng-if="deliveryDetail.payState==2">未付</span><span  ng-if="deliveryDetail.payState==1">已付</span></td>
+                    <td><label class="term_label">装卸费：</label></td>
+                    <td><input type="text" class="form_billing form_term" value="{{deliveryDetail.stevedoring/100|number:2}}" readonly="readonly"><span ng-if="deliveryDetail.stevedoringPayState==2">未付</span><span  ng-if="deliveryDetail.stevedoringPayState==1">已付</span></td>
+                    </tr>
+                    <tr>
+                   </tbody>
+                   </table>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_auto dhl_x dhl_x2 ng-cloak" style="padding: 0!important;table-layout: fixed!important;">
+					<tr>
+						<td width="120" align="right"><label class="term_label">到付：</label></td>
+						<td width="100"><span class="red fl">{{deliveryDetail.freightCollect/100|number:2}}</span><span class="fl hg">元</span></td>
+						<td width="60" align="right"><label class="term_label">货款：</label></td>
+						<td width="100"><span class="red fl">{{deliveryDetail.collectingMoney/100|number:2}}</span><span class="fl hg">元</span></td>
+						<td width="60" align="right"><label class="term_label">配安费：</label></td>
+						<td width="100"><span class="red fl">{{deliveryDetail.branchAndInstall/100|number:2}}</span><span class="fl hg">元</span></td>
+						<td width="60" align="right"><label class="term_label">应收：</label></td>
+						<td width="140"><span class="red fl">{{deliveryDetail.totalGetMoney/100|number:2}}</span><span class="fl hg">元</span>	
+							<div class="controls fl" style="margin-left: 10px;margin-top: 3px;">
+								<span ng-if="deliveryDetail.isGet==0" class="tdspan fl">
+									<input type="radio"  checked="checked" name="isGet" style="vertical-align:middle">未收
+								</span>
+							 	<span ng-if="deliveryDetail.isGet==1"  class="tdspan fl">
+							 		<input type="radio"  checked="checked"  name="isGet" style="vertical-align:middle">已收
+							 	</span>
+							</div></td>
+						<td width="60" ng-if="deliveryDetail.totalPayMoney!=null&&deliveryDetail.totalPayMoney!=undefined" align="right"><label class="term_label">应付：</label></td>
+						<td width="140" ng-if="deliveryDetail.totalPayMoney!=null&&deliveryDetail.totalPayMoney!=undefined"><span class="red fl">{{deliveryDetail.totalPayMoney/100|number:2}}</span><span class="fl hg">元</span>	
+							<div ng-if="form.totalPayMoney!=null&&form.totalPayMoney!=undefined" class="controls fl" style="margin-left: 10px;margin-top: 3px;">
+								<span ng-if="deliveryDetail.isPay==0" class="tdspan fl">
+									<input type="radio"  checked="checked"  name="isPay" style="vertical-align:middle">未付
+								</span>
+							 	<span ng-if="deliveryDetail.isPay==1" class="tdspan fl">
+							 		<input type="radio" checked="checked"   name="isPay" style="vertical-align:middle">已付
+							 	</span>
+							</div>
+						</td>
+					</tr>
+				</table>
+            
+            <!-- 搜索 详细 搜索结束 -->
+            
+            <!-- 搜索 详细 列表开始 -->
+            <div class="search_nr clearfix mt_20 dhl_add">
+	        	<my-Diy-Table isPage="false" isShowSeq="false"  width="2200px" isMultiSelect="false" showTotal="false"  isShowTab="false" isShowCheck="true" isFilter="true" isSum="true" id="taskId" 
+	                head='[ {"name":"运单号","code":"trackingNum","width":"90"},
+                {"name":"货品","code":"products","width":"100"},
+                {"name":"件数","code":"count","width":"60"},
+                {"name":"重量","code":"weight","width":"70"},
+                {"name":"体积","code":"volumes","width":"70"},
+                {"name":"安装件数","code":"installCount","width":"60"},
+                {"name":"配安费","code":"branchAndInstall","width":"60"},
+                {"name":"预约上门时间","code":"yyTime","width":"110"},
+                {"name":"收货地址","code":"receAddr","width":"180"},
+                {"name":"收货人","code":"receiverName","width":"100"},
+                {"name":"收货人手机","code":"receiverBillId","width":"100"},
+                 {"name":"到付","code":"freightCollect","width":"100"},
+                  {"name":"货款","code":"collectingMoney","width":"100"},
+                {"name":"安装师傅","code":"sfName","width":"120"},
+                {"name":"回单号","code":"receiptNum","width":"100"},
+                {"name":"回单数量","code":"receiptCount","width":"100"},
+                {"name":"到货时间","code":"arriveGoodsTime","width":"120"},
+                {"name":"接单时间","code":"acceptTime","width":"120"},
+                {"name":"提货时间","code":"pickTime","width":"120"},
+                {"name":"预约时间","code":"upFixTime","width":"120"}
+                ]'>
+                
+                </my-Diy-Table>
+			</div>
+            <!-- 搜索 详细 列表结束 -->
+        </div>
+        
+        <div id="printDiv" style="display: none;">
+ 			<table border=1 width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#000000">
+				<caption style="font-size: 30px; margin-bottom: 16px;">
+					<b>众邦物流有限公司发货清单</b>
+					<br />
+					<span style="position: absolute; top:8; right: 0; width: 286px; height: 16px; font-size:16px;">打印时间: {{printTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+				</caption>
+ 				<tbody>
+ 					<tr style="height: 32px;">
+	 					<td colspan="3" style="font-size: 16; width: 16%;" >发车批次: {{deliveryDetail.batchNum}}</td>
+	 					<td colspan="5" style="font-size: 16; width: 30%;">发车网点: {{deliveryDetail.sourceOrgIdName}}</td>
+	 					<td colspan="4" style="font-size: 16; width: 22%;">到达网点: {{deliveryDetail.descOrgIdName}}</td>
+	 					<td colspan="6" style="font-size: 16; width: 30%;">车费: {{deliveryDetail.freight != "" ? deliveryDetail.freight / 100 : ""}}</td>
+	 				</tr>
+	 				<tr style="height: 32px;">
+	 					<td colspan="3" style="font-size: 16; width: 16%;">车牌号: {{deliveryDetail.plateNumber}}</td>
+	 					<td colspan="5" style="font-size: 16; width: 30%;">司机姓名: {{deliveryDetail.driverName}}</td>
+	 					<td colspan="4" style="font-size: 16; width: 22%;">联系方式: {{deliveryDetail.driverBill}}</td>
+	 					<td colspan="5" style="font-size: 16; width: 30%;">
+	 					  	第<font tdata="PageNO" color="blue">##</font>页</span>共<font tdata="PageCount" color="blue">##</font></span>页
+	 					</td>
+	 				</tr>
+ 					<tr style="height: 32px;">
+ 						<td style="vertical-align:middle; text-align:center; width: 3%; font-size: 15;">序号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">目的城市</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">配送网点</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">货号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 4%; font-size: 15;">包装</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 5%; font-size: 15;">品名</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 3%; font-size: 15;">重量</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 3%; font-size: 15;">体积</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 5%; font-size: 15;">收货人</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">联系方式</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">提货方式</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 15%; font-size: 15;">收货详细地址</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">发货方付</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 4%; font-size: 15;">到付</td> 
+ 						<td style="vertical-align:middle; text-align:center; width: 5%; font-size: 15;">代收款</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 4%; font-size: 15;">回扣</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">回单号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 4%; font-size: 15;">备注</td>
+ 					</tr>
+ 					<tr ng-repeat="o in deliveryDetail.list" style="height: 32px;">
+ 						<!-- 序号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{$index + 1}}</td>
+						<!-- 目的城市 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{(undefined != o.destCityName && o.destCityName.substring(o.destCityName.length - 1) == '市') ? o.destCityName.substring(0, o.destCityName.length - 1) : o.destCityName}}</td>
+						<!-- 配送网点 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.distributionOrgName}}</td>
+						<!-- 货号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.trackingNum}}-{{o.count}}</td>
+						<!-- 包装 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.packingTypeNames}}</td>
+						<!-- 品名 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.goodsNames}}</td>
+						<!-- 重量 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.weight}}</td>
+						<!-- 体积 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.volume}}</td>
+						<!-- 收货人 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.consigneeName}}</td>
+						<!-- 收货人联系方式 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.consigneeBill}}</td>
+						<!-- 交接方式 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.deliveryTypeName == '自提' ? '自提' : '送货'}}</td>
+						<!-- 收货详细地址 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.deliveryTypeName == '自提' ? '' : o.address}}</td>
+						<!-- 发货人付 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{(o.receiptPayment != "" ? o.receiptPayment / 100 : "")+(o.cashPayment != "" ? o.cashPayment / 100 : "")+(o.monthlyPayment != "" ? o.monthlyPayment / 100 : "")}}</td>
+						<!-- 到付 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.freightCollect != "" ? o.freightCollect / 100 : ""}}</td> 
+						<!-- 代收款 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.collectingMoney != "" ? o.collectingMoney / 100 : ""}}</td>
+						<!-- 回扣 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.discount != "" ? o.discount / 100 : ""}}</td>
+						<!-- 回单号 -->	
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.receiptNum}}</td>
+						<!-- 备注 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.remarks}}</td>
+					</tr>
+ 					<tr style="height: 32px;">
+ 						<td colspan="2" style="vertical-align:middle; text-align:center; font-size: 15;">合计: {{printTotalInfo.number}}票</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{printTotalInfo.weight == 0 ? '' : printTotalInfo.weight}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{printTotalInfo.volume == 0 ? '' : printTotalInfo.volume}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{printTotalInfo.consigneePay == 0 ? '' : printTotalInfo.consigneePay}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{printTotalInfo.freightCollect == 0 ? '' : printTotalInfo.freightCollect}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{printTotalInfo.collectingMoney == 0 ? '' : printTotalInfo.collectingMoney}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{printTotalInfo.discount == 0 ? '' : printTotalInfo.discount}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td>&nbsp;</td>
+ 					</tr>
+ 				</tbody>
+ 			</table>
+ 		</div>
+        
+        <div class="bottom_nav1 pb_20 bottom_nav_search">
+        	<a href="javascript:void(0);" ng-click="close();">关 闭</a>
+        	<!-- <a href="javascript:void(0);" ng-click="printTable();">打 印</a> -->
+        	<!-- <a style="cursor: pointer;"   id="selectExport" ng-click="exportOrd()">导出</a> -->
+        </div>
+ 		
+ 		<script type="text/javascript" src="../../js/lodop/LodopFuncs.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/lodop/lodop-business.js?v=${ver}"></script>
+		
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.js"></script>
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="deliveryInfoCtrl.js?v=${ver}"></script>
+		
+</body>
+</html>

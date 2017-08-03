@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  ng-app="transitOutgoingLogApp">
+	<head>
+	    <title>众邦_中转跟踪</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}"/>
+
+</head>
+	<body ng-controller="transitOutgoingLogCtrl">
+	
+        <!-- 运单录入 -->
+		<div class="added_stowage clearfix fl ml_5b" style="min-height: 500px;margin-top: 15px;">
+            <div class="search_nr clearfix">
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix" style="border-top:0;"><h2>--在途信息--</h2></div>
+                
+                
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+				  <tr>
+					<td width="100" align="right" valign="top"><label class="st">跟踪内容：</label></td>
+					<td valign="top"><textarea class="yic_text" style="width:98%;height: 60px;" ng-model="param.content" maxLength="100"></textarea></td>
+					<td width="100"><div class="bottom_nav1 pb_20 bottom_nav_search">
+						 <a style="margin-bottom: 10px!important;" href="javaScript:void(0)" ng-click="doSaveOrdTrackingInfo()" ng-show="isAble">增加</a>
+						 <a href="javaScript:void(0)" ng-click="doClear()">清除</a></div>
+					</td>
+				  </tr>
+				  
+				</table>
+                <div class="zz_list" style="margin: 0 15px;">
+                         <table class="search_list_news" border="0" cellspacing="0" cellpadding="0" width="100%">
+                               <thead>
+                                <tr>
+                                    <th width="25%">跟踪时间</th>
+                                    <th width="25%">跟踪人</th>
+                                    <th width="25%">内容</th>
+                                    <th width="25%">操作</th>
+                                    
+                                </tr>
+                              </thead>
+                              <tbody>
+   
+								  <tr ng-repeat="o in trackingInfo" >
+                                  	<td width="25%" >{{o.createDate}}</td>
+                                    <td width="25%">{{o.opName}}</td>
+                                    <td width="25%">{{o.content}}</td>
+                                    <td width="25%"><a href="javaScript:void(0)" ng-click="doDel(o.trackingId)">删除</a></td>
+                                    
+                                  </tr>
+                              </tbody>
+                  </table>
+				</div>
+			</div>
+        
+        </div>
+        <!--  -->
+		<div class="added_stowage clearfix fl" style="min-height: 500px; position: relative; margin-left: 20px; margin-top: 15px;">
+		
+			<ul class="search_term clearfix border_b">
+                <li class="term_li">
+                <label class="term_label">发运时间：</label>
+               <!--  <input class="form_term w_b62" type="text">  style="width: 27% !important"-->
+                <input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d","dateFmt":"yyyy-MM-dd HH:mm:ss" }'  ng-model="query.starVehicleTime" id="starVehicleTime" readonly="readonly" class="form_term w_b62"  type="text" ng-disabled="check4"/>
+                </li>
+                <li class="term_li">
+	                <label class="term_label">预计到达时间：</label>
+	              <!--   <input class="form_term w_b62" type="text"> style="width: 27% !important"-->
+	               <input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d","dateFmt":"yyyy-MM-dd HH:mm:ss" }'  ng-model="query.expectDate" id="expectDate" readonly="readonly" class="form_term w_b62"  type="text" ng-disabled="check4"/>
+                </li>
+            </ul>
+			<table width="80%" border="0" cellspacing="0" cellpadding="0" class="dhl_xzlist" style="margin:20px 0 0 10%;">
+				<tr>
+					<td width="100">
+						<div class="controls fl" style="margin-left:2px;width: 100px;">
+							<input class="none" id="check-1" type="checkbox" name="check-1" ng-disabled="check1"/>
+							<label for="check-1" class="yd_span">已到货</label>
+						</div>
+					</td>
+					<td width="100"><label class="dhl_xzlistla">到达时间：</label></td>
+					<td>
+					 <input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d","dateFmt":"yyyy-MM-dd HH:mm:ss" }'  ng-model="query.arrGoodsTime" id="arrGoodsTime" readonly="readonly" class="form_term w_b62"  type="text" ng-disabled="check1"/>
+						
+                    </td>
+				  </tr>
+				  <tr>
+					<td colspan="2"><div class="controls fl" style="margin-left:2px;">
+						<input class="none" id="check-2" type="checkbox" name="check-2" ng-disabled="check2"/>
+						<label for="check-2" class="yd_span">短信通知收货人</label>
+  					</div></td>
+					<td></td>
+				  </tr>
+				  <tr>
+					<td><div class="controls fl" style="margin-left:2px;">
+						<input class="none" id="check-3" type="checkbox" name="check-3" ng-click="selectOne()" ng-disabled="check3"/>
+						<label for="check-3" class="yd_span">已签收</label>
+  					</div></td>
+  					
+					<td width="100"><label class="dhl_xzlistla">签收时间：</label></td>
+					<td>
+					 <input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d","dateFmt":"yyyy-MM-dd HH:mm:ss" }'  ng-model="query.signDate" id="signDate" readonly="readonly" class="form_term w_b62" ng-disabled="check4"  type="text" />
+                   </td>
+				  </tr>
+				  <tr>
+				  <td></td>
+				   <td width="100"><label class="dhl_xzlistla">签收类型：</label></td>
+                    <td >
+                    <div class="form_select" >
+                         <my-select id="query.signType" code-type="SIGN_TYPE"  url=""  disabled="check4"/>
+                    </div>
+                    </td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td width="100"><label class="dhl_xzlistla">签收人：</label></td>
+					<td><input  class="form_term" type="text" ng-model="query.signName" maxlength="15"  ng-disabled="check4" /></td>
+				  </tr>
+				  <tr>
+				  <td></td>
+				  <td width="100"><label class="dhl_xzlistla">证件类型：</label></td>
+                    <td>
+                    <div class="form_select" >
+                        <my-select id="query.signCertificateType" code-type="CERTIFICATE_TYPE" url=""/>
+                    </div>
+                    </td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td width="100"><label class="dhl_xzlistla">签收证件号：</label></td>
+					<td><input class="form_term" type="text" ng-model="query.signCertificate" maxlength="20" ng-disabled="check4"/></td>
+				  </tr>
+				  <tr>
+					<td><div class="controls fl" style="margin-left:2px;">
+						<input class="none" id="check-35" type="checkbox" name="check-35" ng-disabled="true"/>
+						<label for="check-35" class="yd_span">已回单</label>
+  					</div></td>
+					<td width="100"><label class="dhl_xzlistla">回单时间：</label></td>
+					<td>
+					   <input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d","dateFmt":"yyyy-MM-dd HH:mm:ss"}'  ng-model="query.receiptDate" id="receiptDate" readonly="readonly" class="form_term w_b62"  type="text" ng-disabled="check35"/>
+                   </td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td width="100"></td>
+					<td>
+						<div class="bottom_nav1 pb_20 bottom_nav_search" style="margin-top:20px; text-align:left;">
+							<a href="javaScript:void(0)" ng-click="doEnd()" ng-show="isShow">跟踪结束</a>
+							<a href="javaScript:void(0)" ng-click="doSave()" ng-show="isShow">保存</a>
+							<a href="javaScript:void(0)" ng-click="close()" ng-show="isShow">返回</a>
+						</div>
+					</td>
+				  </tr>
+				  
+		  </table>
+		
+		</div>
+		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="transitOutgoingLogCtrl.js?v=${ver}"></script>
+</body>
+</html>

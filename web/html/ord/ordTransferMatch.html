@@ -1,0 +1,158 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordTransferMatchApp"> 
+	<head>
+	    <title>联运汇_中转匹配管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+        <style type="text/css">
+          .hideString{
+		        white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+		    }
+		     .w_b60{width: 215px!important;}
+		   
+        </style>
+</head>
+	<body ng-controller="ordTransferMatchCtrl" style="overflow: hidden;">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr><!-- onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" -->
+						<td width="100"><label class="term_label">开单日期：</label>
+                   			</td>
+						<td>
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr" type="text">
+                            </td>
+						<td width="100"><label class="term_label">运单号：</label>
+							</td>
+						<td> <input class="form_term" style="width: 215px;"  ng-model="query.trackingNum"  type="text"></td>
+						<td width="100"><label class="term_label">承运商：</label>
+                        
+                    	</td>
+						<td><input class="form_term" style="width: 215px;"  ng-model="query.orgName"  type="text">
+						</td>
+						
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter  href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">收货地：</label>
+                        
+                    	</td>
+						<td>
+                       <span class="wdcy_input" my-city="des">
+                        </td>
+						<td width="100"><label class="term_label">收货人：</label>
+                    	</td>
+						<td>
+                            <input class="form_term" style="width: 215px;"  ng-model="query.consigneeName"  type="text">
+                        </td>
+                        <td width="100"><label class="term_label">收货人电话：</label>
+                    	</td>
+						<td>
+                            <input class="form_term" style="width: 215px;"  ng-model="query.consigneeBill"  type="text">
+                        </td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">发货人：</label>
+                        
+                    	</td>
+						<td>
+                          <input class="form_term" style="width: 215px;"  ng-model="query.consignorName"  type="text">
+                        </td>
+                        <td width="100"><label class="term_label">发货人电话：</label>
+                    	</td>
+						<td>
+                            <input class="form_term" style="width: 215px;"  ng-model="query.consignorBill"  type="text">
+                        </td>
+					</tr>
+				</tbody>
+		</table>
+		
+               
+                     <div class="search_nr clearfix mt_20">
+              		<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	              		   <h2>查询结果<span style="color: red;font-size: 12px;">(双击查看运单详情)</span></h2>
+	              		    <a ng-click="toTransfer();" href="javascript:void(0)" >运单中转</a>
+		              		<a href="javascript:void(0)" id="exportId" ng-click="page.downloadExcelFile()">导  出</a>
+              		</div>
+                <my-diy-Table isShowSeq="false"  width="100%" name="page" isMultiSelect="true" isShowTab="true"  isShowCheck="true" doubleclick="toDetailAllInfo" isFilter="true" isSum="true" id="idNo" head='[
+                			{"name":"运单号","code":"trackingNum","width":"110"},
+                			{"name":"目的区域","code":"destCountyName","width":"100"},
+                			{"name":"收货人","code":"consigneeName","width":"130"},
+			                {"name":"中转费","code":"transferValue","width":"60","isEdit":"true","isSum":"true"},
+				            {"name":"外发单号","code":"outgoingTrackingNum","width":"100","isEdit":"true","onlySum":"false"},
+				            {"name":"中转时间","code":"outgoingTime","width":"100","isDate":"true","isEdit":"false"},
+				            {"name":"运输合同编号","code":"transportContract","width":"100","onlySum":"false","isEdit":"false"},
+			                {"name":"运费","code":"freight","width":"90"},
+			                {"name":"承运商","code":"orgName","width":"100"},
+			                {"name":"本地联系人","code":"orgPrincipal","width":"80"},
+			                {"name":"本地电话","code":"orgPrincipalPhone","width":"100"},
+			                {"name":"提货电话","code":"carryLinkPhone","width":"100"},
+			                {"name":"提货城市","code":"regionName","width":"100"},
+			                {"name":"提货区域","code":"countyName","width":"100"},
+			                {"name":"提货详细地址","code":"departmentAddress","width":"150"},
+			                {"name":"到付金额","code":"freightCollect","width":"90","number":"2"},
+			                {"name":"代收货款","code":"collectingMoney","width":"90","number":"2"},
+			                {"name":"现付","code":"cashPayment","width":"90","number":"2"},
+			                {"name":"月结","code":"monthlyPayment","width":"90","number":"2"},
+			                {"name":"转账","code":"transPayment","width":"90","number":"2"},
+			                {"name":"回单付","code":"receiptPayment","width":"90","number":"2"},
+			                {"name":"回扣","code":"discount","width":"90","number":"2"},
+			                {"name":"费用合计","code":"totalFee","width":"90","number":"2"},
+			                {"name":"运单状态","code":"seeOrderStateName","width":"90"},
+			                {"name":"品名","code":"products","width":"80"},
+			                {"name":"货号","code":"goodsNumber","width":"80"},
+			                {"name":"件数","code":"count","isSum":"true","width":"70"},
+			                {"name":"总体积(方)","code":"volume","isSum":"true","number":"2","width":"70"},
+			                {"name":"总重量(kg)","code":"weight","isSum":"true","number":"1","width":"70"},
+			                {"name":"开单网点","code":"inputOrgName","width":"80"},
+			                {"name":"开单时间","code":"createDate","width":"120"},
+			                {"name":"目的城市","code":"destCityName","width":"80"},
+			                {"name":"交接方式","code":"deliveryTypeName","width":"70"},
+      			            {"name":"家装服务","code":"serviceTypeName","width":"70"},
+			                {"name":"收货人电话","code":"consigneeBill","width":"100"},
+			                {"name":"发货人","code":"consignorName","width":"130"},
+			                {"name":"发货人电话","code":"consignorBill","width":"100"},
+			                {"name":"备注","code":"remarks","width":"150"}
+			                ]'>
+                </my-diy-Table>
+         <!--        
+                是否签回单，回单号，回单数量，是否核销，商家订单号，是否直送，
+                是否贵重物品，是否控货，提货方式，代收货款，代收手续费，申明价值，保险费，装卸费，包装费，提货费) -->
+		</div>
+        
+        </div>
+
+
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="ordTransferMatchCtrl.js?v=${ver}"></script>
+		
+</body>
+</html>
+

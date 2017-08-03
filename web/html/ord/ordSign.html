@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordSignApp" xmlns="http://www.w3.org/1999/xhtml"  >
+	<head>
+	    <title>_签收管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <style >
+	        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+    	</style>
+</head>
+	<body ng-controller="ordSignCtrl" onload="setContentHeight()" style="overflow:hidden">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">开单日期：</label></td>
+						<td>
+							<input class="form_term fl w_xjr" type="text"  my-Date-Picker='{"maxDate":"%y-%M-%d"}' ng-model="query.beginTime" id="beginTime">
+							<span class="search_span fl">到</span>
+							<input class="form_term w_xjr fl" type="text" ng-model="query.endTime" id="endTime" my-Date-Picker='{"maxDate":"%y-%M-%d"}'>
+                        </td>
+						<td width="100"><label class="term_label">开单网点：</label></td>
+						<td>
+							<div class="form_select ng-cloak">
+	                        	<select name="select" class="xl_z " ng-model="query.orgId" ng-init="query.orgId=-1" >
+						        	 <option value="-1">所有</option>
+								     <option  ng-repeat="o in startOrgData" value="{{o.beginOrgId}}"  >{{o.beginOrgName}}</option>
+						        </select>
+					        </div>
+                        </td>
+						<td width="100"><label class="term_label">当前网点：</label></td>
+						<td>
+							<div class="form_select">
+                                <select id="id2" ng-model="query.distributionOrgId">
+                                    <option value="{{currOrgId}}" ng-selected="query.distributionOrgId==currOrgId">{{currOrgName}}</option>
+                                </select>
+                            </div>
+						</td>
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;">
+								<a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a>
+								<a class="qink" href="javascript:void(0);" ng-click="clearn();">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">交接方式：</label>
+                    	</td>
+						<td>
+                          <div class="form_select">
+                             <select ng-model="query.deliveryType"  ng-init="query.deliveryType=-1">
+                         		<option value="-1">所有</option>
+                                <option ng-repeat="o in deliveryTypeList" value="{{o.codeValue}}" >{{o.codeName}}</option>
+                              </select>
+                           </div>
+                        </td>
+						<td width="100"><label class="term_label">运单号：</label></td>
+						<td><input id="id4"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term" maxlength="16"  type="text" ng-model="query.trackingNum"></td>
+						<td width="100"><label class="term_label">发货人手机：</label></td>
+						<td><input id="id5" maxlength="12" class="form_term" type="text" ng-model="query.consignorBill" onkeyup="this.value=this.value.replace(/\D/g,'')"></td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">收货人手机：</label></td>
+						<td>
+                        	<input id="id6" maxlength="12" class="form_term" type="text" ng-model="query.consigneeBill" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                        </td>
+						<td width="100"><label class="term_label">签收状态：</label>
+                            </td>
+						<td>
+							<div class="form_select">
+                            	<select ng-model="query.signStatus"  ng-init="query.signStatus=2">
+	                         		<option value="-1">所有</option>
+	                                <option ng-repeat="o in signStatusList" value="{{o.codeValue}}"  ng-selected="o.codeValue==2">{{o.codeName}}</option>
+	                            </select>
+                            </div>
+                        </td>
+						<td width="100"></td>
+						<td></td>
+					</tr>
+					
+				</tbody>
+		</table>
+                
+                    <div class="search_nr clearfix mt_20">
+                    
+                    <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果 <span>(分配了师傅合作商的运单，请到配安平台签收或通知师傅APP端签收。)</span></h2>
+                    <a class="button ml_10 tixiansp2" href="javaScript:void(0)" ng-click="doSaveSign()" ><i class="button_icon button_icon dw_tixiansp2"></i>签收录入</a>
+                    <!-- <a href="javascript:void(0);" ng-click="doSaveSign()" >打印提货单</a> -->
+                    <a href="#" ng-click="page.downloadExcelFile()">导出</a></div>
+                    <!-- <my-table showtotal="false">
+                    <div id="size" class="zz_list table_height" style="overflow:auto;">
+                         <table class="search_lista table_kz ng-cloak" border="0" cellspacing="0" cellpadding="0">
+                               <thead id="tb1">
+                                <tr>
+                                    <th width="79" class="search_list_border"><div class="controls"><label for="checkbox" ></label></div></th>
+                                    <th width="150">运单号</th>
+                                    <th width="120">签收状态</th>
+                                    <th width="120">收货人</th>
+                                    <th width="120">收货人手机</th>
+                                    <th width="120">配送方式</th>
+                                    <th width="130">货物名称 </th>
+                                    <th width="130">数量</th>
+                                    <th width="120">总重量</th>
+                                    <th width="120">总体积</th>
+                                    <th width="150">回单号</th>
+                                    <th width="126">回单份数</th>
+                                    <th width="126">到付</th>
+                                    <th width="126">代收货款</th>
+                                    <th width="280">收货地址</th>
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                              	<tr ng-class="{'search_list_tr':$index%2==1}"  repeat-Finish ng-repeat="obj in page.data.items" ng-click="selectOne(obj.orderId)" ng-dblclick="toView(obj.trackingNum)">
+                                  	<td width="79" class="search_list_border" ><div class="controls"><input class="none" id="checkbox{{obj.orderId}}" attr="{{obj}}" value="{{obj}}" type="checkbox"  name="checkbox2" ng-click="selectOne(obj.orderId)"><label for="check-1"></label></div></td>
+                                    <td width="150">{{obj.trackingNum}}</td>
+                                    <td width="120">{{obj.signStatusName}}</td>
+                                    <td width="120">{{obj.consigneeLinkmanName}}</td>
+                                    <td width="120">{{obj.consigneeBill}}</td>
+                                    <td width="120">{{obj.deliveryTypeName}}</td>
+                                    <td width="130">{{obj.goodsName}}</td>
+                                    <td width="130">{{obj.goodsCount}}</td>
+                                    <td width="120">{{obj.weight.toFixed(1)}}</td>
+                                    <td width="120">{{obj.volume.toFixed(2)}}</td>
+                                    <td width="150">{{obj.receiptNum}}</td>
+                                    <td width="126">{{obj.receiptCount}}</td>
+                                    <td width="126">{{obj.freightCollect/100}}</td>
+                                    <td width="126">{{obj.collectingMoney/100}}</td>
+                                    <td width="280">{{obj.address}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                     </div>
+                     </my-table> -->
+                     <my-Adv-Table isShowSeq="false" width="2080px"  isMultiSelect="false"  isShowCheck="true"  isFilter="true" isSum="true" id="orderId" head='
+                            [
+                                {"name":"运单号","code":"trackingNum","width":"150"},
+	                            {"name":"签收状态","code":"signStatusName","width":"120"},
+	                            {"name":"开单网点","code":"orgIdName","width":"120"},
+	                            {"name":"开单时间","code":"createDate","width":"120"},
+				                {"name":"收货人","code":"consigneeLinkmanName","width":"120"},
+				                {"name":"收货人手机","code":"consigneeBill","width":"120"},
+				                {"name":"配送方式","code":"deliveryTypeName","width":"120"},
+				                {"name":"货物名称","code":"goodsName","width":"130"},
+				                {"name":"数量","code":"goodsCount","width":"100","isSum":"true"},
+				                {"name":"总重量","code":"weight","width":"100","isSum":"true","number":"1"},
+				                {"name":"总体积","code":"volume","width":"100","isSum":"true","number":"2"},
+				                {"name":"回单号","code":"receiptNum","width":"100"},
+				                {"name":"回单份数","code":"products","width":"100","isSum":"true"},
+				                {"name":"到付","code":"freightCollectDouble","isSum":"true","number":"1","width":"100"},
+				                {"name":"代收货款","code":"collectingMoneyDouble","isSum":"true","number":"1","width":"100"},
+				                {"name":"收货地址","code":"address","width":"280"}
+			                ]'>
+                </my-Adv-Table>
+                 </div>
+                <!-- <div style="text-align: right; margin-top:15px;"></div> -->
+		</div>
+		 		
+		 <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+        <script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+        <script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+        <script type="text/javascript" src="../js/md5.js"></script>
+        <script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="ordSignCtrl.js?v=${ver}"></script>
+		
+		
+</body>
+
+</html>
+

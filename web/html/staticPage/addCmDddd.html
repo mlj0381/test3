@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmCarrierCompanyApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.ui-select select{}
+</style>
+
+</head>
+<body ng-controller="addCmCarrierCompanyCtrl" >
+
+	<!-- 订单调单 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20"	style="min-height: 300px">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">拉包工：</label>
+                   			</td>
+						<td width="200">
+							<input class="form_term ng-pristine ng-untouched ng-valid ng-valid-maxlength" style="width:90%" ng-model="queryParam.roleName" maxlength="20">
+                        </td>
+						<td ><div class="bottom_search" style="position:inherit;"><a ng-click="doQuery();" ng-enter="" href="javascript:void(0);">查询</a></div></td>
+					</tr>
+				</tbody>
+		</table>
+		<div style="position: relative;">
+			<div class="" style="width:100%;overflow:auto;">
+				<table class="search_lista" width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+					<thead>
+						<tr>
+							<th style="text-align: left;" width="25%"><span style=" padding: 0 5px;" class="ng-binding">拉包工</span></th>
+							<th style="text-align: left;" width="25%"><span style=" padding: 0 5px;" class="ng-binding">帐号</span></th>
+							<th style="text-align: left;" width="25%"><span style=" padding: 0 5px;" class="ng-binding">待提货数量</span></th>
+							<th style="text-align: left;" width="21%"><span style=" padding: 0 5px;" class="ng-binding">操作</span></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background:#fff;">
+							<td>张三</td>
+							<td>13800138000</td>
+							<td>8</td>
+							<td><a style=" color:#2e6de4; text-decoration:underline" href="#" onclick="document.getElementsByClassName('popup')[0].style.display='block';document.getElementsByClassName('popup_bj')[0].style.display='block'">调单</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	<!-- 订单调单 结束 -->
+	
+	<!-- 确认订单 弹窗 开始 -->
+	<div class="popup" style="width: 500px; height: 240px; top: 20px; margin-left: -250px; display:" >
+       		<div class="title"><h2 class="popup_bt">提示</h2><i href="javascript:void(0)" class="list_xl_icon icon" onclick="document.getElementsByClassName('popup')[0].style.display='none';document.getElementsByClassName('popup_bj')[0].style.display='none'"></i></div>
+            <div class="popup_content"><p class="popup_p" style="color: #ff0000;">确定将【订单号】订单派单给xxx</p></div>
+			<div class="clearfix xianlusz"><label class="list_label fl" style="width: 130px;">请填写调单备注：</label><textarea maxlength="200" style="height:90px; width:300px; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="user.sellerNotes" class="form-control fl ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched"></textarea></div>
+            <div class="bottom_nav1" style="margin-top:10px;">
+				<a class="button ml_10 baoc" href="javascript:void(0)" ng-click="doSave()"><i class="button_icon button_icon dw_baoc"></i>保存</a>
+				<a href="javascript:void(0)" ng-click="close()">取 消</a>
+			</div>
+     </div>
+	 <!-- 确认订单 弹窗 结束 -->
+	 
+	 <!-- 透明背景 -->
+	 <div class="popup_bj" style="display:"></div>
+	 
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmCarrierCompanyCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

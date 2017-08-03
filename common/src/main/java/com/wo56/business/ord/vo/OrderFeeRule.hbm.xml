@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-12 11:55:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrderFeeRule" table="order_fee_rule">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="ruleName" type="java.lang.String">
+			<column name="RULE_NAME">
+				<comment>计算规则名称（小费）</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID" />
+		</property>
+		<property name="staProvince" type="java.lang.Long">
+			<column name="STA_PROVINCE" />
+		</property>
+		<property name="staProvinceName" type="java.lang.String">
+			<column name="STA_PROVINCE_NAME" length="50" />
+		</property>
+		<property name="staCity" type="java.lang.Long">
+			<column name="STA_CITY" />
+		</property>
+		<property name="staCityName" type="java.lang.String">
+			<column name="STA_CITY_NAME" length="50" />
+		</property>
+		<property name="desProvince" type="java.lang.Long">
+			<column name="DES_PROVINCE" />
+		</property>
+		<property name="desProvinceName" type="java.lang.String">
+			<column name="DES_PROVINCE_NAME" length="50" />
+		</property>
+		<property name="desCity" type="java.lang.Long">
+			<column name="DES_CITY" />
+		</property>
+		<property name="desCityName" type="java.lang.String">
+			<column name="DES_CITY_NAME" length="50" />
+		</property>
+		<property name="tipType" type="java.lang.Integer">
+			<column name="TIP_TYPE">
+				<comment>小费计算规则（1：按重量递增；2：按重量范围；3：按运费占比）</comment>
+			</column>
+		</property>
+		<property name="staFee" type="java.lang.Long">
+			<column name="STA_FEE">
+				<comment>起价（小费）单位：元</comment>
+			</column>
+		</property>
+		<property name="topFee" type="java.lang.Long">
+			<column name="TOP_FEE">
+				<comment>封顶价（小费）单位：元</comment>
+			</column>
+		</property>
+		<property name="first" type="java.lang.String">
+			<column name="FIRST" length="50">
+				<comment>首重（小费）单位：元</comment>
+			</column>
+		</property>
+		<property name="addWeight" type="java.lang.Long">
+			<column name="ADD_WEIGHT" length="20">
+				<comment>续重（小费）单位：元/kg</comment>
+			</column>
+		</property>
+		<property name="percentage" type="java.lang.String">
+			<column name="PERCENTAGE" length="50">
+				<comment>占比例（小费）单位：%</comment>
+			</column>
+		</property>
+		<property name="ruleType" type="java.lang.Integer">
+			<column name="RULE_TYPE">
+				<comment>计算规则（1：小费；2：运费；3：保费）</comment>
+			</column>
+		</property>
+		<property name="minFee" type="java.lang.Long">
+			<column name="MIN_FEE">
+				<comment>最低一票（运费）元</comment>
+			</column>
+		</property>
+		<property name="minWeightFee" type="java.lang.Long">
+			<column name="MIN_WEIGHT_FEE">
+				<comment>单位：元/kg 上限</comment>
+			</column>
+		</property>
+		<property name="maxWeightFee" type="java.lang.Long">
+			<column name="MAX_WEIGHT_FEE">
+				<comment>单位：元/kg 下限</comment>
+			</column>
+		</property>
+		<property name="minVolumeFee" type="java.lang.Long">
+			<column name="MIN_VOLUME_FEE">
+				<comment>单位：元/kg 上限</comment>
+			</column>
+		</property>
+		<property name="maxVolumeFee" type="java.lang.Long">
+			<column name="MAX_VOLUME_FEE">
+				<comment>单位：元/kg 下限</comment>
+			</column>
+		</property>
+		<property name="numberFee" type="java.lang.Long">
+			<column name="NUMBER_FEE">
+				<comment>单位：件/元（保费）</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="isCurrency" type="java.lang.Integer">
+			<column name="IS_CURRENCY">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="beginOrgId" type="java.lang.Long">
+			<column name="BEGIN_ORG_ID">
+				<comment>开始网点</comment>
+			</column>
+		</property>
+		<property name="endOrgId" type="java.lang.Long">
+			<column name="END_ORG_ID">
+				<comment>目的网点</comment>
+			</column>
+		</property>
+		<property name="towardsId" type="java.lang.Long">
+			<column name="TOWARDS_ID">
+				<comment>线路走向ID</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

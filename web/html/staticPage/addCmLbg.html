@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmCarrierCompanyApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.ui-select select{}
+</style>
+
+</head>
+<body ng-controller="addCmCarrierCompanyCtrl" >
+
+	<!-- 拉包工 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"	style="min-height: 300px">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width: 860px;margin: 0 auto;">
+				    <tr>
+						<td width="110"><label class="term_label">拉包工名称：</label></td>
+						<td><input  maxlength="15" ng-model="data.orgPrincipal" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+					    <td width="110"><label class="term_label">拉包工手机：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td width="110"><label class="term_label">合作方式：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><label class="term_label">归属拉包公司：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+					    <td><label class="term_label">服务省市：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td><label class="term_label">服务地区：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					</tr>
+					<tr>
+						<td><label class="term_label">账户类型：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+					    <td><label class="term_label">持卡人/帐号名：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td><label class="term_label">归属银行：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><label class="term_label">卡号/帐号：</label></td>
+						<td><input  maxlength="15" ng-model="data.orgPrincipal" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+					    <td><label class="term_label">地址：</label></td>
+						<td colspan="3"><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					</tr>
+					<tr>
+					  <td><label class="term_label">身份证正面：</label></td>
+						<td>
+						   <div class="controls">
+		                       <span my-File-Model="identityCard" is-Close="false" ></span>
+		                   </div>
+						</td>
+					    <td><label class="term_label">身份证反面：</label></td>
+						<td colspan="3">
+							<div class="controls">
+		                       <span my-File-Model="identityCard" is-Close="false" ></span>
+		                   </div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		<div class="bottom_nav1" style="border-top:1px dashed #cee1f1; padding-top:20px; margin-top:15px;">
+			<a href="javascript:void(0)" ng-click="doSave()">保 存</a><a
+			href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+	<!-- 拉包工 新增 结束 -->
+	
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmCarrierCompanyCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

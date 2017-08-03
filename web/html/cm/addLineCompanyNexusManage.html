@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addLineCompanyNexusManageApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="云企" />
+<meta name="description" content="云企" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.ui-select select{}
+</style>
+
+</head>
+<body ng-controller="addLineCompanyNexusManageCtrl" >
+	<!-- 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20" style="min-height: 300px">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width: 300px;margin: 0 auto;">
+				    <tbody><tr>
+						<td width="95"><label class="term_label">选择拉包公司：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="user.companyId" ng-options="obj.orgId as obj.orgName for  obj in companyData.items "  class="ng-pristine ng-untouched ng-valid">
+							   </select>
+							</div>
+						</td>
+						
+					</tr>
+					<tr>
+						<td><label class="term_label">归属专线：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="user.lineId" ng-options="obj.orgId as obj.orgName for  obj in orgLink.items "  class="ng-pristine ng-untouched ng-valid">
+							   </select>
+							</div>
+						</td>
+						
+					</tr>
+					
+				</tbody></table>
+			</div>
+		<div class="bottom_nav1" style="border-top:1px dashed #cee1f1; padding-top:20px; margin-top:15px;">
+			<a href="javascript:void(0)" ng-click="doSave()">提 交</a><a href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+	<!-- 新增 结束 -->
+	
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addLineCompanyNexusManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

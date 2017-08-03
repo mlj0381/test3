@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="dedicatedQueryApp"> 
+	<head>
+	    <title>${title}_专线查询 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+       
+</head>
+	<body ng-controller="dedicatedQueryCtrl" style="/*overflow:hidden*/" onLoad="setContentHeight()">
+ 	<!-- 干线费用  start -->
+    <div class="billing_1 clearfix pb_20 mt_20">
+             
+        <div class="search_nr clearfix mt_20">   
+        	  <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>XXX公司运费价格表</h2></div>       
+              
+                   <div class="zz_list ng-scope" style="overflow:auto;">
+                         <table width="100%" class="search_lista dhl_quxt" border="0" cellspacing="0" cellpadding="0">
+                               <thead>
+                                <tr>
+                                   
+									<th>城市</th>
+									<th>区域</th>
+									<th>元/方</th>
+                                    <th>元/顿</th>  
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                                  <!-- <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.orderId);" ng-repeat="o in page.data.items" > -->
+                                  <tr>
+                                  	
+                                    <td rowspan="8">广州市</td>
+                                    <td>天河区</td>
+                                    <td rowspan="5">190</td>
+                                    <td rowspan="8">200</td>   
+                                  </tr>
+                                  <tr>
+                                    
+                                    <td>海珠区</td>
+                                    
+                                    
+                                  </tr>
+                                  <tr>
+                                    
+                                    <td>越秀区</td>
+                                    
+                                    
+                                  </tr>
+                                  <tr>
+                                    
+                                    <td>萝岗区</td>
+                                    
+                                    
+                                  </tr>
+                                  <tr>
+                                    
+                                    <td>黄埔区</td>
+                                    
+                                    
+                                  </tr>
+                                  <tr>
+                                    
+                                    <td>增城区</td>
+                                    <td>200</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    
+                                    <td>番禺区</td>
+                                    <td rowspan="2">220</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    
+                                    <td>从化区</td>
+                                    
+                                    
+                                  </tr>
+                              </tbody>
+                            </table>
+                           
+                </div>
+               
+        	</div>
+    </div>
+    <!-- 干线费用  end -->
+ 		
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="dedicatedQueryLineCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

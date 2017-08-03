@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="dedicatedQueryApp"> 
+	<head>
+	    <title>${title}_安装师傅管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+       
+</head>
+	<body ng-controller="dedicatedQueryCtrl" style="/*overflow:hidden*/" onLoad="setContentHeight()">
+        <!-- 安装师傅管理   start -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">服务省份：</label></td>
+						<td><input class="form_term" ng-model="params.name" maxlength="10"/></td>
+						<td width="100"><label class="term_label">地市：</label></td>
+						<td><input class="form_term" ng-model="params.linkMan" maxlength="10"/></td>
+						<td width="100"><label class="term_label">师傅名称：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						
+						<td rowspan="2"><div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div></td>
+					</tr>
+					<tr>
+						
+						<td width="100">
+							<label class="term_label">合作方式：</label>
+						</td>
+						<td>
+							<div class="form_select">
+		 						<select class="form_term"  ng-model="params.provinceIds" ng-options="obj.id as obj.name for  obj in provinceData.items ">
+                            </select>
+                            </div>
+						</td>
+						<td width="100"><label class="term_label">师傅帐号：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						<td width="100"></td>
+						<td></td>
+						
+					</tr>
+					
+				</tbody>
+		</table>
+        <div class="search_nr clearfix mt_20">
+              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+              <h2>查询结果</h2>
+              
+              <a href="javascript:void(0)" onclick="document.getElementById('xz1').style.display='block';document.getElementById('fade1_xz').style.display='block'">选择平台师傅</a>
+              <a ng-click="newAdd()" class="button ml_10 newly" href="javascript:void(0)">
+             	 <i class="button_icon button_icon dw_newly"></i>新增
+              </a>
+              <a class="button ml_10 write "  href="javascript:void(0)"><i class="button_icon button_icon dw_write"></i>审核</a>
+              <a ng-click="update()" class="button ml_10 modify" href="javascript:void(0)">
+             	 <i class="button_icon button_icon dw_modify"></i>修改
+              </a>
+              
+              </div>
+              
+             <!--  <my-Adv-Table 
+                isShowSeq="false" 
+                isMultiSelect="false" 
+                isShowCheck=true 
+                isFilter="false" 
+                isSum="false" 
+                id="tenantId" 
+                head='[
+                {"name":"专线ID","code":"tenantCode"},
+                {"name":"专线名称","code":"name"},
+                {"name":"到达省份","code":"provinceNames"},
+                {"name":"联系人","code":"linkMan"},
+                {"name":"联系电话","code":"linkPhone"},
+                {"name":"客服电话","code":"csPhones"},
+                {"name":"专线地址","code":"address"}
+                ]'>
+                </my-Adv-Table>-->
+                
+               <my-table>
+                   <div class="zz_list ng-scope" style="overflow:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0">
+                               <thead>
+                                <tr>
+                                    <th width="79" class="search_list_border"><div class="controls"><input id="checkbox" class="none input_gx" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+									<th>省</th>
+									<th>市</th>
+									<th>师傅名称</th>
+                                    <th>师傅账号</th>
+                                    <th>收款方式</th>
+                                    <th>账户名</th>
+                                    <th>帐号</th>
+                                    <th>认证状态</th>
+                                    <th>合作方式</th>
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.orderId);" ng-repeat="o in page.data.items" >
+                                  <tr>
+                                  	<td width="79" class="search_list_border"><div class="controls">
+                                  		<input id="checkbox{{o.orderId}}" class="none input_gx" value="{{o}}" type="checkbox" name="check-1" >
+                                  		<label for="check-1"></label></div>
+                                  	</td>
+                                    <td>广东</td>
+                                    <td>广州</td>
+                                    <td>小白</td>
+                                    <td>13800138000</td>
+                                    <td>银行卡</td>
+                                    <td>小肥肥</td>
+                                    <td>222000000099</td>
+                                    <td>未认证</td>
+                                    <td>自营</td>
+                                    
+                                  </tr>
+                              </tbody>
+                            </table>
+                           
+                </div>
+                </my-table> 
+        	</div>
+        	
+        </div>
+        <!-- 专线查询  end -->
+        
+        <!-- 新增安装师傅   start -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="140"><label class="term_label">师傅名称：</label></td>
+						<td><input class="form_term" ng-model="params.name" maxlength="10"/></td>
+						<td width="140"><label class="term_label">籍贯：</label></td>
+						<td><input class="form_term" ng-model="params.linkMan" maxlength="10"/></td>
+						<td width="140"></td>
+						<td></td>
+						
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">师傅手机：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-model="params.linkMan" maxlength="10"/>
+						</td>
+						<td><label class="term_label">服务省市：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						<td><label class="term_label">合作方式：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">账户类型：</label>
+						</td>
+						<td>
+							<div class="form_select">
+		 						<select class="form_term"  ng-model="params.provinceIds" ng-options="obj.id as obj.name for  obj in provinceData.items ">
+                            </select>
+                            </div>
+						</td>
+						<td><label class="term_label">持卡人/帐户名：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						<td><label class="term_label">归属银行：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">卡号/帐号：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-model="params.linkPhone" maxlength="11"/>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">身份证正面：</label>
+						</td>
+						<td>调js 上传图片
+							
+						</td>
+						<td>
+							<label class="term_label">身份证背面：</label>
+						</td>
+						<td>
+							调js 上传图片
+						</td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">仓库地址：</label>
+						</td>
+						<td colspan="5">
+							<input class="form_term" style="width: 95%" ng-model="params.linkPhone" maxlength="11"/>
+						</td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+        <div class="tx_tc_button">
+					<a class="search_button_ss" href="#">保存</a>
+					<a class="search_button_cz" href="#">取消</a></div>
+        	
+        </div>
+        <!-- 新增安装师傅  end -->
+        
+        
+        <!-- 选择平台师傅   start -->
+        <div id="xz1" class="xz_input" style="display: none;position: fixed;z-index: 1004;left: 50%;top: 50%;width: 1000px;height: 500px;margin:-250px 0 0 -500px;background: #fff;overflow: auto; ">
+        	 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">服务省市：</label></td>
+						<td><input class="form_term" ng-model="params.name" maxlength="10"/></td>
+						<td width="100"><label class="term_label">师傅名称：</label></td>
+						<td><input class="form_term" ng-model="params.linkMan" maxlength="10"/></td>
+						<td width="100"><label class="term_label">师傅帐号：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						
+						<td ><div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><!-- <a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a> --></div></td>
+					</tr>
+					
+					
+				</tbody>
+		</table>
+        <div class="search_nr clearfix mt_20">
+              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+              <h2>查询结果</h2>
+              
+              <a href="javascript:void(0)">确定</a>
+              
+              
+              </div>
+              
+             <!--  <my-Adv-Table 
+                isShowSeq="false" 
+                isMultiSelect="false" 
+                isShowCheck=true 
+                isFilter="false" 
+                isSum="false" 
+                id="tenantId" 
+                head='[
+                {"name":"专线ID","code":"tenantCode"},
+                {"name":"专线名称","code":"name"},
+                {"name":"到达省份","code":"provinceNames"},
+                {"name":"联系人","code":"linkMan"},
+                {"name":"联系电话","code":"linkPhone"},
+                {"name":"客服电话","code":"csPhones"},
+                {"name":"专线地址","code":"address"}
+                ]'>
+                </my-Adv-Table>-->
+                
+               <my-table>
+                   <div class="zz_list ng-scope" style="overflow:auto;min-height:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0">
+                               <thead>
+                                <tr>
+                                    <th width="79" class="search_list_border"><div class="controls"><input id="checkbox" class="none input_gx" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+									<th>服务省市</th>
+									<th>师傅名称</th>
+									<th>师傅账号</th>
+                                    <th>认证状态</th>
+                                    
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.orderId);" ng-repeat="o in page.data.items" >
+                                  <tr>
+                                  	<td width="79" class="search_list_border"><div class="controls">
+                                  		<input id="checkbox{{o.orderId}}" class="none input_gx" value="{{o}}" type="checkbox" name="check-1" >
+                                  		<label for="check-1"></label></div>
+                                  	</td>
+                                    <td>广东</td>
+                                    <td>广州</td>
+                                    <td>小白</td>
+                                    <td>13800138000</td>
+                                    
+                                    
+                                  </tr>
+                              </tbody>
+                            </table>
+                           
+                </div>
+                </my-table> 
+        	</div>
+        	<div class="tx_tc_button"><a class="search_button_cz" href="#" onclick="document.getElementById('xz1').style.display='none';document.getElementById('fade1_xz').style.display='none'">关闭</a></div>
+        </div>
+        <!-- 选择平台师傅  end -->
+        
+        
+        
+        <!-- 认证审核   start -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="140"><label class="term_label">师傅名称：</label></td>
+						<td><input class="form_term" ng-model="params.name" maxlength="10"/></td>
+						<td width="140"><label class="term_label">籍贯：</label></td>
+						<td><input class="form_term" ng-model="params.linkMan" maxlength="10"/></td>
+						<td width="140"></td>
+						<td></td>
+						
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">师傅手机：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-model="params.linkMan" maxlength="10"/>
+						</td>
+						<td><label class="term_label">服务省市：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						<td><label class="term_label">合作方式：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">账户类型：</label>
+						</td>
+						<td>
+							<div class="form_select">
+		 						<select class="form_term"  ng-model="params.provinceIds" ng-options="obj.id as obj.name for  obj in provinceData.items ">
+                            </select>
+                            </div>
+						</td>
+						<td><label class="term_label">持卡人/帐户名：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						<td><label class="term_label">归属银行：</label></td>
+						<td><input class="form_term" ng-model="params.linkPhone" maxlength="11"/></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">卡号/帐号：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-model="params.linkPhone" maxlength="11"/>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">身份证正面：</label>
+						</td>
+						<td>调js 上传图片
+							
+						</td>
+						<td>
+							<label class="term_label">身份证背面：</label>
+						</td>
+						<td>
+							调js 上传图片
+						</td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">仓库地址：</label>
+						</td>
+						<td colspan="5">
+							<input class="form_term" style="width: 95%" ng-model="params.linkPhone" maxlength="11"/>
+						</td>
+						
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">审核原因：</label>
+						</td>
+						<td colspan="5">
+							
+							<textarea class="yic_text" style="width: 95%" ></textarea>
+						</td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+        <div class="tx_tc_button">
+					<a class="search_button_ss" href="#">审核通过</a>
+					<a class="search_button_cz" href="#" style="width: auto;padding: 0 10px;">审核不通过</a></div>
+        	
+        </div>
+        <!-- 认证审核  end -->
+        
+        <div class="popup_bj" id="fade1_xz" style="display:none;"></div>
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="dedicatedQueryCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

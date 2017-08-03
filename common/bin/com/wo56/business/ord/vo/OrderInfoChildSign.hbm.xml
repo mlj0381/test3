@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-12 11:55:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrderInfoChildSign" table="Order_Info_Child_Sign">
+		<id name="childOrderId" type="java.lang.Long">
+			<column name="child_Order_Id" />
+			<generator class="assigned" />
+		</id>
+		<property name="childTrackingNum" type="java.lang.String">
+			<column name="CHILD_TRACKING_NUM" length="50">
+				<comment>子运单号</comment>
+			</column>
+		</property>
+		<property name="signName" type="java.lang.String">
+			<column name="sign_Name">
+				<comment>签收人</comment>
+			</column>
+		</property>
+		<property name="signTime" type="java.util.Date">
+			<column name="sign_Time">
+				<comment>配送网点</comment>
+			</column>
+		</property>
+		<property name="signType" type="java.lang.Integer">
+			<column name="SIGN_TYPE">
+				<comment>签收类型</comment>
+			</column>
+		</property>
+		<property name="imageUrl" type="java.lang.Long">
+			<column name="image_url">
+				<comment>签收图片url</comment>
+			</column>
+		</property>
+		<property name="imageId" type="java.lang.String">
+			<column name="IMAGE_ID">
+				<comment>签收图片id</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="createName" type="java.lang.String">
+			<column name="CREATE_NAME">
+				<comment>创建人名称</comment>
+			</column>
+		</property>
+		<property name="createId" type="java.lang.Long">
+			<column name="CREATE_ID">
+				<comment>创建人id</comment>
+			</column>
+		</property>
+		<property name="remark" type="java.lang.String">
+			<column name="REMARK">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

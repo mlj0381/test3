@@ -1,0 +1,50 @@
+<!--配载信息 start-->
+				<div class="waybill_title bt_h2"><h2 class="title_h2"><i class="icon title_icon fl"></i>配载信息</h2></div>
+				<div style="overflow:auto;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list" style="table-layout:auto;">
+				  <thead>
+				  	<tr>
+						<th>发车批次</th>
+						<th>合同编号</th>
+						<th>车牌号</th>
+						<th>司机名称</th>
+						<th width="100">司机电话</th>
+						<th>发车网点</th>
+						<th>到车网点</th>
+						<th>运单数量</th>
+						<th>配载体积</th>
+						<th>配载重量</th>
+						<th>发车确认人</th>
+						<th>配载时间</th>
+						<th>发车时间</th>
+						<th>到车时间</th>
+						<th>到货确认人</th>
+						<th>运输状态</th>
+						<th>备注</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				   <tr class="waybill_table_listtr" ng-repeat="departInfo in departInfo" ng-if="departInfo">
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.batchNum}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.transportContract}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.plateNumber}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.driverName}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.driverBill}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.sourceOrgId}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.descOrgId}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.number}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.departVolume}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.departWeigth}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.departOpName}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.loadTime}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.departTime}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.arrivalTime}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.arrivalOpName}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.state}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word;word-wrap: break-word;">{{departInfo.remark}}</td>
+						
+				  </tr>
+				  </tbody>
+				</table>
+				</div>
+<!--配载信息 end-->

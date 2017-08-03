@@ -1,0 +1,29 @@
+<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>异动费用</h2></div>
+				
+			<div class="mkae" style=" position: relative;overflow: auto;">
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list ng-cloak dhl_table1">
+	                                <thead>
+	                                  <tr>
+	                                    <th width="10%">异动人员</th>
+	                                    <th width="10%">异动时间</th>
+	                                    <th width="10%">异动金额</th>
+	                                    <th width="10%">异动原因</th>
+	                                  </tr>
+	                                </thead>
+	                                <tbody>
+	                                  <tr ng-show="showData.length==0">
+	                                    <td width="10%"></td>
+	                                    <td width="10%"></td>
+	                                    <td width="10%"></td>
+	                                    <td width="10%"></td>
+	                                  </tr>
+	                                   <tr>
+	                                    <td  width="10%">{{showData.staffTurnover}}</td>
+	                                    <td  width="10%">{{showData.transactionTime}}</td>
+	                                    <td  width="10%">{{showData.transactionAmount}}</td>
+	                                    <td  width="10%">{{showData.transactionNotes}}</td>
+	                                  </tr>
+	                                </tbody>
+	                              </table> 
+			</div>
+		<!-- 问题件 结束 -->

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmOrgRel" table="cm_org_rel">
+		<id name="relId" type="java.lang.Long">
+			<column name="REL_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="lineOrgId" type="java.lang.Long">
+			<column name="LINE_ORG_ID" not-null="true">
+				<comment>专线组织ID</comment>
+			</column>
+		</property>
+		<property name="lineTenantId" type="java.lang.Long">
+			<column name="LINE_TENANT_ID" not-null="true">
+				<comment>专线租户ID</comment>
+			</column>
+		</property>
+		<property name="busiOrgId" type="java.lang.Long">
+			<column name="BUSI_ORG_ID" not-null="true">
+				<comment>商户组织ID</comment>
+			</column>
+		</property>
+		<property name="busiTenantId" type="java.lang.Long">
+			<column name="BUSI_TENANT_ID" not-null="true">
+				<comment>商户租户ID</comment>
+			</column>
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE" not-null="true">
+				<comment>状态:1有效0无效</comment>
+			</column>
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="OP_ID">
+				<comment>操作员ID</comment>
+			</column>
+		</property>
+		<property name="opDate" type="timestamp">
+			<column name="OP_DATE" length="19">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="createDate" type="timestamp">
+			<column name="CREATE_DATE" length="19">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="opName" type="java.lang.String">
+			<column name="OP_NAME" length="50">
+				<comment>操作员姓名</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

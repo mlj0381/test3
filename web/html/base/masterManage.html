@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="masterManageApp"> 
+	<head>
+	    <title>${title}_商家管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="masterManageCtrl" style="overflow:hidden" onLoad="setContentHeight()">
+        <!-- 商家管理   start -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">合作商名称：</label></td>
+						<td><input class="form_term" ng-model="user.name"/></td>
+						<td width="100"><label class="term_label">联系人：</label></td>
+						<td><input class="form_term" ng-model="user.linkMan"/></td>
+						<td width="100"><label class="term_label">联系电话：</label></td>
+						<td><input class="form_term" ng-model="user.linkPhone" maxlength="11"/></td>
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;">
+								<a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a>
+								<a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a>
+								
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">主营业务：</label></td>
+						<td><input class="form_term" ng-model="user.busiNotes"/></td>
+						<td width="100"><label class="term_label">省份：</label></td>
+						<td>
+						<div class="form_select">
+                                <select class="ng-cloak" ng-change="selectCity(user.provinceId);" ng-model="user.provinceId" ng-options="obj.id as obj.name for  obj in provinceData.items ">
+                                </select>
+                            </div>
+						</td>
+						<td width="100"><label class="term_label">城市：</label></td>
+						<td><div class="form_select">
+                                <select class="ng-cloak"  ng-model="user.regionId"  ng-options="obj.id as obj.name for  obj in cityData.items ">
+                                </select>
+                            </div></td>
+					</tr>
+				</tbody>
+		</table>
+        <div class="search_nr clearfix mt_20">
+              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+              	<h2>查询结果</h2>
+              	<a  class="button ml_10 newly" href="javascript:void(0)" ng-click="newSFPartnersAdd()">
+              		<i class="button_icon button_icon dw_newly"></i>新增
+              	</a>
+              	<a class="button ml_10 modify" href="javascript:void(0)" ng-click="sfPartnersUpdate()">
+              		<i class="button_icon button_icon dw_modify"></i>修改
+              	</a>
+              	<a class="button ml_10 delete" href="javascript:void(0)" ng-click="delSFPartners()">
+              		<i class="button_icon button_icon dw_delete"></i>删除
+              	</a>
+              </div>
+              <my-Adv-Table 
+                isShowSeq="false" 
+                isMultiSelect="false" 
+                isShowCheck=true 
+                isFilter="false" 
+                isSum="false" 
+                width="100%"
+                id="relId" 
+                head='[
+                {"name":"师傅合作商编码","code":"tenantCode","width":"10%"},
+                {"name":"师傅合作商名称","code":"name","width":"15%"},
+                 {"name":"登录账号","code":"loginAcct","width":"10%"},
+                {"name":"服务城市","code":"address","width":"15%"},
+                {"name":"联系人","code":"linkMan","width":"10%"},
+                {"name":"联系电话","code":"linkPhone","width":"10%"},
+                {"name":"主营业务","code":"busiNotes","width":"16%"},
+                 {"name":"是否管理员授权","code":"isAuthName","width":"10%"}
+                ]'>
+                </my-Adv-Table>
+              
+              
+        	</div>
+
+        </div>
+        <!-- 商家管理  end -->
+        
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="masterManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

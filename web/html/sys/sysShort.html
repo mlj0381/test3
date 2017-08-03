@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="sysShortCtrlApp"> 
+	<head>
+	    <title>短信查询</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/lrtk.css?v=${ver}">
+        <style >
+	        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+			@media (max-width: 1440px){
+				.table_kz {width:100%;table-layout: auto;
+				}
+				
+				
+    	</style>
+    	
+</head>
+	<body ng-controller="sysShortCtrl" >
+        <div class="billing_1 clearfix pb_20 mt_20">
+	             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+						<tr>
+							<td width="100"><label class="term_label">月份：</label></td>
+							
+								<td><input class="form_term" type="text" my-Date-Picker='{"dateFmt":"yyyy年MM月","minDate":"2016-10","maxDate":"%y-%M"}' class="form-control w180" ng-model="query.yearAndMonth" readonly="readonly"/></td>
+							
+							<td width="100"><label class="term_label">短信模块：</label></td>
+							<td>
+								<div class="form_select">
+                                <select ng-model="query.templateId" ng-options="obj.templateId as obj.templateName  for  obj in templateData.items ">
+                                </select>
+                            	</div>
+                            </td>
+							<td >
+								<div class="bottom_search search_button" style="position:inherit;">
+									<a ng-click="doQuery()" ng-Enter href="javascript:void(0)">查询</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- dddd -->
+				
+				<!-- dddd -->
+	        	<div class="search_nr clearfix mt_20" >
+	              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	              	<h2>查询结果</h2>
+	              </div>
+	             <my_table>
+				<div class="zz_list" style="overflow:auto;">
+					<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0">
+						<thead>
+							<tr>
+								<th width="40">专线名称</th>
+								<th width="30">短信模板</th>
+								<th width="30">短信数量</th>
+							</tr>
+						</thead>
+						<tbody>
+						 <tr ng-class="{'waybill_table_listtr':$index%2==1}"
+								class="ng-cloak" 
+								ng-repeat="o in page.data.items">
+								<td  title="{{o.tenantName}}">{{o.tenantName}}</td>
+								<td title="{{o.templateId}}">{{o.templateName}}</td>
+								<td title="{{o.number}}">
+									<a href="javascript:void(0)" ng-click="toShow(o.templateId)" style="color:blue">{{o.number}}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				</my_table>
+	        	</div>
+        </div>
+        
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="sysShortCtrl.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+	
+</body>
+</html>
+

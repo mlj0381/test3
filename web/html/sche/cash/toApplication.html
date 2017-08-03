@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="toApplicationApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>调度任务-提现申请</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css?v=${ver}">
+
+		 
+		<script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+</head>
+	<body ng-controller="toApplicationCtrl" onload="setContentHeight(300)"  style="overflow:hidden">
+		<div class="billing_1">
+			
+			<!-- 提现申请 开始 -->
+			<div class="tx_tc" id="vehicle_3" style=" margin-top:0; padding-top:28px; padding-bottom:20px;" >
+				<div class="search" style=" padding-top:0;">
+					
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table">
+				  <tbody><tr>
+					<td width="150"><label class="control-label">安装师傅账号：</label></td>
+					<td><input  class="input_box" id="" type="text" ng-model="add.loginAcct" ng-blur="mouseLeave();" ng-keypress="keypress($event)"/></td>
+					<td width="100"><label class="control-label">安装师傅：</label></td>
+					<td><input disabled="disabled" class="input_box" id="" type="text" ng-model="add.workerName" /></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label">收款方式：</label></td>
+					<td><input class="input_box" id="" type="text" ng-model="add.receiTypeName" disabled="disabled"/></td>
+					<td width="150"><label class="control-label">卡名：</label></td>
+					<td><input disabled="disabled" class="input_box input_bbj" type="text" ng-model="add.bankName" /></td>
+					<td width="100"><label class="control-label w_100">持卡人：</label></td>
+					<td><input disabled="disabled" class="input_box input_bbj" type="text"  ng-model="add.accountName" /></td>
+					<td><label class="control-label"><span ng-if="add.receiType==1">银行卡号：</span><span ng-if="add.receiType==2">支付宝号：</span><span ng-if="add.receiType==3">微信号：</span></label></td>
+					<td><input disabled="disabled" ng-if="add.receiType==1" class="input_box input_bbj" type="text" ng-model="add.bankAccount"/>
+					<input disabled="disabled" ng-if="add.receiType==2" class="input_box input_bbj" type="text" ng-model="add.paypalAccount"/>
+					<input disabled="disabled" ng-if="add.receiType==3" class="input_box input_bbj" type="text" ng-model="add.wxAccount"/>
+					</td>
+				  </tr>
+				   <tr>
+						<td width="150"><label class="control-label">待提现金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" ng-model="add.waitCash" /></td>
+						<td width="100"><label class="control-label">提现中金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" ng-model="add.getCash" /></td>
+						<td width="100"><label class="control-label">已提现金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" ng-model="add.hasCash" /></td>
+						<td><label class="control-label w_100">申请提现金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" value="{{add.applyTotalMoney/100|number:2}}"/></td>
+					  </tr>
+				</tbody></table>
+					
+					</div>
+				<!--任务列表 start-->
+			<div class="waybill_title clearfix"></div>
+			<div style="overflow: auto;/*height: 400px*/"><table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th><div class="input_z">
+	                  			<input id="checkboxb" class="none input_gx" ng-click="selectAll('check-2','checkboxb');" type="checkbox">
+	            				<label for="checkboxb"></label>
+	          				</div></th>
+							<th>任务类别</th>
+							<th>运单号</th>
+							<th>金额</th>
+							<th>费用类型</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak" ng-click="selectOne(t,'checkboxt');" ng-repeat="t in add.items">
+                                  	<td class="search_list_border"><div class="controls"><input id="checkboxt{{t.withId}}" class="none input_gx" value="{{t}}" type="checkbox" name="check-2" ><label for="check-2"></label></div></td>
+                                    <td>{{t.keyTypeName}}</td>
+                                    <td>{{t.trackNum}}</td>
+                                    <td>{{t.money/100|number:2}}</td>
+                                     <td>{{t.feeTypeName}}</td>
+                                  </tr>
+				  </tbody>
+			</table></div>
+			<!--任务列表 end-->
+			
+			<!--任务列表 end-->
+			<div class="tx_tc_button" style="margin-top:20px;"><a class="search_button_ss"  href="javaScript:void(0)" ng-click="doSave()">申请</a><a class="search_button_cz" href="javascript:void(0);"  ng-click="close()">返回</a></div>
+				</div>
+    		<!-- 提现申请 结束 -->
+			
+		</div>
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.js"></script>
+		<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="toApplicationCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

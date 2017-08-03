@@ -1,0 +1,718 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="addDepartOtherApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>联运汇_新增中转送货上门</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+
+<style type="text/css">
+.list_xl .list_xl_tbody td {
+	line-height: 34px;
+	border-bottom: 1px dotted #dfdedf;
+	color: #333;
+	text-align: center;
+	text-indent: 0em;
+	white-space: nowrap;
+}
+
+.list_dhl .list_xl_thead th {
+	text-indent: 0;
+	text-align: center;
+}
+
+.dhl_hd td {
+	padding-bottom: 10px;
+}
+.xyib{text-align: right;margin: 15px 20px 0px 25px;}
+</style>
+</head>
+<body ng-controller="addDepartOtherCtrl"  style="overflow: hidden;">
+
+		<div class="billing_1 clearfix pb_20 mt_20 ng-cloak" style="border: 0">
+			
+			<div id="add_id1" ng-show="nextShow">
+				<div class="xyib search_table" style="padding: 0;">
+				<!-- <a class="button ml_10 xyb" href="javascript:void(0)" ng-click="next(1)">下一步</a> -->
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table1 search_term" style="padding: 20px 0 8px !important;">
+				<tbody>
+					<tr>
+						<td width="100"><label class="term_label">开单时间：</label></td>
+						<td width="220">
+						    <input my-Date-Picker ng-model="query.beginDate" id="beginDate" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endDate"  my-Date-Picker id="endDate" class="form_term fl w_xjr" type="text">
+						</td>
+						<td width="100"><label class="term_label">到货时间：</label></td>
+						<td width="220">
+						    <input my-Date-Picker ng-model="query.beginDateArrive" id="beginDateArrive" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endDateArrive"  my-Date-Picker id="endDateArrive" class="form_term fl w_xjr" type="text">
+						</td>
+						<td width="100"><label class="term_label">目的地：</label></td>
+						<td width="" colspan="3">
+								 <span class="wdcy_input" my-city="des"></span>
+		                </td>
+						<td>
+							<div class="fl" style="margin-top: 0"><a class="button ml_10 xyb" href="javascript:void(0)" ng-click="doQuery()">查询</a></div>
+                       		<div class="fl" style="margin-top: 0;margin-left: 15px;"><a class="button ml_10 xyb" href="javascript:void(0)" ng-click="next(1)">下一步</a></div>
+                       	</td>
+					</tr>
+					
+				</tbody>
+		</table>
+				</div>
+				<!-- 中转送货选择库存  开始-->
+				
+				<div class="added_zzwf clearfix added_stowage added_warp" style="/*min-height: 500px;*/width:auto;border: 0;">
+					<!-- 搜索 -->
+					<!-- 左侧 开始-->
+				<div class="fl ng-cloak" style="width: 50%">
+				
+				<div   class="table_height" style="position: relative; border: 1px solid #e1effa; margin: 0 5px 0 10px;overflow: auto;">
+						<table class="search_lista" width="100%" border="0" cellspacing="0" cellpadding="0">
+							<thead class="fixed-thead">
+								<tr>
+									<th width="25" style="padding-left: 14px;" claa="ng-show" >
+										<a  style="cursor: pointer;margin-top: 5px;" class="icon pcar_j" ng-click="onLeftBtClick('all','')"  tips="全部移除数据到右边"></a>
+									</th>
+									<th width="40">序号</th>
+									<th width="100">运单号</th>
+									<th width="130">收货人</th>
+									<th width="120">开单时间</th>
+									<th width="100">目的市</th>
+									<th width="100">目的区域</th>
+									<th width="100">配送网点</th>
+									<th width="100">库存网点</th>
+									<th width="100">到货时间</th>
+									<th width="50">件数</th>
+									<th width="100">体积</th>
+									<th width="100">重量</th>
+									<th width="100">收货人手机</th>
+									<th width="100">收货人地址</th>
+									<th width="100">发货人</th>
+									<th width="100">发货电话</th>
+									<th width="100">费用合计</th>
+									<th width="100">到付金额</th>
+									<th width="100">代收货款</th>
+									<th width="100">配安费</th>
+									<th width="100">交接方式</th>
+									<th width="100">服务方式</th>
+									<th width="100">回单号</th>
+									<th width="100">回单份数</th>
+									<th width="100">备注</th>
+									
+								</tr>
+								<tr>
+									<th></th>
+									<th></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.trackingNum" ng-change="onLeftInputChange('trackingNum')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.consigneeLinkmanName" ng-change="onLeftInputChange('consigneeLinkmanName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.createDateString" ng-change="onLeftInputChange('createDateString')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.destCityName" ng-change="onLeftInputChange('destCityName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.destCityNameAnddestCountyName"  ng-change="onLeftInputChange('destCityNameAnddestCountyName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.distributionOrgName"  ng-change="onLeftInputChange('distributionOrgName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.kcOrgName"  ng-change="onLeftInputChange('kcOrgName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.stockInTime"  ng-change="onLeftInputChange('stockInTime')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.count"  ng-change="onLeftInputChange('count')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.volume"  ng-change="onLeftInputChange('volume')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.weight"  ng-change="onLeftInputChange('weight')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.consigneeBill"  ng-change="onLeftInputChange('consigneeBill')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.address"  ng-change="onLeftInputChange('address')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.consignorLinkmanName"  ng-change="onLeftInputChange('consignorLinkmanName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()"  type="text" ng-model="filterInput.consignorTelephone"  ng-change="onLeftInputChange('consignorTelephone')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.totalFeeString"  ng-change="onLeftInputChange('totalFeeString')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.freightCollectString"  ng-change="onLeftInputChange('freightCollectString')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.collectingMoneyString"  ng-change="onLeftInputChange('collectingMoneyString')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.installCostsString"  ng-change="onLeftInputChange('installCostsString')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.deliveryTypeName"  ng-change="onLeftInputChange('deliveryTypeName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.serviceTypeName"  ng-change="onLeftInputChange('serviceTypeName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.receiptNum"  ng-change="onLeftInputChange('receiptNum')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.receiptCount"  ng-change="onLeftInputChange('receiptCount')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.remarks"  ng-change="onLeftInputChange('remarks')"></th>
+								</tr>
+							</thead>
+							<tbody class="fixed-tbody m_true" style="margin-top: 49px;">
+								
+								<tr ng-repeat=" vl in matchList track by vl.trackingNum">
+									<td width="25" style="padding-left: 14px;">
+										<a ng-click="onLeftBtClick('',vl.trackingNum)" style="cursor: pointer;margin-top: 3px;" class="icon pcar_j"  tips="移除数据到右边"></a>
+									</td>
+									<td width="40">{{$index+1}}</td>
+									<td width="100">{{vl.trackingNum}}</td>
+									<td width="130">{{vl.consigneeLinkmanName}}</td>
+									<td width="120">{{vl.createDateString}}</td>
+									<td width="100">{{vl.destCityName}}</td>
+									<td width="100">{{vl.destCityNameAnddestCountyName}}</td>
+									<td width="100">{{vl.distributionOrgName}}</td>
+									<td width="100">{{vl.kcOrgName}}</td>
+									<td width="100">{{vl.stockInTime}}</td>
+									<td width="50">{{vl.count}}</td>
+									<td width="100">{{vl.volume}}</td>
+									<td width="100">{{vl.weight}}</td>
+									<td width="100">{{vl.consigneeTelephone}}</td>
+									<td width="100">{{vl.address}}</td>
+									<td width="100">{{vl.consignorLinkmanName}}</td>
+									<td width="100">{{vl.consignorTelephone}}</td>
+									<td width="100">{{vl.totalFeeString}}</td>
+									<td width="100">{{vl.freightCollectString}}</td>
+									<td width="100">{{vl.collectingMoneyString}}</td>
+									<td width="100">{{vl.installCostsString}}</td>
+									<td width="100">{{vl.deliveryTypeName}}</td>
+									<td width="100">{{vl.serviceTypeName}}</td>
+									<td width="100">{{vl.receiptNum}}</td>
+									<td width="100">{{vl.receiptCount}}</td>
+									<td width="100">{{vl.remarks}}</td>
+								</tr>
+							</tbody>
+							<tfoot class="fixed-tfoot tfoot">
+							<tr >
+								<td  width="25" style="padding-left: 14px;"></td>
+								<td  width="25" style="padding-left: 14px;"></td>
+								<td  width="100"></td>
+								<td width="130"></td>
+								<td  width="120"></td>
+								<td width="100"></td>
+								<td  width="100"></td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="50">{{leftSum.count}}</td>
+								<td width="100">{{leftSum.volume | number:2}}</td>
+								<td width="100">{{leftSum.weight | number:2}}</td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="100">{{leftSum.totalFee | number:2}}</td>
+								<td width="100">{{leftSum.freightCollect | number:2}}</td>
+								<td width="100">{{leftSum.collectingMoney | number:2}}</td>
+								<td width="100">{{leftSum.installCosts | number:2}}</td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="100"></td>
+								<td width="100"></td>
+							</tr>
+							 </tfoot>
+						</table>
+						
+		           </div>
+				
+				
+				
+				
+				
+				
+				
+					<!-- <div style=" position: relative; border: 1px solid #e1effa; margin: 0 5px 0 10px;overflow: auto;">
+						<my-Adv-Table name="matchListTable" isShowSeq="true"  isMultiSelect="false"  isShowCheck="false" 
+							isFilter="true" width="2115px" isShowBt="true"  isSum="true" name="matchList" isShowPage="false" btTip="移除数据到右边" 
+							btclick="selectAll" btCssType="true" id="trackingNum" 
+			                head='[
+			                {"name":"运单号","code":"trackingNum","width":"75"},
+			                {"name":"收货人","code":"consigneeLinkmanName","width":"80"},
+			                {"name":"开单时间","code":"createDateString","width":"120"},
+			                {"name":"目的地","code":"destCityName","width":"75"},
+			                {"name":"目的区域","code":"destCityNameAnddestCountyName","width":"75"},
+			                {"name":"配送网点","code":"distributionOrgName","width":"75"},
+			                {"name":"库存网点","code":"kcOrgName","width":"75"},
+			                {"name":"到货时间","code":"stockInTime","width":"120"},
+			                {"name":"件数","code":"count","isSum":"true","width":"55"},
+			                {"name":"体积","code":"volume","isSum":"true","width":"55"},
+			                {"name":"重量","code":"weight","isSum":"true","width":"55"},
+			                {"name":"收货人手机","code":"consigneeTelephone","width":"90"},
+			                {"name":"收货人地址","code":"address","width":"90"},
+			                {"name":"发货人","code":"consignorLinkmanName","width":"80"},
+			                {"name":"发货电话","code":"consignorTelephone","width":"90"},
+			                {"name":"费用合计","code":"totalFeeString","isSum":"true","width":"80"},
+			                {"name":"到付金额","code":"freightCollectString","isSum":"true","width":"80"},
+			                {"name":"代收货款","code":"collectingMoneyString","isSum":"true","width":"80"},
+			                {"name":"交接方式","code":"deliveryTypeName","width":"80"},
+			                {"name":"服务方式","code":"serviceTypeName","width":"80"},
+			                {"name":"回单号","code":"receiptNum","width":"80"},
+			                {"name":"回单份数","code":"receiptCount","width":"80"},
+			                {"name":"备注","code":"remarks","width":"200"}]'>
+		                </my-Adv-Table>
+		          	 </div> -->
+						
+					</div>
+					<!-- 左侧 结束 -->
+				
+					<!-- 右侧 开始-->
+				<div class="fl ng-cloak" style="width: 50%">
+					<div style="position: relative; border: 1px solid #e1effa; margin: 0 10px 0 5px; overflow: auto;">
+						<my-Adv-Table name="selectMatchListTable" isShowSeq="true" isMultiSelect="false" isShowCheck="false" 
+							isFilter="true" width="2170px" isShowBt="true" isSum="true" btclick="onRigthBtClick" isShowPage="false" btCssType="false" 
+							btTip="移除数据到左边" id="trackingNum" 
+							head='[
+							{"name":"运单号","code":"trackingNum","width":"75"},
+			                {"name":"开单时间","code":"createDateString","width":"120"},
+			                {"name":"收货人","code":"consigneeLinkmanName","width":"80"},
+			                {"name":"目的地","code":"destCityName","width":"75"},
+			                {"name":"目的区域","code":"destCityNameAnddestCountyName","width":"75"},
+			                {"name":"配送网点","code":"distributionOrgName","width":"75"},
+			                {"name":"库存网点","code":"kcOrgName","width":"75"},
+			                {"name":"到货时间","code":"stockInTime","width":"120"},
+			                {"name":"件数","code":"count","isSum":"true","width":"55"},
+			                {"name":"体积","code":"volume","isSum":"true","width":"55"},
+			                {"name":"重量","code":"weight","isSum":"true","width":"55"},
+			                {"name":"收货人手机","code":"consigneeTelephone","width":"90"},
+			                {"name":"收货人地址","code":"address","width":"90"},
+			                {"name":"发货人","code":"consignorLinkmanName","width":"80"},
+			                {"name":"发货电话","code":"consignorTelephone","width":"90"},
+			                {"name":"费用合计","code":"totalFeeString","isSum":"true","width":"80"},
+			                {"name":"到付金额","code":"freightCollectString","isSum":"true","width":"80"},
+			                {"name":"代收货款","code":"collectingMoneyString","isSum":"true","width":"80"},
+			                {"name":"交接方式","code":"deliveryTypeName","width":"80"},
+			                {"name":"服务方式","code":"serviceTypeName","width":"80"},
+			                {"name":"回单号","code":"receiptNum","width":"80"},
+			                {"name":"回单份数","code":"receiptCount","width":"80"},
+			                {"name":"备注","code":"remarks","width":"80"}]'>
+	                	</my-Adv-Table>
+	                </div>
+						
+				</div>
+				<!-- 右侧  结束-->
+				</div>
+				<!-- 中转送货选择库存  结束 -->
+			</div>
+				
+				
+			<!-- 中转送货编辑  开始-->
+			<div id="add_id2"  class="added_zzwf clearfix ng-cloak" style="min-height: 500px;width:auto;" ng-show="!nextShow">
+				<div class="xyib" ng-show="!view"><a class="xyb" style="margin-right: 10px!important;" href="javascript:void(0)" ng-click="saveTransfer()">保存</a><a class="fh_z_1" href="javascript:void(0)" ng-show="nextButton" ng-click="next(2)">返回</a></div>
+				<!-- 中转送货  开始 -->
+				<div class="added_top" style="padding-left:0;padding-right:25px;border-bottom: 0;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_auto dhl_x" style="padding: 0!important;table-layout: fixed!important;">
+					<tbody><tr>
+						<td width="100"><label class="term_label">承运商：</label></td>
+						<td width="" style="position: relative;">
+							<a href="javascript:void(0)" class="xin_z" ng-disabled="view" ng-click="doAddTransfer()">新增</a>
+                            <input ng-click="openCarr()"  class="form_term" type="text" maxlength="16" ng-disabled="view" ng-model="transferInfo.name"/>
+                        </td>
+						<td width="100"><label class="term_label">联系电话：</label></td>
+						<td width=""><input class="form_term" type="text" maxlength="16" style="border: 1px solid #ff0000;background-color: #fff;" ng-model="transferInfo.linkPhone"/></td>
+						<td width="100"><label class="term_label">提货电话：</label></td>
+						<td><input class="form_term" type="text"   maxlength="16" style="border: 1px solid #ff0000;background-color: #fff;" ng-model="transferInfo.csPhones"/></td>
+						<td width="100"><label class="term_label">提货地址：</label></td>
+						<td><input class="form_term" type="text" style="border: 1px solid #ff0000;background-color: #fff;"  ng-model="transferInfo.departmentAddress"/></td>
+					</tr>
+					<tr>
+						<td colspan="8"><div style="border-top: 1px solid #ddd;margin: 6px 0 6px 25px;"></div></td>
+					</tr>
+					<tr>
+						
+						<td><label class="term_label">车辆信息：</label></td>
+						<td style="position: relative;">
+							<a href="javascript:void(0)" class="xin_z" ng-disabled="view" ng-click="doAddViechInfo()">新增</a>
+							<input class="form_term"  ng-model="form.plateNumber" maxlength="7"  ng-focus="showTotrue()" ng-disabled="view"  ng-keyup="doQueryVehile(form.plateNumber)" type="text"/>
+						    <div class="list_xl ng-cloak list_dhl" style="left: 0%;width: 500px;" ng-show="showPcum">
+						        <div>
+						        	<h2 style="float: left;">请选择车辆</h2>
+						        	<span style="font-size: 12px;font-family:宋体;float: left;padding: 6px 0 6px 10px;display: block;color: #ff0000;">单击一行选中</span>
+						        </div>
+					            <i class="list_xl_icon icon"><a class="gone"  ng-click="showToFalse()" href="javascript:void(0)"></a></i>
+					            <table style="width: 500px;" width="100%" border="0" cellspacing="0" cellpadding="0" class="list_xl_thead">
+					            	<thead>
+					                	<tr>
+					                    	<th style="width: 90px;padding-left: 6px;">车牌号</th>
+					                        <th style="width: 90px">车辆类型</th>
+					                        <th style="width: 80px">司机名称</th>
+					                        <th style="width: 100px">手机号码</th>
+					                        <th style="width: 60px">体积</th>
+					                        <th  width="90">重量</th>
+					                    </tr>
+					                </thead>
+					            </table>
+						        <my-table>
+						            <div class="list_xl_tbody ng-cloak" style="height: 140px!important">
+						            	<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+						            	<tbody>
+						                  <tr ng-repeat="obj in page.data.items" ng-click="selectVehicle(obj)">
+						                    <td width="90" style="padding-left: 6px;" >{{obj.plateNumber}}</td>
+						                    <td width="90">{{obj.vehicleTypeName}}</td>
+						                    <td width="80">{{obj.name}}</td>
+						                    <td width="100">{{obj.bill}}</td>
+						                    <td width="70">{{obj.actualVolume.toFixed(1)}}</td>
+						                    <td  width="70">{{obj.actualWeight.toFixed(2)}}</td>
+						                   </tr>
+						                  </tbody>
+						            </table>
+						            </div>
+								</my-table>
+						    </div>
+						</td>
+						<td><label class="term_label">司机：</label></td>
+						<td><input ng-model="form.driverName" class="form_term" type="text" readonly="readonly"></td>
+						<td><label class="term_label">电话：</label></td>
+						<td><input ng-model="form.driverBill" class="form_term" type="text" readonly="readonly"></td>
+						<td></td>
+						<td>
+						</td>
+						
+					</tr>
+					
+					<tr>
+						<td><label class="term_label">可配置体积：</label></td>
+						<td><input ng-model="form.volume" class="form_term" type="text" readonly="readonly"></td>
+						<td><label class="term_label">可配置重量：</label></td>
+						<td><input ng-model="form.weight" class="form_term" type="text" readonly="readonly"></td>
+						<td><label class="term_label">车辆类型：</label></td>
+						<td>
+                            <div class="form_select">
+						       <select ng-model="form.vehicleType" ng-disabled="true" ng-init="form.vehicleType=-1">
+						     		<option value="-1">请选择</option>
+	                            	<option ng-repeat="obj in vehicleTypeList"  value="{{obj.codeValue}}" >{{obj.codeName}}</option>
+								</select>
+                            </div>
+						</td>
+						<td><label class="term_label">经营方式：</label></td>
+						<td><div class="form_select ">
+                                <select ng-model="form.businessType" ng-disabled="true"  ng-init="form.businessType=-1">
+						     		<option value="-1">请选择</option>
+	                            	<option ng-repeat="obj in businessTypeList"  value="{{obj.codeValue}}" >{{obj.codeName}}</option>
+								</select>
+                            </div>
+						</td>
+						
+					</tr>
+					<tr>
+						
+						<td><label class="term_label">装卸费(元)：</label></td>
+						<td><input class="form_term fl" style="width: 60%" type="text" my-double-val ng-disabled="view" ng-model="ordTransferCost.stevedoring" maxlength="16" />
+						 <div class="controls fl" style="margin-left: 10px;margin-top: 5px;">
+						 <input style="vertical-align:middle" type="checkbox" name="stevedoring" id="stevedoring" ng-disabled="view"/>未付</div></td>
+						<td><label class="term_label">付款方：</label></td>
+						<td>
+							<div class="form_select">
+                                <select ng-model="ordTransferCost.stevedoringPayDot" ng-options="obj.orgId as obj.orgName for  obj in twoOrg " ng-disabled="view"  class="ng-pristine ng-untouched ng-valid"></select>
+                            </div>
+                            
+                        </td>
+						
+						<td><label class="term_label">运费(元)：</label></td>
+						<td><input class="form_term fl" style="width: 60%" type="text" ng-disabled="view" my-double-val ng-model="ordTransferCost.freight" maxlength="16" />
+							<div class="controls fl" style="margin-left: 10px;margin-top: 5px;">
+								<input style="vertical-align:middle" type="checkbox" name="freight" id="freight" ng-disabled="view" />未付</div></td>
+						<td><label class="term_label">付款方：</label></td>
+						<td>
+							<div class="form_select">
+                                <select ng-model="ordTransferCost.freightPayDot" ng-options="obj.orgId as obj.orgName for  obj in twoOrg "  ng-disabled="view" class="ng-pristine ng-untouched ng-valid"></select>
+                            </div>
+                           
+                        </td>
+					</tr>
+					<tr>
+						<td colspan="8"><div style="border-top: 1px solid #ddd;margin: 6px 0 6px 25px;"></div></td>
+					</tr>
+					<tr>
+						<td valign="top"><label class="term_label">备注：</label></td>
+						<td colspan="7"><textarea class="textarea" maxlength="500" ng-model="ordTransferCost.remark" ng-disabled="view" ng-model="query.notes" style="height:30px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched"></textarea></td>
+					</tr>
+					<tr>
+						<!-- <td width="100" ng-show="tabShow" valign="top"><label class="term_label">外发单号：</label></td>
+						<td ng-show="tabShow"><input  class="form_term"  type="text" name="freight" id="freight" ng-disabled="view" my-Num-Val ng-model="ordTransferCost.outgoingTrackingNum"/></td>
+					 -->
+						<td width="100" valign="top"><label class="term_label">运输合同：</label></td>
+						<td><input  class="form_term"  type="text" maxlength="16" ng-disabled="view"  ng-model="ordTransferCost.transportContract"/></td>
+						<td colspan="4"></td>
+					</tr>
+					
+					
+					
+				</tbody>
+				</table>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_auto dhl_x dhl_x2" style="padding: 0!important;table-layout: fixed!important;">
+				<tr>
+						<td width="80" align="right"><label class="term_label">到付：</label>
+                   			</td>
+						<td width="100"><span class="red fl" ng-disabled="true">{{freightCollect.toFixed(2)}}</span><span class="fl hg">元</span></td>
+						<td width="120" align="right"><label style="width: 100px;" class="term_label">代收货款：</label>
+                   			</td>
+						<td width="120"><span class="red fl" ng-disabled="true">{{collectingMoney.toFixed(2)}}</span><span class="fl hg">元</span></td>
+						<td width="80" align="right"><label style="width: 80px;" class="term_label">中转费：</label>
+                   			</td>
+						<td width="120"><span class="red fl" id="transferValue" ng-disabled="true">{{transferMoney.toFixed(2)}}</span><span class="fl hg">元</span></td>
+						<td width="60" align="right" ng-show="!gatherShow"><label class="term_label">应付：</label>
+                   			</td>
+						<td width="120" ng-show="!gatherShow" ><span class="red fl" ng-disabled="true">{{gatherValue.toFixed(2)}}</span><span class="fl hg">元</span>
+								<div class="controls fl"  ng-show="!gatherShow" style="margin-left: 10px;margin-top: 5px;">
+								<input style="vertical-align:middle" ng-disabled="view" type="checkbox" id="isPay" name="isPay" />未付</div>
+						</td>
+                        
+						<td width="60" align="right" ng-show="gatherShow"><label class="term_label">应收：</label>
+                   			</td>
+						<td width="120" ng-show="gatherShow"><span class="red fl">{{gatherValue.toFixed(2)}}</span><span class="fl hg">元</span>
+						<div class="controls fl" style="margin-left: 10px;margin-top: 5px;" ng-show="gatherShow">
+							<input style="vertical-align:middle" ng-disabled="view" type="checkbox" id="isGet" name="isGet"/>未收</div>
+						</td>
+						
+						<td><div style="position:inherit;text-align:right;border-left: 0;margin-left: 15px;">
+							<a class="fh_z " href="javascript:void(0);" ng-click="clearSelect();" ng-show="!view">移除运单</a>
+							<a class="button ml_10 modify" href="javascript:void(0)" ng-click="editTab()" ng-show="!view"><i class="button_icon button_icon dw_modify ml0"></i>修改发货人</a>
+						</div></td>
+						
+					</tr>
+					
+				</table>
+
+				</div>
+				<!-- 中转送货  结束 -->
+				<!-- 列表 -->
+				<div class="search_nr clearfix mt_20 dhl_add">
+	                <my-diy-Table isShowSeq="false" width="2505px" isMultiSelect="true" showTotal="false"  isShowTab="false" isShowCheck="true" isFilter="true" isSum="true" id="orderId" 
+	                head='[
+	                       {"name":"运单号","code":"trackingNum","width":"120"},
+	                       {"name":"收货人","code":"consigneeLinkmanName","width":"120"},
+	                       {"name":"开单时间","code":"createDateString","width":"120"},
+	                       {"name":"目的城市","code":"destCityName","width":"130"},
+			               {"name":"目的区域","code":"destCityNameAnddestCountyName","width":"75"},
+				           {"name":"件数","code":"count","width":"60","isSum":"true"},
+				           {"name":"重量","code":"weight","width":"60","isSum":"true","number":"2"},
+				           {"name":"体积","code":"volume","width":"60","isSum":"true","number":"1"},
+				           {"name":"中转费","code":"transferValue","width":"60","isEdit":"true","callback":"$scope.sumOfTransfer","isSum":"true"},
+				           {"name":"外发单号","code":"outgoingTrackingNum","width":"100","isEdit":"true","onlySum":"false"},
+				           {"name":"中转时间","code":"outgoingTime","width":"100","isDate":"true","isEdit":"false"},
+			               {"name":"开单网点","code":"orgIdName","width":"100"},
+			               {"name":"库存网点","code":"currentOrgIdName","width":"100"},
+				           {"name":"到货时间","code":"stockInTime","width":"130"},
+			               {"name":"费用合计","code":"totalFeeString","width":"80","isSum":"true","number":"2"},
+			               {"name":"回扣(元)","code":"discountString","isSum":"true","width":"60","number":"2"},
+			               {"name":"到付(元)","code":"freightCollectString","isSum":"true","width":"60","number":"2"},
+			               {"name":"代收货款(元)","code":"collectingMoneyString","isSum":"true","width":"100","number":"2"},
+			               {"name":"服务方式","code":"deliveryTypeName","width":"80"},
+			               {"name":"收货人电话","code":"consigneeTelephone","width":"120"},
+			               {"name":"收货地址","code":"address","width":"170"},
+			               {"name":"发货人","code":"consignorName","width":"120"},
+			               {"name":"发货人电话","code":"consignorBill","width":"120"},
+			               {"name":"备注","code":"remarks","width":"200"}]'>
+	                </my-diy-Table>
+				</div>
+				
+			</div>
+			<!-- 中转送货编辑  结束-->
+			<div class="bottom_nav1 pb_20 bottom_nav_search">
+	        	<a href="javascript:void(0);" ng-click="close();">关 闭</a>
+	        	<a href="javascript:void(0);" ng-show="view" ng-click="printTable();">打 印</a>
+	        	<a style="cursor: pointer;"  ng-show="view" id="exportId" ng-click="exportOrd()">导出</a>
+   			</div>
+	</div>
+	
+  <!--承运商弹窗 开始 --> 
+  <div  id="cys_1" class="ng-cloak" style="position:fixed; left:50%; width:850px; height:350px; margin-left:-420px;top:30px; z-index:99996;" ng-show="carShow">
+   		<a class="tc_x " href="javascript:void(0)"  ng-click="onCloseCarr()">x</a>
+   		
+   		<div class="billing_1 clearfix pb_20" style="margin: 0!important;border-top: 0;height:350px;" >
+               <ul class="waybill_tab clearfix disp_a">
+               		<!-- <li id="one1" ng-class="{true:'hover',false:''}[!tabShow]"><a  ng-click="setTab(1)" href="javascript:void(0)" class="a1">专线</a></li> -->
+               		<li id="one2" ><a href="javascript:void(0)" ng-click="setTab(2)" >承运商</a></li>
+               </ul> 
+               
+              <!--  <div id="con_one_1" ng-show="!tabShow">
+               		<div class="cys_tc" style="height: 200px">
+               			<my-adv-Table name="zx" isShowSeq="false" width="100%" isMultiSelect="false" isShowCheck="true" isShowPage="false" id="orgId"
+             			 head='[{"name":"专线","code":"name","width":"25%"},
+				           {"name":"联系人","code":"linkMan","width":"25%"},
+				           {"name":"联系电话","code":"linkPhone","width":"25%"},
+			               {"name":"提货地址","code":"departmentAddress","width":"21%"}]'>
+	                	</my-adv-Table>
+                     </div>
+                     <div class="bottom_nav1 pb_20 bottom_nav_search">
+			        	<a style="min-width: 50px" href="javascript:void(0);" ng-click="selectCarr();">确认</a>
+			        	<a style="min-width: 50px" href="javascript:void(0);" ng-click="onCloseCarr();">取消</a>
+			        	
+			        </div>
+                 </div> -->
+                 <div id="con_one_2" >
+                 	<div class="cys_tc" style="height: 200px">
+                 		<my-adv-Table name="hz" isShowSeq="false" width="100%" isMultiSelect="false" isShowCheck="true" isFilter="true" isShowPage="false" id="orgId"
+             			 head='[
+             			   {"name":"承运商","code":"orgName","width":"25%"},
+				           {"name":"联系人","code":"orgPrincipal","width":"25%"},
+				           {"name":"联系电话","code":"orgPrincipalPhone","width":"25%"},
+			               {"name":"提货地址","code":"departmentAddress","width":"21%"}]'>
+	                	</my-adv-Table>
+                     </div>
+                     <div class="bottom_nav1 pb_20 bottom_nav_search">
+			        	<a style="min-width: 50px" href="javascript:void(0);" ng-click="selectCarr();">确认</a>
+			        	<a style="min-width: 50px" href="javascript:void(0);" ng-click="onCloseCarr();">取消</a>
+			        	
+			        </div>
+				 </div>
+		</div>
+   </div> 
+   
+  
+<!--承运商弹窗结束 --> 
+
+
+<!--修改发货人 开始 --> 
+  <div  id="cys_2" style="position:fixed; left:50%; width:400px; min-height:300px; margin-left:-200px;top:80px; z-index:99996;" ng-show="editShow" class="ng-cloak">
+   		<a class="tc_x " href="javascript:void(0)" ng-click="closeEditTab()">x</a>
+   		
+   		<div class="billing_1 clearfix pb_20" style="margin: 0!important;" >
+              
+					<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="search_table search_term">
+                             <tbody>
+                             	<tr>
+									<td width="100"><label class="term_label">发货人：</label>
+										</td>
+									<td><input class="form_term w_b85" type="text" maxlength="16"  ng-model="linkName"></td>
+								</tr>
+								<tr>
+									<td width="100"><label class="term_label">联系手机：</label>
+										</td>
+									<td><input class="form_term w_b85" type="text" maxlength="16"  ng-model="linkTel"></td>
+								</tr>
+						</tbody>
+                     </table>
+                   
+                     <div class="bottom_nav1 pb_20 bottom_nav_search">
+			        	<a style="min-width: 50px" href="javascript:void(0);" ng-click="comitEdit();">确认</a>
+			        	<a style="min-width: 50px" href="javascript:void(0);" ng-click="closeEditTab();">取消</a>
+			       	 </div>
+                 
+                 
+		</div>
+   </div> 
+   
+  
+<!--修改发货人 结束 --> 
+<!-- 打印开始 -->
+	 <div id="printDiv" style="display: none;">
+ 			<table border=1 width="90%" cellspacing="0" align="center" cellpadding="0" style="border-collapse:collapse；" bordercolor="#000000">
+				<caption style="font-size: 30px; margin-bottom: 16px;">
+					<b>{{currOrgName}}中转详情</b>
+					<br />
+					<span style="position: absolute; top:8; right: 5%; width: 286px; height: 16px; font-size:16px;">打印时间: {{printTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+				</caption>
+ 				<tbody>
+ 					<tr style="height: 32px;">
+	 					<td colspan="4" style="font-size: 16; width: 16%;">承运商: {{transferInfo.orgName}}</td>
+	 					<td colspan="4" style="font-size: 16; width: 30%;">中转网点电话: {{userInfoOrg.supportStaffPhone}}</td>
+	 					<td colspan="4" style="font-size: 16; width: 22%;">目的地电话: {{transferInfo.linkPhone}}</td>
+	 					<td colspan="3" style="font-size: 16; width: 30%;">目的地: {{transferInfo.address}}</td>
+	 				</tr>
+	 				<tr style="height: 32px;">
+	 					<td colspan="4" style="font-size: 16; width: 16%;">车牌号: {{form.plateNumber}}</td>
+	 					<td colspan="4" style="font-size: 16; width: 30%;">司机姓名: {{form.driverName}}</td>
+	 					<td colspan="4" style="font-size: 16; width: 22%;">联系方式: {{form.driverBill}}</td>
+	 					<td colspan="3" style="font-size: 16; width: 30%;">车辆类型: {{form.vehicleTypeName}}</td>
+	 				</tr>
+	 				<tr style="height: 32px;">
+	 					<td colspan="4" style="font-size: 16; width: 16%;">装卸费(元): {{ordTransferCost.stevedoring}} <span ng-if="ordTransferCost.payState==1">未付</span><span ng-if="ordTransferCost.payState!=1">已付</span></td>
+	 					<td colspan="4" style="font-size: 16; width: 30%;">付款方： {{ordTransferCost.stevedoringPayDotName}}</td>
+	 					<td colspan="4" style="font-size: 16; width: 22%;">运费(元)： {{ordTransferCost.freight}} <span ng-if="ordTransferCost.stevedoringPayState==1">未付</span><span ng-if="ordTransferCost.stevedoringPayState!=1">已付</span></td>
+	 					<td colspan="3" style="font-size: 16; width: 30%;">付款方：{{ordTransferCost.freightPayDotName}}</td>
+	 				</tr>
+ 					<tr style="height: 32px;">
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">运单号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">开单网点</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">开单时间</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">件数</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">重量</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">体积</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">中转费</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">到付(元)</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">代收货款(元)</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">目的城市</td> 
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">服务方式</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">收货方</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">收货方电话</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">收货地址</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">备注</td>
+ 					</tr>
+ 					<tr ng-repeat="o in list" style="height: 32px;">
+ 						<!-- 运单号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.trackingNum}}</td>
+						<!-- 开单网点 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.orgIdName}}</td>
+						<!-- 开单时间 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.createDateString.substring(0,10)}}</td>
+						<!-- 件数 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.count}}</td>
+						<!-- 重量 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.weight | filterString | number:2 }}</td>
+						<!-- 体积 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.volume | filterString | number:1 }}</td>
+						<!-- 中转费 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.transferValue | filterString | number:2 }}</td>
+						<!-- 到付（元） -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.freightCollectString | filterString | number:2 }}</td>
+						<!-- 代收货款 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.collectingMoneyString | filterString | number:2 }}</td>
+						<!-- 目的城市 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.destCityName}}</td> 
+						<!-- 服务方式 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.deliveryTypeName}}</td>
+						<!-- 收货方 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.consigneeLinkmanName}}</td>
+						<!-- 收货方电话 -->	
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.consigneeTelephone}}</td>
+						<!-- 收货方地址 -->	
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.address}}</td>
+						<!-- 备注 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.remarks}}</td>
+					</tr>
+ 					<tr style="height: 32px;"><!-- 20列数据 -->
+ 						<td colspan="2" style="vertical-align:middle; text-align:center; font-size: 15;">合计: {{list.length}}票</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{totalCount ==0 ?'': totalCount}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{actualWeight}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{actualVolume}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{transferMoney}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{freightCollect}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{collectingMoney}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						
+ 					</tr>
+ 				</tbody>
+ 			</table>
+ 		</div>
+
+<!-- 打印结束 -->
+
+	
+<div id="alertMsgIsShow" class="popup_bj" ng-show="showCarr" style="z-index:99995"></div>
+
+
+	<script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/lodop/lodop-business.js?v=${ver}"></script>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/angucomplete.js?v=${ver}"></script>
+
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="addDepartOtherTransitCtrlUser.js?v=${ver}"></script>
+	<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+		<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+	</object>
+	
+</body>
+</html>
+

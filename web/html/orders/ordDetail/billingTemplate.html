@@ -1,0 +1,80 @@
+<div class="billing_2 clearfix bt_h2" style="margin: 0px">	<h2 class="title_h2" style="padding-top: 0;"><i class="icon title_icon fl"></i>基本信息</h2>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table jb_tab"  style=" border-right: 1px solid #b7d3e7;">
+					  <tr>
+						<td class="waybill_table_r" width="80">订单号</td>
+						<td width="">{{orderInfo.orderNo}}</td>
+						<td class="waybill_table_r" width="80">运单号</td>
+						<td width="">{{orderInfo.trackingNum}}</td>
+						<td class="waybill_table_r" width="80">下单时间</td>
+						<td width="120">{{orderInfo.createTime}}</td>
+						<td class="waybill_table_r" width="80">开单时间</td>
+						<td width="">{{orderInfo.inputTime}}</td>
+						<td class="waybill_table_r" width="80">开单人</td>
+						<td width="">{{orderInfo.inputUserName}}</td>
+					  </tr>
+					  <tr>
+						<td class="waybill_table_r">到站</td>
+						<td>{{orderInfo.cityName}}</td>
+						<td class="waybill_table_r">归属专线</td>
+						<td>{{orderInfo.tenantName}}</td>
+						<td class="waybill_table_r">开单网点</td>
+						<td >{{orderInfo.orgIdName}}</td>
+						<td class="waybill_table_r" width="">拉包工</td>
+						<td width="">{{orderInfo.workerName}}</td>
+						<td class="waybill_table_r" width="">拉包工电话</td>
+						<td width="">{{orderInfo.workerBill}}</td>
+						
+					  </tr>
+					   <tr>
+						<td class="waybill_table_r" width="">配送方式</td>
+						<td>{{orderInfo.serviceTypeName}}</td>
+						<td class="waybill_table_r" width="">付款方式</td>
+						<td width="">{{orderInfo.paymentTypeName}}</td>
+						<td class="waybill_table_r" width="">收货人</td>
+						<td>{{orderInfo.consigneeName}}</td>
+						<td class="waybill_table_r" width="">收货人号码</td>
+						<td width="" colspan="3">{{orderInfo.consigneeBill}}</td>
+						
+					  </tr>
+					  
+					   <tr>
+					   <td class="waybill_table_r" width="">收货地址</td>
+						<td width="" colspan="3">{{orderInfo.address}}</td>
+						<td class="waybill_table_r">品名</td>
+						<td>{{orderInfo.product}}</td>
+						<td class="waybill_table_r">件数</td>
+						<td>{{orderInfo.count}}</td>
+						<td class="waybill_table_r">包装</td>
+						<td >{{orderInfo.packingName}}</td>
+						
+					  </tr>
+					  <tr>
+						<td class="waybill_table_r" width="">重量</td>
+						<td width="">{{orderInfo.weight}}</td>
+						<td class="waybill_table_r" width="">体积</td>
+						<td width="">{{orderInfo.volume}}</td>
+						<td class="waybill_table_r">备注</td>
+						<td colspan="5">{{orderInfo.remark}}</td>
+						
+						
+					  </tr>
+					  
+					</table>
+					
+					<div class="wzgz_div">
+							<div class="wzgz_1" >{{orderInfo.orderStateName}}</div>
+							
+						</div>
+					
+		</div>
+		<style>
+
+.wzgz_div{position: absolute;right:20%;top: -3px;z-index: 1;}
+.wzgz_1{width: 116px;
+height: 46px;
+display: inline-block;background: url(../image/$tenantId$/dt.png) no-repeat;color: #ff0000;
+    text-align: center;
+    font-size: 17px;
+    line-height: 43px;
+    font-weight: bold;}
+</style>

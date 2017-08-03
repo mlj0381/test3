@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmUserAreaApp">
+	<head>
+	    <title>一智通</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+</head>
+	<body ng-controller="addCmUserAreaCtrl">
+    	<div class="billing_1">
+			<div class="search" >
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table">
+				  <tr>
+					<td width="150"><label class="control-label">账号：</label></td>
+					<td width="150"><input class="input_box" ng-model="userData.loginAcct" id="" type="text" ng-disabled="true"/>
+					</td>
+					<td width="150"><label class="control-label">姓名：</label></td>
+					<td width="150"><input class="input_box" id="" ng-model="userData.userName" type="text" ng-disabled="true"/></td>
+					<td></td>
+					
+				  </tr>
+				  <tr>
+					<td><label class="control-label">省份：</label></td>
+					<td ><div class="search_select">
+							<select name="select" class="xl_z" ng-model="data.province"  ng-disabled="all" ng-options="province as province.name for  province in provinces" ng-change="queryCity(data)">
+								<option value="">请选择服务省</option>
+								</select>
+						</div></td>
+					<td><label class="control-label">城市：</label></td>
+					<td colspan="3">
+						<input class="input_box search_select" id="districts" ng-click="queryDistrict()" ng-model="data.cityName" style="min-width: 148px;width: 100%;" type="text" />
+						<!-- 下拉选择-->
+						<div id="selectItem" class="drop_down" style=" width:397px;min-height:200px;" ng-show="isAreaShow">
+							<div class="drop_down_1 clearfix" style="min-height:198px;">
+								<h2>选择服务区域(可多选)</h2>
+								<div class="drop_down_nr" ng-repeat="district in citys">
+								<a href="javaScript:void(0);" ng-click="selDistrict(this)" ng-class="districtIds.district_{{district.id}}" >{{district.name}}</a>
+								</div>
+								<div class="drop_down_ann">
+								<a class="drop_down_a" href="javaScript:void(0);" ng-click="getAll()">全部</a>
+									<a class="drop_down_a" href="javaScript:void(0);" ng-click="districtConfirm()">确定</a>
+									<a class="drop_down_a" href="javaScript:void(0);" ng-click="isAreaShow=false">关闭</a>
+								</div>
+						</div>
+					</div>
+					</td>
+					<td></td>
+				  </tr>
+				</table>
+			</div>
+				<div class="addition_2 clearfix" style="margin:0 130px 18px;">
+					<div class="fl" >
+						<dl class="clearfix" id="addition_{{obj.userAreaId}}" ng-repeat="obj in objNameList"><dt></dt>
+						     <dd>{{obj.userAreaName}}</dd>
+						     <dd>
+							     <a class="addition_2_a mt_10" href="javaScript:void(0)" ng-click="delUserArea(obj.userAreaId)">
+							     </a>
+						     </dd>
+						</dl>
+						<!-- <dl class="clearfix" id="addition_4"><dt></dt><dd>广东省 广州市、珠海市</dd><dd><a class="addition_2_a mt_10" href="#" onclick="document.getElementById('addition_4').style.display='none'"></a></dd></dl> -->
+					</div>
+					<a class="button ml_10 baoc" style="margin: 18px 0 0 130px;" href="javaScript:void(0)" ng-click="doSaveUserArea()"><i class="button_icon button_icon dw_baoc"></i>保存</a> 
+		
+				</div>
+			
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list">
+				<thead>
+				  	<tr>
+						
+						<th style="width:23.33%;">省份</th>
+						<th style="width:53.33%;">城市</th>
+						<th>操作</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr ng-repeat="o in userAreaList.items">
+					
+					<td>{{o.proName}}</td>
+					<td style="white-space:inherit;">{{o.userAreaName}}</td>
+					<td><a href="javaScript:void(0)" ng-click="delArea(o.userAreaId)" class="dhl_tjgd">删除</a></td>
+				  </tr>
+
+				  </tbody>
+			</table>
+		</div>
+		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmUserAreaCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

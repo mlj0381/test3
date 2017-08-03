@@ -1,0 +1,33 @@
+<!-- 现金收支 开始 -->
+		<span class="yc_message_span">现金收支</span>
+		<div class="mkae" style=" position: relative;border-top:1px solid #e0e5e9; ">            
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list ng-cloak">
+                 <thead>
+                   <tr>
+                     <th>科目</th>
+                     <th>金额</th>
+                     <th>收支类型</th>
+                     <th>收支状态</th>
+                     <th>操作人</th>
+                     <th>操作时间</th>
+                     <th>是否核销</th>
+                     <th>核销人</th>
+                     <th>核销时间</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr ng-repeat="o in porveInfos"  class="ng-scope">
+                     <td class="ng-binding" >{{o.feeTypeName}}</td>
+                     <td class="ng-binding">{{o.feeDouble}}</td>
+                     <td class="ng-binding">{{o.payTypeName}}</td>
+                     <td class="ng-binding">{{o.payStsName}}</td>
+                     <td class="ng-binding">{{o.opIdName}}</td>
+                     <td class="ng-binding hideString">{{o.createDate.split(" ")[0]}}</td>
+                     <td class="ng-binding">{{o.checkStsName}}</td>
+                     <td class="ng-binding" ng-show="o.checkSts!=2">{{o.opIdName}}</td>
+                     <td class="ng-binding" ng-show="o.checkSts==2"></td>
+                     <td class="ng-binding hideString">{{o.checkDate.split(" ")[0]}}</td>
+                   </tr>
+                 </tbody>
+              </table>
+            </div>

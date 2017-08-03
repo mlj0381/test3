@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="platSfManageApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>师傅管理</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+</head>
+	<body ng-controller="platSfManageCtrl" onload="setContentHegthDelay(800)">
+		<div class="billing_1">
+			<div id="vehicle">
+			
+			<div style="position: relative;">
+			
+        <!-- 选择平台师傅   start -->
+        	 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">服务省：</label></td>
+						<td><div class="search_select">
+							<select name="select" class="xl_z" ng-model="params.provinceId" ng-change="queryCity(params.provinceId)"  ng-options="province.id as province.name for  province in provinces">
+								<option value="">所有</option>
+								</select>
+						</div>	</td>
+						<td width="100"><label class="term_label">服务市：</label></td>
+						<td><div class="search_select">
+							<select name="select" class="xl_z" ng-model="params.cityId"   ng-options="objCon.id as objCon.name for  objCon in citys">
+								<option value="">所有</option>
+								</select>
+						</div>	</td>
+						<td ><div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQueryPlat();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div></td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">师傅名称：</label></td>
+						<td><input class="form_term" ng-model="params.sfUserName" maxlength="10"/></td>
+						<td width="100"><label class="term_label">师傅帐号：</label></td>
+						<td><input class="form_term" ng-model="params.sfUserAcct" maxlength="11"/></td>
+						</tr>
+					
+				</tbody>
+		</table>
+        <div class="search_nr clearfix mt_20">
+              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+              <h2>查询结果</h2>
+              
+              <a ng-click="addSf();" href="javascript:void(0)">确定</a>
+              <a class="" href="" ng-click="close()">关闭</a>
+              
+              </div>
+              
+             <!--  <my-Adv-Table 
+                isShowSeq="false" 
+                isMultiSelect="false" 
+                isShowCheck=true 
+                isFilter="false" 
+                isSum="false" 
+                id="tenantId" 
+                head='[
+                {"name":"专线ID","code":"tenantCode"},
+                {"name":"专线名称","code":"name"},
+                {"name":"到达省份","code":"provinceNames"},
+                {"name":"联系人","code":"linkMan"},
+                {"name":"联系电话","code":"linkPhone"},
+                {"name":"客服电话","code":"csPhones"},
+                {"name":"专线地址","code":"address"}
+                ]'>
+                </my-Adv-Table>-->
+                
+               <my-table  name="sfPage">
+               
+                   <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;min-height:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0">
+                               <thead id="tb1">
+                                <tr>
+                                    <th width="79" class="search_list_border">
+	                                    <div class="controls">
+	                                   <input id="checkboxa" class="none input_gx" ng-click="selectAll('check-1','checkboxa');" type="checkbox">
+		            					<label for="checkboxa"></label>
+	                                    </div></th>
+									<th width="25%">服务省市</th>
+									<th width="25%">师傅名称</th>
+									<th width="25%">师傅账号</th>
+                                    <th width="21%">认证状态</th>
+                                    
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak" ng-click="selectOne(o.sfUserId,'checkbox');" ng-repeat="o in sfPage.data.items">
+                                  	<td width="79" class="search_list_border"><div class="controls"><input id="checkbox{{o.sfUserId}}" class="none input_gx" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="25%">{{o.provinceName}}{{o.cityName}}</td>
+                                    <td width="25%">{{o.name}}</td>
+                                    <td width="25%">{{o.phone}}</td>
+                                     <td width="21%">{{o.auditStateName}}</td>
+                                  </tr>
+                                    
+                              </tbody>
+                            </table>
+                           
+                </div>
+                </my-table> 
+        	</div>
+        <!-- 选择平台师傅  end -->
+        
+			</div>
+		</div>
+		
+		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+			<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="platSfManageCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

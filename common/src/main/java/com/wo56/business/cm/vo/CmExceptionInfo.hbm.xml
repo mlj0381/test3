@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-4 13:56:57 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmExceptionInfo" table="cm_exception_info">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<property name="exceptionCode" type="string">
+			<column name="exception_code" length="20">
+				<comment>&#210;&#236;&#179;&#163;&#177;&#224;&#194;&#235;</comment>
+			</column>
+		</property>
+		<property name="exceptionName" type="string">
+			<column name="exception_name" length="20">
+				<comment>&#210;&#236;&#179;&#163;&#177;&#224;&#194;&#235;</comment>
+			</column>
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="state">
+				<comment>1&#161;&#162;&#211;&#208;&#208;&#167;&#163;&#172;2&#206;&#222;&#208;&#167;</comment>
+			</column>
+		</property>
+		<property name="tenantCode" type="string">
+			<column name="tenant_code" length="20">
+				<comment>&#185;&#171;&#203;&#190;&#177;&#224;&#194;&#235;</comment>
+			</column>
+		</property>
+		<property name="tanentId" type="java.lang.Long">
+			<column name="tanent_id">
+				<comment>&#185;&#171;&#203;&#190;ID</comment>
+			</column>
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="op_id">
+				<comment>&#178;&#217;&#215;&#247;&#200;&#203;</comment>
+			</column>
+		</property>
+		<property name="opDate" type="timestamp">
+			<column name="op_date" length="19" not-null="true">
+				<comment>&#178;&#217;&#215;&#247;&#202;&#177;&#188;&#228;</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,8 @@
+@charset "gb2312";
+
+
+/*icon css定义*/
+.icon{ background: url(../../image/$tenantId$/icon.png) no-repeat;}
+
+/*index search css定义*/
+.index_search{background: url(../../image/$tenantId$/index_search.jpg) repeat;}

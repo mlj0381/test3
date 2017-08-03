@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="shareOrderApp">
+<head>
+	<title>分享运单</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=640,target-densitydpi=device-dpi,minimum-scale=0.5,maximum-scale=0.5,user-scalable=yes"/>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta content="telephone=no" name="format-detection"/>
+<style>
+body, button, input, select, textarea{ font:24px/1.125 "Arial","Microsoft YaHei"; color:#333;}
+body, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, th, td, p, blockquote, pre, form, fieldset, legend, input, button, textarea, hr { margin: 0; padding: 0;}
+img{ border: 0 none;}
+ul, ol{ list-style-type: none;}
+input, button, select, textarea{ outline: medium none;}
+body{ background:#ebebee;}
+a{ text-decoration:none; color:#343434;}
+.fl{ float:left;}
+.fr{ float:right;}
+.clearfix:after{ content:""; height:0; visibility:hidden; display:block; clear:both;}
+.clearfix{ zoom:1;}
+.overflow{ overflow:hidden;}
+.container {width: 640px;margin: 0 auto;background: #ebebeb;}
+.list_zc li, .bd_l {margin: 0px;border-bottom: 1px dashed #ccc;border-top: 1px solid #ccc;background: #fff;position: relative;}
+.label1 {display: inline-block;text-align: right;width: 120px;}
+
+.r_a{ position:absolute; right:10px; bottom:17px;}
+.list_c {padding: 18px 0;position: relative;}
+.list_c p {line-height: 42px; color: #666;}
+.lis_s p{ color:#e20000}
+.xiazai {background: #f5f5f5;padding: 15px 20px;position: fixed; bottom: 0; border-top: 1px solid #ccc;width: 600px;}
+.lij_z {background: #4f9eee; border-radius: 7px; padding: 15px; color: #fff; margin: 16px 10px 0 0;}
+.ng-cloak{display:none;}
+</style>
+</head>
+
+<body ng-controller="shareOrderCtrl" class="ng-cloak">
+	<div class="container"  style="margin-bottom:170px;" >
+		
+		<ul class="list_zc" style="margin-top:20px;border-bottom: 1px solid #ccc;">
+			
+			
+			<li style="border-top:0;padding:5px 21px 0;">
+					<div class="list_c">
+						<p><label class="label1">订单号：</label>{{order.orderNo}}</p>
+						<p><label class="label1">运单号：</label>{{order.trackingNum}}</p>
+					</div>
+			</li>
+			<li style="border-top:0;padding:5px 21px 0; ">
+					<div class="list_c">
+						<p><label class="label1">目的地：</label>{{order.desCityName}}</p>
+						<p><label class="label1">收货人：</label>{{order.consignee}}  {{order.consigneePhone}}</p>
+						<p><label class="label1">承运公司：</label>{{order.carrierName}}</p>
+					</div>
+			</li>
+			<li style="border-top:0;padding:5px 21px 0;border-bottom: 0 ">
+					<div class="list_c lis_s" style="color:#ff0000;">
+						<p><label class="label1">运输状态：</label>{{order.orderState}}</p>
+						<p><label class="label1">付款方式：</label>{{order.paymentType}}</p>
+						<p class="r_a"><label class="label1">运费：</label>￥{{order.totalFee}}</p>
+					</div>
+					
+			</li>
+			
+			
+		</ul>
+		
+		<div class="xiazai clearfix">
+			<img src="/image/weChat/logo-120.png" width="80" height="80" alt="" class="fl" style="margin-top:6px;" />
+			<div class="fl" style="color:#333; line-height:36px; padding-left:20px; margin-top:10px;">
+				<p>云货宝</p>
+				<p>物流更便捷，高效</p>
+			</div>
+			<a href="javascript:void(0)" onclick="javascript:openApp()" class="fr lij_z">立即下载</a>
+		</div>
+	</div>
+	
+</body>
+<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="shareOrderCtrl.js?v=${ver}"></script>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="CreditDtlApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>信用详情</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css">
+        <script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+		
+</head>
+	<body  ng-controller="CreditDtlCtrl"  onload="setContentHeight(350)" >
+		<div class="billing_1" style="padding-bottom:80px;">
+			<div class="dhl_credit search">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="search_table com_liest" >
+				  <tr>
+					<td width="120"><label class="control-label">信用等级：</label></td>
+					<td width="20%">
+						<!--代码开始-->
+						<div class="xx_pj">
+							<div class="xx_a">
+								<ul class="star" id="star">
+									<li><a href="javascript:void(0)" class="one-star">1</a></li>
+									<li><a href="javascript:void(0)" class="two-stars">2</a></li>
+									<li><a href="javascript:void(0)" class="three-stars">3</a></li>
+									<li><a href="javascript:void(0)" class="four-stars">4</a></li>
+									<li><a href="javascript:void(0)" class="five-stars">5</a></li>
+								</ul>
+								<div class="current-rating" id="showb"></div>
+							</div>
+							<!--评价文字-->
+							<!--<div class="description"></div>-->
+						</div>
+						<!--代码结束-->					</td>
+				    <td width="120"><label class="control-label">信用分数：</label></td>
+				    <td>{{ca.creditValue}}</td>
+				    <td><a class="button ml_10 xinybz" href="#"  onClick="document.getElementById('vehicle_1').style.display='block';document.getElementById('fade1_xz').style.display='block'"><i class="button_icon button_icon dw_xinybz"></i>信用标准</a></td>
+				  </tr>
+			  </table>
+			 </div>
+			 <ul class="dhl_credit_liest clearfix">
+				 <li class="fl" style="width:47%; margin-left:2%">
+					<!--保证金 start-->
+					<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>保证金</h2></div>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list dhl_credit_table">
+						  <thead>
+							<tr>
+								<th></th>
+								<th>金额</th>
+								<th>分数</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>保证金</td>
+							<td>{{cad.e_1001}}</td>
+							<td>{{cad.v_1001}}</td>
+							</tr>
+						  <tr class="waybill_table_listtr">
+							<td>总分</td>
+							<td></td>
+							<td>{{cad.v_1000}}</td>
+							</tr>
+						  
+						  </tbody>
+						</table>
+					<!--保证金 end-->
+				 </li>
+				 <li class="fr" style="width:47%; margin-right:2%">
+					<!--接单量 start-->
+					<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>接单量</h2></div>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list dhl_credit_table">
+						  <thead>
+							<tr>
+								<th></th>
+								<th>笔数</th>
+								<th>分数</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>接单数</td>
+							<td>{{cad.e_2001}}</td>
+							<td>{{cad.v_2001}}</td>
+							</tr>
+						  <tr class="waybill_table_listtr">
+							<td>总数</td>
+							<td></td>
+							<td>{{cad.v_2000}}</td>
+						</tr>
+						  
+						  </tbody>
+						</table>
+					<!--接单量 end-->
+				 </li>
+				 <li class="fl" style="width:47%; margin-left:2%">
+					<!--预约及时率 start-->
+					<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>预约及时率</h2></div>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list dhl_credit_table">
+						  <thead>
+							<tr>
+								<th></th>
+								<th>笔数</th>
+								<th>分数</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>及时</td>
+							<td>{{cad.e_5001}}</td>
+							<td>{{cad.v_5001}}</td>
+							</tr>
+						  <tr class="waybill_table_listtr">
+							<td>超时</td>
+							<td>{{cad.e_5002}}</td>
+							<td>{{cad.v_5002}}</td>
+							</tr>
+						  <tr>
+							<td>总分</td>
+							<td></td>
+							<td>{{cad.v_5000}}</td>
+							</tr>
+						  </tbody>
+						</table>
+					<!--预约及时率 end-->
+				 </li>
+				 <li class="fr" style="width:47%; margin-right:2%">
+					<!--核销及时率 start-->
+					<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>核销及时率</h2></div>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list dhl_credit_table">
+						  <thead>
+							<tr>
+								<th></th>
+								<th>笔数</th>
+								<th>分数</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						 <tr>
+							<td>及时</td>
+							<td>{{cad.e_6001}}</td>
+							<td>{{cad.v_6001}}</td>
+							</tr>
+						  <tr class="waybill_table_listtr">
+							<td>超时</td>
+							<td>{{cad.e_6002}}</td>
+							<td>{{cad.v_6002}}</td>
+							</tr>
+						  <tr>
+							<td>总分</td>
+							<td></td>
+							<td>{{cad.v_6000}}</td>
+							</tr>
+						  </tbody>
+						</table>
+					<!--核销及时率 end-->
+				 </li>
+				 <li class="fl" style="width:47%; margin-left:2%">
+					<!--服务满意 start-->
+					<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>服务满意</h2></div>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list dhl_credit_table">
+						  <thead>
+							<tr>
+								<th></th>
+								<th>笔数</th>
+								<th>分数</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>满意</td>
+							<td>{{cad.e_4001}}</td>
+							<td>{{cad.v_4001}}</td>
+							</tr>
+						  <tr class="waybill_table_listtr">
+							<td>不满意</td>
+							<td>{{cad.e_4002}}</td>
+							<td>{{cad.v_4002}}</td>
+							</tr>
+						  <tr>
+							<td>总分</td>
+							<td></td>
+							<td>{{cad.v_4000}}</td>
+							</tr>
+						  </tbody>
+						</table>
+					<!--服务满意 end-->
+				 </li>
+				 <li class="fr" style="width:47%; margin-right:2%">
+					<!--投诉 start-->
+					<div class="waybill_title"><h2 class="title_h2"><i class="icon title_icon fl"></i>投诉</h2></div>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list dhl_credit_table">
+						  <thead>
+							<tr>
+								<th></th>
+								<th>笔数</th>
+								<th>分数</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>普通投诉</td>
+							<td>{{cad.e_3001}}</td>
+							<td>{{cad.v_3001}}</td>
+							</tr>
+						  <tr class="waybill_table_listtr">
+							<td>重大投诉</td>
+							<td>{{cad.e_3002}}</td>
+							<td>{{cad.v_3002}}</td>
+							</tr>
+						  <tr>
+							<td>总分</td>
+							<td></td>
+							<td>{{cad.v_3000}}</td>
+							</tr>
+						  </tbody>
+						</table>
+					<!--投诉 end-->
+				 </li>
+			</ul>
+			<div class="tx_tc_button"><a class="search_button_cz" href="javaScript:void(0)"  ng-click="close()">关闭</a></div>
+		</div>
+
+		<!-- 信用标准 弹窗 开始 -->
+		<div id="vehicle_1" class="popup" style="width: 700px; height: 470px; margin-left: -350px; margin-top: -40%;z-index: 1006; display:none;">
+			<div class="tx_tc">
+				<div style="min-height:370px">
+				<dl class="dhl_credit_dl">
+					<dt>信用标准</dt>
+					<dd><b>1.信用体系规划：</b><br />
+					接单量、预约及时率、核销及时率、服务态度、投诉</dd>
+					<dd><b>2.每项考核细则</b><br />
+					接单量：每接一单，得10分<br />
+					预约及时率：及时预约，得2分，超时扣2分<br />
+					核销及时率：及时核销，得2分，超时扣2分<br />
+					服务态度：满意，得2分，不满意，扣2分<br />
+					投诉：投诉一次扣10分，投诉3三次，取消资格<br />
+					重大投诉：取消资格
+					</dd>
+				</dl>
+				</div>
+				<div class="tx_tc_button"><a class="search_button_cz" href="#"  onclick="document.getElementById('vehicle_1').style.display='none';document.getElementById('fade1_xz').style.display='none'">关闭</a></div>
+			</div>
+    	</div>
+    	<!-- 信用标准 弹窗 结束 -->
+		
+		
+		
+		<!--半透明黑色背景  开始-->
+		<div id="fade1_xz" class="popup_bj" style="display:none;"></div>
+		<!--半透明黑色背景  结束-->
+
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.js"></script>
+		<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="CreditDtlCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

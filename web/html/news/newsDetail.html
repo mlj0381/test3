@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="NewsApp">
+<head>
+</head>
+<body ng-controller="newsDetailCtrl">
+
+	<div ng-bind-html="content"></div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/base64.js"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript">
+	angular.module("NewsApp", ['commonApp'])
+	.controller("newsDetailCtrl", ["$scope","commonService","$sce","$location",function($scope,commonService,$sce,$location) {
+	var id=getQueryString("id");
+	commonService.postUrl("newsBO.ajax?cmd=queryNewsDetail",{"id":id},function(data){
+		$scope.content=$sce.trustAsHtml(data.content);
+	});
+}])
+</script>
+</body>
+</html>

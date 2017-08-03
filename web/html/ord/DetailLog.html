@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="billApp" >
+	<head>
+	    <title>众邦_运营管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
+			<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+		</object>
+</head>
+	<body ng-controller="billCtrl" >
+		<!-- 运单跟踪 开始 -->
+		<div class="billing_1 clearfix" style="border-bottom: 0;padding-top: 10px;">
+		<span class="yc_message_span">运单跟踪 </span>
+		<div style=" position: relative;border-top:1px solid #e0e5e9;">
+			<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list">
+                                <thead>
+                                  <tr>
+                                    <th style="text-align: left;width:23.33%;"><div style="margin-left: 10px;line-height: 48px">时间</div></th>
+                                    <th style="text-align: left;width:38.33%;line-height: 48px"><div style="margin-left: 10px;line-height: 48px">操作信息</div></th>
+                                    <th style="text-align: left;width:38.33%;line-height: 48px"><div style="margin-left: 10px;line-height: 48px">操作明细</div></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="o in ordLogInfos"  class="ng-scope">
+                                    <td class="ng-binding" style="text-align: left;white-space:inherit;"><div style="margin-left: 10px;">{{o.COL_4}}</div></td>
+                                    <td class="ng-binding" style="text-align: left;white-space:inherit;"><div style="margin-left: 10px;">{{o.COL_3}}</div></td>
+                                    <td class="ng-binding" style="text-align: left;"><div style="margin-left: 10px">操作员:{{o.COL_2}}<span ng-if="o.COL_5!=''">,车牌号:{{o.COL_5}}</span></div></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+		</div>
+		</div>
+		<!-- 运单跟踪 结束 -->
+		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="DetailLogCtrl.js?v=${ver}"></script>
+		
+</body>
+</html>
+

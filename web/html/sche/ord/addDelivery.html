@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="addDeliveryApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>新增配载</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/leftboxcs.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master_open.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css?v=${ver}">
+	<style type="text/css">
+		.list_xl .list_xl_tbody td {
+		    line-height: 34px;
+		    border-bottom: 1px dotted #dfdedf;
+		    color: #333;
+		    text-align:center;
+		    text-indent:0em;
+		    white-space: nowrap;}
+		.list_dhl .list_xl_thead th{text-indent:0;text-align:center;}
+		.dhl_hd td{padding-bottom: 10px;}
+		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+    		display: none !important;
+		}
+		
+	</style>
+</head>
+<body ng-controller="addDeliveryCtrl" onload="setContentHegthDelay()" style="overflow: hidden;">
+	<div class="billing_1 clearfix pb_20 mt_20" style="border: 0">
+		<div id="add_id1" ng-show="yeFlag" >
+			<div class="xyib"><a class="button ml_10 xyb" href="javascript:void(0)" ng-click="next(1)">下一步{{isClick}}</a></div>
+			<!-- 新增配载信息 -->
+			<div class="added_zzwf clearfix added_stowage added_warp" style="min-height: 500px;width:auto;">
+				<!-- 搜索 -->
+				<div class="added_top" style="padding:0;border-bottom: 0;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="padding: 0!important;">
+						<tbody>
+							<tr>
+								<!-- <td width="100"><label class="term_label">预约上门时间：</label></td>
+								<td width="220">
+									<input my-date-picker ng-model="query.yyYimeStart" id="beginTime" readonly="readonly" class="form_term fl w_xjr" type="text">
+									<span class="search_span fl">到</span>
+									<input readonly="readonly" ng-model="query.yyTimeEnd" my-date-picker id="endTime" class="form_term fl w_xjr" type="text">
+                            	</td> -->
+								<td width="100"><label class="term_label">收货地址：</label></td>
+								<td width="360" colspan="3">
+								 <span class="wdcy_input" my-city="des"></span>
+		                        </td>
+								<td width="100"><label class="term_label">扫描运单号：</label>
+		                    	</td>
+								<td><input placeholder="扫描时，请点击这里" class="form_term ng-pristine ng-untouched ng-valid ng-valid-maxlength" id="_trackingNum" ng-disabled="all" ng-model="trackingNum" type="text" ng-keydown="setTrackingNum(($event));">
+								</td>
+								<td>
+									<div class="bottom_search search_button" style="position:inherit;border: 0;margin-left: 0; text-align: left;">
+										<a ng-click="doQuery();"  href="javascript:void(0);">查询</a>
+										<a class="qink" href="javascript:void(0);" ng-click="clearQuery();">清空</a>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- 左侧 开始-->
+				<div class="fl ng-cloak" style="width: 50%">
+					 <div style=" position: relative; border: 1px solid #e1effa; margin: 0 10px 0 20px;overflow: auto;min-height: 500px;">
+			  		<table class="search_lista" width="100%" border="0" cellspacing="0" cellpadding="0">
+							<thead class="fixed-thead">
+								<tr>
+									<th width="25" style="padding-left: 14px;" class="ng-show" >
+										<a  style="cursor: pointer;margin-top: 5px;" class="icon pcar_j" ng-click="onLeftBtClick('all','')"  tips="全部移除数据到右边"></a>
+									</th>
+									<th width="40">序号</th>
+									<th width="100" ng-click="onLeftSortClick('trackingNum')">运单号<i ng-if="leftSortObj['trackingNum']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['trackingNum']=='-'"  class="list_top_tpx"></i></th>
+									<th width="130" ng-click="onLeftSortClick('products')">货品<i ng-if="leftSortObj['products']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['products']=='-'"  class="list_top_tpx"></i></th>
+									<th width="120" ng-click="onLeftSortClick('count')">件数<i ng-if="leftSortObj['count']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['count']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onLeftSortClick('weight')">重量<i ng-if="leftSortObj['weight']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['weight']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onLeftSortClick('installCount')">安装件数<i ng-if="leftSortObj['installCount']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['installCount']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onLeftSortClick('yyTime')">预约上门时间<i ng-if="leftSortObj['yyTime']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['yyTime']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onLeftSortClick('receAddr')">收货地址<i ng-if="leftSortObj['receAddr']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['receAddr']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onLeftSortClick('sfName')">安装师傅<i ng-if="leftSortObj['sfName']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['sfName']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" 	ng-click="onLeftSortClick('sfPhone')">师傅手机<i ng-if="leftSortObj['sfPhone']=='+'"  class="list_top_tp"></i><i ng-if="leftSortObj['sfPhone']=='-'"  class="list_top_tpx"></i></th>
+								</tr>
+								<tr>
+									<th></th>
+									<th></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.trackingNum" ng-change="onLeftInputChange('trackingNum')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.products" ng-change="onLeftInputChange('products')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.count" ng-change="onLeftInputChange('count')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.weight" ng-change="onLeftInputChange('weight')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.installCount"  ng-change="onLeftInputChange('installCount')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.yyTime"  ng-change="onLeftInputChange('yyTime')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.receAddr"  ng-change="onLeftInputChange('receAddr')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.sfName"  ng-change="onLeftInputChange('sfName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInput.sfPhone"  ng-change="onLeftInputChange('sfPhone')"></th>
+									</tr>
+							</thead>
+							<tbody class="fixed-tbody m_true" style="margin-top: 49px;">
+								
+								<tr ng-repeat=" vl in matchList track by vl.trackingNum" ng-dblclick="onLeftBtClick('',vl.trackingNum)">
+									<td width="25" style="padding-left: 14px;">
+										<a ng-click="onLeftBtClick('',vl.trackingNum)" style="cursor: pointer;margin-top: 3px;" class="icon pcar_j"  tips="移除数据到右边"></a>
+									</td>
+									<td width="40">{{$index+1}}</td>
+									<td width="100">{{vl.trackingNum}}</td>
+									<td width="130">{{vl.products}}</td>
+									<td width="120">{{vl.count}}</td>
+									<td width="100">{{vl.weight}}</td>
+									<td width="100">{{vl.installCount}}</td>
+									<td width="100">{{vl.yyTime}}</td>
+									<td width="100">{{vl.receAddr}}</td>
+									<td width="100">{{vl.sfName}}</td>
+									<td width="100">{{vl.sfPhone}}</td>
+								</tr>
+							</tbody>
+							
+						</table>
+			
+                </div>
+					<!-- 统计 -->
+					<table width="" border="0" cellspacing="0" cellpadding="0" class="added_top_list" style="margin: 30px auto;">
+						<tr>
+							<td><label class="added_label">到付：</label></td>
+							<td><span class="red ng-cloak">{{freightCollectWait| number:2}}</span>元</td>
+							<td width="70"><label class="added_label">货款：</label></td>
+							<td><span class="red ng-cloak">{{collectingMoneyWait | number:2}}</span>元</td>   
+							<td width="70"><label class="added_label">体积：</label></td>
+							<td><span class="red ng-cloak">{{actualVolumeWait | number:2}}</span>方</td>
+							<td width="70"><label class="added_label">重量：</label></td>
+							<td><span class="red ng-cloak">{{actualWeightWait | number:2}}</span>千克</td>
+							<td width="70"><label class="added_label">票数：</label></td>
+							<td width=""><span class="red ng-cloak">{{matchCount}}</span>票
+						</tr>
+					</table>
+				</div>
+				<!-- 左侧 结束 -->
+			
+				<!-- 右侧 开始-->
+				<div class="fl ng-cloak" style="width: 50%">
+				<div style="position: relative; border: 1px solid #e1effa; margin: 0 20px 0 10px; overflow: auto;min-height: 500px;">
+				
+				<table class="search_lista" width="100%" border="0" cellspacing="0" cellpadding="0">
+							<thead class="fixed-thead">
+								<tr>
+									<th width="25" style="padding-left: 14px;" class="ng-show" >
+										<a  style="cursor: pointer;margin-top: 5px;" class="icon pcar_m" ng-click="onRigthBtClick('all','')"  tips="全部移除数据到左边"></a>
+									</th>
+									<th width="40">序号</th>
+									<th width="100" ng-click="onRigthSortClick('trackingNum')">运单号<i ng-if="rigthSortObj['trackingNum']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['trackingNum']=='-'"  class="list_top_tpx"></i></th>
+									<th width="130" ng-click="onRigthSortClick('products')">货品<i ng-if="rigthSortObj['products']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['products']=='-'"  class="list_top_tpx"></i></th>
+									<th width="120" ng-click="onRigthSortClick('count')">件数<i ng-if="rigthSortObj['count']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['count']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onRigthSortClick('weight')">重量<i ng-if="rigthSortObj['destCityName']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['destCityName']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onRigthSortClick('volumes')">体积<i ng-if="rigthSortObj['volumes']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['volumes']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onRigthSortClick('installCount')">安装件数<i ng-if="rigthSortObj['installCount']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['installCount']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onRigthSortClick('yyTime')">预约上门时间<i ng-if="rigthSortObj['yyTime']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['yyTime']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onRigthSortClick('receAddr')">收货地址<i ng-if="rigthSortObj['receAddr']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['receAddr']=='-'"  class="list_top_tpx"></i></th>
+									<th width="50" 	ng-click="onRigthSortClick('sfName')">安装师傅<i ng-if="rigthSortObj['sfName']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['sfName']=='-'"  class="list_top_tpx"></i></th>
+									<th width="100" ng-click="onRigthSortClick('sfPhone')">师傅手机<i ng-if="rigthSortObj['sfPhone']=='+'"  class="list_top_tp"></i><i ng-if="rigthSortObj['sfPhone']=='-'"  class="list_top_tpx"></i></th>
+									
+								</tr>
+								<tr>
+									<th></th>
+									<th></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.trackingNum" ng-change="onRigthInputChange('trackingNum')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.products" ng-change="onRigthInputChange('products')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.count" ng-change="onRigthInputChange('count')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.weight" ng-change="onRigthInputChange('weight')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.volumes"  ng-change="onRigthInputChange('volumes')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.installCount"  ng-change="onRigthInputChange('installCount')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.yyTime"  ng-change="onRigthInputChange('yyTime')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.receAddr"  ng-change="onRigthInputChange('receAddr')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.sfName"  ng-change="onRigthInputChange('sfName')"></th>
+									<th><input value=""  class="inp_sr mt0"  ng-click="scrollTopTable()" type="text" ng-model="filterInputRigth.sfPhone"  ng-change="onRigthInputChange('sfPhone')"></th>
+									
+									</tr>
+							</thead>
+							<tbody class="fixed-tbody m_true" style="margin-top: 49px;">
+								
+								<tr ng-repeat=" vl in selectMatchList track by vl.trackingNum" ng-dblclick="onRigthBtClick('',vl.trackingNum)">
+									<td width="25" style="padding-left: 14px;">
+										<a ng-click="onRigthBtClick('',vl.trackingNum)" style="cursor: pointer;margin-top: 3px;" class="icon pcar_m"  tips="移除数据到左边"></a>
+									</td>
+									<td width="40">{{$index+1}}</td>
+									<td width="100">{{vl.trackingNum}}</td>
+									<td width="130">{{vl.products}}</td>
+									<td width="120">{{vl.count}}</td>
+									<td width="100">{{vl.weight}}</td>
+									<td width="100">{{vl.volumes}}</td>
+									<td width="100">{{vl.installCount}}</td>
+									<td width="100">{{vl.yyTime}}</td>
+									<td width="100">{{vl.receAddr}}</td>
+									<td width="50">{{vl.sfName}}</td>
+									<td width="100">{{vl.sfPhone}}</td>
+								</tr>
+							</tbody>
+							
+						</table>
+				
+				
+					
+                </div>
+					<!-- 统计 -->
+					<table width="" border="0" cellspacing="0" cellpadding="0" class="added_top_list" style="margin: 30px auto;">
+						<tr>
+							<td><label class="added_label">到付：</label></td>
+							<td><span class="red ng-cloak">{{freightCollect | number:2}}</span>元</td>
+							<td width="70"><label class="added_label">货款：</label></td>
+							<td><span class="red ng-cloak">{{collectingMoney | number:2}}</span>元</td>   
+							<td width="70"><label class="added_label">体积：</label></td>
+							<td><span class="red ng-cloak">{{actualVolume | number:2}}</span>方</td>
+							<td width="70"><label class="added_label">重量：</label></td>
+							<td><span class="red ng-cloak">{{actualWeight | number:2}}</span>千克</td>
+							<td width="70"><label class="added_label">票数：</label></td>
+							<td width=""><span class="red ng-cloak">{{matchCountSel}}</span>票
+						</tr>
+					</table>
+				</div>
+				<!-- 右侧  结束-->
+			</div>
+	   </div>
+	   <!-- 中转送货选择库存  结束 -->
+	   
+	   <!-- 中转送货编辑  开始-->
+		<div id="add_id2" ng-show="!yeFlag" class="added_zzwf clearfix ng-hide" style="min-height: 500px;width:auto;">
+			<div class="xyib">
+				<a class="xyb" style="margin-right: 10px!important;" href="javascript:void(0)" ng-click="doSave()">保存</a>
+				<a class="fh_z_1" href="javascript:void(0)"  ng-hide="isClick" ng-click="next(2)">返回</a>
+			</div>
+			<!-- 中转送货  开始 -->
+			<div class="added_top" style="padding-left:0;padding-right:25px;border-bottom: 0;" ng-show="!tabShow">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_auto dhl_x" style="padding: 0!important;table-layout: fixed!important;">
+					<tbody>
+						<td><label class="term_label">车牌信息：</label></td>
+						<td style="position: relative;">
+							<a href="javascript:void(0)" style="position: absolute;right: 8px; top: 4px; " ng-click="doAddViechInfo()">新增</a>
+							<input class="form_term"  ng-model="form.plateNumber" maxlength="7"  ng-focus="showTotrue()"  ng-keyup="doQueryVehile(form.plateNumber)" type="text"/>
+						    <div class="list_xl ng-cloak list_dhl" style="left: 0%;width: 650px;height: 500px;" ng-show="showPcum">
+						        <div class="clearfix">
+						        	<h2 style="float: left;">请选择车辆</h2>
+						        	<span style="font-size: 12px;font-family:宋体;float: left;padding: 6px 0 6px 10px;display: block;color: #ff0000;">单击一行选中</span>
+						        	<i class="list_xl_icon icon"><a class="gone" ng-click="showToFalse()" href="javascript:void(0)"></a></i>
+						        </div>
+					            
+					           <div style="background: #e8f1fa;width: 100%"> 
+					           	<table style="width: 630px;" width="100%" border="0" cellspacing="0" cellpadding="0" class="list_xl_thead">
+					            	<thead>
+					                	<tr>
+					                    	<th style="width: 90px;padding-left: 6px;">车牌号</th>
+					                        <th style="width: 90px;">车辆类型</th>
+					                        <th style="width: 80px;">司机名称</th>
+					                        <th style="width: 100px;">手机号码</th>
+					                        <th style="width: 70px;">体积</th>
+					                        <th  width="70px;">重量</th>
+					                    </tr>
+					                </thead>
+					            </table></div>
+						        <my-table>
+						            <div class="list_xl_tbody ng-cloak" style="height: 370px!important">
+						            	<table  width="100%" border="0" cellspacing="0" cellpadding="0">
+						            	<tbody>
+						                  <tr ng-repeat="obj in page.data.items" ng-click="selectVehicle(obj)">
+						                    <td width="90px;" style="padding-left: 6px;" >{{obj.plateNumber}}</td>
+						                    <td width="90px;">{{obj.vehicleTypeName}}</td>
+						                    <td width="80px;">{{obj.name}}</td>
+						                    <td width="100px;">{{obj.bill}}</td>
+						                    <td width="70px;">{{obj.actualVolume.toFixed(1)}}</td>
+						                    <td  width="70px;">{{obj.actualWeight.toFixed(2)}}</td>
+						                   </tr>
+						                  </tbody>
+						            </table>
+						            </div>
+								</my-table>
+						    </div>
+						</td>
+						<td><label class="term_label">司机：</label></td>
+						<td><input ng-model="form.driverName" class="form_term" type="text" readonly="readonly"></td>
+						<td><label class="term_label">电话：</label></td>
+						<td><input ng-model="form.driverBill" class="form_term" type="text" readonly="readonly"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><label class="term_label">可配置体积：</label></td>
+						<td><input ng-model="form.volume" class="form_term" type="text" readonly="readonly"></td>
+						<td><label class="term_label">可配置重量：</label></td>
+						<td><input ng-model="form.weight" class="form_term" type="text" readonly="readonly"></td>
+						<td><label class="term_label">车辆类型：</label></td>
+						<td>
+                           <input ng-model="form.vehicleTypeName" class="form_term" type="text" readonly="readonly">
+						</td>
+						<td><label class="term_label">经营方式：</label></td>
+						<td><div class="form_select ">
+                                <select ng-model="form.businessType"  ng-init="form.businessType=-1">
+						     		<option value="-1">请选择</option>
+	                            	<option ng-repeat="obj in businessTypeList"  value="{{obj.codeValue}}" >{{obj.codeName}}</option>
+								</select>
+                            </div>
+						</td>
+					</tr>
+					<tr>
+						<td><label class="term_label">装卸费(元)：</label></td>
+						<td>
+							<input class="form_term fl" style="width: 32%" ng-model="form.stevedoring"  my-double-val='keyup' type="text" onkeyup="this.value=this.value.replace(/^[0-9]\.[0-9]{2}?$/,'')">
+							<div class="controls fl" style="margin-left: 5px;">
+								<span class="tdspan fl">
+									<input type="radio" ng-value="1" ng-model="form.stevedoringPayState" name="stevedoringPayState" style="vertical-align:middle">未付
+								</span>
+							 	<span class="tdspan fl">
+							 		<input type="radio" ng-value="2" ng-model="form.stevedoringPayState" name="stevedoringPayState" style="vertical-align:middle">已付
+							 	</span>
+							</div>
+						</td>
+						<td><label class="term_label">运费(元)：</label></td>
+						<td>
+							<input class="form_term fl" style="width: 32%" ng-model="form.freight"  my-double-val='keyup' type="text" onkeyup="this.value=this.value.replace(/^[0-9]\.[0-9]{2}?$/,'')">
+							<div class="controls fl" style="margin-left: 5px;">
+								<span class="tdspan fl">
+									<input type="radio" ng-value="1" ng-model="form.payState"  name="payState" style="vertical-align:middle">未付
+								</span>
+							 	<span class="tdspan fl">
+							 		<input type="radio" ng-value="2" ng-model="form.payState" name="payState" style="vertical-align:middle">已付
+							 	</span>
+							</div>
+						</td>
+							<td><label class="term_label">师傅：</label></td>
+							<td width="">
+								<input class="form_term" type="text" maxlength="16" ng-model="form.sfName" ng-click="openDirect()">
+								<!--请选择客户 开始 -->
+		    					<div class="list_xl ng-cloak" ng-show="directCustFlag" style="height: 300px">
+	        						<div class="fr" style="margin-right: 50px;margin-top: 3px;">
+	        							<label class="fl" style="line-height: 24px;">
+	        								查询条件：<my-select id="directQuery.sfQueryType" code-type="SF_QUERY_TYPE"   default-value="1" />
+	        							</label>
+	        							<input class="form_input fl"  ng-model="directQuery.sfQueryValue" style="width: 80px;border: 1px solid #4e6390;height: 24px;line-height: 24px;"  maxlength="14" type="text" />
+	        							<a class="fl tj_and" href="#" style="line-height: 24px; height: 24px;"  href="javascript:(void)" ng-click="querySfInfo()">查询</a>
+	        						</div>
+	            					<i class="list_xl_icon icon"><a class="gone" href="javascript:(void)" ng-click="cosleDirect()"></a></i>
+	            					
+	            					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list_xl_thead">
+	            						<thead>
+	                						<tr>
+	                    						<th style="width:50%;vertical-align: middle;">名称</th>
+	                        					<th style="width:50%;vertical-align: middle;">电话</th>
+	                    					</tr>
+					                	</thead>
+	            					</table>
+	            					 <my-table name="sf">
+	            					 <div class="list_xl_tbody" id="pTable" style="height: 180px">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+		            						<tbody>
+		            							<tr ng-repeat="obj in sf.data.items" ng-click="selectSf(obj)">
+		                    						<td class="ng-clock" style="width:25%">{{obj.name}}</td>
+		                    						<td class="ng-cloak" style="width:25%">{{obj.phone}}</td>
+												</tr>
+		                  					</tbody>
+		            					</table>
+	            					</div>
+								</my-table>
+		    					</div>
+		    					<!--请选择客户 结束 -->
+	                        </td>
+							<td width="120"><label class="term_label">师傅手机：</label></td>
+							<td width=""><input class="form_term" type="text" maxlength="16" ng-model="form.sfPhone"></td>
+					</tr>
+					<tr>
+						<td valign="top"><label class="term_label">备注：</label></td>
+						<td colspan="7">
+							<textarea class="textarea" maxlength="200" ng-model="form.remarks"  rows="2" style="width:100%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched">
+							</textarea>
+						</td>
+					</tr>
+				</tbody>
+				</table>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_auto dhl_x dhl_x2" style="padding: 0!important;table-layout: fixed!important;">
+					<tr>
+						<td width="120" align="right"><label class="term_label">到付：</label></td>
+						<td width="100"><span class="red fl">{{form.freightCollectFee.toFixed(2)}}</span><span class="fl hg">元</span></td>
+						<td width="60" align="right"><label class="term_label">货款：</label></td>
+						<td width="100"><span class="red fl">{{form.collectingMoneyFee.toFixed(2)}}</span><span class="fl hg">元</span></td>
+						<td width="60" align="right"><label class="term_label">配安费：</label></td>
+						<td width="100"><span class="red fl">{{form.branchAndInstallFee.toFixed(2)}}</span><span class="fl hg">元</span></td>
+						<td width="60" align="right"><label class="term_label">应收：</label></td>
+						<td width="180"><span class="red fl">{{form.totalGetMoneyFee.toFixed(2)}}</span><span class="fl hg">元</span>	
+							<div class="controls fl" style="margin-left: 5px;">
+								<span class="tdspan fl">
+									<input type="radio" ng-value="0" ng-model="form.isGet" name="isGet" style="vertical-align:middle">未收
+								</span>
+							 	<span class="tdspan fl">
+							 		<input type="radio" ng-value="1" ng-model="form.isGet" name="isGet" style="vertical-align:middle">已收
+							 	</span>
+							</div></td>
+						<td width="60" align="right"><label class="term_label">应付：</label></td>
+						<td width="180"><span class="red fl">{{form.totalPayMoneyFee.toFixed(2)}}</span><span class="fl hg">元</span>	
+							<div class="controls fl" style="margin-left: 5px;">
+								<span class="tdspan fl">
+									<input type="radio" ng-value="0" ng-model="form.isPay" name="isPay" style="vertical-align:middle">未付
+								</span>
+							 	<span class="tdspan fl">
+							 		<input type="radio" ng-value="1" ng-model="form.isPay" name="isPay" style="vertical-align:middle">已付
+							 	</span>
+							</div>
+						</td>
+						<td colspan="3">
+							<div style="position:inherit;text-align:right;border-left: 0;margin-left: 15px;">
+								<a class="fh_z " href="javascript:void(0);" ng-click="clearSelect();">移除运单</a>
+<!-- 								<a class="button ml_10 modify" href="javascript:void(0)" ng-click="editTab()"> -->
+<!-- 									<i class="button_icon button_icon dw_modify ml0"></i>修改发货人 -->
+<!-- 								</a> -->
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<!-- 中转送货  结束 -->
+			<!-- 列表 -->
+			<div class="search_nr clearfix mt_20 dhl_add">
+	        	<my-Diy-Table isPage="false" isShowSeq="false"  width="2400px" isMultiSelect="true" showTotal="false"  isShowTab="false" isShowCheck="true" isFilter="true" isSum="true" id="taskId" 
+	                head='[ {"name":"运单号","code":"trackingNum","width":"90"},
+                {"name":"货品","code":"products","width":"100"},
+                {"name":"件数","code":"count","width":"60"},
+                {"name":"重量","code":"weight","width":"70"},
+                {"name":"体积","code":"volumes","width":"70"},
+                {"name":"安装件数","code":"installCount","width":"60"},
+                {"name":"原配安费","code":"branchAndInstall","width":"60"},
+                {"name":"配安费","code":"newBranchAndInstall","width":"60","isEdit":"true","callback":"$scope.calculate"},
+                {"name":"预约上门时间","code":"yyTime","width":"110"},
+                {"name":"收货地址","code":"receAddr","width":"180"},
+                {"name":"收货人","code":"receiverName","width":"100"},
+                {"name":"收货人手机","code":"receiverBillId","width":"100"},
+                 {"name":"到付","code":"freightCollect","width":"100"},
+                  {"name":"货款","code":"collectingMoney","width":"100"},
+                {"name":"安装师傅","code":"sfName","width":"120"},
+                {"name":"回单号","code":"receiptNum","width":"100"},
+                {"name":"回单数量","code":"receiptCount","width":"100"},
+                {"name":"到货时间","code":"arriveGoodsTime","width":"120"},
+                {"name":"接单时间","code":"acceptTime","width":"120"},
+                {"name":"提货时间","code":"pickTime","width":"120"},
+                {"name":"预约时间","code":"upFixTime","width":"120"}
+                ]'>
+                
+                </my-Diy-Table>
+			</div>
+		</div>
+		<!-- 中转送货编辑  结束-->
+	</div>
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/jquery.hotkeys.js?v=${ver}"></script>
+
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="addDeliveryCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-7 19:48:21 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.wo56.business.sche.timeout.vo.WayTimeOutDtl" table="way_time_out_dtl">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="dealId" type="java.lang.Long">
+            <column name="DEAL_ID" not-null="true">
+                <comment>´¦ÀíÈËid</comment>
+            </column>
+        </property>
+         <property name="timeOutId" type="java.lang.Long">
+            <column name="TIME_OUT_ID" not-null="true">
+                <comment>´¦ÀíÈËid</comment>
+            </column>
+        </property>
+        <property name="dealName" type="string">
+            <column name="DEAL_NAME" length="100" not-null="true">
+                <comment>´¦ÀíÈËÃû³Æ</comment>
+            </column>
+        </property>
+        <property name="dealIdea" type="string">
+            <column name="DEAL_IDEA" length="500" not-null="true">
+                <comment>´¦ÀíÒâ¼û</comment>
+            </column>
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="CREATE_TIME" length="19" not-null="true">
+                <comment>´´½¨Ê±¼ä</comment>
+            </column>
+        </property>
+        <property name="dealState" type="java.lang.Integer">
+            <column name="DEAL_STATE">
+                <comment>´¦Àí×´Ì¬</comment>
+            </column>
+        </property>
+        <property name="sts" type="java.lang.Integer">
+            <column name="STS">
+                <comment>1 ÓÐÐ§ 2 ÎÞÐ§</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

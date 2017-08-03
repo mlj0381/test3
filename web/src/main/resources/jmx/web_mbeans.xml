@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<mbeans>
+	   <mbean name="framework:name=JVMMonitor" interfaces="com.framework.jmx.mbean.jvm.JVMMonitorMBean" clazz="com.framework.jmx.mbean.jvm.JVMMonitor" desc="jvm的MBean"/>
+	
+	   <mbean name="framework:name=CacheMonitor" interfaces="com.framework.jmx.mbean.cache.CacheMonitorMBean" clazz="com.framework.jmx.mbean.cache.CacheMonitor" desc="缓存的MBean"/>	
+	</mbeans>
+</root>

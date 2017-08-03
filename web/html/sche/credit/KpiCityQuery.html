@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="CreditApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>信用管理</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css">
+		<script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+</head>
+	<body ng-controller="CreditCtrl" onload="setContentHegthDelay(800)"  style="overflow:hidden">
+		<div class="billing_1">
+			<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table">
+				  <tr>
+					<td width="100"><label class="control-label">省份：</label></td>
+					<td>
+						<div class="search_select w_146">
+							<select ng-change="selectCity(query.provinceId);"
+								ng-model="query.provinceId"
+								ng-options="obj.id as obj.name for  obj in provinceData.items "
+								name="select" class="xl_z">
+							</select>
+						</div>
+					</td>
+					<td width="100"><label class="control-label">城市：</label></td>
+					<td><div class="search_select w_146 fl">
+							<select ng-change="selectDistrict(query.cityId);"
+								ng-model="query.cityId"
+								ng-options="obj.id as obj.name for  obj in cityData.items "
+								name="select" class="xl_z">
+							</select>
+						</div>
+					</td>				
+					<td width="150"><label class="control-label">开始时间：</label></td>
+					<td>
+						<div class="search_select w_146">
+							<input my-Date-Picker ng-model="query.beginDate" readonly="readonly" class="input_box" id="" type="text" >
+						</div>					
+					</td>
+					<td rowspan="2">
+					<div class="search_button"><a class="search_button_ss" href="javaScript:void(0)" ng-Enter ng-click="doQuery()">搜索</a>  <a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">重置</a></div>					</td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100">截止时间：</label></td>
+					<td><div class="search_select w_146 fl">
+							<input my-Date-Picker ng-model="query.endDate" readonly="readonly" class="input_box" id="" type="text" >
+					</div></td>
+				  	<td width="100"><label class="control-label w_100">运单来源：</label></td>
+					<td><div class="search_select w_146">
+							<my-select id="query.isTmail" code-type="IS_TMALL" has-all="true" default-value="-1" url="" />
+						</div></td>
+				  </tr>
+				</table>
+
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl"><i class="icon title_icon fl"></i>任务列表</h2>
+				<div class="fr mt15_mr20">
+				</div>
+			</div>
+			 <my-table>
+			 <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="search_lista">
+				  <thead id="tb1">
+				  	<tr>
+						<th width="10%">省份</th>
+						<th width="15%">城市</th>
+						<th width="15%">预约及时率</th>
+						<th width="15%">安装及时率</th>
+						<th width="15%">核销达成率</th>
+						<th width="15%">投诉率</th>
+						<th width="15%">KPI总分</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak" ng-click="selectOne(o.sfUserId);" ng-repeat="o in page.data.items">
+                                    <td  width="10%">{{o.provinceName}}</td>
+                                    <td width="15%">{{o.cityName}}</td>
+                                    <td width="15%">{{o.strReserveScore}}</td>
+                                    <td width="15%">{{o.strGxScore}}</td>
+                                    <td width="15%">{{o.strCheckScore}}</td>
+                                    <td width="15%">{{o.strComplaintScore}}</td>
+                                    <td width="15%">{{o.strKpiScore}}</td>
+                                  </tr>
+				  </tbody>
+			</table>
+			</div>
+			<!--任务列表 end-->
+			</my-table>
+			</div>
+		</div>
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.js"></script>
+		<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="KpiCityQueryCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

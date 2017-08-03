@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-2-23 13:57:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.common.sms.vo.SysSmsTemplate" table="sys_sms_template">
+		<id name="templateId" type="long">
+			<column name="TEMPLATE_ID" />
+			<generator class="assigned" />
+		</id>
+		<property name="templateName" type="string">
+			<column name="TEMPLATE_NAME" length="128" not-null="true" />
+		</property>
+		<property name="templateContent" type="string">
+			<column name="TEMPLATE_CONTENT" length="2048" not-null="true" />
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE" />
+		</property>
+		<property name="createDate" type="date">
+			<column name="CREATE_DATE" length="10" />
+		</property>
+		<property name="remarks" type="string">
+			<column name="REMARKS" length="512" />
+		</property>
+		<property name="smsClassName" type="string">
+			<column name="SMS_CLASSNAME" length="12" />
+		</property>
+		<property name="smsClassMethod" type="string">
+			<column name="SMS_CLASS_METHOD" length="12" />
+		</property>
+		<property name="smsPerform" type="integer">
+			<column name="SMS_PERFORM" length="11" />
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID" length="20">
+				<comment>租户id</comment>
+			</column>
+		</property>
+		<property name="smsType" type="java.lang.Integer">
+			<column name="SMS_TYPE">
+				<comment>短信类型：</comment>
+			</column>
+		</property>
+		<property name="objType" type="java.lang.String">
+			<column name="OBJ_TYPE" length="12" />
+		</property>
+		<property name="objId" type="java.lang.Long">
+			<column name="OBJ_ID" />
+		</property>
+	</class>
+</hibernate-mapping>

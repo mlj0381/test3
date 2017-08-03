@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="departManageApp"> 
+	<head>
+	    <title>众邦_送货上门 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <style type="text/css">
+          .search_page {
+		    top: 150px;
+		    width: 100%;
+		    position: absolute;
+          } 
+        </style>
+</head>
+	<body ng-controller="departManageCtrl" style="overflow:hidden" onload="setContentHegthDelay()">
+        <!-- 送货上门 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+                    	<td width="120"><label class="term_label">发车时间：</label></td>
+                    	<td width="300"><input my-Date-Picker ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker id="endTime" class="form_term fl w_xjr" type="text"></td>
+                       <!--  <li class="term_li"><label class="term_label">当前网点：</label><div class="form_select w_b60">
+                                <select class="ng-cloak">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select>
+                                 <select name="select" class="xl_z" ng-model="query.currOrgId"  ng-disabled="all" ng-options="obj.beginOrgId as obj.beginOrgName for obj in currOrgData" ng-change="changeData(query.currOrgId)">
+								       <option value="">所有</option>
+						        </select>
+                            </div></li>
+                        <li class="term_li"><label class="term_label">目的网点：</label>
+                        <div class="form_select w_b60 " >
+                                 <my-select id="query.descOrgId"  has-all="false"  url="routeBO.ajax?cmd=queryRoateRuting" show_name="endOrgName" show_value="endOrgId"  url-param='{"addType":2,"collectType":3}'/>
+                                <select name="select" class="xl_z" ng-model="query.descOrgId"  ng-disabled="all" ng-options="obj.endOrgId as obj.endOrgName for obj in desOrgData" >
+								    <option value="">所有</option>
+						        </select>
+                            </div></li> -->
+                        <td width="100"><label class="term_label">批次号：</label></td>
+                        <td><input  id="id1" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term w_b60" maxlength="16" ng-model="query.batchNum" type="text"></td>
+               <!--          <li class="term_li"><label class="term_label">车辆状态：</label><div class="form_select w_b60">
+                                 <my-select id="query.vehicleState"  has-all="true"  code-type="VEHICLE_STATE" url-param=''/>
+                            </div></li> -->
+                         <td><div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div></td>
+	                   </tr>
+	                   </tbody>
+	                 </table>
+                     <div class="search_nr clearfix mt_20">
+		              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+				              <h2>--查询结果--</h2>
+				              <a  ng-click="doSave()" href="javaScript:void(0)">新增送货信息</a>
+				             <!--   <a  ng-click="confirmMatchVehi();" href="javaScript:void(0)" >发车确认</a> -->
+				              <a  href="javaScript:void(0)" ng-click="toView();">查看送货信息</a>
+				              <a  ng-click="deleteDepart();" href="javaScript:void(0)">删除送货信息</a>
+				              <a  ng-click="doModify()" href="javaScript:void(0)">修改送货信息</a>
+				              <a href="javascript:void(0)" id="exportId" ng-click="commonExport()">导出所有</a>
+				              <a ng-click="toView();" href="javaScript:void()">打印送货信息</a>
+		              </div>
+             <my-Adv-Table isShowSeq="false" width="100%" isMultiSelect="false"  isShowCheck="true" isFilter="true" isSum="true" id="batchNum" head='[
+             {"name":"发车批次","code":"batchNum","width":"7%"},
+             {"name":"配载时间","code":"loadTimeStr","width":"11%"},
+             {"name":"发车时间","code":"departTimeStr","width":"11%"},
+             {"name":"车辆状态","code":"stateName","width":"7%"},
+             {"name":"总票数","code":"orderNum","isSum":"true","width":"7%"},
+             {"name":"总重量","code":"weight","isSum":"true","number":"1","width":"7%"},
+             {"name":"总体积","code":"volume","isSum":"true","number":"2","width":"7%"},
+             {"name":"发车网点","code":"sourceOrgIdName","width":"7%"},
+             {"name":"目的网点","code":"descOrgIdName","width":"7%"},
+             {"name":"车牌号","code":"plateNumber","width":"7%"},
+             {"name":"司机姓名","code":"driverName","width":"7%"},
+             {"name":"司机手机","code":"driverBill","width":"9%"}]'>
+                </my-Adv-Table>
+        </div>
+        </div>
+		
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="departManageHomeCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

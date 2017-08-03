@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="businessManageDetailApp"> 
+	<head>
+	    <title>${title}_商家管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="businessManageDetailCtrl" style="/*overflow:hidden*/" onLoad="setContentHeight()">
+ 	<!-- 商家详情  start -->
+    <div class="billing_1 clearfix pb_20 mt_20" style="min-height: 430px">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table addition_table delivery_1">
+				  <tbody><tr>
+					<td width="100"><label class="control-label w_100">商家名称：</label></td>
+					<td><input class="input_box" id="" ng-model="user.name" type="text"></td>
+					<td width="100"><label class="control-label w_100">联系人：</label></td>
+					<td><input class="input_box" id=""  ng-model="user.linkMan" type="text"></td>
+					<td width="100"><label class="control-label w_100">联系电话：</label></td>
+					<td><input class="input_box" id="" ng-model="user.linkPhone" type="text"></td>
+				  </tr>
+				  <tr>
+				  	<td width="100"><label class="control-label w_100">主营业务：</label></td>
+					<td><input class="input_box" id=""  ng-model="user.busiNotes" type="text"></td>
+					<td width="100"><label class="control-label w_100">服务类型：</label></td>
+					<td>
+						<div class="form_select w_146">
+                               <select class="form_billing_x" ng-model="user.businessType" ng-options="obj.codeId as obj.codeName for obj in roleInfos.items "></select>
+                     	</div>
+                            </td>
+					<td width="100"></td>
+					<td>
+                    </td>
+				  </tr> 
+				  <tr>
+					<td width="100"><label class="control-label w_100">提货地址：</label></td>
+					<td colspan="5"><input class="input_box" style="width: 97.5%!important" ng-model="user.address" type="text"></td>
+					
+				  </tr>
+				  <tr>
+				  	<td width="100"><label class="control-label w_100">签约专线公司：</label></td>
+					<td colspan="5" >
+						<a class="tj_and f14" ng-repeat="obj in provinceArrays.items">{{obj.name}}</a>
+					</td>
+					
+				  </tr> 
+				  <tr>
+					<td width="100" valign="top"><label class="control-label w_100">商家简介：</label></td>
+					<td colspan="5"><textarea maxlength="500" class="deliery_textarea ng-pristine ng-untouched ng-valid ng-valid-maxlength" ng-model="user.sellerNotes"></textarea></td>
+					
+				  </tr>
+
+				</tbody></table>
+        
+    </div>
+    <!-- 商家详情  end -->
+ 		
+ 		
+ 	
+ 		
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="businessManageDetailCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

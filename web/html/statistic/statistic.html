@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="MyApp">
+<head>
+	<title>运营统计</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- bootstrap -->
+    <link href="../css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js" defer="defer"></script>
+	<style type="text/css">
+		#panel_item_tab ul {
+			height: 29px;
+			padding: 0;
+		}
+		
+		#panel_item_tab ul li {
+			display: block;
+			height: 22px;
+			cursor: pointer;
+		}
+		
+		#panel_item_tab li {
+			color: #6f7070;
+			text-align: center;
+			line-height: 29px;
+		}
+		
+		#panel_item_tab li span {
+			font-size: 14px;
+		}
+		
+		.cl_zlgl_statistic {
+			margin: 10px 10px 10px;
+		}
+		
+		.cl_zlgl_statistic td {
+			padding: 0 0px 10px 0;
+		}
+		
+		.cl_zlgl_statistic td label {
+			display: inline-block;
+			float: right;
+			font-weight: normal;
+			cursor: auto;
+			font-size: 12px;
+			text-align: right;
+		}
+		
+		.chartActive {
+			font-weight: bold !important;
+			color: #ff7800 !important;
+			font-size: 15px !important;
+		}
+		
+		.id_rd .id_rd_1 td {
+			font-weight: normal;
+			position: relative;
+			text-transform: uppercase;
+			vertical-align: top !important;
+			border-bottom: 0px !important;
+			background: #eaf4f8;
+			line-height: 20px !important;
+			border-left: 1px solid #fff;
+			color: #116282;
+		}
+		
+		.id_rd .id_rd_2 td {
+			color: #2a6496;
+		}
+		
+		.id_rd td {
+			padding: 8px;
+			line-height: 1.428571429;
+			vertical-align: top;
+			border-top: 1px solid #edf2f7;
+			font-size: 13px;
+			color: #526273;
+		}
+		
+		.table tfoot th {
+			background: #eaf4f8 none repeat scroll 0 0;
+			border-bottom: 0 none !important;
+			border-left: 1px solid #fff;
+			color: #116282;
+			font-weight: normal;
+			line-height: 20px !important;
+			position: relative;
+			text-transform: uppercase;
+			vertical-align: top !important;
+		}
+		
+		.statistic_black_overlay {
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index: 1001;
+			-moz-opacity: 0.8;
+			opacity: .80;
+			filter: alpha(opacity = 80);
+		}
+		
+		.statistic_white_content {
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			right: 0%;
+			bottom: 0%;
+			width: 100%;
+			height: 100%;
+			padding: 16px;
+			border: 16px solid #f83148;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+		}
+		
+		.dispaly_none {
+			display: none;
+		}
+		
+		.dispaly_block {
+			display: block;
+		}
+		
+		.statistic_select {
+			width: 180px;
+			/*padding-top: 3px;
+			height: 28px;*/
+			outline: none;
+		}
+		
+		.w180 {
+			width: 180px;
+		}
+		
+		.statistic_btn {
+			
+		}
+		.hideString{
+		        white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+		}
+		.search_lista td,.search_lista th{padding: 0 5px;}
+	</style>
+</head>
+<body onLoad="setContentHeight()">
+	<div class="billing_1 clearfix pb_20 mt_20">
+<!-- 		<!-- navbar -->
+<!-- 		<simple-navbar id="simpleNavbarId"></simple-navbar> -->
+<!-- 	    end navbar -->
+<!-- 	    sidebar start -->
+<!-- 	    <simple-menu id="simpleMenuId" loadurl="sysMenu.ajax?cmd=loadMenu" currenturl="/logbi/statistic/statistic.html"></simple-menu> -->
+<!-- 	    sidebar end -->
+	
+	<div class="content" style="padding: 0; min-height: 680px;" ng-controller="testCtrl">
+		<!-- 统计项主面板 -->
+		<div style="overflow: hidden; margin: 10px 10px;" class="ng-cloak" ng-show="loadControl.showMain">
+			<table align="center">
+				<tr ng-repeat="rowIndex in statisticItemRowIndexs">
+					<td ng-repeat="statisticItem in statisticItems" ng-if="$index >= rowIndex * 4 && $index < (rowIndex + 1) * 4">
+						<div style="height: 232px; width: 232px; padding: 2px; float: left; margin: 0 20px 10px 0; cursor: pointer; border:1px dashed #000;" ng-click="showStatisticInfoFromPanel(statisticItem);">
+							<div id="chart{{statisticItem.chartId}}" style="height: 190px; width: 226px;">
+								<img  style="margin-top: 30px; margin-left: 45px;" ng-src="../../image/statistic/{{statisticItem.chartImg}}">
+							</div>
+							<div style="padding: 12px 0 6px; line-height: 18px; text-align: center; background: #f4f4f4;">
+								<span>{{statisticItem.chartName}}</span><br />
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- 结果面板 -->
+		<div ng-show="!loadControl.showMain" id="showChartMain" class="ng-cloak">
+			<!-- 维度(条件) Start -->
+			<div style="overflow: auto;" ng-show="loadControl.isShowLatitude">
+				<div class="chak_x">
+				</div>
+				<div class="cl_zlgl_statistic">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td>
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td width="70" ng-show="loadControl.isShowLatitudeTypeSelect"><label>分析纬度：</label></td>
+										<td ng-show="loadControl.isShowLatitudeTypeSelect">
+											<div class="ui-select statistic_select">
+												<select ng-model="loadControl.selectedLatitudeId" ng-options="value.latitudeId as value.latitudeName for value in loadControl.associateLatitudeInfo" ng-change="changeSelectedLatitudeId();"></select>
+											</div>
+										</td>
+										<td ng-show="loadControl.selectedLatitudeType==0 || loadControl.selectedLatitudeType==5">&nbsp;&nbsp;</td>
+										<td ng-show="loadControl.selectedLatitudeType==0 || loadControl.selectedLatitudeType==5">&nbsp;</td>
+										
+										<td width="70" ng-show="loadControl.selectedLatitudeType==1 || loadControl.selectedLatitudeType==2"><label>年份：</label></td>
+										<td ng-show="loadControl.selectedLatitudeType==1 || loadControl.selectedLatitudeType==2"><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年',minDate:'2015',maxDate:'%y'})" class="form-control w180"  id="selectedLatitudeTypeDate1"/></td>
+										
+										<td width="70" ng-show="loadControl.selectedLatitudeType==3"><label>月份：</label></td>
+										<td ng-show="loadControl.selectedLatitudeType==3"><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月',minDate:'2015-01',maxDate:'%y-%M'})" class="form-control w180" id="selectedLatitudeTypeDate2"/></td>
+										
+										<td width="70" ng-show="loadControl.selectedLatitudeType==4"><label>日期：</label></td>
+										<td ng-show="loadControl.selectedLatitudeType==4"><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月dd日',minDate:'2015-01-01',maxDate:'%y-%M-%d'})" class="form-control w180" id="selectedLatitudeTypeDate3"/></td>
+										
+										<td width="70" ng-if="specialChartId != undefined && specialChartId == 10117"><label>客户名称：</label></td>
+										<td ng-if="specialChartId != undefined && specialChartId == 10117"><input type="text" class="form-control w180" ng-model="queryParams.consignorName"/></td>
+										
+										<td width="70" ng-if="specialChartId != undefined && ((specialChartId == 10111 || specialChartId == 10112) || (specialChartId == 10113 || specialChartId == 10114))"><label>发货人：</label></td>
+										<td ng-if="specialChartId != undefined && ((specialChartId == 10111 || specialChartId == 10112) || (specialChartId == 10113 || specialChartId == 10114))"><input type="text" class="form-control w180" ng-model="queryParams.consignorName"/></td>
+										
+										<td width="70" ng-if="specialChartId != undefined && specialChartId == 10108"><label>承运公司：</label></td>
+										<td ng-if="specialChartId != undefined && specialChartId == 10108"><input type="text" class="form-control w180" ng-model="queryParams.carrierCompanyName"/></td>
+										
+										<td width="70" ng-if="specialChartId != undefined && specialChartId == 10106"><label>到站网点：</label></td>
+										<td ng-if="specialChartId != undefined && specialChartId == 10106">
+											<div class="ui-select statistic_select">
+												<select ng-model="queryParams.descOrgIdz" ng-options="obj.endOrgId as obj.endOrgName for obj in routes"></select>
+											</div>
+										</td>
+										
+										<td width="70" ng-show="loadControl.isShowOrgSelect"><label>网点：</label></td>
+										<td ng-show="loadControl.isShowOrgSelect">
+											<div class="ui-select statistic_select">
+												<select ng-model="orgSelect" ng-options="obj.orgId as obj.orgName for obj in orgInfo"></select>
+											</div>
+										</td>
+										
+										<td>
+											
+										</td>
+										<td ng-show="loadControl.selectedLatitudeType==8 || loadControl.selectedLatitudeType==9">&nbsp;</td>
+                  						<td ng-show="loadControl.selectedLatitudeType==8 || loadControl.selectedLatitudeType==9">
+                  							<div class="bottom_search"><a ng-click="analysis();" style="width: 80px; height: 28px; padding: 2px 12px; margin-bottom: 8px;">开始分析</a></div>
+                  						</td>
+									</tr>
+									<tr ng-show="loadControl.selectedLatitudeType==7">
+										<td ng-show="loadControl.selectedLatitudeType==7"><label>开始日期：</label></td>
+										<td ng-show="loadControl.selectedLatitudeType==7"><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月dd日',minDate:'2015-01-01',maxDate:'%y-%M-%d'})" class="form-control w180" id="selectedLatitudeTypeDate4"/></td>
+										<td ng-show="loadControl.selectedLatitudeType==7"><label>结束日期：</label></td>
+										<td ng-show="loadControl.selectedLatitudeType==7"><input type="text" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月dd日',minDate:'2015-01-01',maxDate:'%y-%M-%d'})" class="form-control w180" id="selectedLatitudeTypeDate5"/></td>
+										<td>&nbsp;</td>
+                  						<td>
+                  							<div class="bottom_search"><a ng-click="analysis();" style="width: 80px; height: 28px; padding: 2px 12px; margin-bottom: 8px;">开始分析</a></div>
+                  						</td>
+                  						<td ng-show="isShowBackButton">
+                  							<div class="bottom_search"><a ng-click="backPanel();" style="width: 80px; height: 28px; padding: 2px 26px; margin-bottom: 8px;">返回</a></div>
+                  						</td>
+									</tr>
+									<tr ng-show="loadControl.selectedLatitudeType==8">
+										<td><label>月份：</label></td>
+										<td colspan="5">
+											<span ng-repeat="o in loadControl.multiMonthStatistic">
+												<input type="checkbox" value="{{o}}" name="multiMonthStatistic">&nbsp; {{o}}&nbsp;&nbsp;
+											</span>
+										</td>
+									</tr>
+									<tr ng-show="loadControl.selectedLatitudeType==9">
+										<td><label>月份：</label></td>
+										<td colspan="5">
+											<span ng-repeat="o in loadControl.multiMonthCompare" ng-if="$index < 6">
+												<input type="checkbox" value="{{o}}" name="multiMonthCompare">&nbsp; {{o}}&nbsp;&nbsp;
+											</span>
+										</td>
+									</tr>
+									<tr ng-show="loadControl.selectedLatitudeType==9">
+										<td><label></label></td>
+										<td colspan="5">
+											<span ng-repeat="o in loadControl.multiMonthCompare" ng-if="$index >= 6">
+												<input type="checkbox" value="{{o}}" name="multiMonthCompare">&nbsp; {{o}}&nbsp;&nbsp;
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td ng-show="loadControl.isShowTenandSelect"><label>租户：</label></td>
+										<td ng-show="loadControl.isShowTenandSelect">
+											<div class="ui-select statistic_select">
+												<select ng-model="tenantSelect" ng-options="obj.codeId as obj.codeName for obj in tenants"></select>
+											</div>
+										</td>
+									</tr>
+									<tr ng-repeat="group in chartTableQueryConditions">
+											<td colspan="2" ng-repeat="c in group">
+												<label class="fl" style="width: 70px;">{{c.codeName}}：</label>
+												<div ng-show="c.codeValue=='select'" class="ui-select statistic_select">
+													<div ng-if="c.codeValue=='select'">
+														<select class="form-control" id="{{c.codeDesc}}">
+
+														</select>
+													</div>
+												</div>
+												<div ng-if="c.codeValue=='text'"><input type="text" class="form-control w180" id="{{c.codeDesc}}" /></div>
+											</td>
+									</tr>
+								</table>
+							</td>
+							<td ng-show="loadControl.selectedLatitudeType!=7 && loadControl.selectedLatitudeType!=8 && loadControl.selectedLatitudeType!=9">&nbsp;</td>
+                  			<td ng-show="loadControl.selectedLatitudeType!=7 && loadControl.selectedLatitudeType!=8 && loadControl.selectedLatitudeType!=9">
+                  				<div class="bottom_search"><a ng-click="analysis();" style="width: 80px; height: 28px; padding: 2px 12px; margin-bottom: 8px;">开始分析</a></div>
+                  			</td>
+                  			<td ng-show="isShowBackButton && loadControl.selectedLatitudeType!=7 && loadControl.selectedLatitudeType!=8 && loadControl.selectedLatitudeType!=9">
+                  				<div class="bottom_search"><a ng-click="backPanel();" style="width: 80px; height: 28px; padding: 2px 26px; margin-bottom: 8px;">返回</a></div>
+                  			</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- 维度(条件) End -->
+			<div class="chak_x">
+				<div class="d_bzj_js cplx" ng-show="undefined != currentMainChartInfo.chartDescHtml && currentMainChartInfo.chartDescHtml.toString().length > 0">
+					<label>?</label>
+    				<span style="display: none;">
+    					<div class="arrow-up"></div>
+        				<p ng-bind-html="currentMainChartInfo.chartDescHtml"></p>
+    				</span>
+				</div>
+				<div style="margin-left: {{undefined != currentMainChartInfo.chartDescHtml && currentMainChartInfo.chartDescHtml.toString().length > 0 ? 20 : 0}}px;">
+					<!-- 
+						<span class="blueBig ckcy_cyxx">运营分析结果</span>
+					 -->
+					<div class="bottom_search" ng-show="isShowBackButton && !loadControl.isShowLatitude"><a ng-click="backPanel();" style="width: 80px; height: 28px; padding: 2px 26px; margin-bottom: 8px;">返回</a></div>
+				</div>
+			</div>
+			
+			<!--   -->
+			<div class="chart" style="margin-top: 20px;">
+				<!-- 一级图表 -->
+				<div id="container" style="display: none; width: 100%; height: 100%;" ></div>
+				<report-table></report-table>
+				<!-- 二级弹出框 -->
+				<div ng-class="seconedLevelPopupWindow.window.displayClass">
+					<div class="statistic_white_content" ng-class="seconedLevelPopupWindow.window.displayClass"><a href="javascript:void(0)" ng-click="seconedLevelPopupWindow.window.close();">X</a>
+						<nav-tabs outter-scope-object='seconedLevelNavTabs'></nav-tabs>
+						<div id="seconedLevelHighchartsContainer1" style="display: none;" align="center"></div>
+						<div id="seconedLevelHighchartsContainer2" style="display: none;" align="center"></div>
+						<div id="seconedLevelHighchartsContainer3" style="display: none;" align="center"></div>
+						<div id="seconedLevelHighchartsContainer4" style="display: none;" align="center"></div>
+						<div id="seconedLevelHighchartsContainer5" style="display: none;" align="center"></div>
+						<report-table outter-scope-object="seconedLevelTable1"></report-table>
+						<report-table outter-scope-object="seconedLevelTable2"></report-table>
+						<report-table outter-scope-object="seconedLevelTable3"></report-table>
+						<report-table outter-scope-object="seconedLevelTable4"></report-table>
+						<report-table outter-scope-object="seconedLevelTable5"></report-table>
+						<!-- TODO 详情 -->
+						<statistic-detail-info scope-object="seconedLevelOrderDetailInfo" template-url="seconedStatisticOrderDetailInfo.html"></statistic-detail-info>
+						<statistic-detail-info scope-object="seconedLevelTrackingInfo" template-url="seconedStatisticTrackingDetailInfo.html"></statistic-detail-info>
+					</div> 
+					<div class="statistic_black_overlay" ng-class="seconedLevelPopupWindow.window.displayClass"></div>
+				</div>
+				<!-- 三级弹出框 -->
+				<div ng-class="thirdLevelPopupWindow.window.displayClass">
+					<div class="statistic_white_content" ng-class="thirdLevelPopupWindow.window.displayClass"><a href="javascript:void(0)" ng-click="thirdLevelPopupWindow.window.close();">X</a>
+						<nav-tabs outter-scope-object='thirdLevelNavTabs'></nav-tabs>
+						<div id="thirdLevelHighchartsContainer1" style="display: none;" align="center"></div>
+						<div id="thirdLevelHighchartsContainer2" style="display: none;" align="center"></div>
+						<div id="thirdLevelHighchartsContainer3" style="display: none;" align="center"></div>
+						<div id="thirdLevelHighchartsContainer4" style="display: none;" align="center"></div>
+						<div id="thirdLevelHighchartsContainer5" style="display: none;" align="center"></div>
+						<report-table outter-scope-object="thirdLevelTable1"></report-table>
+						<report-table outter-scope-object="thirdLevelTable2"></report-table>
+						<report-table outter-scope-object="thirdLevelTable3"></report-table>
+						<report-table outter-scope-object="thirdLevelTable4"></report-table>
+						<report-table outter-scope-object="thirdLevelTable5"></report-table>
+						
+						<!-- TODO 详情 -->
+						<statistic-detail-info scope-object="thirdLevelOrderDetailInfo" template-url="thirdStatisticOrderDetailInfo.html"></statistic-detail-info>
+						<statistic-detail-info scope-object="thirdLevelTrackingInfo" template-url="thirdStatisticTrackingDetailInfo.html"></statistic-detail-info>
+					</div> 
+					<div class="statistic_black_overlay" ng-class="thirdLevelPopupWindow.window.displayClass"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- scripts -->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+	<!-- highcharts %%%% start -->    
+    <script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+  	<script type="text/javascript" src="../js/highcharts/exporting.js"></script>
+  	<script type="text/javascript" src="../js/highcharts/highcharts-3d.js"></script>
+  	<!-- highcharts %%%% end -->
+  	
+	<!--[if !IE]> -->
+	<script src="../js/angular/angular.min.js"></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+	<script src="../js/angular-1.2.19/angular.min.js"></script>
+	<![endif]-->
+	<!--[if !lte IE 8 ]>
+	<script src="../../js/angular/angular.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script src="statistic.js?v=${ver}"></script>
+</body>
+</html>

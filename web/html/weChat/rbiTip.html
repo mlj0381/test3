@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="rbiTipeApp">
+<head >
+	<title>打点小费</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=640,target-densitydpi=device-dpi,minimum-scale=0.5,maximum-scale=0.5,user-scalable=yes"/>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta content="telephone=no" name="format-detection"/>
+	<link rel="stylesheet" type="text/css" href="../css/weChat/index.css">
+</head>
+
+<body ng-controller="rbiTipeCtrl" class="ng-cloak">
+	<div class="container"  style="margin-bottom:170px;">
+		<div style="text-align:center; margin:15px 0 35px;">
+			<p style=" font-size:30px; line-height:80px">扫描开单/打点小费</p>
+			<div style=" position:relative">
+				<img ng-src="{{query.ordersQrCodeUrl}}" width="260" height="260" alt="" style="background:#fff; padding:20px;"/><!-- 微信-->
+				<!-- <img src="../image/weChat/icon_wx.png" width="" height="" style="position:absolute; top:50%; left:50%; margin-left:-37px; margin-top:-37px;" alt="" /> --><!-- 微信中间图标-->
+			</div>
+		</div>
+		<ul class="list_zc">
+			
+			
+			<li style="border-top:0;padding:5px 21px 0; margin-top:10px;">
+					<div class="list_c">
+						<p><label class="label1">拉包工：</label>{{query.pullName}}  {{query.pullPhone}}</p>
+						<p><label class="label1">到站：</label>{{query.cityName}}</p>
+						<p><label class="label1">物流公司：</label>{{query.tenantName}}</p>
+					</div>
+			</li>
+			<li style="border-top:0;padding:5px 21px 0; margin-top:10px;">
+					<div class="list_c">
+						<p><label class="label1">收货人：</label>{{query.consigneeName}}  {{query.consigneePhone}}</p>
+						<p><label class="label1">地址：</label>{{query.consigneeAddress}}</p>
+					</div>
+			</li>
+			<li style="border-top:0;padding:5px 21px 40px; margin-top:10px;">
+					<div class="list_c"  ng-repeat="obj in goods">
+						<p><label class="label1">发货人：</label>{{obj.consignorName}}  {{obj.consignorPhone}}</p>
+						<p><label class="label1">地址：</label>{{obj.provineName}}{{obj.cityName}}{{obj.countyName}}{{obj.address}}</p>
+					
+					</div>
+					<div style=" padding:20px; position:absolute; right:0px; bottom:5px;">
+						<a href="javascript:void(0)" ng-click="otherInfo(1)" ng-show="isShow == undefined || isShow == true">更多+</a>
+						<a href="javascript:void(0)" ng-click="otherInfo(2)" ng-show="isShow == false">收回-</a>
+					</div>
+			</li>
+		</ul>
+		
+		<div class="xiazai clearfix">
+			<img src="../image/weChat/logo.png" width="160" height="49" alt="" class="fl" style="margin-top:20px;" />
+			<div class="fl" style="color:#333; line-height:36px; padding-left:20px; margin-top:10px; border-left:1px solid #ccc; margin-left:20px;">
+				<p>云货宝</p>
+				<p>物流更便捷，高效</p>
+			</div>
+			<a href="javascript:void(0)" onclick="javascript:openApp()"  class="fr lij_z">立即下载</a>
+		</div>
+	</div>
+	
+</body>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="rbiTipCtrl.js?v=${ver}"></script>
+</html>

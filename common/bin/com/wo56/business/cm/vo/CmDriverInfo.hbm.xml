@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-15 16:26:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.cm.vo.CmDriverInfo" table="cm_driver_info">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="orgId" type="long">
+            <column name="ORG_ID" not-null="true">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#231;&#189;&#145;&#231;&#130;&#185;id</comment>
+            </column>
+        </property>
+        <property name="currentOrgId" type="long">
+            <column name="CURRENT_ORG_ID" not-null="true">
+                <comment>&#229;&#189;&#147;&#229;&#137;&#141;&#231;&#189;&#145;&#231;&#130;&#185;</comment>
+            </column>
+        </property>
+        <property name="tenantId" type="long">
+            <column name="TENANT_ID" not-null="true">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;id</comment>
+            </column>
+        </property>
+        <property name="name" type="string">
+            <column name="NAME" not-null="true">
+                <comment>&#229;&#143;&#184;&#230;&#156;&#186;&#229;&#144;&#141;&#231;&#167;&#176;</comment>
+            </column>
+        </property>
+        <property name="telephone" type="string">
+            <column name="TELEPHONE">
+                <comment>&#229;&#155;&#186;&#229;&#174;&#154;&#231;&#148;&#181;&#232;&#175;&#157;</comment>
+            </column>
+        </property>
+        <property name="bill" type="string">
+            <column name="BILL" >
+                <comment>&#230;&#137;&#139;&#230;&#156;&#186;&#229;&#143;&#183;&#231;&#160;&#129;</comment>
+            </column>
+        </property>
+        <property name="identityCard" type="string">
+            <column name="IDENTITY_CARD" >
+                <comment>&#232;&#186;&#171;&#228;&#187;&#189;&#232;&#175;&#129;</comment>
+            </column>
+        </property>
+        <property name="drivingLicense" type="string">
+            <column name="DRIVING_LICENSE" >
+                <comment>&#233;&#169;&#190;&#233;&#169;&#182;&#232;&#175;&#129;</comment>
+            </column>
+        </property>
+        <property name="bankAccount" type="string">
+            <column name="BANK_ACCOUNT" >
+                <comment>&#233;&#147;&#182;&#232;&#161;&#140;&#232;&#180;&#166;&#229;&#143;&#183;</comment>
+            </column>
+        </property>
+        <property name="bankName" type="string">
+            <column name="BANK_NAME" >
+                <comment>&#233;&#147;&#182;&#232;&#161;&#140;&#229;&#144;&#141;&#231;&#167;&#176;</comment>
+            </column>
+        </property>
+        <property name="certificate" type="string">
+            <column name="CERTIFICATE">
+                <comment>&#228;&#187;&#142;&#228;&#184;&#154;&#232;&#181;&#132;&#230;&#160;&#188;&#232;&#175;&#129;</comment>
+            </column>
+        </property>
+        <property name="status" type="int">
+            <column name="STATUS" not-null="true">
+                <comment>&#231;&#138;&#182;&#230;&#128;&#129;&#239;&#188;&#154;0 &#229;&#164;&#177;&#230;&#149;&#136; &#239;&#188;&#140;1
+                &#230;&#156;&#137;&#230;&#149;&#136;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="CREATE_DATE" length="19" not-null="true">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="opId" type="long">
+            <column name="OP_ID" not-null="true">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#228;&#186;&#186;id</comment>
+            </column>
+        </property>
+         <property name="identityCardNo" type="string">
+            <column name="IDENTITY_CARD_NO" >
+                <comment>司机身份证号</comment>
+            </column>
+        </property>
+         <property name="identityCardBack" type="string">
+            <column name="IDENTITY_CARD_BACK" >
+                <comment>身份证反面</comment>
+            </column>
+        </property>
+         <property name="opName" type="string">
+            <column name="OP_NAME" >
+                <comment>操作人名称</comment>
+            </column>
+        </property>
+         <property name="creatorId" type="java.lang.Long">
+            <column name="CREATOR_ID" length="20">
+            	<comment>创建人id</comment>
+            </column>
+        </property>
+         <property name="creatorName" type="string">
+            <column name="CREATOR_NAME">
+            	<comment>创建人名称</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

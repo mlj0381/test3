@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="doSignTracksApp">
+<head>
+<title>调度任务-人工调度任务</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运会" />
+<meta name="description" content="联运会" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master_open.css?v=${ver}">
+<style type="text/css">
+.w_b60 {
+	width: 147px !important;
+}
+
+#dhl_map {
+	width: 80%;
+	left: 50%;
+	margin-left: -40%;
+	top: 80px;
+	height: 70%;
+	border: 2px solid #ccc;
+	border-radius: 5px;
+	position: fixed;
+	z-index: 1004
+}
+
+#dhl_map .popup_bt {
+	background: #f4f4f4;
+	font-size: 20px;
+	color: #e66045;
+	line-height: 50px;
+}
+
+#box-shadow {
+	left: 0
+}
+
+.dhl_map_1 {
+	top: 90px;
+}
+
+.dhl_map_liest {
+	height: 400px;
+}
+
+.search_lista tbody tr:nth-child(even) {
+	background: #CFDDE7;
+}
+
+.search_lista tbody tr:nth-child(odd) {
+	background: transparent
+}
+</style>
+</head>
+<body ng-controller="doSignTracksCtrl" onLoad="setContentHeight()"
+	style="overflow: hidden;">
+	<div class="billing_1" style="padding-bottom: 80px;">
+
+		
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+		<div class="search_table">
+		<tab-show orderstate=7 ver="${ver}"
+			urltab="ordOrdersWebBO.ajax?cmd=queryTracksSum" headnum="order"></tab-show>
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+                        <td width="100"><label class="control-label w_100">开单时间：</label></td>
+						<td>
+						<input style="width: 80px!important;" ng-model="query.beginInputTime" my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  id="beginInputTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" style="width: 80px!important;"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' ng-model="query.endInputTime" id="endInputTime" class="form_term fl w_xjr" type="text">
+                        </td>
+							<td width="80"><label class="control-label">开单物流：</label></td>
+						<td>
+						<div class="form_select" style="width: 129px">
+						   <select ng-model="query.tenantId" ng-options="obj.tenantId as obj.tenantName for  obj in tenantData "></select>
+                        </div>
+                        </td>
+                        <td width="100"><label class="control-label w_100">订单号：</label></td>
+						<td><input class="input_box" ng-model="query.orderNo"	maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.trackingNum"	maxlength="20" id="" type="text" /></td>
+                       <!--  <td width="100"><label class="control-label w_100">运单状态:</label></td>
+						<td><div class="form_select" style="width: 129px">
+                            <my-select id="query.orderState" selectid="" has-all="true"  code-type="ORDER_INFO_STATE"  showName="codeName" defaultValue="-1" showValue="codeId" filter="" ></my-select>
+                        </div>
+						</td> -->
+						
+						<td rowspan="3">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					<tr>
+					     
+						<td width="100"><label class="control-label w_100">发货人：</label></td>
+						<td><input class="input_box" ng-model="query.consignorName"	maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">发货人电话：</label></td>
+						<td><input class="input_box" ng-model="query.consignorBill"	maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">拉包工：</label></td>
+						<td><input class="input_box" ng-model="query.workerName"	maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">开单人：</label></td>
+						<td><input class="input_box" ng-model="query.inputUserName"	maxlength="20" id="" type="text" /></td>
+					</tr>
+					<tr>
+					    
+						<td width="100"><label class="control-label w_100">收货人：</label></td>
+						<td><input class="input_box" ng-model="query.consigneeName"	maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">收货人电话：</label></td>
+						<td><input class="input_box" ng-model="query.consigneeBill"	maxlength="20" id="" type="text" /></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			<div class="bottom_nav pb_20 bottom_nav_search clearfix tableStyle">
+					<h2>查询结果</h2>
+					<a class="button fr ml_10 gangxianjs" id="exportId"
+						ng-click="commonExport()" href="javascript:void(0);"><i
+						class="button_icon button_icon dw_gangxianjs"></i>导 出</a> <a
+						class="button ml_10 see_b" ng-click="openWayDetail()"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_see_b"></i>查看详情</a>
+				</div>
+		</div>
+			<!--任务列表 start-->
+			<div style="position: relative;" class="search_nr clearfix mt_20">
+				
+				<my-Table-Cm head="head" is-Multi-Select="true" table="table"
+				after-Init-Fn="doQuery();" url="url" param="query" id="orderId" is-Show-Row="true"
+				table-Name="doSignTracks" ver="${ver}"></my-Table-Cm>
+			</div>
+			
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+
+	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" style="display: none;"></div>
+	<!--半透明黑色背景  结束-->
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="doSignTracksCtrl.js?v=${ver}"></script>
+	<script type="text/javascript" src="tabTemplate.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/table/tableCommon.js?v=${ver}"></script>
+	<script type="text/javascript" src="../tracks/trackDetail/trackDetail.js?v=${ver}"></script>
+</body>
+</html>
+

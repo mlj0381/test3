@@ -1,0 +1,580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="mainApp">
+	<head>
+	    <title>${title}</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+		<link rel="shortcut icon" href="/image/$tenantId$/32x32.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="css/$tenantId$/master.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" href="css/pace-theme-center-simple.css?v=${ver}"><!-- 自动加载 css -->
+        <link rel="stylesheet" type="text/css" href="css/$tenantId$/tooltipster.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="css/$tenantId$/ui.admin.css?v=${ver}">
+        <style>
+        body, html{width: 100%;height: 100%;
+        height:-moz-calc(100% - 90px);
+        height:-webkit-calc(100% - 90px);
+        height:calc(100% - 90px)
+        }
+        ul.in_left li.fl_left{ float:left}
+		.main_yybb{ border-top:1px solid #e8e8e8; border-bottom:0;}
+		.tc_x {
+			    right: -35px;
+			    position: absolute;
+			    font-size: 50px;
+			    color: #fff;
+			    font-weight: normal;
+			    font-family: Arial, Helvetica, sans-serif;
+			}
+		.tc_x:hover{text-decoration: none;}
+		.hideString{
+		      white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+		  }
+		  .search_page {
+					    top: 260px;
+					    width: 90%;
+					    position: absolute;
+		 }
+		 		 		 
+/******地市选择样式*****/
+.content1{ width:460px; border:1px solid #dcdcdc; overflow:hidden; margin-top:2px; padding:10px; position:relative; background:#fff;box-shadow: 1px 1px 5px #f4f4f4;}
+.dx_a{ padding-bottom:5px;}
+.dx_a span{ color:#333px; padding-right:10px; color:#ff0000}
+.dx_a span em{ color:#06C; cursor:pointer; padding-left:6px;}
+
+.JD-stock{position:relative;margin-bottom:0;}
+.JD-stock .tab{width:100%;height:25px;float:left;border-bottom:2px solid #ffb84e;overflow:visible;*overflow:hidden}
+.JD-stock .tab li{float:left;clear:none;height:23px;padding:1px 1px 0;border:1px solid #ddd;border-bottom:0;margin-right:3px;background-color:#fff;line-height:22px;text-decoration:none;width: auto;}
+.JD-stock .tab .curr{*position:relative;height:25px;padding:0;border:2px solid #ffb84e;border-bottom:0;width: auto;}
+.JD-stock .tab a{position:relative;float:left;height:23px;padding:0 20px 1px 10px;line-height:23px;text-align:center;text-decoration:none;cursor:pointer;color:#005AA0;outline:0;*blr:expression(this.onFocus=this.blur())}
+.JD-stock .tab a:hover{background:0;color:#005AA0}
+.JD-stock .tab a i{position:absolute;right:5px;top:10px;*top:9px;display:block;width:7px;height:5px;overflow:hidden;opacity:.5;filter:alpha(opacity=50)}
+.JD-stock .tab .curr i,#JD-stock .tab a:hover i{opacity:1;filter:alpha(opacity=100)}
+#JD-stock .area-list{padding-top: 13px;padding-bottom: 15px;background: #fff;padding-left: 8px;}
+#JD-stock .area-list li{float:left;clear:none; line-height:20px; margin:0 20px 0 0;width:auto;}
+#JD-stock .area-list li a{float:left;color:#000;margin: 2px;padding: 4px;font-family:"Arial","宋体";}
+#JD-stock .area-list li a:hover{ background:#ff7800; color:#fff;}
+#JD-stock .area-list .longer-area{width:370px}
+#JD-stock .area-list .long-area{width:170px}
+#JD-stock .area-list li a.bh{ background:#ff7800; color:#fff;}
+
+.JD-stock .area-list{padding-top: 13px;padding-bottom: 15px;background: #fff;padding-left: 8px;}
+.JD-stock .area-list li{float:left;clear:none; line-height:20px; margin:0 20px 0 0;width:auto;}
+.JD-stock .area-list li a{float:left;color:#000;margin: 2px;padding: 4px;font-family:"Arial","宋体";}
+.JD-stock .area-list li a:hover{ background:#ff7800; color:#fff;}
+.JD-stock .area-list .longer-area{width:370px}
+.JD-stock .area-list .long-area{width:170px}
+.JD-stock .area-list li a.bh{ background:#ff7800; color:#fff;}
+
+#JD-stock .area-list1{padding-top: 13px;padding-bottom: 15px;background: #fff;padding-left: 8px;}
+#JD-stock .area-list1 li{float:left;clear:none; line-height:20px; margin:0 20px 0 0;width:auto;}
+#JD-stock .area-list1 li a{float:left;color:#000;margin: 2px;padding: 4px;font-family:"Arial","宋体";width: 55px;}
+#JD-stock .area-list1 li a:hover{ background:#ff7800; color:#fff;}
+#JD-stock .area-list1 .longer-area{width:370px}
+#JD-stock .area-list1 .long-area{width:170px}
+#JD-stock .area-list1 li a.bh{ background:#ff7800; color:#fff;}
+
+#JD-stock .area-list2{padding-top: 13px;padding-bottom: 15px;background: #fff;padding-left: 8px;}
+#JD-stock .area-list2 li{float:left;clear:none; line-height:20px; margin:0 20px 0 0;width:auto;}
+#JD-stock .area-list2 li a{float:left;color:#000;margin: 2px;padding: 4px;font-family:"Arial","宋体";width: 75px;}
+#JD-stock .area-list2 li a input{width: 24px!important;}
+#JD-stock .area-list2 li a:hover{ background:#ff7800; color:#fff;}
+#JD-stock .area-list2 .longer-area{width:370px}
+#JD-stock .area-list2 .long-area{width:170px}
+#JD-stock .area-list2 li a.bh{ background:#ff7800; color:#fff;}
+
+.close_m {position: absolute;z-index: 2;top: 6px;cursor: pointer;width: 17px;height: 17px; font-size:20px; right:15px;}
+.close_m a:hover{ color:#ff7800;}
+
+.qx{ position:absolute; right:140px; top:6px;}
+.qx label{ float:left!important; font-weight:normal; line-height:22px!important;}
+.whe{ width:80px; float:left; line-height:20px; height:20px}
+a.qd_a{ background: #f4f4f4;height: 24px!important;line-height: 24px!important;display: block;float: left;padding: 0px 5px;}
+a.qd_a:hover { background: #FF7800 none repeat scroll 0% 0%;  color: #FFF;}
+
+.titleCity{position: absolute;left:0px;top:0px;}
+.titleCity h2{font-size: 15px;color: #00b6f7;margin-top: -2px;}
+
+.titleCity h3{font-size: 15px;color: #00b6f7;margin-top: -2px;}
+.titleCity h5{font-size: 15px;color: #00b6f7;margin-top: -2px;}
+.JD-stock{padding-top: 25px;}
+/******地市选择样式*****/
+	
+		 .kz_fx li{float: left;width: 220px;margin-bottom: 10px;}
+		 .kz_fx .term_label {width: 78px;}
+		 .kz_fx .form_term,.kz_fx .wdcy_input .form_term{width: 142px!important;}
+		 
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+.progress {
+  height: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  float: left;
+  width: 0;
+  height: 100%;
+  font-size: 12px;
+  line-height: 20px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #428bca;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: width 0.6s ease;
+          transition: width 0.6s ease;
+}
+
+.progress-striped .progress-bar {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 40px 40px;
+}
+
+.progress.active .progress-bar {
+  -webkit-animation: progress-bar-stripes 2s linear infinite;
+          animation: progress-bar-stripes 2s linear infinite;
+}
+
+.progress-bar-success {
+  background-color: #5cb85c;
+}
+
+.progress-striped .progress-bar-success {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+}
+
+		 
+    	</style>
+</head>
+	<body ng-controller="mainCtrl" class="ng-cloak" ng-click="hideMenu()">
+	
+	<!--加载  开始-->
+		<div ng-show="loadCount>0" class="ng-hide" style=" background:#fff; z-index:1005; position:fixed; padding:5px;border-radius:3px; width:32px; height:32px; margin:-21px 0 0 -21px;top:50%; left:50%; "><img src="image/$tenantId$/jdt.gif" alt="" /></div>
+		<div id="fade1_xz" class="popup_bj ng-hide" style="z-index: 1004;" ng-show="loadCount>0" ng-model="loadCount"></div>
+	<!--加载  结束-->
+	<!-- 进度条 开始 -->
+		<div ng-show="rate>0" class="progress progress-striped" style="position:fixed; padding:5px;border-radius:3px; width:200px; margin:-21px 0 0 -21px;top:51%; left:44%;z-index: 1005; ">
+  			<div class="progress-bar progress-bar-success" ng-style="{width: rate + '%'}">
+    			<div>{{rate}}%</div>
+  			</div>
+		</div>
+		<div id="fade1_xz" style="z-index: 1004;" class="popup_bj ng-hide" ng-show="rate>0" ng-model="rate"></div>
+	<!-- 进度条 结束 -->
+	
+	  <ul class="in_left">
+    	<!-- 头部 -->
+    	<li class="fl_left" style="width:100%">
+	    	<div class="header">
+	        	<div class="logo fl"><a href="#"><img src="image/$tenantId$/logo.png" ng-src="{{logo}}"  alt="" /></a></div>
+	            <ul class="header_nav clearfix">
+	            	<li class="nav_li"><a href="javascript:void(0)" class="nav_li_a nav_qsj" ng-click="loadIndex()"><i class="block"><img alt="" src="image/$tenantId$/nav_icon.png" /></i><span>首页</span></a></li>
+	                <my-Menu menu-Out="myTopMenu" ver="${ver}" callback="meunTab(id,url,name,menuId)"></my-Menu>
+	            </ul>
+	         <div class="user icon ng-binding"  >
+	          	<div class="clearfix " style="position: relative;" ng-if="showData">
+	          		<span style="line-height: 20px;font-size: 12px;color: #fff;" class="fl">{{userName}} ，
+	          		</span> 
+	          	
+			        <ul class="us_lb fl">
+			          	<li><a class="fl" href="#" id="org" ng-model="query.org">{{orgName}}</a>
+			          	<i class="top_tj fl" style="display: block!important;"  ng-show="showData">
+			          	</i></li>
+			          	<li ng-repeat=" obj in orgData" class="fl" style="display: none;">
+			          		<a href="javascript:void(0)" ng-click="changeDate(obj)">{{obj.orgName}}</a>
+			          	</li>
+			         </ul>
+			        
+	          	</div>
+	          <div style="font-size: 12px;color: #fff;" ng-if="!showData">
+                     {{orgName}}，{{userName}} 
+	                <br/>
+	         </div>	
+	       
+	          <div style="font-size: 12px;color: #fff;text-align: center;line-height: 17px;">{{tenantName}}</div>
+	          <p>
+	           <a href="javascript:void(0)" class="cancel fl" ng-click="modifyPwd()">修改密码</a>
+	          <a href="javascript:void(0)" class="cancel fl" ng-click="logout()">注销</a>
+	           
+	          </p>
+	          
+	          </div>
+	        </div>
+        </li>
+        <li class="fl_left" ng-show="isShowIndex!=true" callback="callback()" ver="${ver}"   mytab="myTab">
+        </li>
+        
+        <li class="fl_left" style="width:100%">
+        	<!-- 首页内容 开始 -->
+        	 <div ng-show="isShowIndex==true">
+			</div>
+			<!-- 首页内容 结束 -->
+        </li>
+         <div ng-show="isShowIndex==true" >
+        </div>
+        
+        </ul>
+        <div style="padding-top: 70px;" class="main_content wrap-fluid" ng-hide="isShowIndex==true" >
+			<my-Tab callback="sideBarInit" ver="${ver}" name="myTab"></my-Tab>
+		</div>
+		<!-- 确认框 -->
+		<div  style="width: 402px; /*height: 152px;*/ margin-top: -176px; margin-left: -201px;padding-bottom: 15px;" class="popup ng-hide" ng-show="confirmMsg.isShow" >
+       		<div class="title"><h2 class="popup_bt">提示</h2><i  href="javascript:void(0)" class="list_xl_icon icon" ng-click="confirmMsg.close()" ></i></div>
+            <div class="popup_content" style="height: auto;"><p class="popup_p">{{confirmMsg.text}}</p></div>
+            <div class="popup_button"><a href="javascript:void(0)" class="button_green" ng-click="confirmMsg.sure()">{{confirmMsg.sureText}}</a><a href="javascript:void(0)" class="button_red" ng-click="confirmMsg.cancel()">{{confirmMsg.cancelText}}</a></div>
+       </div>
+	   <div ng-show="confirmMsg.isShow" class="popup_bj ng-hide" ></div>
+	   
+	   <!-- 确认框 -->
+		<div style="width: 402px; height: 152px; margin-top: -176px; margin-left: -201px;" class="popup ng-hide" ng-show="alertMsg.isShow" >
+       		<div class="title"><h2 class="popup_bt">提示</h2><i  href="javascript:void(0)" class="list_xl_icon icon" ng-click="alertMsg.close()" ></i></div>
+            <div class="popup_content"><p class="popup_p" ng-bind-html="alertMsg.text" ></p></div>
+            <div class="popup_button"><a href="javascript:void(0)" class="button_green" ng-click="alertMsg.sure()">确认</a></div>
+       </div>
+   <!--首页查询结果 7.5 新增 开始 --> 
+  <!-- 
+  <div  id="isShowSearch" style="position:fixed;top:80px;left:50%; width:90%; height:80%; margin-left:-45%; z-index:1003;display: none">
+		<a class="tc_x" href="javascript:void(0)" ng-click="closeView()">x</a>
+   		<div class="billing_1 clearfix plr_20" style="margin: 0!important">
+			
+			
+			<ul class="search_table search_term kz_fx clearfix"  style=" padding: 0px 0px;">
+				<li><label class="term_label fl">运单号：</label><input ng-model="query.trackingNum" class="form_term fl" type="text" maxlength="22" id="id1"></li>
+				<li><label class="term_label fl">货品名：</label><input ng-model="query.goodsName"  class="form_term fl" type="text"  maxlength="255" id="id2"></li>
+				<li><label class="term_label fl">件数：</label><input placeholder="件数大于" ng-model="query.goodsCount"  class="form_term fl" type="text"  maxlength="22" id="id3"></li>
+				<li><label class="term_label fl">签收状态：</label><div class="form_select fl"><my-select id="query.signState"  has-all="true" has-all="true"  code-type="SIGN_STATUS" width="130px"/></div></li>
+                <li><label class="term_label fl">货方：</label><input  placeholder="发货方或收货方"  ng-model="query.consignorName"     class="form_term fl" type="text"  maxlength="22" id="id5"></li>
+                <li><label class="term_label fl">货方电话：</label><input placeholder="发货方或收货方电话"  ng-model="query.consignorTelephone"  class="form_term fl" type="text"  maxlength="22" id="id6"></li>
+                <li><label class="term_label fl">外发单号：</label><input  ng-model="query.outgoingTrackingNum"   class="form_term fl" type="text"  maxlength="22" id="id4"></li>
+               	<li><label class="term_label fl">是否中转：</label><div class="form_select fl"><my-select id="query.transitOutgoingState" default-value=0 code-type="TRANSIT_OUTGOING_STATE" width="130px"/></div></li>
+                 <li><label class="term_label fl">到站网点：</label><div class="form_select fl"><select ng-model="query.distributionOrgId" ng-options="obj.endOrgId as obj.endOrgName for  obj in orgInfo.items  " width="130px"></select></div></li>
+				<li><label class="term_label fl">配安费：</label><input placeholder="配安费"  ng-model="query.fee"   onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')"  class="form_term fl" type="text"  maxlength="22" id="id6"></li>
+               	<li><label class="term_label fl">收货地：</label><span class="wdcy_input fl" my-city="des"></span></li>
+               <li style="float: right;">
+								<div class="search_button" style="border: 0;text-align: left;margin-left: 73px;">
+									<a class="search_button_ss" href="javaScript:void(0)" ng-Enter ng-click="doQueryOrder()" style="cursor: pointer;margin-top: 0;height: 26px;line-height: 26px;">搜索</a> 
+									<a class="search_button_cz" href="javaScript:void(0)" ng-click="clearModel()" style="cursor: pointer;margin-top: 0;" >重置</a>
+								</div>
+							</li>
+               
+			</ul>
+			<div class="bottom_nav_search clearfix" style="margin-bottom: 5px; padding-top:5px; border-top: 1px solid #dee6e9">
+				<h2 style="color: #7f8f97; float: left; font-family: '宋体'; font-size: 12px; font-weight: normal; line-height: 30px;">--查询结果--(双击查看详情)</h2>
+			</div>
+			<div class="kz_fx_list">
+				 <my-Adv-Table width="100%" isautohide="false" doubleclick="toDetail" isShowSeq="false" isMultiSelect="false" isShowCheck="fasle" isFilter="true" isSum="true" id="trackingNum" 
+	                           head='[
+	                           {"name":"运单号","code":"trackingNum","width":"100"}
+	                           ,{"name":"开单日期","code":"createDate","width":"120"}
+	                           ,{"name":"货品名","code":"goodsName","width":"80"}
+	                           ,{"name":"件数","code":"count","isSum":"true","width":"60"}
+	                           ,{"name":"体积","code":"volume","isSum":"true","number":"2","width":"60"}
+	                           ,{"name":"发货方","code":"consignorName","width":"100"}
+	                           ,{"name":"发货方电话","code":"consignorTelephone","width":"100"}
+	                           ,{"name":"收货方","code":"consigneeName","width":"100"}
+	                           ,{"name":"收货方电话","code":"consigneeBill","width":"100"}
+	                           ,{"name":"运单状态","code":"seeOrderStateName","width":"100"}
+	                           ,{"name":"开单网点","code":"orgIdName","width":"100"}
+	                           ,{"name":"到达网点","code":"distributionOrgName","width":"100"}
+	                           ,{"name":"目的省","code":"provinceName","width":"100"}
+	                           ,{"name":"目的市","code":"cityName","width":"100"}
+	                           ,{"name":"目的县/区","code":"countyName","width":"100"}
+	                           ,{"name":"目的街道","code":"streetName","width":"120"}
+	                           ,{"name":"收货地址","code":"address","width":"180"}
+	                           ,{"name":"运费","code":"freightString","isSum":"true","width":"80"}
+	                           ,{"name":"提货费","code":"pickingCostsString","isSum":"true","width":"80"}
+	                           ,{"name":"配安费","code":"installCost","isSum":"true","width":"80"}
+	                           ,{"name":"装卸费","code":"handingCostsString","width":"80","isSum":"true"}
+	                           ,{"name":"包装费","code":"packingCostsString","width":"80","isSum":"true"}
+	                           ,{"name":"送货费","code":"deliveryCostsString","width":"80","isSum":"true"}
+	                           ,{"name":"现付金额","code":"cashPaymentString","width":"80","isSum":"true"}
+	                           ,{"name":"到付金额","code":"freightCollectString","width":"80","isSum":"true"}
+	                           ,{"name":"回单付金额","code":"receiptPaymentString","width":"80","isSum":"true"}
+	                           ,{"name":"月结金额","code":"monthlyPaymentString","width":"80","isSum":"true"}
+	                           ,{"name":"回扣金额","code":"discountString","width":"80","isSum":"true"}
+	                           ,{"name":"代收货款金额","code":"collectingMoneyString","width":"120","isSum":"true"}
+	                           ,{"name":"代收货款手续费","code":"procedureFeeString","width":"120","isSum":"true"}
+	                           ,{"name":"付款方式","code":"paymentTypeName","width":"80"}
+	                           ,{"name":"承运公司","code":"carrierCompanyName","width":"100"}
+	                           ,{"name":"外发单号","code":"outgoingTrackingNum","width":"100"}
+	                           ,{"name":"外发费","code":"outgoingFeeString","width":"100","isSum":"true"} 
+	                           ,{"name":"本地联系人","code":"linkerName","width":"100"} 
+	                           ,{"name":"联系电话","code":"linkerPhone","width":"100"} 
+	                           ,{"name":"提货电话","code":"deliveryPhone","width":"100"} 
+	                           ,{"name":"提货地址","code":"deliveryAddress","width":"100"} 
+	                           ]'>
+	                   </my-Adv-Table> 
+	            </div>
+		</div>
+	</div>
+	 -->
+<!--首页查询结果 7.5 新增 结束 --> 
+       
+       
+	   <div ng-show="alertMsg.isShow" class="popup_bj ng-hide" ></div>
+	   <div id="alertMsgIsShow" class="popup_bj"  style="display: none;z-index:1002"></div>
+	   
+		
+        <!--[if !IE]> -->
+	    <script src='js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="js/md5.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/pace.js?v=${ver}"></script><!-- 自动加载进度条插件 -->
+        <script type="text/javascript" src="js/sidebar/jquery.tooltipster.js?v=${ver}"></script>
+        <script type="text/javascript" src="js/sidebar/sidebar.js?v=${ver}"></script>
+        <script type="text/javascript" src="js/highcharts/highcharts.js?v=${ver}"></script>
+        <script type="text/javascript" src="js/highcharts/highcharts-ng.js?v=${ver}"></script>
+        <script type="text/javascript" src="js/indexLabel/indexLabel.js?v=${ver}"></script>
+        <script type="text/javascript" src="js/jquery.hotkeys.js?v=${ver}"></script>
+        <script type="text/javascript" src="js/common.js?v=${ver}"></script>
+        <script type="text/javascript" src="js/menu/menuCommon.js?v=${ver}"></script>
+        <script type="text/javascript" src="mainCtrl.js?v=${ver}"></script>
+         
+        <!-- <script type="text/javascript" src="include.js"></script> -->
+        <script type="text/javascript">
+        
+	      //首页打开一个快捷方式
+			function openIndex(id,name,url){
+				var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				if(url.indexOf("_isref=true")!=-1){
+					scope.myTab.open(id,name,url,"-1");
+				}else{
+					scope.myTab.open(id,name,url);
+				}
+				
+				scope.isShowIndex=false;
+				scope.$apply();
+			}
+        
+        	//在一个tab里面新开一个页面
+			function openTab(id,name,url,params){
+				var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				scope.myTab.openWithParent(id,name,url,params);
+				scope.$apply();
+			}
+			//在一个tab里面关闭一个页面并回到父页面
+        	function closeToParentTab(isReload){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				scope.myTab.closeToParentTab(isReload);
+				scope.$apply();
+        	}
+			//只是关闭页面
+        	function close(){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				scope.myTab.close();
+				scope.$apply();
+        	}
+        	/**获取当前页面tab的id**/
+        	function getCurrentOpenId(){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				return scope.myTab.getCurrentOpenId();
+        	}
+        	
+        	/**获取当前页面tab的元素**/
+        	function getCurrentOpenTab(){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				return scope.myTab.getCurrentTab();
+        	}
+        	
+        	 /**
+       	  * 弹出框 
+       	  */
+       	 var alert=function(text, callback){
+       		 var appElement = document.querySelector('[ng-controller=mainCtrl]');
+       		 var scope=angular.element(appElement).scope();
+       		 scope.alertMsg.alert(text, callback);
+       		 scope.$apply();
+       	 }
+       	 
+       	 /**
+       	  * 确认框 
+       	  */
+       	 var confirm=function(text,sureCallBack,cancelCallBack,sureText,cancelText){
+       		 var appElement = document.querySelector('[ng-controller=mainCtrl]');
+       		 var scope=angular.element(appElement).scope();
+       		 scope.confirmMsg.confirm(text,sureCallBack,cancelCallBack,sureText,cancelText);
+       		 scope.$apply();
+       	 }
+       	 
+     	/**
+       	  * 隐藏菜单 
+       	  */
+       	 var changeCurrentTabUrl=function(url){
+       		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+			var scope=angular.element(appElement).scope();
+			scope.myTab.changeCurrentTabUrl(url);
+			scope.$apply();
+       	 }
+      	 
+        	WEB_SOCKET_SWF_LOCATION = "js/websocket/WebSocketMain.swf";
+        	WEB_SOCKET_DEBUG = true;
+        	var ws = null;
+        	function startWebSocket() {
+        		if (!window.WebSocket) alert("WebSocket not supported by this browser!");
+        		// 创建WebSocket
+        		var url = document.location.toString().replace('http://', '');
+        		var ip;
+        		if (url.indexOf(":") > 0) {
+        			ip = url.substring(0, url.indexOf(":"));
+        		} else {
+        			ip = url.substring(0, url.indexOf("/"));
+        		}
+        		url = "ws://" + ip + ":12002/ws";
+        		try {
+        			ws = new ReconnectingWebSocket(url, null, {debug: false, reconnectInterval: 5000, maxReconnectInterval: 120000});
+        		} catch (e) {
+        			ws = new WebSocket(url);
+        		}
+        		// 收到消息时在消息框内显示
+        		ws.onmessage = function(evt) {
+        			console.info(evt);
+        			var data = eval("("+evt.data+")");
+        			pushMessageToTipTipInfos(data.taskType, data.message);
+        		};
+        		// 断开时会走这个方法
+        		ws.onclose = function() { 
+        			console.log("close~~");
+        		};
+        		// 连接上时走这个方法
+        		ws.onopen = function() {   
+        			console.log("open~~");
+        		};
+        	}
+
+        	var allTipInfos = new Array();
+        	function pushMessageToTipTipInfos(title, message) {
+        		allTipInfos.push({
+        			id: (new Date()).valueOf(),
+        			title: title,
+        			message: message
+        		});
+        		refreshTipPop();
+        	}
+
+        	function popMessageToTipTipInfos(id) {
+        		var temp = new Array();
+        		for (var i = 0; i < allTipInfos.length; i++) {
+        			if (id != allTipInfos[i].id) {
+        				temp.push(allTipInfos[i]);
+        			}
+        		}
+        		allTipInfos = temp;
+        		refreshTipPop();
+        	}
+        	
+        	function refreshTipPop(){
+        		$('.winpop').remove();
+        		for (var i = 0; i < allTipInfos.length; i++) {
+        			var tip = allTipInfos[i];
+        			var bottom = (i * 160) + 5;
+					var parentDom = $("<div>").attr('id', tip.id).addClass('winpop').css('height', '150').css('display', 'block').css('bottom', bottom);
+        			var titleDom = $("<div>").addClass('title').html(tip.title);
+        			var spanDom = $("<span>").attr('id', 'a' + tip.id).addClass('close').html('X');
+        			spanDom.bind('click', function(){
+        				var spanDomId = $(this).attr('id');
+        				popMessageToTipTipInfos(spanDomId.substr(1));
+        			});
+        			spanDom.appendTo(titleDom);
+        			
+        			var contentDom = $('<div>').addClass('con');
+        			$('<a>').attr('href','#').html(tip.message).appendTo(contentDom);
+        			
+        			titleDom.appendTo(parentDom);
+        			contentDom.appendTo(parentDom);
+        			parentDom.appendTo('body');
+        		}
+        	};
+        	
+        	function showProgressBar(rate){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				if(rate == 95 && scope.rate<99 && scope.rate>=95){
+					scope.rate += 1;
+				} else if(scope.rate!=99){
+					scope.rate = rate;
+				}
+				try{
+ 					scope.$apply();
+				}catch(e){
+					
+				}
+        	}
+        	
+        	function hideProgressBar(){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				scope.rate=0;
+				try{
+ 					scope.$apply();
+				}catch(e){
+					
+				}
+			}
+        	
+        	function showLoad(){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				scope.loadCount+=1;
+				try{
+ 					scope.$apply();
+				}catch(e){
+					
+				}
+			}
+        	
+        	function hideLoad(){
+        		var appElement = document.querySelector('[ng-controller=mainCtrl]');
+				var scope=angular.element(appElement).scope();
+				scope.loadCount-=1;
+				try{
+ 					scope.$apply();
+				}catch(e){
+					
+				}
+			}
+        	
+        	startWebSocket();
+		</script>
+</body>
+</html>

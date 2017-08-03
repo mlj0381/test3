@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ApplicationApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>投诉管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css">
+<script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+</head>
+<body ng-controller="ApplicationCtrl"
+	style="overflow: hidden">
+	<div class="billing_1">
+		<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table search_term">
+					<tr>
+						<td width="100"><label class="control-label">省份：</label></td>
+						<td>
+							<div class="search_select">
+								<select ng-model="query.provinceId"  ng-init="query.provinceId=-1" ng-change="selectCity()">
+	                            	<option value="-1">请选择</option>
+	                            	<option ng-repeat="obj in provinceData"  value="{{obj.id}}">{{obj.name}}</option>
+								</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label">城市：</label></td>
+						<td>
+							<div class="search_select">
+								<select ng-model="query.cityId"  ng-init="query.cityId=-1" ng-change="selectDistrict()">
+	                            	<option value="-1">请选择</option>
+	                            	<option ng-repeat="obj in cityData"  value="{{obj.id}}">{{obj.name}}</option>
+								</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label">县区：</label></td>
+						<td>
+							<div class="search_select">
+								<select ng-model="query.countyId"  ng-init="query.countyId=-1" >
+	                            	<option value="-1">请选择</option>
+	                            	<option ng-repeat="obj in districtData"  value="{{obj.id}}">{{obj.name}}</option>
+								</select>
+							</div>
+						</td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" href="javaScript:void(0)" ng-click="doQuery()" ng-Enter>搜索</a> 
+								<a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">重置</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label">收货人：</label></td>
+						<td>
+							<input class="input_box" ng-model="query.receiveName" type="text" />
+						</td>
+						<td width="100"><label class="control-label">收货人电话：</label></td>
+						<td>
+							<input class="input_box" ng-model="query.receivePhone" type="text" />
+						</td>
+						<td width="100"><label class="control-label">运单号：</label></td>
+						<td>
+							<input class="input_box" ng-model="query.wayBillId" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label">安装师傅账号：</label></td>
+						<td>
+							<input class="input_box" ng-model="query.doTel" type="text" />
+						</td>
+						<td width="100"><label class="control-label">安装师傅：</label></td>
+						<td>
+							<input class="input_box" ng-model="query.doObjName" type="text" />
+						</td>
+						<td width="100"><label class="control-label">投诉状态：</label></td>
+						<td>
+							<div class="search_select">
+								<select ng-model="query.state"  ng-init="query.state=-1" >
+	                            	<option value="-1">所有</option>
+	                            	<option ng-repeat="obj in stateList"  value="{{obj.codeValue}}">{{obj.codeName}}</option>
+								</select>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+			<div class="search_nr ">
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2>
+			</div>
+			<my-table>
+			<div id="size" class="zz_list table_height" style="overflow:auto;">
+			<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0" style="width: 2000px;">
+				<thead  id="tb1">
+					<tr>
+						<th width="100">运单号</th>
+						<th width="100">服务类型</th>
+						<th width="130">开单日期</th>
+						<th width="100">收货人</th>
+						<th width="100">收货人电话</th>
+						<th width="150">收货城市</th>
+						<th width="140">安装师傅账号</th>
+						<th width="100">安装师傅</th>
+						<th width="100">投诉状态</th>
+						<th width="100">严重级别</th>
+						<th width="100">处理人</th>
+						<th width="180">处理情况说明</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class="{'search_list_tr':$index%2==1}" class="ng-cloak"
+						ng-repeat="o in page.data.items">
+						<td width="100">{{o.wayBillId}}</td>
+						<td width="100">{{o.exchangeType}}</td>
+						<td width="130">{{o.openDate}}</td>
+						<td width="100">{{o.receiveName}}</td>
+						<td width="100">{{o.receivePhone}}</td>
+						<td width="150">{{o.PROVINCE_CITY_COUNTY}}</td>
+						<td width="140">{{o.doTel}}</td>
+						<td width="100">{{o.doObjName}}</td>
+						<td width="100">{{o.stateName}}</td>
+						<td width="100">{{o.level}}</td>
+						<td width="100">{{o.dealOpName}}</td>
+						<td width="180">{{o.dealResult}}</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<!--任务列表 end--> </my-table>
+			</div>
+		</div>
+		<!-- 提现审批 开始 -->
+		<div class="tx_tc" id="vehicle_1"
+			style="display: none; margin-top: 0; padding-top: 28px; padding-bottom: 20px;">
+			<div style="min-height: 370px">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table tx_tc_table">
+					<tr>
+						<td width="100"><label class="control-label w_100">安装师傅：</label></td>
+						<td><input disabled="disabled" class="input_box" type="text"
+							ng-model="audit.workerName" /></td>
+						<td width="100"><label class="control-label w_100">师傅帐号：</label></td>
+						<td><input class="input_box" id="" type="text"
+							ng-model="audit.workerLoginAcct" disabled="disabled" /></td>
+						<td><label class="control-label w_100">提现金额：</label></td>
+						<td><input disabled="disabled" class="input_box" type="text"
+							value="300" ng-model="audit.dzMoney" /></td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">银行：</label></td>
+						<td><input class="input_box" id="" type="text"
+							ng-model="audit.bankName" disabled="disabled" /></td>
+						<td width="100"><label class="control-label w_100">持卡人：</label></td>
+						<td><input class="input_box" id="" type="text"
+							ng-model="audit.accountName" disabled="disabled" /></td>
+						<td><label class="control-label w_100">银行卡号：</label></td>
+						<td colspan="3"><input disabled="disabled" class="input_box"
+							type="text" style="width: 100%" ng-model="audit.bankAccount" /></td>
+					</tr>
+					<tr>
+						<td><label class="control-label w_100">申请时间：</label></td>
+						<td><input class="input_box" id="" type="text"
+							disabled="disabled" ng-model="audit.strCreateDate" /></td>
+						<td><label class="control-label w_100">申请人：</label></td>
+						<td><input class="input_box" id="" type="text"
+							disabled="disabled" ng-model="audit.workerName" /></td>
+					</tr>
+					<tr>
+						<td valign="top"><label class="control-label w_100"
+							style="line-height: 20px;">审批备注：</label></td>
+						<td colspan="5"><textarea ng-model="audit.auditNote"
+								maxlength="500"
+								style="height: 90px; width: 100%; border: 1px solid #d9e2ee; border-radius: 5px; padding: 3px 4px;"
+								ng-model="newData.carOwnerVisitLog"
+								class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea></td>
+					</tr>
+				</table>
+			</div>
+			<div class="tx_tc_button">
+				<a class="search_button_ss" href="javaScript:void(0)"
+					ng-click="auditSts('1')">通过</a><a class="search_button_ss"
+					href="javaScript:void(0)" ng-click="auditSts('2')">不通过</a><a
+					class="search_button_cz" href="javaScript:void(0)"
+					ng-click="auditBack()">取消</a>
+			</div>
+		</div>
+		<!-- 提现审批 结束 -->
+
+		<!-- 提现明细 开始 -->
+		<div class="tx_tc" id="vehicle_2"
+			style="display: none; margin-top: 0; padding-top: 28px; padding-bottom: 20px;">
+			<div class="search" style="padding-top: 0;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tbody>
+						<tr>
+							<td width="100"><label class="control-label w_100">安装师傅：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								ng-model="auditView.ca.workerName" /></td>
+							<td width="100"><label class="control-label w_100">师傅帐号：</label></td>
+							<td><input class="input_box" id="" type="text"
+								ng-model="auditView.ca.workerLoginAcct" disabled="disabled" /></td>
+							<td><label class="control-label w_100">提现金额：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								value="300" ng-model="auditView.ca.dzMoney" /></td>
+						</tr>
+						<tr>
+							<td width="100"><label class="control-label w_100">银行：</label></td>
+							<td><input class="input_box" id="" type="text"
+								ng-model="auditView.ca.bankName" disabled="disabled" /></td>
+							<td width="100"><label class="control-label w_100">持卡人：</label></td>
+							<td><input class="input_box" id="" type="text"
+								ng-model="auditView.ca.accountName" disabled="disabled" /></td>
+							<td><label class="control-label w_100">银行卡号：</label></td>
+							<td colspan="3"><input disabled="disabled" class="input_box"
+								type="text" style="width: 100%"
+								ng-model="auditView.ca.bankAccount" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix"></div>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="waybill_table_list">
+				<thead>
+					<tr>
+						<th>任务类别</th>
+						<th>运单号</th>
+						<th>金额</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class="{'search_list_tr':$index%2==0}" class="ng-cloak"
+						ng-repeat="t in auditView.cad">
+						<td>{{t.taskTypeName}}</td>
+						<td>{{t.bussId}}</td>
+						<td>{{t.dzMoney}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<!--任务列表 end-->
+
+			<div class="search" style="padding-top: 20px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tbody>
+						<tr>
+							<td width="150"><label class="control-label">申请人：</label></td>
+							<td><input disabled="disabled" class="input_box" id=""
+								type="text" ng-model="auditView.ca.CreateName" /></td>
+							<td width="100"><label class="control-label w_100">申请时间：</label></td>
+							<td><input disabled="disabled" class="input_box" id=""
+								type="text" ng-model="auditView.ca.strCreateDate" /></td>
+							<td width="150"><label class="control-label">审核人：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								ng-model="auditView.ca.AuditMan" /></td>
+							<td width="100"><label class="control-label w_100">审核时间：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								ng-model="auditView.ca.strAuditDate" /></td>
+						</tr>
+						<tr>
+
+							<td width="150"><label class="control-label">审核状态：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								ng-model="auditView.ca.stateName" /></td>
+							<td width="100"><label class="control-label w_100">审核备注：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								value="300" ng-model="auditView.ca.auditNote" /></td>
+							<td><label class="control-label">打款时间：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								ng-model="auditView.ca.strVeriyDate" /></td>
+							<td><label class="control-label">核销码：</label></td>
+							<td><input disabled="disabled" class="input_box" type="text"
+								ng-model="auditView.ca.VerifyId" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="tx_tc_button" style="margin-top: 20px;">
+				<a class="search_button_cz" href="#"
+					onclick="document.getElementById('vehicle_2').style.display='none';document.getElementById('vehicle').style.display='block'">返回</a>
+			</div>
+		</div>
+		<!-- 提现明细 结束 -->
+
+		<!-- 提现申请 开始 -->
+		<div class="tx_tc" id="vehicle_3"
+			style="display: none; margin-top: 0; padding-top: 28px; padding-bottom: 20px;">
+			<div class="search" style="padding-top: 0;">
+
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tbody>
+						<tr>
+							<td width="150"><label class="control-label">安装师傅账号：</label></td>
+							<td><input class="input_box" id="" type="text"
+								ng-model="add.loginAcct" ng-keypress="keypress($event)" /></td>
+							<td width="100"><label class="control-label w_100">安装师傅：</label></td>
+							<td><input disabled="disabled" class="input_box" id=""
+								type="text" ng-model="add.workerName" /></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td width="150"><label class="control-label">待提现金额：</label></td>
+							<td><input disabled="disabled" class="input_box input_bbj"
+								type="text" ng-model="add.waitCash" /></td>
+							<td width="100"><label class="control-label w_100">提现中金额：</label></td>
+							<td><input disabled="disabled" class="input_box input_bbj"
+								type="text" ng-model="add.getCash" /></td>
+							<td width="100"><label class="control-label w_100">已提现金额：</label></td>
+							<td><input disabled="disabled" class="input_box input_bbj"
+								type="text" ng-model="add.hasCash" /></td>
+						</tr>
+						<tr>
+
+							<td width="150"><label class="control-label">银行：</label></td>
+							<td><input disabled="disabled" class="input_box input_bbj"
+								type="text" ng-model="add.bankName" /></td>
+							<td width="100"><label class="control-label w_100">持卡人：</label></td>
+							<td><input disabled="disabled" class="input_box input_bbj"
+								type="text" ng-model="add.accountName" /></td>
+							<td><label class="control-label w_100">申请提现金额：</label></td>
+							<td><input disabled="disabled" class="input_box input_bbj"
+								type="text" ng-model="add.applyTotalMoney" /></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">支行名称：</label></td>
+							<td colspan="3"><input disabled="disabled"
+								class="input_box input_bbj" type="text" style="width: 438px"
+								ng-model="add.bankName" /></td>
+							<td><label class="control-label">账号：</label></td>
+							<td colspan="3"><input disabled="disabled"
+								class="input_box input_bbj" type="text" style="width: 438px"
+								ng-model="add.bankAccount" /></td>
+
+						</tr>
+
+					</tbody>
+				</table>
+
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix"></div>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="waybill_table_list">
+				<thead>
+					<tr>
+						<th><div class="input_z">
+								<input id="checkboxb" class="none input_gx"
+									ng-click="selectAll('check-2','checkboxb');" type="checkbox">
+								<label for="checkboxb"></label>
+							</div></th>
+						<th>任务类别</th>
+						<th>运单号</th>
+						<th>金额</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class="{'search_list_tr':$index%2==0}" class="ng-cloak"
+						ng-click="selectOne(t,'checkboxt');" ng-repeat="t in add.items">
+						<td class="search_list_border"><div class="controls">
+								<input id="checkboxt{{t.taskId}}" class="none input_gx"
+									value="{{t}}" type="checkbox" name="check-2"><label
+									for="check-2"></label>
+							</div></td>
+						<td>{{t.taskTypeName}}</td>
+						<td>{{t.bussId}}</td>
+						<td>{{t.totalMoney}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<!--任务列表 end-->
+
+			<!--任务列表 end-->
+			<div class="tx_tc_button" style="margin-top: 20px;">
+				<a class="search_button_ss" href="javaScript:void(0)"
+					ng-click="doSave()">申请</a><a class="search_button_cz" href="#"
+					ng-click="applyBack()">返回</a>
+			</div>
+		</div>
+		<!-- 提现申请 结束 -->
+
+	</div>
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="ComplainListCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

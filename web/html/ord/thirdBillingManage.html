@@ -1,0 +1,199 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="thirdBillingManageApp"> 
+	<head>
+	    <title>联运汇_运单管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <style type="text/css">
+          .hideString{
+		        white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+		    }
+		   .search_term .form_select, .search_term .search_select{    width:150px;}
+			.form_term { width:150px}
+			.lsw{ width:152px!important;}
+			.lsw1{ width:66px!important;}
+			.lws2{ width:94px!important;}
+			@media(min-width:1600px){
+				.search_term .form_select, .search_term .search_select{    width:170px;}
+			    .form_term { width:170px}
+			    .lsw{ width:172px!important;}
+			    .lsw1{ width:76px!important;}
+			    .lws2{ width:94px!important;}
+        </style>
+</head>
+	<body ng-controller="thirdBillingManageCtrl">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">开单日期：</label></td>
+						<td width="160">
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr lsw1"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr lsw1" type="text">
+                         </td>
+						<td width="100"><label class="term_label">开单网点：</label></td>
+						<td width="155"><div class="form_select">
+                               <!--  <select class="ng-cloak">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select> -->
+                                <select ng-model="query.orgId" ng-options="obj.orgId as obj.orgName for  obj in orgData " ng-change="queryOrg()">
+                                </select>
+                            </div></td>
+						<td width="100"><label class="term_label">配送网点：</label></td>
+						<td width="150"><div class="form_select" >
+                                <select ng-model="query.descOrgId" ng-options="obj.endOrgId as obj.endOrgName for  obj in orgInfo.items ">
+                                </select>
+                            </div>
+						</td>
+						<td width="100"><label class="term_label">付款方式：</label></td>
+						<td><div class="form_select" >
+                                <select ng-model="query.paymentType" ng-options="objCon.codeValue as objCon.codeName for objCon in paymentTypeData ">
+                                </select>
+                            </div>
+						</td>
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery(1);" ng-Enter  href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+						
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">运单状态：</label>
+                        
+                    	</td>
+						<td>
+                        <div class="form_select" >
+                                <my-select id="query.orderState" selectid="id='id4'" has-all="true"  code-type="APP_ORDER_STATE"  showName="codeName" defaultValue="-1" showValue="codeId" filter="拼单中,已删除" ></my-select>
+                            </div>
+                        </td>
+						
+						<td>
+                        	<div class="form_select lws2">
+                           	 	 <select ng-model="query.queryType" ng-disabled="all" ng-options="objCon.codeValue as objCon.codeName for objCon in queryTypeDate.items"></select>
+                        	 </div>
+                        </td>
+                        <td>
+                        	 <input class="form_term lsw" ng-model="query.queryValue"  type="text">
+                    	</td>
+						<td width="100"><label class="term_label">制单人：</label>
+                        
+                    	</td>
+						<td >
+                            <input class="form_term lsw"  ng-model="query.inputUserName"  type="text">
+                        </td>
+						<td></td>
+						<td></td>
+				</tbody>
+		</table>
+                     <div class="search_nr clearfix mt_20">
+              		<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	              		   <h2>查询结果</h2>
+	              		    <a class="button ml_10 anzhuanks" ng-click="openUp();" href="javascript:void(0);"><i class="button_icon button_icon dw_anzhuanks"></i>上传图片</a>
+	              		    <a ng-click="addView();" href="javascript:void(0)" ng-show="isShow">运单录入</a>
+		              		<a class="button ml_10 modify ng-hide" my-has-auth="90002"  href="javascript:void(0)" ng-click="toEdit();" ng-show="isShow"><i class="button_icon button_icon dw_modify ml0"></i>运单修改</a>
+		              		<a class="button ml_10 modify ng-hide"  my-has-auth="90004"   href="javascript:void(0)" ng-click="toEditSign();" ><i class="button_icon button_icon dw_modify ml0"></i>签收运单修改</a>
+		              		<a class="button ml_10 delete ng-hide" my-has-auth="90001"   ng-click="toDel();" href="javascript:void(0)"　ng-show="isShow" id="delOrder" ><i class="button_icon button_icon dw_delete ml0"></i>运单删除</a>
+		              		<a class="button ml_10 see_b" ng-click="toView(1);" href="javascript:void(0)" ><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+<!-- 	              		    <a ng-click="toTransfer();" href="javascript:void(0)" ng-show="isShow" id="auditId">运单中转</a>
+ -->		              		<a href="javascript:void(0)" id="exportId" ng-click="commonExport()">导  出</a>
+	              		    <a ng-click="toEdit('print');" href="javascript:void()" >打印</a>
+		              		<a ng-click="posting();" href="javascript:void(0)"　ng-show="isShow"><i></i>过账</a>
+              		</div>
+                <my-Adv-Table isShowSeq="false" width="100%" tablename="billingManage" isMultiSelect="true"  isShowCheck="true" doubleclick="toDetailAllInfo" isFilter="true" isSum="true" id="orderId" head='[
+                			{"name":"运单号","code":"trackingNum","width":"110"},
+                			{"name":"过账","code":"postingStsName","width":"60"},
+			                {"name":"开单网点","code":"orgIdName","width":"90"},
+			                {"name":"开单时间","code":"createDate","width":"125"},
+			                {"name":"库存网点","code":"currentOrgIdName","width":"90"},
+			                {"name":"运单状态","code":"seeOrderStateName","width":"70"},
+			                {"name":"配送网点","code":"distributionOrgIdName","width":"90"},
+			                {"name":"目的城市","code":"destCityName","width":"60"},
+			                {"name":"目的区域","code":"destCityNameAnddestCountyName","width":"60"},
+			                {"name":"收货人","code":"consigneeName","width":"120"},
+			                {"name":"收货人电话","code":"consigneeBill","width":"110"},
+			                {"name":"货品","code":"products","width":"80"},
+			                {"name":"货号","code":"goodsNumber","width":"80"},
+			                {"name":"运输方式","code":"isSeaTransportName","width":"70"},
+			                {"name":"交接方式","code":"deliveryTypeName","width":"70"},
+			                {"name":"总体积(方)","code":"volume","isSum":"true","number":"2","width":"70"},
+			                {"name":"件数","code":"count","isSum":"true","width":"70"},
+			                {"name":"总重量(kg)","code":"weight","isSum":"true","number":"1","width":"70"},
+			                {"name":"运费","code":"freightDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"配安费","code":"installCostsDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"回扣","code":"discountDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"费用合计","code":"totalFeeDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"运费核销","code":"tranferFalgName","width":"70"},
+			                {"name":"付款方式1","code":"paymentTypeName","width":"70"},
+			                {"name":"金额1(元)","code":"cashMoneyDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"付款方式2","code":"paymentType2Name","width":"70"},
+			                {"name":"金额2(元)","code":"cashMoney2Double","isSum":"true","number":"2","width":"70"},
+			                {"name":"现付","code":"cashPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"到付","code":"freightCollectDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"月结","code":"monthlyPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"回单付","code":"receiptPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"转账","code":"transPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"收货地址","code":"address","width":"120"},
+			                {"name":"发货人","code":"consignorName","width":"120"},
+			                {"name":"发货人电话","code":"consignorTelephone","width":"110"},
+			                {"name":"合作商","code":"doObjName","width":"120"},
+			                {"name":"合作商电话","code":"doTel","width":"110"},
+			                {"name":"家装服务","code":"serviceTypeName","width":"80"},
+			                {"name":"制单人","code":"inputUserName","width":"80"},
+			                {"name":"仓管员","code":"consignee","width":"80"},
+			                {"name":"备注","code":"remarks","width":"170"},
+			                {"name":"是否签回单","code":"isReceiptName","width":"70"},
+			                {"name":"回单号","code":"receiptNum","width":"70"},
+			                {"name":"回单数量","code":"receiptCount","isSum":"true","width":"60"},  
+			                {"name":"是否核销","code":"isVerificationName","width":"60"},
+			                {"name":"商家订单号","code":"sellerOrderId","width":"80"},
+			                {"name":"是否直送","code":"isDirectName","width":"60"},
+			                {"name":"是否贵重物品","code":"isImportantName","width":"80"},
+			                {"name":"是否控货","code":"releaseNoteName","width":"60"},
+			                {"name":"代收货款","code":"collectingMoneyDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"代收手续费","code":"procedureFeeDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"申明价值","code":"goodsPriceDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"保险费","code":"offerDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"装卸费","code":"handingCostsDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"包装费","code":"packingCostsDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"提货费","code":"pickingCostsDouble","isSum":"true","number":"2","width":"70"}
+			                ]'>
+			                
+			                
+                </my-Adv-Table>
+                <!-- 运单上传图片 -->
+                <div  ng-show="orderUpPic" ng-include="'orderCommonUploadPic.html'"></div>
+                <!-- 运单上传图片 -->
+		</div>
+        
+        </div>
+
+
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="thirdBillingManageCtrl.js?v=${ver}"></script>
+		
+</body>
+</html>
+

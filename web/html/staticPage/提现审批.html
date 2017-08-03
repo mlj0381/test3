@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmCarrierCompanyApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.ui-select select{}
+</style>
+
+</head>
+<body ng-controller="addCmCarrierCompanyCtrl" >
+
+	<!-- 拉包工 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"	style="min-height: 300px">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width:90%;margin: 0 auto;">
+				    <tr>
+						<td width="110"><label class="term_label">拉包工帐号：</label></td>
+						<td><input  maxlength="15" ng-model="data.orgPrincipal" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+					    <td width="110"><label class="term_label">拉包工：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td width="110"></td>
+						<td></td>
+						<td width="110"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><label class="term_label">收款方式：</label></td>
+						<td>
+							<div class="ui-select">
+							   <select ng-model="data.regionId" ng-options="obj.id as obj.name for  obj in citys" ng-change="selectDistrict(data.regionId)" class="ng-pristine ng-untouched ng-valid">
+							   	<option value="0" selected="selected" label="全部">全部</option>
+							   </select>
+							</div>
+						</td>
+					    <td><label class="term_label">卡名：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td><label class="term_label">持卡人：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td><label class="term_label">帐号：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					</tr>
+					<tr>
+						<td><label class="term_label">已提现金额：</label></td>
+						<td>
+							<input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+						</td>
+					    <td><label class="term_label">提现中金额：</label></td>
+						<td><input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+						<td><label class="term_label">待提现金额：</label></td>
+						<td>
+							<input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+						</td>
+						<td><label class="term_label">申请提现金额：</label></td>
+						<td>
+							<input  maxlength="16" ng-model="data.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+						</td>
+					</tr>
+					
+					
+				</table>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_term" style="width:90%;margin: 0 auto;padding: 4px 0!important;">
+					<tr>
+							<td width="110"></td>
+							<td colspan="7">
+								<div style="border-top: 0px solid #f0f5fb;border-bottom: 0px solid #f0f5fb;">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list" style="border-right: 1px solid #b7d3e7; ">
+								  <thead>
+									<tr>
+										<th width="60">
+											<div class="input_z">
+												<input ng-click="selectAll();" id="checkbox" class="none input_gx" name="checkbox" type="checkbox">
+												<label for="checkbox"></label>
+											</div>
+										</th>
+										<th>序号</th>
+										<th>费用类型</th>
+										<th>运单号</th>
+										<th>订单号</th>
+										<th>小费金额</th>			
+										
+								  </tr>
+								  </thead>
+								  <tbody>
+								  <tr class="waybill_table_listtr">
+										<td>
+											<div class="input_z">
+												<input ng-click="selectAll();" id="checkbox" class="none input_gx" name="checkbox" type="checkbox">
+												<label for="checkbox"></label>
+											</div>
+										</td>
+										<td>操作内容操作内容</td>
+										<td>2011-01-01 12:00:00</td>
+										<td>操作人</td>
+										<td>2011-01-01 12:00:00</td>
+										<td>操作人</td>
+								  </tr>
+								  </tbody>
+								</table>
+								</div>
+							</td>
+						</tr>
+				</table>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width:90%;margin: 0 auto;">
+					<tr>
+					    <td valign="top" width="110"><label class="term_label">审批备注：</label></td>
+						<td colspan="7">
+						   <textarea maxlength="200" style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 2px; padding:3px 4px;" ng-model="user.sellerNotes" class="form-control fl ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched"></textarea>
+						</td>
+					    
+					</tr>
+				</table>
+			</div>
+		<div class="bottom_nav1" style="border-top:1px dashed #cee1f1; padding-top:20px; margin-top:15px;">
+			<a href="javascript:void(0)" ng-click="doSave()">审批通过</a>
+			<a href="javascript:void(0)" ng-click="doSave()">审批不通过</a>
+			<a href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+	<!-- 拉包工 新增 结束 -->
+	
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmCarrierCompanyCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

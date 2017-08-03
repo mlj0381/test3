@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-21 9:53:59 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ac.vo.AcMyWallet" table="ac_my_wallet">
+		<id name="id" type="java.lang.Long">
+			<column name="Id" />
+			<generator class="identity" />
+		</id>
+		<property name="userId" type="java.lang.Long">
+			<column name="USER_ID" not-null="true">
+			</column>
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME" not-null="true">
+			</column>
+		</property>
+		<property name="applyTime" type="java.util.Date">
+			<column name="APPLY_TIME">
+			</column>
+		</property>
+		<property name="showTime" type="java.util.Date">
+			<column name="SHOW_TIME">
+			</column>
+		</property>
+		<property name="orderId" type="java.lang.Long">
+			<column name="ORDER_ID" length="20">
+			</column>
+		</property>
+		<property name="amount" type="java.lang.Long">
+			<column name="AMOUNT" length="20">
+			</column>
+		</property>
+		<property name="amountState" type="java.lang.Integer">
+			<column name="AMOUNT_STATE" length="2">
+			</column>
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE" length="2">
+			</column>
+		</property>
+		<property name="province" type="java.lang.Long">
+			<column name="PROVINCE">
+			</column>
+		</property>
+		<property name="provinceName" type="java.lang.String">
+			<column name="PROVINCE_NAME">
+			</column>
+		</property>
+		<property name="consignor" type="java.lang.String">
+			<column name="CONSIGNOR">
+			</column>
+		</property>
+		<property name="consignorPhone" type="java.lang.String">
+			<column name="CONSIGNOR_PHONE">
+			</column>
+		</property>
+		<property name="orderTime" type="java.util.Date">
+			<column name="ORDER_TIME">
+			</column>
+		</property>
+		<property name="accountId" type="java.lang.Long">
+			<column name="ACCOUNT_ID">
+			</column>
+		</property>
+		<property name="orderNumber" type="java.lang.String">
+			<column name="ORDER_NUMBER">
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID" length="20">
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

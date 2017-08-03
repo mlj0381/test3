@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="departManageApp">
+<head>
+<title>联运汇_干线发车</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}">
+<style type="text/css">
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak,
+	.x-ng-cloak, .ng-hide:not (.ng-hide-animate ) {
+	display: none !important;
+}
+</style>
+</head>
+<body ng-controller="departManageCtrl" style="overflow: hidden"
+	onload="setContentHegthDelay()">
+	<!-- 运单录入 -->
+	
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 400px">
+
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			class="yic_n clearfix fl yic_sx dhl_zz" style="padding: 20px 0;">
+			<tbody>
+				<tr>
+
+					<td class="yic_li" width="140">
+						<label class="yic_label"><em>*</em>导入文件：</label>
+					</td>
+					<td><input type="file" ng-file-select="" ng-model="tennatDataConfigFile" name="file" class="ng-pristine ng-valid ng-touched"></td>
+					<td class="yic_li" width="140"></td>
+					<td></td>
+					<td class="yic_li" width="140"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="yic_li"></td>
+					<td></td>
+					<td class="yic_li"></td>
+					<td></td>
+					<td class="yic_li"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="yic_li "></td>
+					<td></td>
+					<td class="yic_li" id="area_id_display"></td>
+					<td></td>
+					<td class="yic_li" id="area_id_display"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="yic_li" id="area_id_display"></td>
+					<td></td>
+					<td class="yic_li" id="area_id_display"></td>
+					<td></td>
+					<td class="yic_li" id="area_id_display"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="yic_li"></td>
+					<td></td>
+					<td class="yic_li" id="area_id_display">
+					<label class="yic_label"></label></td>
+					<td></td>
+
+					<td class="yic_li" id="area_id_display" style=""></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="yic_li"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div>
+			<span style="color: red">提示：点击下方的“导出格式”导出模板，参照模板填写好后请删除模板中原有的数据，货品必选，否则不记录该条运单。</span><br />
+			<span style="margin-left: 37px; color: red">最多一次性导入300条数据，超过300条的后面数据不做录入！！！</span>
+		</div>
+		<div class="bottom_nav1 pb_20 bottom_nav_search"
+			style="border-top: 1px solid #eeeeee; padding-top: 15px; margin-top: 10px;">
+			<a href="javascript:void(0)" ng-click="commit(tennatDataConfigFile)">开始录入</a>
+			<a href="/download/text.xlsx">导出格式</a>
+			<a href="javascript:void(0)" ng-click="close()">返回</a>
+		</div>
+	</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/fileupload/angular-file-upload-shim.js"></script>
+	<script type="text/javascript"
+		src="../js/fileupload/angular-file-upload.js"></script>
+	<script type="text/javascript" src="../js/fileupload/upload.js"></script>
+	<script type="text/javascript" src="ordImportBillMainCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

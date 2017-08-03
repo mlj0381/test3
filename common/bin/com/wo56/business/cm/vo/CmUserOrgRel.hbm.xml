@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-1 13:46:15 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmUserOrgRel" table="cm_user_org_rel">
+		<id name="userOrgRelId" type="long">
+			<column name="user_org_rel_id" />
+			<generator class="identity" />
+		</id>
+		<property name="userId" type="java.lang.Long">
+			<column name="user_id" />
+		</property>
+		<property name="orgId" type="java.lang.Long">
+			<column name="org_id" />
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="tenant_id" />
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="op_id" />
+		</property>
+		<property name="opDate" type="timestamp">
+			<column name="op_date" length="19" not-null="true" />
+		</property>
+		<property name="marginFee" type="java.lang.Long">
+			<column name="margin_fee">
+				<comment>&#210;&#209;&#189;&#201;&#196;&#201;&#177;&#163;&#214;&#164;&#189;&#240;&#163;&#168;&#181;&#165;&#206;&#187;&#183;&#214;&#163;&#169;</comment>
+			</column>
+		</property>
+		<property name="marginFeeLimit" type="java.lang.Long">
+			<column name="margin_fee_limit">
+				<comment>&#177;&#163;&#214;&#164;&#189;&#240;&#183;&#167;&#214;&#181;(&#181;&#165;&#206;&#187;&#183;&#214;)</comment>
+			</column>
+		</property>
+		<property name="largestAcceptOrder" type="java.lang.Integer">
+			<column name="largest_accept_order">
+				<comment>&#215;&#238;&#180;&#243;&#189;&#211;&#181;&#165;&#202;&#253;</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

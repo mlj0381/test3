@@ -1,0 +1,28 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+apply plugin: 'war'
+apply plugin: 'application'
+
+webAppDirName = 'html'
+mainClassName = 'com.wo56.business.StartWebServer'
+applicationDefaultJvmArgs = ["-Djava.awt.headless=true", "-Djava.net.preferIPv4Stack=true", "-Dsun.net.inetaddr.ttl=10", "-Djava.security.egd=file:/dev/zero", "-Dfile.encoding=UTF-8", "-agentlib:JvmMain"]
+
+dependencies {
+    compile (
+    	project(':common')
+    )
+}
+
+war {
+	def buildTimestamp = new Date().format('ddHHmmss')
+	eachFile {
+		if (it.name.indexOf('.html') > 0) {
+	    	filter(ReplaceTokens, tokens: ['title': project.ext.title, 'ver': buildTimestamp],  beginToken : '${', endToken : '}')
+	    }
+	}
+}
+
+def loadEnvConfig(env) {
+    def configFile = file('config.groovy')
+    new ConfigSlurper(env).parse(configFile.toURL()).toProperties()
+}

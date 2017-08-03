@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-8 16:39:51 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.sys.vo.SysTenantRegister" table="sys_tenant_register">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="logisticsName" type="java.lang.String">
+			<column name="LOGISTICS_NAME" length="50" not-null="true">
+				<comment>物流公司名称</comment>
+			</column>
+		</property>
+		
+		<property name="linkName" type="java.lang.String">
+			<column name="LINK_NAME" length="50" not-null="true">
+				<comment>联系人</comment>
+			</column>
+		</property>
+		<property name="telephone" type="java.lang.String">
+			<column name="TELEPHONE" length="50" not-null="true">
+				<comment>联系电话</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS" length="500" not-null="true">
+				<comment>地址</comment>
+			</column>
+		</property>
+		<property name="boardTime" type="java.util.Date">
+			<column name="BOARD_TIME"  not-null="true">
+				<comment>登记时间</comment>
+			</column>
+		</property>
+		<property name="remark" type="java.lang.String">
+			<column name="REMARK" length="500" >
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="boardName" type="java.lang.String">
+			<column name="BOARD_NAME" length="50">
+				<comment>登记人</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

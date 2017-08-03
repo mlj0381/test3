@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-4-23 14:26:43 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.transfer.vo.OrdTransferDetail" table="ord_transfer_detail">
+        <composite-id name="id" class="com.wo56.business.transfer.vo.OrdTransferDetailId">
+            <key-property name="batchNum" type="java.lang.Long">
+                <column name="BATCH_NUM" />
+            </key-property>
+            <key-property name="orderId" type="java.lang.Long">
+                <column name="ORDER_ID" />
+            </key-property>
+        </composite-id>
+        <property name="createDate" type="java.sql.Timestamp">
+            <column name="CREATE_DATE" length="19">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

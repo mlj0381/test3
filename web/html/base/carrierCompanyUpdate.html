@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="carrierCompanyUpdateApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+<style>
+.form_billing{border-radius: 1px;}
+.ui-select{width: 100%;
+        width:-moz-calc(100% - 2px);
+        width:-webkit-calc(100% - 2px);
+        width:calc(100% - 2px)}
+.ui-select,.ui-select select{ height:24px!important;min-height: 24px !important;}
+.ui-select select{}
+</style>
+
+</head>
+<body ng-controller="carrierCompanyUpdateCtrl" onLoad="setContentHeight()">
+
+	<!-- 拉包工 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"	style="min-height: 300px">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="width: 360px;margin: 0 auto;">
+				    <tr>
+						<td width="110"><label class="term_label"><em>*</em>公司编码：</label></td>
+						<td><input  maxlength="15" ng-model="user.tenantCode" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+						
+					</tr>
+					<tr>
+						<td width="110"><label class="term_label"><em>*</em>拉包公司：</label></td>
+						<td><input  maxlength="15" ng-model="user.name" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+						
+					</tr>
+					<tr>
+						<td width="110"><label class="term_label"><em>*</em>法人：</label></td>
+						<td><input  maxlength="15" ng-model="user.linkMan" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+						
+					</tr>
+					<tr>
+						<td width="110"><label class="term_label"><em>*</em>联系电话：</label></td>
+						<td><input  maxlength="15" ng-model="user.linkPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+						
+					</tr>
+					<tr>
+						<td width="110"><label class="term_label">客服电话：</label></td>
+						<td><input  maxlength="15" ng-model="user.csPhones" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/></td>
+						
+					</tr>
+					<tr>
+					  <td width="110" valign="top"><label class="term_label">公司地址：</label></td>
+						<td> <textarea maxlength="500" style="height:60px; width:100%; border: 1px solid #A1BBD1;border-radius: 2px; padding:3px 4px;resize:none;" ng-model="user.address" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea></td>
+						
+					</tr>
+					<tr>
+						<td width="110"><label class="term_label">法人身份证：</label></td>
+						<td>
+							<div class="controls">
+								<li>
+			                       <span my-File-Model="corporateFrontCardId" is-Close="false"  ></span>
+			                       <span my-File-Model="corporateBackCardId" is-Close="true" ></span>
+			                     </li>
+		                   </div>
+						</td>
+					</tr>
+					<tr>
+						<td width="110"><label class="term_label">公司营业执照：</label></td>
+						<td>
+							<div class="controls">
+		                       <span my-File-Model="businesslicensePicId" is-Close="false"></span>
+		                   </div>
+						</td>
+					</tr>
+					<tr>
+					  <td valign="top"><label class="term_label">公司简介：</label></td>
+						<td>
+						  <textarea maxlength="500" style="height:60px; width:100%; border: 1px solid #A1BBD1;border-radius: 2px; padding:3px 4px;resize:none;" ng-model="user.sellerNotes" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+						</td>
+					    
+					</tr>
+				</table>
+			</div>
+		<div class="bottom_nav1" style="border-top:1px dashed #cee1f1; padding-top:20px; margin-top:15px;">
+			<a href="javascript:void(0)" ng-click="doUpdate()">提 交</a><a
+			href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+	<!-- 拉包工 新增 结束 -->
+	
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="carrierCompanyUpdateCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

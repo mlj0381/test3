@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AcProveCashStsApp"> 
+	<head>
+	    <title>众邦_核销管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="AcProveCashStsCtrl" onload="setContentHeight()"  style="overflow:hidden">
+        <!-- 核销管理 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">运单号：</label></td>
+						<td><input class="form_term" ng-model="query.trackingNum" ng-change="upNum('query.trackingNum')" maxlength="16" type="text"></td>
+						<td width="100"><label class="term_label">核销类型：</label></td>
+                       		
+						<td><div class="form_select">
+                                <my-select id="query.checkType"   else-value="5-6-99-7"	value="" code-type="AC_CASH_PROVE@CHECK_TYPE" has-all="true" default-value="-1" url="" />
+                            </div></td>
+						<td width="100"><label class="term_label">收支类型：</label>
+                       		</td>
+						<td><div class="form_select">
+                                <my-select id="query.inoutSts" code-type="AC_CASH_PROVE@INOUT_STS"  has-all="true" default-value="-1" />
+                            </div></td>
+						
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							<!-- <div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" href="javascript:void(0);">查询</a><a class="search_button_cz" ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div> -->
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">核销状态：</label>
+                       		</td>
+						<td><div class="form_select">
+                                <my-select id="query.checkSts" filter="已核销" code-type="AC_CASH_PROVE@CHECK_STS" default-value="2"  has-all="false" url="" />
+                            </div></td>
+						<td width="100"><label class="term_label">发货方：</label></td>
+						<td><input class="form_term" ng-model="query.consignorName" maxlength="16" type="text"></td>
+						<td width="100"><label class="term_label">发货人：</label></td>
+						<td><input class="form_term" ng-model="query.consignorLinkmanName"  maxlength="16" type="text"></td>
+						
+					</tr>
+					<tr>
+						
+						<td width="100"><label class="term_label">发货人手机：</label></td>
+						<td><input class="form_term" ng-model="query.consignorBill"  maxlength="16" type="text"></td>
+						<td width="100"></td>
+						<td></td>
+                       	<td></td>
+                       	<td></td>
+                       
+					</tr>
+				</tbody>
+		</table>
+        
+                
+                <div class="search_nr clearfix mt_20">
+                    <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果</h2><a  ng-click="deal();" href="javascript:void(0)">现金已收</a></div>
+              
+                            
+                  <my-table>
+                  
+                  <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0" style="width:1915px;display: block;">
+                               <thead id="tb1">
+                                <tr >
+                                    <th width="80" class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                    <th width="119">运单号</th>
+                                    <th width="111">核销金额</th>
+                                    <th width="108">核销状态</th>
+                                    <th width="140">创建日期</th>
+                                    <th width="142">核销日期</th>
+                                    <th width="128">收支类型</th>
+                                    <th width="118">现金状态</th>
+                                    <th width="130">对方对象类型</th>
+                                    <th width="128">对方对象ID</th>
+                                    <th width="108">核销类型</th>
+                                    <th width="108">核销方式</th>
+                                    <th width="92">发货方</th>
+                                    <th width="92">发货人</th>
+                                    <th width="92">发货人手机</th>
+                                    <th width="202">系统备注</th>
+                                </tr>
+                              </thead>
+                          
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.checkedId);" ng-repeat="o in page.data.items">
+                                  	<td width="80" class="search_list_border"><div class="controls"><input id="checkbox{{o.checkedId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="119">{{o.trackingNum}}</td>
+                                    <td width="111">{{o.amount/100}}</td>
+                                    <td width="108">{{o.checkStsName}}</td>
+                                    <td width="140">{{o.createDate}}</td>
+                                    <td width="142">{{o.checkDate}}</td>
+                                    <td width="128">{{o.inoutStsName}}</td>
+                                    <td width="118">{{o.cashStsName}}</td>
+                                    <td width="130">{{o.faceObjTypeName}}</td>
+                                    <td width="128">{{o.faceObjIdName}}</td>
+                                    <td width="108">{{o.checkTypeName}}</td>
+                                    <td width="108">{{o.isSysDoName}}</td>
+                                    <td width="92">{{o.consignorName}}</td>
+                                    <td width="92">{{o.consignorLinkmanName}}</td>
+                                    <td width="92">{{o.consignorBill}}</td>
+                                    <td width="202"><div class="wz_hh" style="width: 200px;">{{o.sysRemark}}</div></td>
+                                  </tr>
+                              </tbody>
+                            </table>
+							
+				</div>
+                </my-table>
+                           
+		</div>
+        
+        </div>
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="AcProveCashStsCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

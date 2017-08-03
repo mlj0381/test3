@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-5 15:08:56 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.sys.vo.SysTenantDef" table="sys_tenant_def">
+        <id name="tenantId" type="long">
+            <column name="TENANT_ID" />
+            <generator class="native" />
+        </id>
+        <property name="tenantCode" type="string">
+            <column name="TENANT_CODE" length="20">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;CODE</comment>
+            </column>
+        </property>
+        <property name="name" type="string">
+            <column name="NAME" length="40">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;&#229;&#144;&#141;&#231;&#167;&#176;</comment>
+            </column>
+        </property>
+        <property name="linkMan" type="string">
+            <column name="LINK_MAN" length="10">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;&#232;&#129;&#148;&#231;&#179;&#187;&#228;&#186;&#186;</comment>
+            </column>
+        </property>
+        <property name="linkPhone" type="string">
+            <column name="LINK_PHONE" length="15">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;&#232;&#129;&#148;&#231;&#179;&#187;&#228;&#186;&#186;&#231;&#148;&#181;&#232;&#175;&#157;</comment>
+            </column>
+        </property>
+        <property name="outerLinkMan" type="string">
+            <column name="OUTER_LINK_MAN" length="10">
+                <comment>
+                &#229;&#164;&#150;&#229;&#143;&#145;&#228;&#184;&#154;&#229;&#138;&#161;&#233;&#187;&#152;&#232;&#174;&#164;&#232;&#129;&#148;&#231;&#179;&#187;&#228;&#186;&#186;</comment>
+            </column>
+        </property>
+        <property name="outerLinkPhone" type="string">
+            <column name="OUTER_LINK_PHONE" length="15">
+                <comment>
+                &#229;&#164;&#150;&#229;&#143;&#145;&#228;&#184;&#154;&#229;&#138;&#161;&#233;&#187;&#152;&#232;&#174;&#164;&#232;&#129;&#148;&#231;&#179;&#187;&#228;&#186;&#186;&#231;&#148;&#181;&#232;&#175;&#157;</comment>
+            </column>
+        </property>
+        <property name="csPhones" type="string">
+            <column name="CS_PHONES" length="50">
+                <comment>&#229;&#174;&#162;&#230;&#156;&#141;&#231;&#148;&#181;&#232;&#175;&#157;(&#229;&#164;&#154;&#228;&#184;&#170;)</comment>
+            </column>
+        </property>
+        <property name="domain" type="string">
+            <column name="DOMAIN" length="40">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;&#229;&#159;&#159;&#229;&#144;&#141;&#233;&#133;&#141;&#231;&#189;&#174;</comment>
+            </column>
+        </property>
+        <property name="style" type="string">
+            <column name="STYLE" length="20">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;&#231;&#154;&#174;&#232;&#130;&#164;&#233;&#133;&#141;&#231;&#189;&#174;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="CREATE_DATE" length="19">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#230;&#151;&#165;&#230;&#156;&#159;</comment>
+            </column>
+        </property>
+        <property name="status" type="int">
+            <column name="STATUS" >
+                <comment>状态 0 无效 1 有效</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

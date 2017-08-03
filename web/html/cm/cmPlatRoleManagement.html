@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="cmPlatRoleManagementApp">
+	<head>
+	    <title>${title}_平台管理员管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        
+</head>
+	<body ng-controller="cmPlatRoleManagementCtrl" style="overflow: hidden;" >
+        <!-- 问题处理-回显 -->
+        <div class="billing_1 clearfix pb_20 mt_20" >
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">角色名称：</label>
+                   			</td>
+						<td>
+							<input class="form_term" ng-model="queryParam.roleName" maxlength="20"/>
+                        </td>
+						<td width="100">
+							<label class="term_label">菜单类型：</label>
+						</td>
+						<td>
+                         <div class="form_select">
+								 <my-select id="queryParam.menuType" has-all="true" code-type="MENU_TYPE" />
+							</div>
+						</td>
+						<td width="100"><!-- <label class="term_label">姓名：</label> -->
+                    	</td>
+						<td>
+							<!-- <input class="form_term" ng-model="queryParam.userName" maxlength="10"/> -->
+						</td>
+						
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><!-- <label class="term_label">账号：</label> -->
+                    	</td>
+						<td>
+                        <!-- <input class="form_term" ng-model="queryParam.loginAcct" maxlength="11"/> -->
+                        </td>
+						<td width="100"></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+					</tr>
+					
+				</tbody>
+		</table>
+                
+                 <div class="search_nr clearfix mt_20">
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	                <h2>查询结果</h2>
+	                <a class="button ml_10 newly" href="javascript:void(0)" ng-click="addUser()">
+	                	<i class="button_icon button_icon dw_newly"></i>新增
+	                </a>
+	                <a class="button ml_10 modify" href="javascript:void(0)" ng-click="updateUser()">
+	                	<i class="button_icon button_icon dw_modify"></i>修改
+	                </a>
+	                <a class="button ml_10 delete" href="javascript:void(0)" ng-click="delUser()">
+	                	<i class="button_icon button_icon dw_delete"></i>删除
+	                </a>
+	                <!-- <a href="javascript:void(0)" ng-click="roleManager()">角色管理</a> -->
+                </div>
+               <my-Adv-Table 
+               isShowSeq="false" 
+               isMultiSelect="false" 
+               isShowCheck="true" 
+               width="100%"
+               isFilter="false" 
+               isSum="false" 
+               id="roleId"  
+               head='[
+               {"name":"角色名称","code":"roleName","width":"20%"},
+               {"name":"菜单类型","code":"menuTypeName","width":"20%"},
+               {"name":"操作人","code":"userName","width":"20%"},
+               {"name":"创建时间","code":"createDate","width":"16%"}
+               ]'>
+               </my-Adv-Table>
+                
+		</div>
+        </div>
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="cmPlatRoleManagementCtrl.js?v=${ver}"></script>
+</body>
+</html>
+
+

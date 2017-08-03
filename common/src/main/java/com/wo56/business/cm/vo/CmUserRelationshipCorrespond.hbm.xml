@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-15 16:26:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmUserRelationshipCorrespond"
+		table="cm_user_relationship_correspond">
+		<id name="relationshipId" type="java.lang.Long">
+			<column name="RELATIONSHIP_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="loginAcct" type="java.lang.String">
+			<column name="LOGIN_ACCT" not-null="true">
+				<comment>用户账号</comment>
+			</column>
+		</property>
+		<property name="relationshipLoginAcct" type="java.lang.String">
+			<column name="RELATIONSHIP_LOGIN_ACCT" not-null="true">
+				<comment>对应的账号</comment>
+			</column>
+		</property>
+		<property name="relationshipOrgId" type="java.lang.String">
+			<column name="RELATIONSHIP_ORG_ID">
+				<comment>对应的网点</comment>
+			</column>
+		</property>
+		<property name="createDate" type="java.sql.Timestamp">
+			<column name="CREATE_DATE" length="19" not-null="true">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="remark" type="java.lang.String">
+			<column name="remark">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

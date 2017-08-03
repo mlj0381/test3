@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="installUserManageApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>师傅管理</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+</head>
+	<body ng-controller="installUserManageCtrl" >
+		<div class="billing_1">
+			<div class="search" style="padding: 0">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+				  <tr>
+					<td width="150"><label class="control-label">省份：</label></td>
+					<td>
+						<div class="search_select">
+							<select name="select" class="xl_z" ng-model="query.provinceId" ng-change="queryCity(query.provinceId)"  ng-options="province.id as province.name for  province in provinces">
+								<option value="">所有</option>
+								</select>
+						</div>					
+					</td>
+					<td width="100"><label class="control-label w_100">地市：</label></td>
+					<td><div class="search_select">
+								<select name="select" class="xl_z" ng-model="query.cityId"  ng-change="selectCity()" ng-options="objCon.id as objCon.name for  objCon in citys">
+								<option value="">所有</option>
+								</select>						</div></td>
+								
+							<td width="100"><label class="control-label w_100">合作方式：</label></td>
+					<td><div class="search_select w_146">
+								<my-select id="query.cooperationType"  has-all="true" default-value=""
+									code-type="COOPERATION_TYPE" url-param='' />
+							</div></td>	
+					<td rowspan="2">
+						<div class="search_button"><a class="search_button_ss" href="javaScript:void(0)" ng-Enter ng-click="doQuery()">搜索</a>  <a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">重置</a></div>					</td>
+				  </tr>
+				  <tr>
+					<td><label class="control-label">师傅名称：</label></td>
+					<td><input class="input_box" ng-model="query.sfUserName" type="text" /></td>
+					<td width="100"><label class="control-label w_100">师傅账号：</label></td>
+					<td><input class="input_box" ng-model="query.sfUserAcct" type="text" /></td>
+					<td><label class="control-label">认证类型：</label></td>
+					<td>
+						<div class="search_select w_146">
+						<my-select id="query.auditState" code-type="AUDIT_TYPE" has-all="true" default-value="-1" url="" />
+						</div>	
+					</td>
+				  </tr>
+				</table>
+
+			</div>
+			<div style="position: relative;">
+			<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+              <h2>查询结果</h2>
+              
+              <!-- <a href="javascript:void(0)" ng-click="selectPlatSf();" >选择平台师傅</a> -->
+              <a ng-click="toAddSfUser()" class="button ml_10 newly" href="javascript:void(0)">
+             	 <i class="button_icon button_icon dw_newly"></i>新增
+              </a>
+              <a class="button ml_10 write " ng-click="authorSfInfo();" href="javascript:void(0)"><i class="button_icon button_icon dw_write"></i>审核</a>
+              <a ng-click="toModify(2)" class="button ml_10 modify" href="javascript:void(0)">
+             	 <i class="button_icon button_icon dw_modify"></i>修改
+              </a>
+               <a ng-click="toModify(1)"  href="javascript:void(0)">
+             	 查看
+              </a>
+               <a ng-click="toDelSfUser()"  href="javascript:void(0)">
+             	 删除
+              </a>
+              </div>
+			 <my-table>
+			 <div>
+			<div class="zz_list" style="overflow:auto;">
+	<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0">
+				  <thead>
+				  	<tr>
+						<th width=2%><div class="input_z">
+	                  			<input id="checkboxa" class="none input_gx" ng-click="selectAll('check-1','checkboxa');" type="checkbox">
+	            				<label for="checkboxa"></label>
+	          				</div></th>
+						<th width="8%">省</th>
+						<th width="8%">市</th>
+						<th width="10%">县区</th>
+						<th width="8%">师傅名称</th>
+						<th width="10%">师傅账号</th>
+						<th width="8%">收款方式</th>
+						<th width="10%">卡名</th>
+						<th width="10%">账户名</th>
+						<th width="10%">账号/卡号</th>
+						<th width="8%">认证状态</th>
+						<th width="8%">合作方式</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.sfUserId,'checkbox');" ng-repeat="o in page.data.items">
+                                  	<td width="2%" class="search_list_border"><div class="controls"><input id="checkbox{{o.sfUserId}}" class="none input_gx" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="8%">{{o.provinceName}}</td>
+                                    <td width="8%">{{o.cityName}}</td>
+                                    <td title="{{o.distrName}}" width="10%">{{o.distrName}}</td>
+                                    <td width="8%">{{o.name}}</td>
+                                    <td width="10%">{{o.phone}}</td>
+                                    <td width="8%">{{o.receiTypeName}}</td>
+                                    <td width="10%">{{o.bankName}}</td>
+                                    <td width="10%">{{o.accountName}}</td>
+                                    <td width="10%">{{o.bankAccount}}</td>
+                                     <td width="8%">{{o.auditStateName}}</td>
+                                    <td width="8%">{{o.cooperationTypeName}}</td>
+                                  </tr>
+				  </tbody>
+			</table>
+			</div></div>
+			</my-table>
+			</div>
+		</div>
+		
+		
+      
+        <div class="popup_bj" id="fade1_xz" style="display:none;"></div>
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+			<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="installUserManageCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

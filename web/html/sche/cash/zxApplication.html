@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="zxApplicationApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>调度任务-提现审批</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运会"/> 
+		<meta name="description" content="联运会" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+          <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css?v=${ver}">
+		<script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+</head>
+	<body ng-controller="zxApplicationCtrl" style="overflow: hidden;">
+		<div class="billing_1">
+			<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+				  <tr>
+					<td width="150"><label class="control-label">申请开始时间：</label></td>
+					<td>
+						
+							<input my-Date-Picker ng-model="query.beginDate" readonly="readonly" class="form_term " id="" type="text" >
+										
+					</td>
+					<td width="100"><label class="control-label">申请截止时间：</label></td>
+					<td>
+							<input my-Date-Picker ng-model="query.endDate" readonly="readonly" class="form_term " id="" type="text" >
+						</td>
+					<td width="100"><label class="control-label">审核状态：</label></td>
+					<td><div class="form_select">
+							<my-select id="query.state" code-type="CASH_APPLICATION@STATE" has-all="true" default-value="-1" url="" />
+						</div></td>
+					<td rowspan="2">
+						<div class="search_button"><a class="search_button_ss" href="javaScript:void(0)" ng-Enter ng-click="doQuery()">搜索</a>  <a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">重置</a></div>					</td>
+				  </tr>
+				  <tr>
+					<td width="150"><label class="control-label">服务商名称：</label></td>
+					<td><input class="form_term " ng-model="query.workerName" type="text" /></td>
+					<td width="100"><label class="control-label">联系方式：</label></td>
+					<td><input class="form_term " ng-model="query.workerLoginAcct" type="text" /></td>
+					<td width="100"></td>
+					<td></td>
+				  </tr>
+				</table>
+
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl"><i class="icon title_icon fl"></i>任务列表</h2>
+				<div class="fr mt15_mr20">
+					<!-- <a class="button fr ml_10 tixiansp2" href="javascript:void(0);" ng-click="verification()"><i class="button_icon button_icon dw_tixiansp2"></i>核销</a> -->
+					<a class="button fr ml_10 tixiansp2" href="javascript:void(0);" ng-click="getApplicationByIdView()"><i class="button_icon button_icon dw_tixiansp2"></i>提现明细</a>
+					<a class="button fr ml_10 tixiansp" href="javascript:void(0);" ng-click="getApplicationById()"><i class="button_icon button_icon dw_tixiansp"></i>提现审批</a>
+					<!-- <a class="button fr ml_10 tixiansq" href="javascript:void(0);" ng-click="doSave();"><i class="button_icon button_icon dw_tixiansq"></i>提现申请</a> -->
+				</div>
+			</div>
+			 <my-table>
+			 <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="search_lista table_kz" style="width: 2000px;">
+				  <thead id="tb1">
+				  	<tr>
+						<th width="80"><div class="input_z">
+	                  			<input id="checkboxa" class="none input_gx" ng-click="selectAll('check-1','checkboxa');" type="checkbox">
+	            				<label for="checkboxa"></label>
+	          				</div></th>
+						<th width="100">服务商名称</th>
+						<th width="130">联系方式</th>
+						<th width="100">提现金额</th>
+						<th width="100">审核状态</th>
+						<th width="130">申请时间</th>
+						<th width="100">申请人</th>
+						<th width="130">审批时间</th>
+						<th width="100">审批人</th>
+						<th width="120">审核备注</th>
+						<th width="130">核销时间</th>
+						<th width="130">核销号</th>
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o,'checkbox');" ng-repeat="o in page.data.items">
+                                  	<td width="80" class="search_list_border"><div class="controls"><input id="checkbox{{o.id}}" class="none input_gx" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="100">{{o.workerName}}</td>
+                                    <td width="130">{{o.workerLoginAcct}}</td>
+                                    <td width="100">{{o.dzMoney/100|number:2}}</td>
+                                    <td width="100">{{o.stateName}}</td>
+                                    <td width="130">{{o.createDate}}</td>
+                                    <td width="100">{{o.createName}}</td>
+                                    <td width="130">{{o.auditDate}}</td>
+                                    <td width="100">{{o.auditMan}}</td>
+                                    <td width="120">{{o.auditNote}}</td>
+                                    <td width="130">{{o.veriyDate}}</td>
+                                    <td width="130">{{o.verifyId}}</td>
+                                  </tr>
+				  </tbody>
+			</table>
+			</div>
+			<!--任务列表 end-->
+			</my-table>
+			</div>
+			
+			
+		</div>
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="zxApplicationCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

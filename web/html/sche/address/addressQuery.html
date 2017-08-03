@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addressQueryApp">
+<head>
+<title>调度任务-地址库查询</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="addressQueryCtrl" onload="setContentHeight()" style="overflow: hidden;">
+	<div class="billing_1" style="padding-bottom: 20px;">
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="100"><label class="control-label">省份：</label></td>
+						<td>
+							<div class="search_select w_146">
+								<select ng-change="selectCity(query.provinceId);"
+									ng-model="query.provinceId"
+									ng-options="obj.id as obj.name for  obj in provinceData.items "
+									name="select" class="xl_z">
+								</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label w_100">城市：</label></td>
+						<td><div class="search_select w_146 fl">
+								<select ng-change="selectDistrict(query.cityId);"
+									ng-model="query.cityId"
+									ng-options="obj.id as obj.name for  obj in cityData.items "
+									name="select" class="xl_z">
+								</select>
+							</div></td>
+						<td width="100"><label class="control-label w_100">县区：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.countyId"
+									ng-options="obj.id as obj.name for  obj in districtData.items "
+									name="select" class="xl_z">
+								</select>
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl" style="width: 140px;">
+					<i class="icon title_icon fl"></i>数据列表
+				</h2>
+			</div>
+			<div class="bj_map">
+				<my_table>
+				<div id="size" class="zz_list table_height" style="overflow:auto;">
+				<table  width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_lista">
+					<thead  id="tb1">
+						<tr>
+							<th width="25%">省份</th>
+							<th width="25%">城市</th>
+							<th width="25%">区县</th>
+							<th width="25%">街道/城镇</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-class="{'waybill_table_listtr':$index%2==1}"
+							class="ng-cloak"
+							ng-repeat="o in page.data.items">
+							<td width="25%" title="{{o.proviceName}}">{{o.provinceName}}</td>
+							<td width="25%" title="{{o.cityName}}">{{o.cityName}}</td>
+							<td width="25%" title="{{o.countyName}}">{{o.countyName}}</td>
+							<td width="25%" title="{{o.streetName}}">{{o.streetName}}</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+				</my_table>
+			</div>
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+	
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="addressQueryCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

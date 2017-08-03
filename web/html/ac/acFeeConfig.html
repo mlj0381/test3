@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="acFeeConfigApp">
+	<head>
+	    <title>众邦_员工管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        
+</head>
+	<body ng-controller="acFeeConfigCtrl" style="overflow: hidden;" >
+        <!-- 问题处理-回显 -->
+        <div class="billing_1 clearfix pb_20 mt_20" >
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+						<tr>
+							<td width="100"><label class="term_label">科目名称：</label>
+                            </td>
+							<td>
+								
+                   					<input class="form_term" ng-model="data.feeName" maxlength="10"/>
+                            	
+							</td>
+							<td width="100"><label class="term_label">科目类型：</label>
+							
+							</td>
+							<td>
+								<!-- <div class="form_select w_b60">
+                               <select ng-model="data.feeType" 
+									ng-options="obj.codeValue as obj.codeName for obj in userData.items ">
+								</select>
+                            </div> -->
+                        <div class="form_select">
+						     <my-select id="data.feeType" code-type="AC_CASH_PROVE@CHECK_TYPE" has-all="true" url="" />
+					    </div>
+							</td>
+							<td width="100"><!--<label class="term_label">网点：</label>-->
+							</td>
+							<td><!-- 
+                    	<div class="form_select w_b60 " >
+                               <select ng-model="data.orgId"
+									ng-options="obj.orgId as obj.orgName for  obj in orgInfo.items ">
+								</select>
+                        </div>-->
+							</td>
+							<td >
+								<div class="bottom_search search_button" style="position:inherit;">
+									<a ng-click="doQuery()" ng-Enter href="javascript:void(0);">查询</a>
+	<!-- 								<a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a> -->
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+        
+               
+                 <div class="search_nr clearfix mt_20">
+	                <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果</h2>
+	                <a class="button ml_10 newly" href="javascript:void(0)" ng-click="toSave()"><i class="button_icon button_icon dw_newly"></i>新增科目</a>
+	                </div>
+                <my-table>
+                 <div  id="size"  class="zz_list ng-scope table_height" style="overflow:auto;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0"  class="search_lista">
+                                <thead class="fixed-thead" id="tb1">
+                                  <tr>
+
+                                    <th width="79" class="search_list_border"><div class="controls"><input class="none" id="checkbox" type="checkbox"  ng-click="selectAll();" name="checkbox"><label for="checkbox"></label></div></th>
+                                    <th width="40%">科目名称</td>
+                                    <th width="40%">科目类型</td>
+                                    <th width="18%">创建时间</td>
+
+                                    <!--<th class="search_list_border"><div class="controls"><input class="none" id="checkbox" type="checkbox"  ng-click="selectAll();" name="checkbox"><label for="checkbox"></label></div></th>
+                                    <th>费用名称</th>
+                                    <th>费用类型</th>
+                                    <th>创建时间</th>-->
+
+                                    <!-- <th>归属网点</th> -->
+                                   <!--  <th>线路标准</th> -->
+                                  </tr>
+                                </thead>
+                               
+                                <tbody class="fixed-tbody">
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"   class="ng-cloak" ng-click="selectOne(o.feeId);" ng-repeat="o in page.data.items">
+                                    <td width="79" class="search_list_border"><div class="controls"><input id="checkbox{{o.feeId}}" class="none" value="{{o}}" type="checkbox" ng-click="selectOne(o.feeId)" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="40%">{{o.feeName}}</td>
+                                    <td width="40%">{{o.feeTypeName}}</td>
+                                    <td width="18%">{{o.createTime}}</td>
+                                    <!-- <td>{{o.orgName}}</td> -->
+                                 <!--    <td>{{o.isStandardLineName}}</td> -->
+                                  </tr>
+                                </tbody>
+                              </table>
+               </div>
+             </my-table>
+                
+		</div>
+        </div>
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="acFeeConfigCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

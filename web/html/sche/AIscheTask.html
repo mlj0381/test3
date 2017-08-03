@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="AIscheTaskApp">
+<head>
+<title>调度任务-人工调度任务</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运会" />
+<meta name="description" content="联运会" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+<style type="text/css">
+.w_b60{width: 147px!important;}
+
+
+
+#dhl_map{width: 80%;left: 50%;margin-left:-40%;top:80px;height:70%; border: 2px solid #ccc;
+    border-radius: 5px;position: fixed;z-index: 1004}
+#dhl_map .popup_bt{background: #f4f4f4;font-size: 20px;color: #e66045;line-height: 50px;}
+#box-shadow{left:0}
+.dhl_map_1{top:90px;}
+.dhl_map_liest{height: 400px;}
+
+
+
+</style>
+</head>
+<body ng-controller="AIscheTaskCtrl" onload="setContentHeight()" style="overflow: hidden;">
+	<div class="billing_1" style="padding-bottom: 80px;">
+		<!--步骤 start-->
+		<div class="step">
+			<ul class="clearfix step_ul">
+				<li class="hover" style="width:14%"><i class="step_icon st_anzhuanfp"></i>
+					<p>安装分配</p></li>
+				<li class="" style=""><i class="step_icon st_jiedan"></i>
+					<p>接单</p></li>
+				<li class=""><i class="step_icon st_tihu"></i>
+					<p>提货</p></li>
+				<li class=" "><i class="step_icon st_yuyue"></i>
+					<p>预约</p></li>
+				<li class=""><i class="step_icon st_aanzhuan"></i>
+					<p>安装</p></li>
+				<li class=" "><i class="step_icon st_hexiao"></i>
+					<p>核销</p></li>
+				<li class="" style="background: none; width: 13%; padding: 0"><i
+					class="step_icon st_qianshou"></i>
+					<p>签收</p></li>
+			</ul>
+			<div class="step_ul_width" style="width: 10%;"></div>
+			<!--注释：上面 width:100% 根据li上 hover个数 而变化. 1个=10%，2个=20%，3个=40%，4个=50%，5个=60%，6个=80%，7个=100%-->
+		</div>
+		<!--步骤 end-->
+	<ul class="waybill_tab clearfix disp_a ng-cloak">
+			<!-- <li  id="two1"><a class="a1"
+				href="scheTaskManage.html">待分配任务<span class="span_red">({{statisticsTaskCount.waitDistributed}})</span></a></li> -->
+			<li class="hover" id="two2"><a class="a1" href="AIscheTask.html?v=${ver}">人工调度<span
+					class="span_red">({{statisticsTaskCount.rgDis}})</span></a></li>
+			<li id="two3"><a class="a1" href="waitAcceptTask.html?v=${ver}">待接单<span
+					class="span_red">({{statisticsTaskCount.waitAccept}})</span></a></li>
+			<li id="two4"><a class="a1" href="waitPickTask.html?v=${ver}">待提货<span
+					class="span_red">({{statisticsTaskCount.waitPickUp}})</span></a></li>
+			<li id="two5"><a class="a1" href="waitYyTask.html?v=${ver}">待预约<span
+					class="span_red">({{statisticsTaskCount.waitYy}})</span></a></li>
+			<li id="two5"><a class="a1" href="waitSignTask.html?v=${ver}">待签收<span
+					class="span_red">({{statisticsTaskCount.waitSignUp}})</span></a></li>
+			<li id="two8"><a class="a1" href="doSign.html?v=${ver}">已签收<span
+					class="span_red">({{statisticsTaskCount.doSign}})</span></a></li>
+			<li id="two9"><a class="a1" href="timeOutTask.html?v=${ver}">时效异常<span
+					class="span_red">({{statisticsTaskCount.timeOut}})</span></a></li>
+			
+		</ul>
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="100"><label class="control-label">收货地：</label></td>
+						<td>
+							 <span class="wdcy_input" my-city="des"></span>
+						</td>
+						<!-- <td width="100"><label class="control-label w_100">发货人：</label></td>
+						<td><input class="input_box" ng-model="query.clientName"
+							maxlength="20" id="" type="text" /></td>
+						 <td width="100"><label class="control-label w_100">收货人：</label></td>
+						<td><input class="input_box" ng-model="query.receiveName"
+							maxlength="20" id="" type="text" /></td> -->
+						
+						<td width="100"><label class="control-label w_100">干线状态：</label></td>
+						<td><div class="search_select w_146 fl"><select ng-model="query.isGxEnd" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">已结束</option>
+									<option  value="2">未结束</option>
+								</select></div>
+								</td>
+						 <td width="100"><label class="control-label w_100">到货状态：</label></td>
+						<td><div class="search_select w_146 fl"><select ng-model="query.isArriveGoods" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">已到货</option>
+									<option  value="2">未到货</option>
+								</select></div>
+						</td>
+						<td width="100"><label class="control-label w_100">订单来源：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.isTmall" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">天猫</option>
+								</select>
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+							<tr>
+						<td width="100"><label class="control-label w_100">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">到货时间：</label></td>
+						<td><input class="input_box" id="gxEndTime" my-Date-Picker='{"minDate":"2016-10-01","dateFmt":"yyyy-MM-dd"}' type="text"></td>
+						<td width="100"><label class="control-label w_100">开单日期：</label>
+                   			</td>
+						<td colspan="2">
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly"   my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr" type="text">
+                            </td>
+					</tr>
+					
+				</table>
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2><span style="float:left;padding-top:14px;color: #ff0000;">(表格输入信息或选择条件，需要按回车进行查询)</span>
+				<div class="fr mt15_mr20">
+					<a class="button fr ml_10 gangxianjs" ng-click="openGxEnd();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_gangxianjs"></i>补录提货信息</a>
+						<a class="button fr ml_10 gangxianjs" ng-click="arriveGoods();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_gangxianjs"></i>到货</a>
+						 <a
+						class="button fr ml_10 rgfp" ng-click="openYy();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_rgfp"></i>预约</a>
+						 <a class="button fr ml_10 rgfp" ng-click="queryMatchSf();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_rgfp"></i>查找师傅</a>
+						<a class="button ml_10 see_b" ng-click="openWayDetail()" href="javascript:void(0);"><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+				</div>
+			</div>
+			<div class="bj_map">
+			<my-Table-Cm head="head" is-Multi-Select="true" table="table" after-Init-Fn="doQuery()" url="url" param="query" id="taskId" table-Name＝"" ver="${ver}"></my-Table-Cm>
+				<!-- 地图  开始-->
+				<div id="dhl_map" class="dhl_map popup" style="display: none; " ng-show="orderMap">
+					<h2 class="popup_bt">查找师傅
+						<i href="javascript:void(0)" style="right: 20px;top: 20px;" class="list_xl_icon icon" ng-click="closeMap()"></i>
+					</h2>
+					<div class="d_map" style="padding: 15px;">
+						<!-- 投影 -->
+						<div id="box-shadow"></div>
+						<div class="dhl_map_1">
+						<div ng-click="showOrClose();"  class="dhl_d"><img  src="../../image/$tenantId$/rrecom.png" alt="" /></div>
+						<div class="dhl_seach clearfix"><input class="input_box sfzh" style="width:230px!important" id="sfPhone" placeholder="输入师傅或者合作商名称或者账号"   type="text"><a class="dhl_sfzh" ng-click="queryMatchSf()" href="javascript:void(0);" >搜索</a></div><!-- 师傅账号搜索 -->
+						<!-- 分配列表 -->
+						<ul id="ul" class="dhl_map_liest clearfix">
+							<li class="dhl_map_li" ng-repeat="s in sfList">
+								<dl class="dhl_map_dl clearfix">
+									<dt class="dhl_map_dt">
+										<i class="yq_tb" ></i><i  class="dhl_sj"></i>{{s.name}}({{s.phone}})
+									</dt>
+									<!-- <dd>信用：{{s.credit}}</dd>
+									<dd>
+										接单：<span class="red">{{s.currOrderSum}}</span>/{{s.maxOrderSum}}
+									</dd> -->
+									<dd ng-if="s.productNames!=null&&s.productNames!=undefined" style="float: inherit;">类别：{{s.productNames}}</dd>
+									</dl> <a class="dhl_map_button" ng-click="shceDisSf(s)"
+								href="javascript:void(0);">分配</a>
+							</li>
+						</ul>
+						</div>
+						<!-- 百度地图容器 -->
+						<div style="width: 100%; height:550px;" id="allmap"></div>
+					</div>
+
+				</div>
+				<!-- 地图  结束-->
+			</div>
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+	<!-- 干线结束 弹窗 开始 -->
+	<div id="vehicle_qxjs" class="popup"
+		style="width: 400px; height: 250px; margin-left: -200px; margin-top: -230px; z-index: 1006; display: none;">
+		<div class="tx_tc">
+			<div style="min-height: 120px; padding-top: 20px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table tx_tc_table" style="padding-top: 0">
+					<tr>
+						<td width="100"><label class="control-label w_100">提货人电话：</label></td>
+						<td><input class="input_box" ng-model="query.pickUpPhone"
+							id="" type="text" /></td>
+
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">提货地址：</label></td>
+						<td><input class="input_box" id=""
+							ng-model="query.pickUpAddr" type="text" /></td>
+
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">提货验证码：</label></td>
+						<td><input class="input_box" id=""
+							ng-model="query.pickCode" type="text" /></td>
+
+					</tr>
+					
+				</table>
+
+			</div>
+			<div class="tx_tc_button">
+				<a class="search_button_ss" ng-click="gxEnd();"
+					href="javascript:void(0);">保存</a><a class="search_button_cz"
+					href="javascript:void(0);" ng-click="closeGxEnd()">取消</a>
+			</div>
+		</div>
+	</div>
+	<!-- 干线结束 弹窗 结束 -->
+	<div id="vehicle_yy" class="popup" style="width: 500px; height: 260px; margin-left: -250px; margin-top: -130px; z-index: 1006; display: none;">
+			<div class="tx_tc">
+				<div style="min-height:80px; padding-top:30px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table" style="padding-top: 0">
+				  <tbody>
+				  <tr>
+					<td width="80"><label class="control-label">上门时间：</label></td>
+					<td width="120"><input class="input_box" style="width: 120px;" id="yyTime" my-Date-Picker='{"minDate":"%y-%M-%d","dateFmt":"yyyy-MM-dd"}' type="text"></td>
+					<td width="80"><label class="control-label">时间段：</label></td>
+					<td><div class="search_select"><select	name="select" id="ipFixTime" class="xl_z">
+					<option selected="selected" value="上午">上午 </option>
+					<option value="下午">下午</option>
+					<option value="晚上">晚上</option>
+					</select></div>
+					</td>
+					
+				  </tr>
+				   
+		
+				</tbody></table>
+				
+				</div>
+				<div class="tx_tc_button"><a class="search_button_ss" ng-click="yy()" href="javascript:void(0);">保存</a><a class="search_button_cz" href="javascript:void(0);" ng-click="closeYy();">关闭</a></div>
+			</div>
+    	</div>
+	
+	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" style="display: none;"></div>
+	<!--半透明黑色背景  结束-->
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="AIscheTaskCtrl.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="http://api.map.baidu.com/api?v=2.0&ak=Qdr46VYff5fCeik9OoRRLZUNjHmHuvkr"></script>
+	<script type="text/javascript" src="../js/table/tableCommon.js?v=${ver}"></script>
+</body>
+</html>
+

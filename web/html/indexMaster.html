@@ -1,0 +1,91 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="indexMasterApp">
+
+	<head>
+	    <title>${title}</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Pragma"   content="no-cache">
+		<meta http-equiv="Cache-Control"   content="no-cache">
+		<meta http-equiv="Expires"   content="0">			
+		<link rel="stylesheet" type="text/css" href="css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="css/$tenantId$/login.css?v=${ver}"/>
+		<link rel="shortcut icon" href="/image/$tenantId$/32x32.ico" type="image/x-icon" />
+		<style>
+			[ng\:cloak],
+			[ng-cloak],
+			[data-ng-cloak],
+			[x-ng-cloak],
+			.ng-cloak,
+			.x-ng-cloak,
+			.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
+		</style>
+		
+</head>
+	<body ng-controller="indexMasterCtrl">
+    	
+    <div class="wrap">
+        <div class="login_banner fl"><img src="image/$tenantId$/login_banner.png" alt="" /></div>
+        <div class="login_form fr">
+				<div class="login_logo"><img src="image/$tenantId$/login_logo.png" alt="" /></div>
+				<form  class="login_wrap" name="loginForm" ng-submit="submit('${ver}')" novalidate>
+				<input type="password" style="display: none">
+				<div class="form_item mb15 ">
+					<div class="clearfix"><input ng-model="tenantCode" autocomplete="off" class="cur login_input fl login_icon login_zh input" style="width:120px; padding-left:40px;" type="text" name="fname"  placeholder="输入帐号" ng-blur="queryCompanyInfo()" />
+					<input ng-model="companyName" class="cur login_input fr input" style="width:210px;" type="text" name="fname" disabled="disabled"  placeholder="输入公司名称" /></div>
+				</div>
+				<div class="form_item mb15">
+					<input class="cur login_icon login_input login_lb input" style="padding-left:42px;"  type="text" name="userName" ng-model="userName"  required  placeholder="用户名" />   
+				</div>
+				<div class="form_item mb15">
+					<input class="cur login_input login_icon login_mm input" style="padding-left:42px;"  name="password" type="password" ng-model="password" required placeholder="密码" />
+					<!--<div class="login_error"><i class="error_icon fl"></i>账户名错误，请重新输入</div>-->
+				</div>
+				<div class="form_item mb25 clearfix"></div>
+				
+				<div class="form_item"><input class="login_btn" type="submit" value="登录" /></div>
+				</form>
+			</div>
+        
+        </div>
+         <div class="footer clearfix">
+			<div class="footer_c clearfix" >
+				<img class="fl" src="image/zb/wo56.png" alt=""/>
+				<p class="fl foot_p" >广州增信信息科技有限公司<br /> 握物流(wo56.com)技术支持 </p>
+            </div>
+        </div>
+        
+         <!-- 确认框 -->
+		<div  style="width: 402px; height: 152px; margin-top: -176px; margin-left: -201px;" class="popup ng-hide" ng-show="confirmMsg.isShow" >
+       		<div class="title"><h2 class="popup_bt">提示</h2><i  href="javascript:void(0)" class="list_xl_icon icon" ng-click="confirmMsg.close()" ></i></div>
+            <div class="popup_content"><p class="popup_p">{{confirmMsg.text}}</p></div>
+            <div class="popup_button"><a href="javascript:void(0)" class="button_green" ng-click="confirmMsg.sure()">{{confirmMsg.sureText}}</a><a href="javascript:void(0)" class="button_red" ng-click="confirmMsg.cancel()">{{confirmMsg.cancelText}}</a></div>
+       </div>
+	   <div ng-show="confirmMsg.isShow" class="popup_bj ng-hide" ></div>
+	   
+	   <!-- 确认框 -->
+		<div style="width: 402px; height: 152px; margin-top: -176px; margin-left: -201px;" class="popup ng-hide" ng-show="alertMsg.isShow" >
+       		<div class="title"><h2 class="popup_bt">提示</h2><i  href="javascript:void(0)" class="list_xl_icon icon" ng-click="alertMsg.close()" ></i></div>
+            <div class="popup_content"><p class="popup_p">{{alertMsg.text}}</p></div>
+            <div class="popup_button"><a href="javascript:void(0)" class="button_green" ng-click="alertMsg.sure()">确认</a></div>
+       </div>
+	   <div ng-show="alertMsg.isShow" class="popup_bj ng-hide" ></div>
+	   
+        <!--[if !IE]> -->
+	    <script src='js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="js/base64.js"></script>
+		<script type="text/javascript" src="js/md5.js"></script>
+		<script type="text/javascript" src="js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="loginMasterCtrl.js?v=${ver}"></script>
+	</body>
+</html>

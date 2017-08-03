@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html  ng-app="MyApp">
+<head>
+	<title>货源统计图表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- bootstrap -->
+    <link href="../css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js" defer="defer"></script>
+</head>
+<body>
+    <!-- navbar -->
+	<simple-navbar id="simpleNavbarId"></simple-navbar>
+    <!-- end navbar -->
+
+    <!-- sidebar -->
+    <simple-menu id="simpleMenuId" loadurl="sysMenu.ajax?cmd=loadMenu" currenturl="/logbi/statistic/goods.html"></simple-menu>
+    <!-- end sidebar -->
+    
+   	<!-- statistics chart built with jQuery Flot -->
+	<div class="content">
+		<div>
+			<div class="users-list">
+				<div class="bt_n">
+					<h2>货源统计图表</h2>
+				</div>
+				<div class="cl_zlgl">
+					<div class="table-products section">
+						<div class="chart">
+							<div class="col-md-121">
+								<h4 class="clearfix">
+									货源数据统计
+									<div class="btn-group pull-right">
+										<button class="glow left" onclick="dayRedraw();">天</button>
+										<button class="glow middle active" onclick="monthRedraw();">月</button>
+									</div>
+								</h4>
+							</div>
+							<div class="col-md-121">
+								<div id="statsChart"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end statistics chart -->
+	
+	<!-- scripts -->
+    <!-- flot charts -->
+    <script src="../js/jquery.flot.js"></script>
+    <script src="../js/jquery.flot.stack.js"></script>
+    <script src="../js/jquery.flot.resize.js"></script>
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="AcProveManageCtrl.js?v=${ver}"></script>
+</body>
+</html>

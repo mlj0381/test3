@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-3-27 11:00:37 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.sys.vo.SysTableHeadConfig" table="sys_table_head_config">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="tenantId" type="long">
+            <column name="tenant_id" not-null="true">
+                <comment>租户ID</comment>
+            </column>
+        </property>
+        <property name="orgId" type="long">
+            <column name="org_id" not-null="true">
+                <comment>网点ID</comment>
+            </column>
+        </property>
+        <property name="userId" type="long">
+            <column name="user_id" not-null="true">
+                <comment>用户ID</comment>
+            </column>
+        </property>
+        <property name="tableName" type="string">
+            <column name="table_name" length="64" not-null="true">
+                <comment>表格名称</comment>
+            </column>
+        </property>
+        <property name="headName" type="string">
+            <column name="head_name" length="64" not-null="true">
+                <comment>表头列名称</comment>
+            </column>
+        </property>
+        <property name="headCode" type="string">
+            <column name="head_code" length="64" not-null="true">
+                <comment>表头列code</comment>
+            </column>
+        </property>
+        <property name="headIndex" type="int">
+            <column name="head_index" not-null="true">
+                <comment>表头列顺序</comment>
+            </column>
+        </property>
+        <property name="state" type="int">
+            <column name="state" not-null="true">
+                <comment>状态，1有效0失效</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

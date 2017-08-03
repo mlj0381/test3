@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="receiptReturnManageApp"> 
+	<head>
+	    <title>${title}_回单返回</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="receiptReturnManageCtrl"  onload="setContentHeight()" style="overflow:hidden">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">签单日期：</label>
+                   			</td>
+						<td>
+						<input my-Date-Picker='{"maxDate":"%y-%M-%d"}'  id="beginTime" ng-model="query.beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly"  my-Date-Picker='{"maxDate":"%y-%M-%d"}' id="endTime" ng-model="query.endTime" class="form_term fl w_xjr" type="text">
+                            </td>
+						<td width="100"><label class="term_label">开单网点：</label>
+							</td>
+						<td><div class="form_select">
+                                <select class="ng-cloak" id="id1">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select>
+                            </div></td>
+						<td width="100"><label class="term_label">配送网点：</label>
+                        
+                        
+                        
+                    	</td>
+						<td><div class="form_select " >
+                               <!--  <my-select id="query.descOrgId"  has-all="false"  url="routeBO.ajax?cmd=queryRoateRuting" show_name="endOrgName" show_value="endOrgId"  url-param='{"addType":1,"collectType":3}'/> 
+                                <my-select id="orderNotify.distributionOrgId" url="routeBO.ajax?cmd=getTowards" show_name="endOrgName" show_value="endOrgId"  url-param='{"beginOrgId":{{currOrgId}},"hasAll":"Y"}'/>
+                               -->
+                             <my-select id="query.descOrgId" selectid="id='selectId'" url="routeBO.ajax?cmd=getTowards" show_name="endOrgName" show_value="endOrgId"  url-param='{"beginOrgId":{{currOrgId}},"hasAll":"Y"}'/>
+                            </div>
+						</td>
+						
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">运单号：</label>
+                        
+                    	</td>
+						<td>
+                        <input id="id2" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term"  ng-maxlength="20" ng-model="query.trackingNum" type="text">
+                        </td>
+						<td width="100"><label class="term_label">发货人手机：</label></td>
+						<td><input id="id3"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term"   maxlength="11" ng-model="query.consignorBill" type="text"></td>
+						<td width="100"><label class="term_label">收货人手机：</label></td>
+						<td><input id="id4" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form_term" maxlength="11" ng-model="query.consigneeBill" type="text"></td>
+						
+						
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">回单号：</label>
+                        
+                    	</td>
+						<td>
+                        	<input id="id5" ng-maxlength="20"   class="form_term" ng-model="query.receiptNum" type="text">
+                        </td>
+						<td width="100"><label class="term_label">回单返厂：</label></td>
+						<td><div class="form_select">
+                                <select class="ng-cloak" id="receipt">
+                                  <option  value="">全部</option>
+                                   <option selected="selected" value="12">未返回</option>
+                                   <option  value="13">已返回</option>
+                                </select>
+                            </div></td>
+						<td width="100"></td>
+						<td></td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+               
+                     <div class="search_nr clearfix mt_20">
+                     <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+                         <h2>查询结果--<span class="f14">双击查看订单详情</span></h2>
+	                     <a ng-click="receiptReturn();" href="javascript:void(0)">回单返回</a>
+	                     <a ng-click="delReturn();" href="javascript:void(0)">取消返回</a>
+	                     <!-- <a href="javascript:void(0)" id="exportId" ng-click="commonExport()">导  出</a>
+	                     <a href="javascript:void(0)" id="printId" ng-click="printTable()">打印</a> -->
+                     </div>
+                  <my-table>
+                   <div id="size" class="zz_list table_height" style="overflow:auto;">
+                         <table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0"  style="width: 2000px;">
+                               <thead  id="tb1">
+                                <tr>
+                                    <th width="79" class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+									<th width="150">运单号</th>
+									<th width="120">开单网点</th>
+									<th width="120">付款方式</th>
+                                    <th width="120">回单号</th>
+                                    <th width="120">回单份数</th>
+                                    <th width="120">重量</th>
+                                    <th width="120">体积</th>
+                                    <th width="120">配送网点</th>
+                                    <th width="120">件数</th>
+                                    <th width="126">到付金额</th>
+                                    <th width="126">收货人</th>
+                                    <th width="126">收货人手机</th>
+                                    <th width="200">备注</th>
+                                    <th width="130">收货方式</th>
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.orderId);" ng-dblclick="toView(o.trackingNum)" ng-repeat="o in page.data.items">
+                                  	<td width="79" class="search_list_border"><div class="controls"><input id="checkbox{{o.orderId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="150">{{o.trackingNum}}</td>
+                                        <td width="120">{{currOrgName}}</td>
+                                        <td width="120">{{o.paymentTypeName}}</td>
+                                        <td width="120">{{o.receiptNum}}</td>
+                                        <td width="120">{{o.receiptCount}}</td>
+                                        <td width="120">{{o.weight.toFixed(1)}}</td>
+                                        <td width="120">{{o.volume.toFixed(2)}}</td>
+                                        <td width="120">{{o.distributionOrgName}}</td>
+                                        <td width="120">{{o.count}}</td>
+                                        <td width="126">{{o.freightCollect/100}}</td>
+                                        <td width="126">{{o.consigneeLinkmanName}}</td>
+                                        <td width="126">{{o.consigneeBill}}</td>
+                                        <td width="200"><div class="cc_yc" style="width: 200px;">{{o.remarks}}</div></td>
+                                        <td width="130">{{o.deliveryTypeName}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                          
+                </div>
+                </my-table>
+        </div>
+        
+         <!-- 打印开始 -->
+<!--          ：回单报表													
+            签收日期：2016-07-01 00：00：00 至 2016-07-11 23：59：59	运行区间：汕头  至  全部     				
+          运单号	托运日期	到站	发货人	收货人	品名	件数	回单份数	签收日期	运费	付款方式	代收货款	签收状况 -->
+         <div id="printDiv" style="display: none;">
+ 			<table border=1 width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#000000">
+				<caption style="font-size: 30px; margin-bottom: 16px;">
+					<b>回单报表</b>
+					<br />
+					<span style="position: absolute; top:8; right: 0; width: 286px; height: 16px; font-size:16px;">打印时间: {{printTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+				</caption>
+ 				<tbody>
+ 					<tr style="height: 32px;">
+	 					<td colspan="5" style="font-size: 16; width: 48%;">开单时间: {{dateTime}}</td>
+	 					<td colspan="6" style="font-size: 16; width: 26%;">运行区间:  {{beginOrgNameAndEndOrgName}}</td>
+	 				    <td colspan="3" style="font-size: 16; width: 30%;text-align:center;" >
+	 					  	第<font tdata="PageNO" color="blue">##</font>页</span>共<font tdata="PageCount" color="blue">##</font></span>页
+	 					</td>
+	 				</tr>
+ 					<tr style="height: 32px;">
+ 						<td style="vertical-align:middle; text-align:center; width: 3%; font-size: 15;">序号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">运单号</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 12%; font-size: 15;">开单日期</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">到站</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">发货人</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 8%; font-size: 15;">收货人</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 7%; font-size: 15;">品名</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 5%; font-size: 15;">件数</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">回单份数</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 12%; font-size: 15;">签收日期</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">运费</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">付款方式</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">代收货款</td>
+ 						<td style="vertical-align:middle; text-align:center; width: 6%; font-size: 15;">签收状况 </td>
+ 					</tr>
+ 					<tr ng-repeat="o in printData.items" style="height: 32px;">
+ 						<!-- 序号 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{$index + 1}}</td>
+						<!-- 运单号-->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.trackingNum}}</td>
+						<!-- 开单日期 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.createDate}}</td>
+						<!-- 到站 -->	
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.distributionOrgName}}</td>
+						<!-- 发货人 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.consignorName}}</td>
+						<!-- 收货人 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.consigneeName}}</td>
+						<!-- 品名 -->	
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.goodsNames}}</td>
+						<!-- 件数-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.receiptCount}}</td>
+						<!-- 回单份数 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.count}}</td>
+						<!-- 签收日期-->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.signDate}}</td>
+						<!-- 运费 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.freight/100}}</td>
+						<!-- 付款方式-->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.paymentTypeName}}</td>
+						<!-- 代收货款 -->						
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.collectingMoney/100}}</td>
+						<!-- 签收状况 -->
+						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{o.signStatusName}}</td>
+					</tr>
+					<tr style="height: 32px;">
+ 						<td colspan="2" style="vertical-align:middle; text-align:center; font-size: 15;">合计: {{printData.items.length}}票</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">&nbsp;</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;"></td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;"></td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{receiptCountNum}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{countNum}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;"></td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{freightNum/100}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;"></td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;">{{collectingMoneyNum/100}}</td>
+ 						<td style="vertical-align:middle; text-align:center; font-size: 15;"></td>
+ 					</tr>
+ 				</tbody>
+ 			</table>
+ 		</div>
+                    <!-- 打印结束 -->
+        
+        </div>
+		
+ 		<script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/lodop/lodop-business.js?v=${ver}"></script>
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="receiptReturnManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,270 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-12 11:55:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrderInfo" table="order_info">
+		<id name="orderId" type="java.lang.Long">
+			<column name="ORDER_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="orderNumber" type="java.lang.String">
+			<column name="ORDER_NUMBER" length="100" not-null="true">
+				<comment>订单号</comment>
+			</column>
+		</property>
+		<property name="desProvince" type="java.lang.Long">
+			<column name="DES_PROVINCE">
+				<comment>目的省份</comment>
+			</column>
+		</property>
+		<property name="desProvinceName" type="java.lang.String">
+			<column name="DES_PROVINCE_NAME" length="50">
+				<comment>目的省份名称</comment>
+			</column>
+		</property>
+		<property name="desCity" type="java.lang.Long">
+			<column name="DES_CITY">
+				<comment>目的城市</comment>
+			</column>
+		</property>
+		<property name="desCityName" type="java.lang.String">
+			<column name="DES_CITY_NAME" length="50">
+				<comment>目的城市名称</comment>
+			</column>
+		</property>
+		<property name="desDistrict" type="java.lang.Long">
+			<column name="DES_DISTRICT">
+				<comment>目的区</comment>
+			</column>
+		</property>
+		<property name="desDistrictName" type="java.lang.String">
+			<column name="DES_DISTRICT_NAME" length="50">
+				<comment>目的区名称</comment>
+			</column>
+		</property>
+		<property name="traProvince" type="java.lang.Long">
+			<column name="TRA_PROVINCE">
+				<comment>中转省份</comment>
+			</column>
+		</property>
+		<property name="traProvinceName" type="java.lang.String">
+			<column name="TRA_PROVINCE_NAME" length="50">
+				<comment>中转省份名称</comment>
+			</column>
+		</property>
+		<property name="traCity" type="java.lang.Long">
+			<column name="TRA_CITY">
+				<comment>中转城市</comment>
+			</column>
+		</property>
+		<property name="traCityName" type="java.lang.String">
+			<column name="TRA_CITY_NAME" length="50">
+				<comment>中转城市</comment>
+			</column>
+		</property>
+		<property name="traDistrict" type="java.lang.Long">
+			<column name="TRA_DISTRICT">
+				<comment>中转区</comment>
+			</column>
+		</property>
+		<property name="traDistrictName" type="java.lang.String">
+			<column name="TRA_DISTRICT_NAME" length="50">
+				<comment>中转区名称</comment>
+			</column>
+		</property>
+		<property name="consignee" type="java.lang.String">
+			<column name="CONSIGNEE" length="100">
+				<comment>收货人</comment>
+			</column>
+		</property>
+		<property name="consigneePhone" type="java.lang.String">
+			<column name="CONSIGNEE_PHONE" length="30">
+				<comment>收货人电话</comment>
+			</column>
+		</property>
+		<property name="consigneeAddress" type="java.lang.String">
+			<column name="CONSIGNEE_ADDRESS">
+				<comment>收货人地址</comment>
+			</column>
+		</property>
+		<property name="consignor" type="java.lang.String">
+			<column name="CONSIGNOR" length="50">
+				<comment>发货人</comment>
+			</column>
+		</property>
+		<property name="consignorPhone" type="java.lang.String">
+			<column name="CONSIGNOR_PHONE" length="30">
+				<comment>发货人电话</comment>
+			</column>
+		</property>
+		<property name="consignorAddress" type="java.lang.String">
+			<column name="CONSIGNOR_ADDRESS">
+				<comment>发货人地址</comment>
+			</column>
+		</property>
+		<property name="productName" type="java.lang.String">
+			<column name="PRODUCT_NAME">
+				<comment>品名</comment>
+			</column>
+		</property>
+		<property name="packName" type="java.lang.String">
+			<column name="PACK_NAME">
+				<comment>包装</comment>
+			</column>
+		</property>
+		<property name="carrierId" type="java.lang.Long">
+			<column name="CARRIER_ID">
+				<comment>承运商ID</comment>
+			</column>
+		</property>
+		<property name="carrierName" type="java.lang.String">
+			<column name="CARRIER_NAME">
+				<comment>承运商名称</comment>
+			</column>
+		</property>
+		<property name="pullId" type="java.lang.Long">
+			<column name="PULL_ID">
+				<comment>拉包工ID</comment>
+			</column>
+		</property>
+		<property name="pullName" type="java.lang.String">
+			<column name="PULL_NAME" length="50">
+				<comment>拉包工名称</comment>
+			</column>
+		</property>
+		<property name="pullPhone" type="java.lang.String">
+			<column name="pull_phone" length="50">
+				<comment>拉包工电话</comment>
+			</column>
+		</property>
+		<property name="orderState" type="java.lang.Integer">
+			<column name="ORDER_STATE" not-null="true">
+				<comment>订单状态</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.sql.Timestamp">
+			<column name="CREATE_TIME" length="19" not-null="true">
+				<comment>开单时间</comment>
+			</column>
+		</property>
+		<property name="createId" type="java.lang.Long">
+			<column name="CREATE_ID">
+				<comment>开单员ID</comment>
+			</column>
+		</property>
+		<property name="createName" type="java.lang.String">
+			<column name="CREATE_NAME" length="50">
+				<comment>开单员</comment>
+			</column>
+		</property>
+		<property name="opTime" type="java.sql.Timestamp">
+			<column name="OP_TIME" length="19">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="OP_ID">
+				<comment>操作人ID</comment>
+			</column>
+		</property>
+		<property name="opName" type="java.lang.String">
+			<column name="OP_NAME" length="50">
+				<comment>操作人名称</comment>
+			</column>
+		</property>
+		<property name="number" type="java.lang.Integer">
+			<column name="NUMBER">
+				<comment>件数</comment>
+			</column>
+		</property>
+		<property name="weight" type="java.lang.String">
+			<column name="WEIGHT" length="50">
+				<comment>重量</comment>
+			</column>
+		</property>
+		<property name="volume" type="java.lang.String">
+			<column name="VOLUME" length="50">
+				<comment>体积</comment>
+			</column>
+		</property>
+		<property name="payment" type="java.lang.Integer">
+			<column name="PAYMENT">
+				<comment>付款方式</comment>
+			</column>
+		</property>
+		<property name="paymentName" type="java.lang.String">
+			<column name="PAYMENT_NAME" length="20">
+				<comment>付款方式名称</comment>
+			</column>
+		</property>
+		<property name="interchange" type="java.lang.Integer">
+			<column name="INTERCHANGE">
+				<comment>交接方法</comment>
+			</column>
+		</property>
+		<property name="interchangeName" type="java.lang.String">
+			<column name="INTERCHANGE_NAME" length="50">
+				<comment>交接方法名称</comment>
+			</column>
+		</property>
+		<property name="remarks" type="java.lang.String">
+			<column name="REMARKS" length="500">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="ordsId" type="java.lang.Long">
+			<column name="ORDS_ID">
+				<comment>下单ID</comment>
+			</column>
+		</property>
+		<property name="arrivedOrgId" type="java.lang.Long">
+			<column name="ARRIVED_ORG_ID">
+				<comment>到达网点（中转站）</comment>
+			</column>
+		</property>
+		<property name="billingOrgId" type="java.lang.Long">
+			<column name="BILLING_ORG_ID">
+				<comment>开单网点</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="tenant_id">
+				<comment>开单租户</comment>
+			</column>
+		</property>
+		
+		<property name="staProvince" type="java.lang.Long">
+			<column name="STA_PROVINCE">
+				<comment>提货省份</comment>
+			</column>
+		</property>
+		<property name="staCity" type="java.lang.Long">
+			<column name="STA_CITY">
+				<comment>提货市</comment>
+			</column>
+		</property>
+		<property name="staDistrict" type="java.lang.Long">
+			<column name="STA_DISTRICT">
+				<comment>提货区</comment>
+			</column>
+		</property>
+		
+		<property name="departCount" type="java.lang.Integer">
+			<column name="DEPART_COUNT">
+				<comment>配载次数</comment>
+			</column>
+		</property>
+		
+		<property name="selfNumber" type="java.lang.String">
+			<column name="SELF_NUMBER">
+				<comment>自编号</comment>
+			</column>
+		</property>
+		<property name="orderStateOut" type="java.lang.Integer">
+			<column name="ORDER_STATE_OUT" not-null="true">
+				<comment>对外订单状态</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

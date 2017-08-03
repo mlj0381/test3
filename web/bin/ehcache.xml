@@ -1,0 +1,158 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd">
+
+	<cache name="SYS_BO_METHOD"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LFU"/>
+					
+	<cache name="SYS_ENTITY_TMPL"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LFU"/>
+					
+	<cache name="com.framework.core.inter.impl.SysIntfCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+           
+	<cache name="com.framework.core.cache.impl.SysStaticDataCache"
+					maxElementsInMemory="30000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+          
+	<cache name="com.framework.core.cache.impl.SysCfgCache"
+					maxElementsInMemory="3000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+           
+	<cache name="com.framework.core.cache.impl.OpenAppDefCache"
+					maxElementsInMemory="3000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+	
+	<cache name="com.framework.core.cache.impl.SysUrlDataCache"
+					maxElementsInMemory="30000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+    
+  <cache name="com.framework.core.cache.impl.SysLockReqCache"
+				maxElementsInMemory="30000"
+				eternal="true"
+				overflowToDisk="false"
+				memoryStoreEvictionPolicy="LRU"/>			
+
+	<!-- 菜单/权限/角色/授权加入缓存 Start -->
+	<cache name="com.wo56.common.cache.SysMenuCache"
+				maxElementsInMemory="3000" 
+				eternal="true" 
+				overflowToDisk="false"
+				memoryStoreEvictionPolicy="LRU" />
+	<cache name="com.wo56.common.cache.SysEntityCache"
+				maxElementsInMemory="30000" 
+				eternal="true" 
+				overflowToDisk="false"
+				memoryStoreEvictionPolicy="LRU" />
+	<cache name="com.wo56.common.cache.SysRoleGrantCache"
+				maxElementsInMemory="300000" 
+				eternal="true" 
+				overflowToDisk="false"
+				memoryStoreEvictionPolicy="LRU" />
+	<cache name="com.wo56.common.cache.SysRoleCache"
+				maxElementsInMemory="3000" 
+				eternal="true" 
+				overflowToDisk="false"
+				memoryStoreEvictionPolicy="LRU" />
+	<cache name="com.wo56.common.cache.SysRoleOperRelCache"
+				maxElementsInMemory="30000" 
+				eternal="true" 
+				overflowToDisk="false"
+				memoryStoreEvictionPolicy="LRU" />
+	<!-- 菜单/权限/角色/授权加入缓存 End -->
+	
+	
+	<!-- BUSINESS -->
+	<cache name="com.framework.core.cache.impl.SysProvinceDataCache"
+					maxElementsInMemory="30000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+           
+	<cache name="com.framework.core.cache.impl.SysCityDataCache"
+					maxElementsInMemory="30000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+           
+	<cache name="com.framework.core.cache.impl.SysDistrictDataCache"
+					maxElementsInMemory="30000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+	
+	<cache name="com.framework.core.cache.impl.SysStreetDataCache"
+					maxElementsInMemory="30000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+					
+	<cache name="com.business.wlpt.common.service.impl.SysSmsTemplateDataCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+					
+	<cache name="com.wo56.common.cache.OraganizationCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+					
+					
+	<cache name="com.wo56.common.cache.AcFeeCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+	
+	<cache name="com.wo56.common.cache.SysProductCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+					
+	<cache name="com.wo56.common.cache.SysTenantDefCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>
+					
+	<cache name="com.wo56.common.sms.cache.SysTenantExtendCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>					
+	<cache name="com.framework.core.inter.impl.SysPostLogCache"
+					maxElementsInMemory="10000"
+					eternal="true"
+					overflowToDisk="false"
+					memoryStoreEvictionPolicy="LRU"/>				
+    <defaultCache 
+					maxElementsInMemory="10000"
+					eternal="false"
+					timeToIdleSeconds="1800"
+					timeToLiveSeconds="7200"
+					overflowToDisk="true"
+					maxElementsOnDisk="10000000"
+					diskPersistent="false"
+					diskExpiryThreadIntervalSeconds="120"
+					memoryStoreEvictionPolicy="LRU" />
+    
+
+</ehcache>

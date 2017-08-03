@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="batchApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>${title}_批量回单返厂</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master_open.css?v=${ver}">
+<style type="text/css">
+.list_xl .list_xl_tbody td {
+    line-height: 34px;
+    border-bottom: 1px dotted #dfdedf;
+    color: #333;
+    text-align:center;
+    text-indent:0em;
+    white-space: nowrap;}
+.list_dhl .list_xl_thead th{text-indent:0;text-align:center;}
+.dhl_hd td{padding-bottom: 10px;}
+ .hideString{
+		        white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+		    }
+</style>
+</head>
+<body ng-controller="batchCtrl" onload="setContentHeight()" >
+	<my-table name="order" ng-show="false"></my-table>
+	<div class="billing_1 clearfix pb_20 mt_20" style="border-top: 0;">
+	<!-- 回单返厂信息 -->
+	<div class="added_warp clearfix ng-cloak" >
+		
+		<table class="search_term" width="100%" border="0" cellspacing="0" cellpadding="0" >
+			<tbody><tr>
+		                   <td width="100">
+	                            <label class="term_label">付款方式：</label></td>
+	                       <td width="210">
+	                             <div class="form_select">
+	                                 <select id="_paymentType" class="xl_z ng-pristine ng-untouched ng-valid"  ng-model="query.paymentType" ng-options="objCon.codeValue as objCon.codeName for  objCon in paymentTypeData.items" ></select>
+                                 </div>
+                            </td>
+	                        <td width="100">
+	                            <label class="term_label">发货方：</label>
+	                           </td>
+	                           <td width="220">
+	                            <input class="form_select fl" ng-model="query.consignorName"/>
+                            </td>
+                        
+                           
+	                        <td width="100"><div class="bottom_search"><a style="cursor: pointer;" ng-Enter ng-click="doQuery()">{{isTrue ? "查找中。":"查找"}}</a></div></td>
+	         				<td></td>
+	         </tr>
+	         </tbody>
+	         </table>
+		
+		
+			<!-- 搜索 -->
+			<div class="added_stowage clearfix fl ml_5b" style="min-height: 500px;">
+			
+			<!-- 快搜    -->
+			<div class="added_ks">
+				<h2 style="font-family:宋体;line-height: 52px;color: #000;font-weight: bold;">未选返厂记录（共{{order.data.items.length == undefined ? 0 : order.data.items.length}}笔）</h2>
+				<label class="added_label fl">快找：</label>
+					<input class="added_input" style="width:180px;" ng-model="selectData.trackingNums" ng-maxlength="20" type="text" placeholder="请输入运单号按回车键查询" id="trackingNumEnterA" ng-keydown="checkData(1)" ng-blur="checkData(1)">
+			</div>
+
+			<!-- 列表 -->
+			<div style="min-height: 318px; position: relative; border: 1px solid #e1effa; margin: 0 20px;">
+				<div class="pf" style="width: 100%; min-height: 318px; overflow: auto;">
+					<table name="MyTable" class="search_listc added_list" border="0" cellspacing="0" cellpadding="0" style="display: block; width: 1753px; left: 0px;">
+						<thead>
+							<tr>
+								<th width="25px" style="padding-left: 14px;"><a class="pcar_j icon" ng-click="selectAll(order.data)" tips="全选添加到返厂信息列表" style="cursor: pointer;"></a></th>
+								<th width="100">运单号</th>
+								<th width="116">发货方</th>
+								<th width="100">付款方式</th>
+								<th width="100">回单付金额</th>
+								<th width="100">到付金额</th>
+                                <th width="120">回单号</th>
+                                <th width="100">回单份数</th>
+                                <th width="100">重量</th>
+                                <th width="100">体积</th>
+                                <th width="120">配送网点</th>
+                                <th width="100">件数</th>
+                                <th width="120">收货人</th>
+                                <th width="120">收货人手机</th>
+                                <th width="200">备注</th>
+                                <th width="100" style="border-right: 0">收货方式</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cloak ng-scope" ng-class="{'search_list_bj':o.orderState==5}" ng-repeat="o in order.data.items">
+								<td valign="top" width="25px" style="padding-left: 14px;"><a ng-click="select(o);" class="pcar_j icon" tips="添加到返厂信息列表"></a></td>
+                                <td width="100">{{o.trackingNum}}</td>
+                                <td width="116" title="{{o.consignorName}}"><div class="cc_yc" style="width: 110px;">{{o.consignorName}}</div></td>
+                                <td width="100">{{o.paymentTypeName}}</td>
+                                <td width="100">{{o.receiptPayment/100}}</td>
+                                <td width="100">{{o.freightCollect/100}}</td>
+                                <td width="120">{{o.receiptNum}}</td>
+                                <td width="100">{{o.receiptCount}}</td>
+                                <td width="100">{{o.weight.toFixed(1)}}</td>
+                                <td width="100">{{o.volume.toFixed(2)}}</td>
+                                <td width="120">{{o.distributionOrgName}}</td>
+                                <td width="100">{{o.count}}</td>
+                                <td width="120">{{o.consigneeLinkmanName}}</td>
+                                <td width="120">{{o.consigneeBill}}</td>
+                                <td width="200" title="{{o.remarks}}"><div class="cc_yc" style="width: 200px;">{{o.remarks}}</div></td>
+                                <td width="" style="border-right: 0">{{o.deliveryTypeName}}</td>
+							</tr>
+							<tr ng-show="order.data.items.length > 0">
+								<td valign="top" width="25px" style="padding-left: 14px;">
+							    </td>
+							    <td width="100" style="color: #ff0000;font-weight: bold">合计{{order.data.items.length}}笔</td>
+					            <td width="116"></td>
+					            <td width="100"></td>
+					             <td width="100" style="color: #ff0000;font-weight: bold">{{order.data.items | sumOfItems:'receiptPaymentString'}}</td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{order.data.items | sumOfItems:'freightCollectString'}}</td>
+                                <td width="120"></td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{order.data.items | sumOfItems:'receiptCount'}}</td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{order.data.items | sumOfItems:'weight' }}</td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{order.data.items | sumOfItems:'volume' }}</td>
+                                <td width="120"></td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{order.data.items | sumOfItems:'count' }}</td>
+                                <td width="120"></td>
+                                <td width="120"></td>
+                                <td width="200"></td>
+                                <td width="" style="border-right: 0"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<div class="added_stowage clearfix fl" style="min-height: 500px;position: relative; margin-left: 20px;">
+			 
+	         
+		
+			<!-- 快搜 -->
+			<div class="added_ks">
+				<div class="clearfix">
+				<h2 class="fl" style="font-family:宋体;line-height: 40px;color: #000;font-weight: bold;">已选记录（共{{list.length}}笔）</h2>
+				<div class="bottom_nav1 clearfix fr" style="width: auto;padding-right: 20px;">
+	          	
+	          		<a href="javascript:void(0)" style="cursor: pointer;" ng-click="doSave()">返厂</a>
+	          		<a href="javascript:void(0)"  ng-click="close()">返回</a>
+	         	</div>
+	         	</div>
+				<label class="added_label fl">快找：</label> 
+				<input class="added_input" style="width:180px;" ng-model="selectData.geTrackingNums" ng-maxlength="20" ng-model="selectData.trackingNumber" type="text" placeholder="请输入运单号按回车键查询" id="trackingNumEnterB" ng-keydown="isCheckData(1)" ng-blur="isCheckData(1)" >
+			</div>
+
+			<div style="min-height: 318px; position: relative; border: 1px solid #e1effa; margin: 0 20px; overflow: auto;">
+				<div class="pf"  style="width: 100%;min-height: 318px; overflow: auto;">
+					<table class="search_listc added_list" border="0" cellspacing="0" cellpadding="0" style="display: block; width: 1753px; left: 0px;">
+						<thead>
+							<tr>
+								<th width="25px" style="padding-left: 14px;">
+									<a class="pcar_m icon" ng-click="selectClear();" tips="全选移除到待返厂列表" style="cursor: pointer;"></a>
+								</th>
+								<th width="100">运单号</th>
+								<th width="116">发货方</th>
+								<th width="100">付款方式</th>
+								<th width="100">回单付金额</th>
+                                <th width="100">到付金额</th>
+                                <th width="120">回单号</th>
+                                <th width="100">回单份数</th>
+                                <th width="100">重量</th>
+                                <th width="100">体积</th>
+                                <th width="120">配送网点</th>
+                                <th width="100">件数</th>
+                                <th width="120">收货人</th>
+                                <th width="120">收货人手机</th>
+                                <th width="200">备注</th>
+                                <th width="100">收货方式</th>
+							</tr>
+						</thead>
+					
+						<tbody>
+							<tr class="cloak ng-scope" ng-class="{'search_list_tr':$index%2==1}" ng-repeat="o in list">
+								<td valign="top" width="25px" style="padding-left: 14px;">
+									<a class="pcar_m icon" ng-click="clear(o);" tips="全选移除到待返厂列表" style="cursor: pointer;"></a>
+								</td>
+								<td width="100">{{o.trackingNum}}</td>
+							    <td width="116" title="{{o.consignorName}}"><div class="cc_yc" style="width: 110px;">{{o.consignorName}}</div></td>
+                                <td width="100">{{o.paymentTypeName}}</td>
+                                <td width="100">{{o.receiptPayment/100}}</td>
+                                 <td width="100">{{o.freightCollect/100}}</td>
+                                <td width="120">{{o.receiptNum}}</td>
+                                <td width="100">{{o.receiptCount}}</td>
+                                <td width="100">{{o.weight.toFixed(1)}}</td>
+                                <td width="100">{{o.volume.toFixed(2)}}</td>
+                                <td width="120">{{o.distributionOrgName}}</td>
+                                <td width="100">{{o.count}}</td>
+                                <td width="120">{{o.consigneeLinkmanName}}</td>
+                                <td width="120">{{o.consigneeBill}}</td>
+                                <td width="200" title="{{o.remarks}}"><div class="cc_yc" style="width: 200px;">{{o.remarks}}</div></td>
+                                <td width="100">{{o.deliveryTypeName}}</td>
+							</tr>
+							<tr ng-show="list.length > 0">
+								<td valign="top" width="25px" style="padding-left: 14px;">
+								</td>
+								<td width="100" style="color: #ff0000;font-weight: bold">合计{{list.length}}笔</td>
+					            <td width="116"></td>
+					            <td width="100"></td>
+					            <td width="100" style="color: #ff0000;font-weight: bold">{{list | sumOfItems:'receiptPaymentString'}}</td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{list | sumOfItems:'freightCollectString'}}</td>
+                                <td width="120"></td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{list | sumOfItems:'receiptCount'}}</td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{list | sumOfItems:'weight' }}</td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{list | sumOfItems:'volume' }}</td>
+                                <td width="120"></td>
+                                <td width="100" style="color: #ff0000;font-weight: bold">{{list | sumOfItems:'count' }}</td>
+                                <td width="120"></td>
+                                <td width="120"></td>
+                                <td width="200"></td>
+                                <td width="100"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</div>
+		
+		</div>
+		</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/x.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="receiptBatchReturnCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="excRegisterApp">
+<head>
+<title>调度任务-异常登记</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="excRegisterCtrl" onload="setContentHeight()">
+	<div class="billing_1 ng-cloak" style="padding-bottom:80px;">
+					
+		<!--异常登记 start-->
+			
+				<div class="search" style="margin: 0 35px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId" ng-blur="toView(query.wayBillId)" maxlength="20" type="text"></td>
+						<td width="100"><a class="search_ydcx" onclick="document.getElementById('exc_1').style.display='block';document.getElementById('alertMsgIsShow').style.display='block'"
+ 							href="javascript:void(0);" ng-Enter>查找运单</a></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+						
+					  </tr>
+					  <tr>
+					  	<td width="10%"><label class="control-label">异常类型：</label></td>
+						<td width="23.33%"><div class="search_select">
+								<my-select id="query.excType"  has-all="" default-value=""
+									code-type="EXCEPTION_TYPE" url-param='' />
+							</div></td>
+						
+						<td width="10%"><label class="control-label">异常件数：</label></td>
+						<td width="23.33%"><input class="input_box" ng-model="query.count" type="text"></td>
+						<td width="10%"></td>
+						<td width="23.33%"></td>
+					  </tr>
+					  
+					  
+					  <tr>
+						<td valign="top"><label class="control-label">异常描述：</label></td>
+						<td colspan="5"><textarea maxlength="500" ng-model="query.notes" style="height:90px; width:100%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+						</td>
+						
+						</tr>
+					  
+					  <tr>
+						<td><label class="control-label">处理状态：</label></td>
+						<td width="23.33%">
+							<div class="search_select">
+								<my-select id="query.excState"  has-all="" default-value=""
+									code-type="DEAL_STATE" url-param='' />
+									<!-- <select ng-model="query.excState" name="select" class="xl_z" ng-options="obj.codeValue as obj.sfName for  obj in sfInfo ">
+									<option></option> 
+								</select>-->
+							</div>					</td>
+						<td><label class="control-label w_100">异常责任方：</label></td>
+						<td><div class="search_select">
+								<select ng-model="query.dutyObjName" name="select" class="xl_z">
+									<option></option>
+									<option value="开单部门">开单部门</option>
+									<option value="专线公司">专线公司</option>
+									<option value="安装师傅">安装师傅</option>
+									<option value="发货人">发货人</option>
+									<option value="枢纽">枢纽</option>
+									<option value="收货人">收货人</option>
+									<option value="客服">客服</option>
+									<option value="调度">调度</option>
+								</select>
+							</div></td>
+						<td><label class="control-label">异常金额：</label></td>
+						<td><input  class="input_box" ng-model="query.exceFee"   type="text"></td>
+						
+					  </tr>
+					  
+					</tbody></table>
+				</div>
+				
+				
+				<div class="search" style="margin: 0 35px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table  tx_tc_table dhl_r">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label w_100">上传图片：</label></td>
+						<td colspan="5"><ul class="dd_cx clearfix">
+						<li><span my-File-Model="exceImage1" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage2" is-Close="true" ></span></li>
+					<li><span my-File-Model="exceImage3" is-Close="true" ></span></li>
+					</ul></td>
+					  </tr>
+					</tbody></table>
+				</div>	
+				<div class="search" style=" margin: 0 35px; ">
+					<div class="bottom_nav1 " style="text-align:left;margin: 20px 0 0 100px;width: auto;padding: 0">
+						<a href="javascript:void(0)" ng-click="doSave()" class="hover">生成维修任务</a>
+						<a href="javascript:void(0)" ng-click="close()" class="">取消维修任务</a>
+						<a href="javascript:void(0)" ng-click="close()" class="">生成返货任务</a>
+						<a href="javascript:void(0)" ng-click="close()" class="">生成返货任务</a>
+						
+					</div>
+					<!-- 点击显示 开始 -->
+					<div style="margin-top: 20px;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r" style="padding-top: 0;">
+						  <tbody>
+						  <tr>
+							<td width="100"><label class="control-label">维修类别：</label></td>
+							<td width="200">
+							<div class="search_select">
+									<my-select id="query.excType"  has-all="" default-value=""
+										code-type="EXCEPTION_TYPE" url-param='' />
+								</div>
+							</td>
+							<td width="100"><label class="control-label">师傅账号：</label></td>
+							<td width="200"><input class="input_box"  maxlength="20" type="text"></td>
+							<td width="100"><label class="control-label">师傅：</label></td>
+							<td width="200"><input class="input_box"  maxlength="20" type="text"></td>
+							<td><a class="search_ydcx" onclick="document.getElementById('exc_2').style.display='block';document.getElementById('alertMsgIsShow').style.display='block'" href="javascript:void(0);">找师傅</a></td>
+							
+						  </tr>
+						  <tr>
+						  	<td><label class="control-label">维修费：</label></td>
+							<td><div class="search_select">
+									<my-select id="query.excType"  has-all="" default-value=""
+										code-type="EXCEPTION_TYPE" url-param='' />
+								</div></td>
+							
+							<td><label class="control-label">上门地址：</label></td>
+							<td><input class="input_box" ng-model="query.count" type="text"></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  
+						  
+						  <tr>
+							<td valign="top"><label class="control-label">任务备注：</label></td>
+							<td colspan="5"><textarea maxlength="500" ng-model="query.notes" style="height:90px; width:100%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+							</td>
+							<td></td>
+						  </tr>
+						  
+						</tbody>
+						</table>
+					</div>
+					<!-- 点击显示 结束 -->
+				</div>
+				<div class="tx_tc_button" style="margin:20px 0">
+					<a class="search_button_ss" ng-click="doSave();" href="javascript:void(0);">保存</a>
+					<a class="search_button_cz" href="javascript:void(0);" ng-click="close();">取消</a>
+				</div>
+	
+			
+			<!--异常登记 end-->
+				
+			
+	</div>
+	
+	
+	
+	<!--查找运单 开始 --> 
+   <div  id="exc_1" style="position:fixed; top:50%;left:50%; width:850px; height:600px; margin-left:-480px;margin-top:-307px; z-index:99996;display: none">
+   		<a class="tc_x" href="javascript:void(0)" onclick="document.getElementById('exc_1').style.display='none';document.getElementById('alertMsgIsShow').style.display='none'">x</a>
+   		
+   		<div class="billing_1 clearfix pb_20" style="margin: 0!important" >
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_qkd">
+					<tbody><tr>
+                	<td width="110"><label class="term_label">运单号：</label></td>
+                	<td><input ng-model="query.trackingNum" class="form_term" type="text" maxlength="22"></td>
+                    <td width="90"><label class="term_label">发货方：</label></td>
+                    <td><input ng-model="query.consignorName"     class="form_term" type="text"  maxlength="22"></td>
+                    <td width="90"><label class="term_label">发货人：</label></td>
+                    <td><input ng-model="query.consignorLinkmanName"     class="form_term" type="text"  maxlength="22"></td>
+                    
+                    <td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+					</td>
+					</tr>
+					<tr>
+                    <td><label class="term_label">发货人电话：</label></td>
+                    <td><input ng-model="query.consignorBill"  class="form_term" type="text"  maxlength="22"></td>
+                    <td><label class="term_label">中转单号：</label></td>
+                    <td><input  ng-model="query.outgoingTrackingNum"   class="form_term" type="text"  maxlength="22"></td>
+                    <td><label class="term_label">收货方：</label></td>
+                    <td><input ng-model="query.consigneeName"     class="form_term" type="text"  maxlength="22"></td>
+                    </tr>
+                    <tr>
+					<td><label class="term_label">收货人：</label></td>
+					<td><input  ng-model="query.consigneeLinkmanName"    class="form_term" type="text"  maxlength="22"></td>
+					<td><label class="term_label">收货人电话：</label></td>
+					<td><input ng-model="query.consigneeBill"  class="form_term" type="text"  maxlength="22"></td>
+					</tr>
+                   </tbody>
+                </table>
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果--<span class="f14">双击查看详情</span></h2><!-- <a href="#">查看详情</a> --></div>
+				<my-table>
+	                <div id="size" class="zz_list table_height" style="overflow:auto;">
+						<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0">
+	                          <thead id="tb1">
+	                                  <tr>
+	                                    <th width="11%">运单号</th>
+	                                    <th width="9%">受理日期</th>
+	                                    <th width="9%">发货方</th>
+	                                    <th width="9%">发货人</th>
+	                                    <th width="9%">发货人电话</th>
+	                                    <th width="9%">收货方</th>
+	                                    <th width="9%">收货人</th>
+	                                    <th width="9%">收货人电话</th>
+	                                    <th width="7%">状态</th>
+	                                    <th width="9%">受理网点</th>
+	                                    <th width="9%">到站</th>
+	                                  </tr>
+	                                </thead>
+	                         
+	                             <tbody>
+	                                <tr style="cursor: pointer;" ng-repeat="o in page.data.items" ng-dblclick="toDetail(o)">
+	                                  <td width="11%" title="{{o.trackingNum}}">{{o.trackingNum}}</td>
+	                                  <td width="9%" >{{o.createDate.split(" ")[0]}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.consignorName}}">{{o.consignorName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.consignorLinkmanName}}">{{o.consignorLinkmanName}}</td>
+	                                  <td width="9%"  title="{{o.consignorBill}}">{{o.consignorBill}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.consigneeName}}">{{o.consigneeName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.onsigneeLinkmanName}}">{{o.consigneeLinkmanName}}</td>
+	                                  <td width="9%"  title="{{o.consigneeBill}}">{{o.consigneeBill}}</td>
+	                                  <td width="7%"  class="hideString" title="{{o.orderStateName}}">{{o.orderStateName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.orgIdName}}">{{o.orgIdName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.distributionOrgName}}">{{o.distributionOrgName}}</td>
+	                                </tr>
+	                              </tbody>
+	                       </table>
+
+			</div>
+		</my-table>
+		</div>
+   </div>
+<!--查找运单 结束 --> 
+       
+<!--找师傅 开始 --> 
+   <div  id="exc_2" style="position:fixed; top:50%;left:50%; width:850px; height:600px; margin-left:-480px;margin-top:-307px; z-index:99996;display: none">
+   		<a class="tc_x" href="javascript:void(0)" onclick="document.getElementById('exc_2').style.display='none';document.getElementById('alertMsgIsShow').style.display='none'"
+>x</a>
+   		
+   		<div class="billing_1 clearfix pb_20" style="margin: 0!important" >
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term dhl_qkd">
+					<tbody><tr>
+                	<td width="110"><label class="term_label">运单号：</label></td>
+                	<td><input ng-model="query.trackingNum" class="form_term" type="text" maxlength="22"></td>
+                    <td width="90"><label class="term_label">发货方：</label></td>
+                    <td><input ng-model="query.consignorName"     class="form_term" type="text"  maxlength="22"></td>
+                    <td width="90"><label class="term_label">发货人：</label></td>
+                    <td><input ng-model="query.consignorLinkmanName"     class="form_term" type="text"  maxlength="22"></td>
+                    
+                    <td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+					</td>
+					</tr>
+					<tr>
+                    <td><label class="term_label">发货人电话：</label></td>
+                    <td><input ng-model="query.consignorBill"  class="form_term" type="text"  maxlength="22"></td>
+                    <td><label class="term_label">中转单号：</label></td>
+                    <td><input  ng-model="query.outgoingTrackingNum"   class="form_term" type="text"  maxlength="22"></td>
+                    <td><label class="term_label">收货方：</label></td>
+                    <td><input ng-model="query.consigneeName"     class="form_term" type="text"  maxlength="22"></td>
+                    </tr>
+                    <tr>
+					<td><label class="term_label">收货人：</label></td>
+					<td><input  ng-model="query.consigneeLinkmanName"    class="form_term" type="text"  maxlength="22"></td>
+					<td><label class="term_label">收货人电话：</label></td>
+					<td><input ng-model="query.consigneeBill"  class="form_term" type="text"  maxlength="22"></td>
+					</tr>
+                   </tbody>
+                </table>
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果--<span class="f14">双击查看详情</span></h2><!-- <a href="#">查看详情</a> --></div>
+				<my-table>
+	                <div id="size" class="zz_list table_height" style="overflow:auto;">
+						<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0">
+	                          <thead id="tb1">
+	                                  <tr>
+	                                    <th width="11%">运单号</th>
+	                                    <th width="9%">受理日期</th>
+	                                    <th width="9%">发货方</th>
+	                                    <th width="9%">发货人</th>
+	                                    <th width="9%">发货人电话</th>
+	                                    <th width="9%">收货方</th>
+	                                    <th width="9%">收货人</th>
+	                                    <th width="9%">收货人电话</th>
+	                                    <th width="7%">状态</th>
+	                                    <th width="9%">受理网点</th>
+	                                    <th width="9%">到站</th>
+	                                  </tr>
+	                                </thead>
+	                         
+	                             <tbody>
+	                                <tr style="cursor: pointer;" ng-repeat="o in page.data.items" ng-dblclick="toDetail(o)">
+	                                  <td width="11%" title="{{o.trackingNum}}">{{o.trackingNum}}</td>
+	                                  <td width="9%" >{{o.createDate.split(" ")[0]}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.consignorName}}">{{o.consignorName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.consignorLinkmanName}}">{{o.consignorLinkmanName}}</td>
+	                                  <td width="9%"  title="{{o.consignorBill}}">{{o.consignorBill}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.consigneeName}}">{{o.consigneeName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.onsigneeLinkmanName}}">{{o.consigneeLinkmanName}}</td>
+	                                  <td width="9%"  title="{{o.consigneeBill}}">{{o.consigneeBill}}</td>
+	                                  <td width="7%"  class="hideString" title="{{o.orderStateName}}">{{o.orderStateName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.orgIdName}}">{{o.orgIdName}}</td>
+	                                  <td width="9%"  class="hideString" title="{{o.distributionOrgName}}">{{o.distributionOrgName}}</td>
+	                                </tr>
+	                              </tbody>
+	                       </table>
+
+			</div>
+		</my-table>
+		</div>
+   </div>
+<!--找师傅 结束 --> 
+
+	   <div id="alertMsgIsShow" class="popup_bj"  style="display: none;z-index:99995"></div>
+	   
+	   
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->`
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="excRegisterCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

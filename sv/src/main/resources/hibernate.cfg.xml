@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">none</property>
+		<property name="show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+
+		<!-- MYSQL5 -->
+		<property name="hibernate.dialect">com.framework.core.dialect.MySQLDBExtDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">@jdbc.url@</property>
+		<property name="connection.useUnicode">true</property>
+		<property name="connection.characterEncoding">UTF-8</property>
+		<property name="hibernate.connection.username">@jdbc.user@</property>
+		<property name="hibernate.connection.password">@jdbc.password@</property>
+		<property name="hibernate.max_fetch_depth">2</property>
+		<property name="hibernate.jdbc.fetch_size">20</property>
+		<property name="hibernate.jdbc.batch_size">50</property>
+
+		<!-- cache and dialect -->
+		<!-- Enable the second-level cache -->
+		<property name="cache.use_second_level_cache">true</property>
+		<property name="cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
+		<property name="net.sf.ehcache.configurationResourceName">ehcache.xml</property>
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.min_size">4</property>
+		<property name="hibernate.c3p0.max_size">16</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.max_statements">100</property>
+		<property name="hibernate.c3p0.acquire_increment">2</property>
+		<property name="hibernate.c3p0.idle_test_period">20</property>
+
+		<!-- CORE -->
+		<mapping resource="com/framework/core/cache/vo/SysCacheRefresh.hbm.xml" />
+		<mapping resource="com/framework/core/cache/vo/SysStaticData.hbm.xml" />
+		<mapping resource="com/framework/core/cache/vo/SysCfg.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/SysIntf.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttp.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttpParam.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttpFilter.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttpAccess.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/OpenAppDef.hbm.xml" />
+		<mapping resource="com/framework/core/interceptor/vo/SysUrl.hbm.xml" />
+		<mapping resource="com/framework/core/interceptor/vo/SysLockReq.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/SysPostLog.hbm.xml" />
+
+		<!-- COMPONENTS -->
+		<mapping resource="com/framework/components/fdfs/vo/SysAttach.hbm.xml" />
+		<mapping resource="com/framework/components/match/vo/MatchChainDef.hbm.xml" />
+		<mapping resource="com/framework/components/match/vo/MatchSimilarRule.hbm.xml" />
+		<mapping resource="com/framework/components/match/vo/MatchResults.hbm.xml" />
+
+		<!-- common -->
+		<mapping resource="com/framework/components/citys/Province.hbm.xml" />
+		<mapping resource="com/framework/components/citys/City.hbm.xml" />
+		<mapping resource="com/framework/components/citys/District.hbm.xml" />
+		<mapping resource="com/framework/components/citys/Street.hbm.xml" />
+
+		<!-- PAYMENT -->
+		<!-- <mapping resource="com/wo56/business/payment/vo/PaymentIntf.hbm.xml" />
+		<mapping resource="com/wo56/business/payment/vo/PayoutIntf.hbm.xml" /> -->
+
+		<!-- PERMISSION -->
+		<mapping resource="com/wo56/business/sys/vo/SysEntity.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysMenu.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysRole.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysRoleGrant.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysRoleOperRel.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysTenantDef.hbm.xml" />
+		<!-- SYSTEM -->
+
+		<!-- CM -->
+		<mapping resource="com/wo56/business/cm/vo/CmAccountInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmUserInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmCustomer.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmDriverInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmVehicleInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmUserAreaRel.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/cm/vo/CmCarrierCompany.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/cm/vo/CmOrgPickupPoint.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/cm/vo/CmOrgRel.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/cm/vo/CmOrgNote.hbm.xml" /> -->
+		 <mapping
+			resource="com/wo56/business/cm/vo/CmUserRelationshipCorrespond.hbm.xml" /> 
+		<!-- ORD -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdOrgCost.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdOrderInfo.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdRouteCost.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/ord/vo/OrdDepartDetail.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdDepartInfo.hbm.xml" />
+	<!-- <mapping resource="com/wo56/business/ord/vo/OrdDeliveryDetail.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdDeliveryGoods.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdOpDetailLog.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdNotify.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdSign.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdSignTask.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdReceiptInfo.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdFee.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdGoodsDetail.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/ord/vo/OrdOpLog.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdExceptionInfo.hbm.xml" /> -->
+	<!-- 	<mapping resource="com/wo56/business/ord/vo/OrdQuestionInfo.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdTransitOutgoing.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdSellerOrder.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdSellerNotify.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdDepartInfoOther.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdDepartDetailOther.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/ord/vo/OrdStock.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdRemarkLog.hbm.xml" /> -->
+
+	<!-- 	<mapping resource="com/wo56/business/ord/vo/OrdOrderInfoHis.hbm.xml" /> -->
+	<!-- 	<mapping resource="com/wo56/business/ord/vo/OrdFeeHis.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdGoodsDetailHis.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdSalesTracking.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdSalesTrackingHis.hbm.xml" /> -->
+
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdOrderInfoPic.hbm.xml" /> -->
+		<!-- ROUTE -->
+		<mapping resource="com/wo56/business/route/vo/RouteRouting.hbm.xml" />
+		<mapping resource="com/wo56/business/route/vo/RouteTowards.hbm.xml" />
+		<mapping resource="com/wo56/business/route/vo/RouteTowardsDtl.hbm.xml" />
+		<mapping resource="com/wo56/business/route/vo/TaskRouteFeeRetry.hbm.xml" />
+		<mapping resource="com/wo56/business/route/vo/RouteAreaRelCfg.hbm.xml" />
+		<mapping resource="com/wo56/business/route/vo/RouteIntroduce.hbm.xml" />
+		<!-- ORG -->
+		<mapping resource="com/wo56/business/org/vo/Organization.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdTrackingInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdTrackingDetail.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdCastChangeInfo.hbm.xml" /> -->
+
+		<!-- <mapping resource="com/wo56/business/org/vo/OrdImportBill.hbm.xml" /> -->
+
+		<!-- AC -->
+		<mapping resource="com/wo56/business/ac/vo/AcAccount.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/cm/vo/CmTrunkCost.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmTrunkCostDetail.hbm.xml" /> -->
+
+		<!-- task -->
+		<!-- <mapping resource="com/wo56/business/task/vo/ExcPushMessHisTask.hbm.xml" />
+		<mapping resource="com/wo56/business/task/vo/ExcPushMessTask.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/statistic/vo/SysStatisticSeries.hbm.xml" />
+		<mapping resource="com/wo56/business/statistic/vo/SysStatisticChart.hbm.xml" /> -->
+		<!-- <mapping
+			resource="com/wo56/business/statistic/vo/SysStatisticChartLatitude.hbm.xml" /> -->
+		<!-- index -->
+	<!-- 	<mapping resource="com/wo56/business/sys/vo/SysNews.hbm.xml" /> -->
+<!-- 		<mapping resource="com/wo56/business/sys/vo/SysShortcut.hbm.xml" /> -->
+		<!-- sms -->
+		<mapping resource="com/wo56/common/sms/vo/SysSmsParam.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysSmsPlatform.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysSmsPlatformInfo.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysSmsSend.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysSmsSendHis.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysSmsTemplate.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SmsController.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysTenantController.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysTenantExtend.hbm.xml" />
+
+		<!-- AC -->
+		<mapping resource="com/wo56/business/sche/ac/vo/AcBranchFeeConfig.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/sche/ac/vo/YztAcLadderFeeConfig.hbm.xml" /> -->
+		<!-- ord sche -->
+		<!-- <mapping resource="com/wo56/business/sche/ord/vo/AccOutSendStowageCost.hbm.xml" /> -->
+		<!-- <mapping
+			resource="com/wo56/business/sche/ord/vo/AccOutSendStowageCosth.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/ord/vo/Jzinstalldistribution.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/ord/vo/SchedulerTask.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/SchedulerTaskDtl.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/SchedulerTaskHis.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/SchedulerTaskDtlHis.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/ord/vo/YztOrdExceptionHis.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/ord/vo/SchedulerFixTask.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/ScheToFriendTask.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/ord/vo/WayBillHandover.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/WayBillHandoverDetail.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/WayBillLog.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/WayBillMain.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/WayBillProduct.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/WayBillSign.hbm.xml" /> 
+		<mapping resource="com/wo56/business/sche/ord/vo/YztOrdExceOpLog.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/YztOrdFee.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/YztOrdExceptionInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/JzOrderStatus.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/JzOrderAgingNode.hbm.xml" />  -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdTimeOutLog.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdTransportServiceTime.hbm.xml" /> -->
+		<!-- sys -->
+		<!-- <mapping resource="com/wo56/business/sys/vo/SysProductDef.hbm.xml" /> -->
+	<!-- 	<mapping resource="com/wo56/business/cm/vo/CmSfUserInfo.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/cm/vo/CmServAreaInst.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmServAttrInst.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmServiceInst.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/cm/vo/CmCompanyInfo.hbm.xml" />
+	<!-- 	<mapping resource="com/wo56/business/cm/vo/CmSfUserFriends.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/cm/vo/CmContractCompany.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmContractPrice.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmExceptionInfo.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/cm/vo/CmUserOrgRel.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysVerInfo.hbm.xml" />
+
+		<!-- yzt-->
+		<!-- <mapping resource="com/wo56/business/sche/cash/vo/CashApplication.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/cash/vo/CashApplicationDtl.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/cash/vo/CashBaseInstall.hbm.xml" /> -->
+		<!-- <mapping
+			resource="com/wo56/business/sche/credit/vo/CreditCalculateRule.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/credit/vo/CreditChangeDetail.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/credit/vo/CreditRatingRule.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/credit/vo/UserCredit.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/credit/vo/UserCreditDtl.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/cash/vo/ComplaintInfo.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/serve/vo/VisitInfo.hbm.xml" /> -->
+
+		<!-- <mapping resource="com/wo56/business/sche/cash/vo/CashWithdrawInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/cash/vo/CashWithdrawInfoHis.hbm.xml" /> -->
+
+
+		<!-- <mapping resource="com/wo56/business/sche/timeout/vo/WayTimeOut.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/timeout/vo/WayTimeOutDtl.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sche/ord/vo/Waibillmodifyinfo.hbm.xml" />
+		<mapping resource="com/wo56/business/sche/ord/vo/Waibillmodify.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdDutyInfo.hbm.xml" /> -->
+		<!-- transfer vo -->
+		<!-- <mapping resource="com/wo56/business/transfer/vo/OrdTransferDetail.hbm.xml" />
+		<mapping resource="com/wo56/business/transfer/vo/OrdTransferInfo.hbm.xml" />
+ -->
+
+		<!-- <mapping
+			resource="com/wo56/business/ord/vo/OrdBusiObjectFieldModifyLog.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/sys/vo/TableDiy.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/sys/vo/SysPrintConfig.hbm.xml" /> -->
+		<mapping resource="com/wo56/business/sys/vo/SysPrintItem.hbm.xml" />
+
+	<!-- 	<mapping resource="com/wo56/business/sys/vo/SysBusiConfig.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysBusiConfigItem.hbm.xml" /> -->
+		<!-- 船运模块 -->
+		<!-- <mapping resource="com/wo56/business/ord/vo/OrdShippingDetail.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdShippingInfoHis.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdShippingDetailHis.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdShippingInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmShipInfo.hbm.xml" /> -->
+		<!-- cm 云企 -->
+		<mapping resource="com/wo56/business/cm/vo/CmMailList.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmAddress.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysLoginLog.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmUserInfoPull.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmPullBlack.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmArea.hbm.xml" />
+		<!-- ac -->
+		<mapping resource="com/wo56/business/ac/vo/AcWalletRel.hbm.xml" />
+		<mapping resource="com/wo56/business/cm/vo/CmPullWorkHis.hbm.xml" />
+
+		<!--ac 云企 -->
+		<mapping resource="com/wo56/business/ac/vo/AcPaymentMethod.hbm.xml" />
+		<mapping resource="com/wo56/business/ac/vo/AcMyWallet.hbm.xml" />
+		<mapping resource="com/wo56/business/ac/vo/AcAccountWallet.hbm.xml" />
+		<mapping resource="com/wo56/business/ac/vo/AcUserRel.hbm.xml" />
+		<mapping resource="com/wo56/business/ac/vo/AcMyWalletHis.hbm.xml" />
+		<!-- ord -->
+		<mapping resource="com/wo56/business/ord/vo/OrderInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderFee.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderFeeRule.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderTipRuleExt.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdBusiPerson.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdGoodsInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdOrdersInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrdSignInfo.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoTmsError.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoTmsErrorHis.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoChild.hbm.xml" />
+		
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoChildSign.hbm.xml" />
+		<!-- app 云企 -->
+		<mapping resource="com/wo56/business/app/vo/AppPushBillRelat.hbm.xml" />
+		
+		<!-- sys yunqi -->
+		<mapping resource="com/wo56/business/sys/vo/SysTenantRegister.hbm.xml" />
+		
+		<!-- 表头配置 -->
+		<mapping resource="com/wo56/business/sys/vo/SysTableHeadConfig.hbm.xml" />
+		<!-- 品名包装默认值设置 -->
+		<mapping resource="com/wo56/business/statistic/vo/StaticDataSet.hbm.xml" />
+		
+		<mapping resource="com/wo56/business/ord/vo/OrdChildOpLog.hbm.xml" /> 
+	</session-factory>
+</hibernate-configuration>

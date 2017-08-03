@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmUserInfoPullApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+
+<style>
+.form_billing {
+	border-radius: 1px;
+}
+
+.ui-select {
+	width: 100%;
+	width: -moz-calc(100% - 2px);
+	width: -webkit-calc(100% - 2px);
+	width: calc(100% - 2px)
+}
+
+.ui-select, .ui-select select {
+	height: 24px !important;
+	min-height: 24px !important;
+}
+
+.ui-select select {
+	
+}
+.form_billing{
+	background: #fff;border: 1px solid #A1BBD1;
+	
+}
+</style>
+
+</head>
+<body ng-controller="addCmUserInfoPullCtrl">
+
+	<!-- 拉包工 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 300px">
+		<div class="billing_list">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="search_table search_term"
+				style="width: 860px; margin: 0 auto;">
+				<tr>
+					<td width="110"><label class="term_label">拉包工工号：</label></td>
+					<td width="176">
+						<input maxlength="5" ng-disabled="verify == 1 || see == 1" my-Num-Val="keyup" ng-model="save.jobNumber" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+					</td>
+					<td width="110" ><label class="term_label" style="color: red;">*工号为五位数！</label></td>
+					<td width="176"></td>
+					<td width="110"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td width="110"><label class="term_label"><em>*</em>拉包工名称：</label></td>
+					<td width="176">
+						<input maxlength="15" ng-disabled="verify == 1 || see == 1" ng-model="save.userName" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+					</td>
+					<td width="110"><label class="term_label"><em>*</em>拉包工手机：</label></td>
+					<td width="176"><input maxlength="16" ng-disabled="verify == 1 || see == 1" ng-model="save.loginAcct"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td width="110"><label class="term_label">合作方式：</label></td>
+					<td>
+						<div class="ui-select">
+							<select ng-model="save.cooperationMode"  ng-disabled="verify == 1 || see == 1" ng-options="obj.codeValue as obj.codeName for obj in cooperationModeData.items ">
+								<!-- <option value="">所有</option> -->
+							</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="term_label" ng-show="userType == 10"><em>*</em>归属拉包公司：</label>
+						<label class="term_label" ng-show="userType == 2"><em>*</em>归属专线公司：</label>
+					</td>
+					<td>
+						<div class="ui-select">
+							<select ng-model="save.tenantId"  ng-disabled="verify == 1 || see == 1" ng-options="obj.tenantId as obj.orgName for obj in curOrgData.items" class="ng-pristine ng-untouched ng-valid">
+							</select>
+						</div>
+					</td>
+					<td><label class="term_label"><em>*</em>服务省市：</label></td>
+					<td>
+						<!-- <span style="width: 110% !important" class="wdcy_input fl" my-city="ser" region="true" ></span> -->
+						<!-- <input maxlength="16" ng-model="save.orgPrincipalPhone" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /> -->
+						
+						<div class="ui-select fl" style="width: 84px;">
+							<select ng-model="save.province"  ng-disabled="verify == 1 || see == 1" ng-options="obj.id as obj.name for obj in provinceData.items " ng-change="getCityData(save.province)">
+								<!-- <option value="">所有</option> -->
+							</select>
+						</div>
+						<div class="ui-select fr" style="width: 84px;">
+							<select ng-model="save.city"  ng-disabled="verify == 1 || see == 1" ng-options="obj.id as obj.name for obj in cityData.items "  ng-change="getDistrictData(save.city)">
+								<!-- <option value="">所有</option> -->
+							</select>
+						</div>
+					</td>
+					<td><label class="term_label">服务地区：</label></td>
+					<td>
+						<div class="ui-select"   >
+							<select ng-model="save.district"  ng-disabled="verify == 1 || see == 1" ng-options="obj.id as obj.name for obj in districtData.items " >
+								<!-- <option value="">所有</option> -->
+							</select>
+						</div>
+					</td>
+				</tr>
+				<!-- <tr>
+					<td></td>
+					<td colspan="2"><span  class="dhl_xzm ng-claok" ng-repeat="obj in districtArrays">{{obj.districtName}}
+					<a ng-click="delId(obj.district)" title="点击删除省份" style="cursor: pointer;color: red;font-size: 18px">x</a>;</span></td>
+				</tr> -->
+				<tr>
+					<td><label class="term_label">账户类型：</label></td>
+					<td>
+						<div class="ui-select">
+							<select ng-model="save.paymentType"  ng-disabled="verify == 1 || see == 1" ng-options="obj.codeValue as obj.codeName for obj in paymentTypeData.items ">
+								<!-- <option value="">所有</option> -->
+							</select>
+						</div>
+					</td>
+					<td><label class="term_label">持卡人/帐号名：</label></td>
+					<td><input maxlength="16" ng-model="save.bankHolder"  ng-disabled="verify == 1 || see == 1"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td><label class="term_label">归属银行：</label></td>
+					<td>
+						<div class="ui-select">
+							<select ng-model="save.bankCode"  ng-disabled="verify == 1 || see == 1" ng-options="obj.codeValue as obj.codeName for obj in bankNameData.items ">
+								<!-- <option value="">所有</option> -->
+							</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label class="term_label">卡号/帐号：</label></td>
+					<td><input maxlength="15" ng-model="save.bankICard" ng-disabled="verify == 1 || see == 1"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td><label class="term_label">地址：</label></td>
+					<td colspan="3"><input maxlength="16" ng-disabled="verify == 1 || see == 1"
+						ng-model="save.address"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+				</tr>
+				<tr>
+					<td width="110"><label class="term_label"><em>*</em>最大接单数：</label></td>
+					<td><input maxlength="8" ng-disabled="verify == 1 || see == 1" ng-model="save.defaultSingularNum" my-Num-Val="keyup" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td width="110"></td>
+					<td width="176">
+					</td>
+					<td width="110" ></td>
+					<td width="176"></td>
+				</tr>
+				<tr>
+					<td><label class="term_label">身份证正面：</label></td>
+					<td>
+						<div class="controls">
+							<span my-File-Model="frontIdCard" is-Close="false" img-Update="verify != 1 && see != 1"></span>
+						</div>
+					</td>
+					<td><label class="term_label">身份证反面：</label></td>
+					<td colspan="3">
+						<div class="controls">
+							<span my-File-Model="backIdCard" is-Close="false" img-Update="verify != 1 && see != 1"></span>
+						</div>
+					</td>
+				</tr>
+				<tr  ng-show="verify == 1">
+					<td><label class="term_label">审核备注：</label></td>
+					<td colspan="5">
+						<textarea  ng-model="verifys.remark" maxlength="200" style="height:90px; width:100%;
+						 border: 1px solid #d9e2ee; padding:3px 4px;"border-radius: 5px;
+						  class="form-control fl ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched">
+						</textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="bottom_nav1"
+			style="border-top: 1px dashed #cee1f1; padding-top: 20px; margin-top: 15px;">
+			<a href="javascript:void(0)" ng-click="doSave()" ng-show="verify != 1 && see != 1">保 存</a>
+			<a href="javascript:void(0)" ng-click="isVerify(1)" ng-show="verify == 1">审核通过</a>
+			<a href="javascript:void(0)" ng-click="isVerify(2)" ng-show="verify == 1">审核不通过</a>
+			<a href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+	<!-- 拉包工 新增 结束 -->
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmUserInfoPullCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

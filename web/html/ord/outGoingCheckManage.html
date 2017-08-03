@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AcProveManageApp">
+<head>
+<title>联运汇_中转核销管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}">
+<style type="text/css">
+     .hideString{
+              white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+          }
+</style>
+</head>
+<body ng-controller="AcProveManageCtrl" onload="setContentHeight(800)"
+	style="overflow: hidden">
+	<!-- 核销管理 -->
+	<div class="billing_1 clearfix pb_20 mt_20">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+			<td width="100">
+				<label class="term_label">开单日期从：</label></td>
+			<td>
+				<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr" type="text">
+				<span class="search_span fl">到</span>
+				<input readonly="readonly" ng-model="query.endTime" my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr" type="text" >
+			</td>
+			<td  width="100">
+				<label class="term_label">运单号：</label></td>
+			<td>
+				<input id="id1" class="form_term" ng-model="query.trackingNum" ng-change="upNum('query.trackingNum')" maxlength="16" type="text">
+			</td>
+			<td  width="100"><label class="term_label">收支类型：</label></td>
+			<td>
+				<div class="form_select">
+					<my-select selectid="id='id2'"  id="query.inoutSts" code-type="AC_CASH_PROVE@INOUT_STS" has-all="true" default-value="-1" />
+				</div>
+			</td>
+			<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+			</tr>
+			
+			<tr>
+			<td  width="100"><label class="term_label">核销状态：</label></td>
+			<td>
+				<div class="form_select">
+					<my-select  selectid="id='id3'" id="query.checkSts" code-type="AC_CASH_PROVE@CHECK_STS" has-all="true" default-value="-1" url="" />
+				</div>
+			</td>
+			<td  width="100">
+				<label class="term_label">承运商：</label></td>
+			<td>
+				<input id="id1" class="form_term" ng-model="query.carrierCompanyName"  maxlength="16" type="text">
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		</tbody>
+		</table>
+
+		<div class="search_nr clearfix mt_20">
+			<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+				<h2>查询结果--<span class="f14">双击查看运单详情</span></h2>
+				<a ng-click="deal();" href="javascript:void(0)">核销</a>
+				<!-- <a href="javascript:void(0)"  ng-click="toAllAudit()">批量核销</a> -->
+				<a ng-click="undeal();" href="javascript:void(0)">反核销</a>
+				<a href="javascript:void(0)" id="exportId" ng-click="commonExport()">导  出</a>
+			</div>
+			<my-table>
+				<div id="size" class="zz_list table_height" style="overflow:auto;">
+					<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0" style="width: 2380px;">
+							<thead id="tb1">
+								<tr>
+									<th width="79" class="search_list_border">
+										<div class="controls">
+											<input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label>
+										</div>
+									</th>
+									<th width="120">运单号</th>
+									<th width="120">运单状态</th>
+									<th width="120">中转网点</th>
+									<th width="100">核销状态</th>
+									<th width="100">核销金额</th>
+									<th width="100">收支类型</th>
+									<th width="100">到付款</th>
+									<th width="100">代收货款</th>
+									<th width="100">中转费</th>
+									<th width="140">开单时间</th>
+									<th width="140">核销时间</th>
+									<th width="180">承运商</th>
+									<th width="140">中转时间</th>
+									<th width="80">重量(kg)</th>
+									<th width="80">体积</th>
+									<th width="80">数量</th>
+									<th width="100">回单号</th>
+									<th width="80">回单份数</th>
+									<th width="160">备注</th>
+								</tr>
+							</thead>
+						
+							<tbody style="width: 2380px;">
+								<tr ng-class="{'search_list_tr':$index%2==1}" class="ng-cloak" ng-click="selectOne(o.orderId);" ng-repeat="o in page.data.items" ng-dblclick="toView(o.trackingNum)">
+									<td width="79" class="search_list_border">
+										<div class="controls">
+											<input id="checkbox{{o.orderId}}" class="none" value="{{o}}" type="checkbox" name="check-1"><label for="check-1"></label>
+										</div>
+									</td>
+									<td width="120">{{o.trackingNum}}</td>
+									<td width="120">{{o.seeOrderStateName}}</td>
+									<td width="120">{{o.currentOrgIdName}}</td>
+									<td width="100">{{o.checkStsName}}</td>
+									<td width="100">{{o.checkFee | number:2 }}</td>
+									<td width="100">{{o.inoutStsName}}</td>
+									<td width="100">{{o.freightCollect | number:2}}</td>
+									<td width="100">{{o.collectingMoney | number:2}}</td>
+									<td width="100">{{o.outgoingFee | number:2}}</td>
+									<td width="140">{{o.createDate}}</td>
+									<td width="140">{{o.checkSts == 1 ? o.checkDate : ''}}</td>
+									<td width="180" class="hideString" title="{{o.carrierCompanyName}}">{{o.carrierCompanyName}}</td>
+									<td width="140">{{o.tranferDate}}</td>
+									<td width="80">{{o.weight| number:1}}</td>
+									<td width="80">{{o.volume| number:2}}</td>
+									<td width="80">{{o.count}}</td>
+									<td width="100">{{o.receiptNum}}</td>
+									<td width="80">{{o.receiptCount}}</td>
+									<td width="160" class="hideString" title="{{o.remarks}}">{{o.remarks}}</td>
+								</tr>
+								
+								<tr  class="ng-cloak"  ng-show="page.data.items.length >0">
+									<td width="79" class="search_list_border"><div class="controls"></div></td>
+									<td width="120" style="color: #ff0000;font-weight: bold">合计:{{page.data.items.length}}条</td>
+									<td width="120"></td>
+									<td width="120"></td>
+									<td width="100"></td>
+									<td width="100" style="color: #ff0000;font-weight: bold">{{mapCount.checkFee == 0 ? "" : mapCount.checkFee | number:2}}</td>
+									<td width="100"></td>
+									<td width="100" style="color: #ff0000;font-weight: bold">{{mapCount.freightCollect == 0 ? "" : mapCount.freightCollect | number:2}}</td>
+									<td width="100" style="color: #ff0000;font-weight: bold">{{mapCount.collectingMoney == 0 ? "" : mapCount.collectingMoney | number:2 }}</td>
+									<td width="100" style="color: #ff0000;font-weight: bold">{{mapCount.outgoingFee == 0 ? "" : mapCount.outgoingFee | number:2 }}</td>
+									<td width="140"></td>
+									<td width="140"></td>
+									<td width="180"></td>
+									<td width="140"></td>
+									<td width="80" style="color: #ff0000;font-weight: bold">{{mapCount.weight | number:1}}</td>
+									<td width="80" style="color: #ff0000;font-weight: bold">{{mapCount.volume | number:2}}</td>
+									<td width="80" style="color: #ff0000;font-weight: bold">{{mapCount.count}}</td>
+									<td width="100"></td>
+									<td width="80" style="color: #ff0000;font-weight: bold">{{mapCount.receiptCount == 0 ? "" : mapCount.receiptCount }}</td>
+									<td width="160"></td>
+								</tr>
+							</tbody>
+						</table>
+					
+				</div>
+			</my-table>
+		</div>
+	</div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="outGoingCheckManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ApplicationApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>投诉管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css">
+<!-- <script type="text/javascript" src="../../js/x.js?v=${ver}"></script> -->
+
+</head>
+
+<body ng-controller="ApplicationCtrl"  style="overflow: hidden">
+	<div class="billing_1">
+		<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tr>
+						<td width="100">
+							<label class="control-label">省份：</label></td>
+							<td>
+								<div class="search_select">
+									<select ng-model="query.provinceId"  ng-init="query.provinceId=-1" ng-change="selectCity()">
+		                            	<option value="-1">请选择</option>
+		                            	<option ng-repeat="obj in provinceData"  value="{{obj.id}}">{{obj.name}}</option>
+									</select>
+								</div>
+							</td>
+							<td width="100"><label class="control-label w_100">城市：</label></td>
+							<td>
+								<div class="search_select">
+									<select ng-model="query.cityId"  ng-init="query.cityId=-1" ng-change="selectDistrict()">
+		                            	<option value="-1">请选择</option>
+		                            	<option ng-repeat="obj in cityData"  value="{{obj.id}}">{{obj.name}}</option>
+									</select>
+								</div>
+							</td>
+							<td width="100"><label class="control-label w_100">县区：</label></td>
+							<td>
+								<div class="search_select">
+									<select ng-model="query.countyId"  ng-init="query.countyId=-1" >
+		                            	<option value="-1">请选择</option>
+		                            	<option ng-repeat="obj in districtData"  value="{{obj.id}}">{{obj.name}}</option>
+									</select>
+								</div>
+							</td>
+							<td rowspan="2">
+								<div class="search_button">
+									<a class="search_button_ss" href="javaScript:void(0)" ng-click="doQuery()" ng-Enter>搜索</a> 
+									<a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">重置</a>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td width="100"><label class="control-label">收货人：</label></td>
+							<td><input class="input_box" ng-model="query.receiveName" type="text" /></td>
+							<td width="100"><label class="control-label w_100">收货人电话：</label></td>
+							<td><input class="input_box" ng-model="query.receivePhone" type="text" /></td>
+							<td width="100"><label class="control-label">运单号：</label></td>
+							<td><input class="input_box" ng-model="query.wayBillId" type="text" /></td>
+						</tr>
+						<tr>
+							<td width="100"><label class="control-label">回访状态：</label></td>
+							<td>
+								<div class="search_select">
+									<select ng-model="query.state"  ng-init="query.state=-1" >
+		                            	<option value="-1">所有</option>
+		                            	<option ng-repeat="obj in visitInfoState"  value="{{obj.codeValue}}">{{obj.codeName}}</option>
+									</select>
+								</div>
+							</td>
+							<td width="100"></td>
+							<td></td>
+						</tr>
+				</table>
+			</div>
+			<!--任务列表 start-->
+			<div class="search_nr clearfix mt_20" >
+				<div class="waybill_title clearfix">
+					<h2 class="title_h2 fl">
+						<i class="icon title_icon fl"></i>任务列表
+					</h2>
+					<div class="fr mt15_mr20">
+						<a class="button fr ml_10 tixiansp" href="#" ng-click="modifyVisit()"><i class="button_icon button_icon dw_tixiansp"></i>回访跟进</a> 
+						<a class="button fr ml_10 tixiansp2" href="#" ng-click="addVisit()"><i class="button_icon button_icon dw_tixiansp2"></i>回访录入</a>
+					</div>
+				</div>
+				<my-Adv-Table isShowSeq="false" width="100%" isMultiSelect="false" isShowCheck="true" isFilter="false" isSum="false" id="TRACKING_NUM"  
+	         		head='[{"name":"运单号","code":"TRACKING_NUM","width":"8%"},
+	         		{"name":"服务类型","code":"DELIVERY_TYPE_NAME","width":"10%"},
+	         		{"name":"开单日期","code":"CREATE_DATE","width":"12%"},
+	         		{"name":"收货人","code":"CONSIGNEE_NAME","width":"10%"},
+	         		{"name":"收货人手机","code":"CONSIGNEE_BILL","width":"10%"},
+	         		{"name":"收货人电话","code":"CONSIGNEE_TELEPHONE","width":"8%"},
+	         		{"name":"收货城市","code":"PROVINCE_CITY_COUNTY","width":"10%"},
+	         		{"name":"回访状态","code":"STATE_NAME","width":"8%"},
+	         		{"name":"回访人","code":"OP_NAME","width":"8%"},
+	         		{"name":"回访时间","code":"OP_DATE","width":"12%"}]'>
+	            </my-Adv-Table>
+            </div>
+		</div>
+		
+	</div>
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="VisitCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

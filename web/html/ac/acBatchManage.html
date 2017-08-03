@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AcBatchManageApp"> 
+	<head>
+	    <title>联运汇_核销管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="AcBatchManageCtrl" onload="setContentHeight()"  style="overflow:hidden">
+        <!-- 核销管理 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">发车批次：</label>
+                   			</td>
+						<td>
+						 <input class="form_term" ng-model="query.orderId"  maxlength="16" type="text">
+                            </td>  
+						<td width="100"><label class="term_label">核销状态：</label>
+                       		
+                        
+                    	</td>
+						<td>
+                        <div class="form_select">
+                                <my-select id="query.checkSts"  code-type="AC_CASH_PROVE@CHECK_STS" has-all="true" default-value="-1" url="" />
+                            </div>
+                        </td>
+                        
+					   	<td width="100"><label class="term_label">核销节点类型：</label></td>
+                    	<td>
+                        <div class="form_select">
+                                <select ng-model="query.queryType">
+                                     <option value="1" selected="selected">配载发车</option>
+                                     <option value="2">中转发车</option>
+                                </select>
+                            </div>
+                        </td>
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+						
+					</tr>
+					<tr>
+						
+						<td width="100"><label class="term_label">司机名称：</label></td>
+						<td><input class="form_term" ng-model="query.driverName" maxlength="16" type="text"></td>
+						<td width="100"><label class="term_label">司机手机：</label></td>
+						<td><input class="form_term" ng-model="query.driverPhone"  maxlength="12" type="text"></td>
+						
+						
+					</tr>
+	
+					
+				</tbody>
+		</table>
+        
+                
+                     <div class="search_nr clearfix mt_20">
+              
+                            
+                  <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果</h2>
+                  <a class="button ml_10 write " ng-click="deal();" href="javascript:void(0)" id="hexiao"><i class="button_icon button_icon dw_write" id="hexiao"></i>核销</a>
+                  <a  ng-click="undeal();" href="javascript:void(0)" id="hexiaofan">反核销</a>
+                  <a  ng-click="page.downloadExcelFile();" href="javascript:void(0)">导出</a>
+                  </div>
+                  <!--    {"name":"收支类型","code":"payTypeName","width":"60"},
+			                {"name":"收支状态","code":"payStsName","width":"60"},
+			                 -->
+               <my-diy-Table name="page" isShowSeq="false" width="100%" isMultiSelect="true"  isShowCheck="true" doubleclick="" isFilter="true" isSum="true" id="batchNum" 
+                       head='[
+                            {"name":"发车批次","code":"batchNumAlias","width":"100"},
+                            {"name":"运输合同","code":"transportContract","width":"110"},
+                            {"name":"核销科目","code":"feeTypeName","width":"80"},
+                            {"name":"核销状态","code":"checkStsName","width":"80"},
+			                {"name":"核销金额","code":"feeDouble","isSum":"true","width":"100","number":"2"},
+			                {"name":"实际需核销金额","code":"withoutAmountDouble","width":"100","isEdit":"true","isSum":"true","number":"2","onlySum":"false","callback":"$scope.callbackCheck"},
+			                {"name":"已核销金额","code":"checkAmountDouble","width":"90","isSum":"true","number":"2"},
+			                {"name":"核销时间","code":"checkDate","width":"120"},
+			                {"name":"核销人","code":"checkOpName","width":"120"},
+			                {"name":"配载时间","code":"loadTime","width":"120"},
+			                {"name":"配载人","code":"loadOpName","width":"100"},
+			                {"name":"发车网点","code":"sourceOrgIdName","width":"100"},
+			                {"name":"到货网点","code":"descOrgIdName","width":"100"},
+			                {"name":"承运车牌","code":"plateNumber","width":"100"},
+			                {"name":"司机名称","code":"driverName","width":"100"},
+			                {"name":"司机手机","code":"driverBill","width":"100"},
+			                {"name":"发车备注","code":"remark","width":"180"}
+			                ]'>
+                </my-diy-Table>
+                           
+		</div>
+        
+        </div>
+		 
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src=acBatchManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

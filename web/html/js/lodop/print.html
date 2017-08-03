@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>打印</title>
+<script type="text/javascript" src="LodopFuncs.js"></script>
+<script type="text/javascript" src="lodop-business.js"></script>
+<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
+	<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+</object>
+</head>
+<body>
+<input type="button" value="打印" onclick="testPrintEnvelopeInfo();">
+</body>
+<script type="text/javascript">
+function printMyContent() {
+	testPrintExpress();
+}
+
+function testPrintStickerInfo(){
+/**
+ * 标签信息
+ * @param tenantName: 租户名称(例如“众邦物流”)
+ * @param tenantStaffPhone: 租户客服电话(例如“0757-85111487”)
+ * @param lineName: 线路名称(例如“佛山-潮汕往返专线”)
+ * @param source : 开单网点(例如“佛山”)
+ * @param dest : 配送网点和配送区域(揭阳/揭阳区)
+ * @param deliveryTypeName: 配送方式(自提)
+ * @param goodsName: 品名(例如：威远药，多个用“/”分隔)
+ * @param consignee : 收货人
+ * @param goodsNo : 货物单号(运单号加货物数量，例如“28003278-30”)
+ */
+	var stickerInfo = new StickerInfo('众邦物流','0757-85111487','佛山-潮汕往返专线','广东佛山','揭阳/揭阳区','自提','威远药','八两俊', '28003278-30');
+	printStickerInfo(stickerInfo);
+}
+/**
+ * 打印信封
+ */
+function testPrintEnvelopeInfo(){
+	var envelopeInfo = new EnvelopeInfo('123456', '广东广州', '广东佛山', '123456789A', new Date(), '大米', '50000', '八两俊', '18502075239', '野人', 2, '12345678998765432112');
+	printEnvelopeInfo(envelopeInfo);
+}
+
+
+/**
+ * 打印运单
+ */
+function testPrintExpress() {
+	var addressBean = new ExpressAddressBean('广东广州', '18502075239', '广东佛山', '18502075241');
+	var othersInfo = new ExpressOthersInfo(new Date(), '今天是个好日子', new Date());
+	var sender = new ExpressParticipantBean('增信信息科技有限公司', '18502075239', '广州市萝岗区创意大厦B3');
+	var addressee = new ExpressParticipantBean('众邦√物流有限公司', '18502075241', '南海区里水镇广禾物流园6栋18-21档');
+	var goodsInfo1 = new ExpressGoodsInfo('电器', '1万元', '10件', '纸', '100kg', '3方');
+	var goodsInfo2 = new ExpressGoodsInfo('大米', '5000元', '50件', '袋', '2T', '2方');
+	var goodsInfoArray = new Array();
+	goodsInfoArray.push(goodsInfo1);
+	goodsInfoArray.push(goodsInfo2);
+	var deliverInfo = new ExpressDeliverInfo(3,1,1,1);
+	var costInfo = new ExpressCostInfo(500, 80, 1000, 300, 90, 1970, 89, 9000);
+	
+	var expressBean = new ExpressBean(addressBean, sender, addressee, goodsInfoArray, deliverInfo, costInfo, othersInfo);
+ 	printExpressInfo(expressBean,"sss");
+}
+</script>
+</html>

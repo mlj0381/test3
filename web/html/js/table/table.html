@@ -1,0 +1,97 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div class="setTableRow" ng-show="showsSetRow" >
+	<a ng-click="setTabel()" href="javascript:void(0)">表格设置</a>	
+	<div ng-show="setTabelShow" style="margin:30px 0;">      
+		<div class="listShow">
+			<div ng-repeat="hd in headList" ng-drop="true" ng-drop-success="onDropComplete($index, $data,$event)">
+			<label ng-drag="true" ng-drag-data="hd">
+		        <input  ng-model="myCheck" type="checkbox" ng-checked="!hd.isHide"  ng-click="myChange($index)"/>{{hd.name}}
+		        <br />
+		    </label>
+		    </div>
+		</div>
+	    <div class="botBtn">
+	    	<div class="selectBtn">
+	    		<label><input type="checkbox" ng-model="selectAllModel" ng-click="selectAll()" />全选</label>
+	    		<label><input type="checkbox" ng-model="selectBackModel" ng-click="selectBack()" />反选</label>
+	    	</div>
+	    	<a class="saveBtn" ng-click="saveRowSet()" href="javascript:void(0)">保存</a>
+	    	<a class="cancelBtn" ng-click="cancelRowSet()" href="javascript:void(0)">取消</a>
+	    </div>
+	</div>
+</div>
+<div class="table_height"
+	style="position: relative; border: 1px solid #e1effa; margin: 0 5px 0 10px;" my-scrolled ="loadMore()" >
+	<table class="search_lista" width="100%" border="0" cellspacing="0"
+		cellpadding="0" >
+		<thead class="fixed-thead" style="margin-top:{{_top}}px">
+			<tr >
+				<th width="60" class="search_list_border" ng-show="isSelectData == undefined || isSelectData == true">
+					<div class="controls" ng-show="isMultiSelect=='true'">
+						<input   class="none"  type="checkbox" id="{{tableName}}checkBox_all" name="{{tableName}}_checkName">
+						<label for="check-1"   ng-click='updateSelection($event,"all",-1)'></label>
+					</div>
+				</th>
+				<th width="100">序号</th>
+				<th width="{{hd.width}}" ng-repeat=" hd in headList " ng-hide="hd.isHide" >{{hd.name}}</th>
+			</tr>
+			<tr ng-show="isFilter == 'true'">
+				<th width="60" ng-show="isSelectData == undefined || isSelectData == true"></th>
+				<th width="100"></th>
+				<th ng-repeat=" hd in headList " ng-switch="hd.type" ng-hide="hd.isHide">
+				<div ng-switch-when="select">
+					<my-Select-Static type="{{hd.selectSource}}" select-Value="inputParam[hd.code]" callback="inputEnter" exclude="{{hd.exclude}}" ver="${ver}"></my-Select-Static>
+				</div>
+				<div ng-switch-when="selectOrg">
+					<my-Select-Org  select-Value="inputParam[hd.code]" callback="inputEnter"  ver="${ver}"></my-Select-Org>
+				</div>
+				<div ng-switch-when="text">
+ 					<input value="" class="inp_sr mt0" type="text"   ng-model="filterInput[hd.code]" ng-change="inputChange(hd.code)" my-Input-Enter="inputEnter()" ></input>
+ 				</div>
+				<div ng-switch-default>
+ 					<input value="" class="inp_sr mt0" type="text" ng-disabled="!(hd.filter=='true')"  ng-model="filterInput[hd.code]" ng-change="inputChange(hd.code)" my-Input-Enter="inputEnter()" ></input>
+ 				</div>
+ 			
+ 				</th>
+			</tr>
+		</thead>
+		<tbody class="fixed-tbody m_{{isFilter}}" style="margin-top: 49px;" >
+		<tr ng-repeat=" data in tableData track by data[id]" ng-click="updateSelection($event,data[id])" ng-class="{selected1: isSelected({{data[id]}})}">
+				<td width="60" class="search_list_border" ng-show="isSelectData == undefined || isSelectData == true">
+					<div class="controls">
+						<input   class="none"  type="checkbox" value="{{data[id]}}" id="{{tableName}}checkBox_{{data[id]}}" name="{{tableName}}_checkName">
+						<label for="check-1"   ></label>
+					</div>
+				</td>
+				<td width="100" >{{$index+1}}</td>
+				<td width="{{hd.width}}" title="{{data[hd.code]}}"  ng-hide="hd.isHide" ng-repeat=" hd in headList " ng-switch="hd.itemType" repeat-finish >
+				<div ng-switch-when="text">
+					<input type="text" ng-model="data[hd.code]" class="input_box dhl_map_input" style="width:90%">
+				</div>
+				<span ng-switch-default>
+					<span ng-if="hd.css!=undefined">
+						<span ng-if="hd.number!=undefined" class="{{tDCss(data,hd.css)}}" ng-click="clickLocation(data,hd.clickLocation)" ng-mouseenter="mouseenter($event,data,hd.mouseenter)" ng-mouseleave="mouseleave($event,data,hd.mouseleave)">{{data[hd.code] | filterString |number:hd.number }}</span>
+						<span ng-if="hd.number==undefined" class="{{tDCss(data,hd.css)}}" ng-click="clickLocation(data,hd.clickLocation)"  ng-mouseenter="mouseenter($event,data,hd.mouseenter)" ng-mouseleave="mouseleave($event,data,hd.mouseleave)">{{data[hd.code]}}</span>
+					</span>
+					<span ng-if="hd.css==undefined">
+						<span ng-if="hd.number!=undefined" ng-click="clickLocation(data,hd.clickLocation)"  ng-mouseenter="mouseenter($event,data,hd.mouseenter)" ng-mouseleave="mouseleave($event,data,hd.mouseleave)">{{data[hd.code] | filterString |number:hd.number }}</span>
+						<span ng-if="hd.number==undefined" ng-click="clickLocation(data,hd.clickLocation)"  ng-mouseenter="mouseenter($event,data,hd.mouseenter)" ng-mouseleave="mouseleave($event,data,hd.mouseleave)">{{data[hd.code]}}</span>
+					</span>
+				</span>
+				</td>
+		</tr>
+		</tbody>
+		<tfoot class="fixed-tfoot tfoot" style="bottom:{{_bottom}}px">
+			<tr>
+				<td width="60" ng-show="isSelectData == undefined || isSelectData == true"></td>
+				<td width="100" ><span class="text_list">{{totalNum}}</span></td>
+				<td width="{{hd.width}}" ng-repeat=" hd in headList " ng-hide="hd.isHide">
+					<span ng-if="hd.isSum=='true'" class="text_list">
+						{{sumData[hd.code] | number:hd.number}}
+					</span>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+
+</div>

@@ -1,0 +1,58 @@
+	<div class="list_xl" style="top:178px;right:20px;display: none;" id="xgdd">
+            				<i class="list_xl_icon icon">
+            				   <a class="gone" href="javascript:(void)" onclick="document.getElementById('xgdd').style.display='none';"></a>
+            				</i>
+							<div class="list_xl_tbody ng-clock" id="pTable" style="height: 250px;">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								    <thead>
+									    <tr>
+									        <th style="width:40%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;font-family: "Arial","宋体";font-size: 12px;">修改项</th>
+									        <th style="width:30%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;">修改前</th>
+									        <th style="width:30%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;">修改后</th>
+									    </tr>
+								    </thead>
+            						<tbody>
+            							<!-- <tr ng-repeat="obj in customerRemark.items" ng-click="selectRemark(obj)"> -->
+										<tr style="height:36px!important;" ng-repeat="obj in updateOrdBusi">
+											<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:40%;white-space: inherit;text-align: center;" title="{{obj.fieldName}}">{{obj.fieldName}}</td>
+											<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:30%;white-space: inherit;text-align: center;" title ="{{obj.oldValue}}">{{obj.oldValue}}</td>
+											<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:30%;white-space: inherit;text-align: center;" title ="{{obj.newValue}}">{{obj.newValue}}</td>
+										</tr>
+                  					</tbody>
+            					</table>
+            				</div>
+    			</div>
+	
+	<!-- 运单跟踪 开始 -->
+		<h2 class="title_h2" style="margin-left: 10px;padding-top: 0;"><i class="icon title_icon fl dhl_ml_0"></i> 运单跟踪</h2>
+				<div class="hig_1">
+					<div class="mkae" style=" position: relative;">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list_dxb yc_message_list search_list " style="border-left: 1px solid #A1BBD1;">
+		                                <thead>
+		                                  <tr>
+		                                    <th width="120" style="text-align: center;">操作时间</th>
+		                                    <th width="60" style="text-align: center;">日志类型</th>
+		                                    <th width="270" style="text-align: center;">操作信息</th>
+		                                    <th width="100">操作人</th>
+		                                    <th width="100">操作网点</th>
+		                                  </tr>
+		                                </thead>
+		                                <tbody>
+		                                  <tr ng-repeat="o in showData.opLog">
+		                                    <td width="120" style="text-align: center;font-size: 12px;">{{o.createDate}}</td>
+		                                    <td width="60" style="text-align: center;">{{o.opTypeName}}</td>
+		                                    <td ng-if="o.opType == 2 || o.opType == 34" width="270" style="text-align: center;white-space: inherit; word-break: inherit;text-align: left;" title="{{o.opContent}}">
+		                                   		 <a id='{{o.id}}' class="red" href="javascript:void(0)" ng-click="update(o.id)">{{o.opContent}}</a>
+		                                    	 
+		                                    </td>
+		                                    <td ng-if="o.opType != 2 && o.opType != 34" width="270" style="text-align: center;white-space: inherit; word-break: inherit;text-align: left;" title="{{o.opContent}}">{{o.opContent}}</td>
+		                                    <td width="100">{{o.opName}}</td>
+		                                    <td width="100">{{o.orgIdName}}</td>
+		                                  </tr>
+		                                </tbody>
+		             </table>
+		                       
+					</div>
+				</div>
+				
+		<!-- 运单跟踪 结束 -->

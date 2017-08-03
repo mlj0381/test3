@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-7-8 15:27:19 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.sys.vo.SysEntity" table="sys_entity">
+        <id name="entityId" type="int">
+            <column name="ENTITY_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="entityName" type="string">
+            <column name="ENTITY_NAME" length="40" not-null="true">
+                <comment>&#229;&#174;&#158;&#228;&#189;&#147;&#229;&#144;&#141;&#231;&#167;&#176;</comment>
+            </column>
+        </property>
+        <property name="entityType" type="int">
+            <column name="ENTITY_TYPE" not-null="true">
+                <comment>&#229;&#174;&#158;&#228;&#189;&#147;&#231;&#177;&#187;&#229;&#158;&#139;;1 : &#232;&#143;&#156;&#229;&#141;&#149;,2 :
+                &#230;&#147;&#141;&#228;&#189;&#156;&#229;&#174;&#158;&#228;&#189;&#147;</comment>
+            </column>
+        </property>
+        <property name="state" type="int">
+            <column name="STATE" not-null="true">
+                <comment>
+                &#231;&#138;&#182;&#230;&#128;&#129;;&#233;&#187;&#152;&#232;&#174;&#164;0(&#228;&#184;&#141;&#229;&#143;&#175;&#231;&#148;&#168;),1(&#229;&#143;&#175;&#231;&#148;&#168;)</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="CREATE_DATE" length="19" not-null="true">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="lastModifyDate" type="timestamp">
+            <column name="LAST_MODIFY_DATE" length="19" not-null="true">
+                <comment>&#230;&#156;&#128;&#232;&#191;&#145;&#228;&#191;&#174;&#230;&#148;&#185;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="lastModifyOperatorId" type="java.lang.Long">
+            <column name="LAST_MODIFY_OPERATOR_ID">
+                <comment>
+                &#230;&#147;&#141;&#228;&#189;&#156;&#228;&#186;&#186;;&#229;&#175;&#185;&#229;&#186;&#148;sys_operator&#228;&#184;&#173;&#231;&#154;&#132;operator_id</comment>
+            </column>
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" length="256">
+                <comment>&#229;&#164;&#135;&#230;&#179;&#168;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

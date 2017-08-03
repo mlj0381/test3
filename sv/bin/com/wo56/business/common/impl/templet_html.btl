@@ -1,0 +1,87 @@
+<!DOCTYPE html >
+<html ng-app="AcProveManageApp"> 
+	<head>
+	    <title>$<title></title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK" />	
+        <link rel="stylesheet" type="text/css" href="../css/zb/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/zb/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/zb/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/zb/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/zb/master.css?v=${ver}">
+</head>
+	<body ng-controller="AcProveManageCtrl" onload="setContentHeight()"  style="overflow:hidden">
+        <div class="billing_1 clearfix pb_20 mt_20 plr_20">
+                <ul class="search_term clearfix">
+                	<%
+						for(var i = 0; i < query.~size;i++){
+					%><li class="term_li"><label class="term_label">$<query[i][0]>：</label>
+                      <input class="form_term w_b60" ng-model="$<query[i][1]>" type="text">
+                      </li>
+					<%	
+						}
+					%>
+                        <li class="term_li fr" style="width:auto;">
+                        <div class="bottom_search" style="position:inherit;"><a href="javaScript:void(0)" ng-click="doQuery()">查询</a>
+                        <a href="javaScript:void(0)" ng-click="clear();">清空</a></div></li>
+                    </ul>
+                     <div class="search_nr clearfix mt_20">
+                  	<my-table>
+                              <div style="overflow: scroll; height: 318px; position: relative;border:1px solid #e0e5e9;">
+                               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_list">
+                               <thead>
+                                <tr >
+                                    <th class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+				                	<%
+										for(var i = 0; i < titles.~size;i++){
+									%>
+				                      <th>$<titles[i]></th>
+									<%	
+										}
+									%>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  <tr class="ng-cloak" ng-click="selectOne(o.checkedId);" ng-repeat="o in page.data.items">
+                                  	<td class="search_list_border"><div class="controls"><input id="checkbox{{o.checkedId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+				                	<%
+										for(var i = 0; i < names.~size;i++){
+									%>
+				                      <td>{{o.$<names[i]>}}</td>
+									<%	
+										}
+									%>
+                                  </tr>
+                              </tbody>
+                            </table>
+							 </div>
+                </my-table>
+                           
+		</div>
+        
+        </div>
+		<div class="bottom_nav pb_20 bottom_nav_search"><a  ng-click="deal();" href="javascript:void(0)">新增</a></div>
+		<div class="bottom_nav pb_20 bottom_nav_search"><a  ng-click="deal();" href="javascript:void(0)">修改</a></div>
+		<div class="bottom_nav pb_20 bottom_nav_search"><a  ng-click="deal();" href="javascript:void(0)">删除</a></div>
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="$<jsName>.js?v=${ver}"></script>
+</body>
+</html>
+

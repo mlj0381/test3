@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-15 16:26:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrdDepartDetail" table="ord_depart_detail">
+		<composite-id name="id"
+			class="com.wo56.business.ord.vo.OrdDepartDetailId">
+			<key-property name="batchNum" type="long">
+				<column name="BATCH_NUM" />
+			</key-property>
+			<key-property name="orderId" type="long">
+				<column name="ORDER_ID" />
+			</key-property>
+		</composite-id>
+		<property name="createDate" type="timestamp">
+			<column name="CREATE_DATE" length="19" not-null="true">
+				<comment>&#229;&#136;&#155;&#229;&#187;&#186;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+			</column>
+		</property>
+		<property name="installFee" type="long">
+			<column name="INSTALL_FEE" length="20">
+				<comment>配载安装费用</comment>
+			</column>
+		</property>
+		<property name="arrivalOpId" type="java.lang.Long">
+			<column name="ARRIVAL_OP_ID">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalOpName" type="string">
+			<column name="ARRIVAL_OP_NAME">
+				<comment></comment>
+			</column>
+		</property>
+		<property name="arrivalTime" type="java.util.Date">
+			<column name="ARRIVAL_TIME" length="19">
+				<comment></comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

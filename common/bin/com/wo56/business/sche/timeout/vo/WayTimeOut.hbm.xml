@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-7 19:48:21 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.wo56.business.sche.timeout.vo.WayTimeOut" table="way_time_out">
+        <id name="timeOutId" type="java.lang.Long">
+            <column name="TIME_OUT_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="wayBillMain" type="string">
+            <column name="WAY_BILL_MAIN" length="20" not-null="true">
+                <comment>ÔËµ¥ºÅ</comment>
+            </column>
+        </property>
+        <property name="serverType" type="string">
+            <column name="SERVER_TYPE" length="50" not-null="true">
+                <comment>·þÎñÀàÐÍ</comment>
+            </column>
+        </property>
+        <property name="timeOueType" type="java.lang.Integer">
+            <column name="TIME_OUE_TYPE">
+                <comment>³¬Ê±ÀàÐÍ 1 ¸ÉÏß½áÊø³¬Ê± 2 Ô¤Ô¼³¬Ê± 3 Ç©ÊÕ³¬Ê±</comment>
+            </column>
+        </property>
+        <property name="startTime" type="java.util.Date">
+            <column name="START_TIME" length="19" />
+        </property>
+        <property name="endTime" type="java.util.Date">
+            <column name="END_TIME" length="19" />
+        </property>
+        <property name="timeLimit" type="string">
+            <column name="TIME_LIMIT" length="45" />
+        </property>
+        <property name="dealState" type="int">
+            <column name="DEAL_STATE" not-null="true" />
+        </property>
+        <property name="tenantId" type="java.lang.String">
+            <column name="TENANT_ID" not-null="true">
+                <comment>×â»§id</comment>
+            </column>
+        </property>
+         <property name="taskId" type="java.lang.Long">
+            <column name="TASK_ID" not-null="true">
+            </column>
+        </property>
+         <property name="orderId" type="java.lang.Long">
+            <column name="ORDER_ID" not-null="true">
+            </column>
+        </property>
+        <property name="tenantCode" type="string">
+            <column name="TENANT_CODE" length="100">
+                <comment>×â»§±àÂë</comment>
+            </column>
+        </property>
+        <property name="sts" type="java.lang.Integer">
+            <column name="STS">
+                <comment>Êý¾ÝÓÐÐ§ÐÔ 1 ÓÐÐ§ 2 ÎÞÐ§</comment>
+            </column>
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATE_TIME" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

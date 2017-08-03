@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="departManageApp">
+<head>
+<title>联运汇_干线发车</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}">
+<style type="text/css">
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak,
+	.x-ng-cloak, .ng-hide:not (.ng-hide-animate ) {
+	display: none !important;
+}
+</style>
+</head>
+<body ng-controller="departManageCtrl"
+	onload="setContentHegthDelay()">
+	<!-- 运单录入 -->
+	<div class="billing_1 clearfix pb_20 mt_20">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			class="search_table search_term">
+			<tbody>
+				<tr>
+					<td width="100"><label class="term_label">导入时间：</label></td>
+					<td><input
+						my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'
+						ng-model="query.beginTime" id="beginTime" readonly="readonly"
+						class="form_term fl w_xjr" type="text"> <span
+						class="search_span fl">到</span><input readonly="readonly"
+						ng-model="query.endTime"
+						my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'
+						id="endTime" class="form_term fl w_xjr" type="text"></td>
+					<td width="100">
+						<label class="term_label">订单号：</label>
+					</td>
+					<td>
+						<input  class="form_term" maxlength="16" ng-model="query.fhdh" type="text">
+					</td>
+					<td width="100">
+						<label class="term_label">导入状态：</label>
+					</td>
+					<td><div class="form_select">
+						<select ng-model="query.state">
+							<option value="">全部</option>
+							<option value="0">未提取</option>
+							<option value="1">已提取</option>
+						</select></div>
+					</td>
+					<td rowspan="2">
+						<div class="bottom_search search_button" style="position:inherit;">
+								<a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a>
+								<a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100">
+						<!-- <label class="term_label">批次号：</label> -->
+					</td>
+					<td>
+						<!-- <input  class="form_term" maxlength="16" ng-model="query.batchNumAlias" type="text"> -->
+					</td>
+					<td width="100">
+					<td></td>
+					<td width="100"></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="search_nr clearfix mt_20">
+			<div class="bottom_nav pb_20 bottom_nav_search clearfix">
+				<h2>查询结果</h2>
+				<a class="button ml_10 newly" style="width: auto;" ng-click="leand()" href="javascript:void(0)">导入Execl</a>
+				<a ng-click="pickUp()" href="javascript:void(0)">提取</a> 
+				<a ng-click="deal()" href="javascript:void(0)">删除</a>
+			</div>
+			<my-Adv-Table width="100%" isMultiSelect="true" isShowCheck="true"
+				isFilter="true" isSum="false" id="id" isShowSeq="true"
+				head='[
+			                {"name":"订单号","code":"fhdh","width":"120"},
+			               	{"name":"导入状态","code":"stateString","width":"120"},
+			               	{"name":"运单号","code":"trackingNum","width":"120"},
+			                {"name":"货号","code":"artNo","width":"130"},
+			                {"name":"货品","code":"fridges","width":"120"},
+			                {"name":"发货人","code":"consignor","width":"120"},
+			                {"name":"发货人电话","code":"consignorPhone","width":"120"},
+			                {"name":"件数","code":"number","width":"70"},
+			                {"name":"体积","code":"volume","width":"90"},
+			                {"name":"体积单价","code":"volumeNum","width":"70"},
+			                {"name":"重量","code":"weight","width":"90"},
+			                {"name":"重量单价","code":"weightNum","width":"70"},
+			                {"name":"付款方式","code":"paymentName","width":"100"},
+			                {"name":"交接方式","code":"deliveryTypeName","width":"100"},
+			                {"name":"家装服务","code":"serviceTypeName","width":"100"},
+			                {"name":"配安费","code":"installCostsString","width":"100"},
+			                {"name":"运费","code":"freightString","width":"100"},
+			                {"name":"收货人","code":"consignee","width":"100"},
+			                {"name":"收货人手机","code":"consigneePhone","width":"100"},
+			                {"name":"备用电话","code":"alternativePhone","width":"100"},
+			                {"name":"收货人省","code":"recProvincesName","width":"100"},
+			                {"name":"收货人市","code":"recCityName","width":"120"},
+			                {"name":"收货人区","code":"recDistrictName","width":"120"},
+			                {"name":"详细地址","code":"address","width":"150"},
+			                {"name":"备注","code":"remarks","width":"150"}
+			                 ]'>
+			</my-Adv-Table>
+
+		</div>
+	</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/fileupload/angular-file-upload-shim.js"></script>
+	<script type="text/javascript"
+		src="../js/fileupload/angular-file-upload.js"></script>
+	<script type="text/javascript" src="../js/fileupload/upload.js"></script>
+	<script type="text/javascript" src="ordImportBillMainCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

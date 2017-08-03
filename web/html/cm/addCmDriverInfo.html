@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="addCmUserInfoApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css">
+
+</head>
+<body ng-controller="addCmUserInfoCtrl" onload="setContentHegthDelay()" style="overflow: hidden;">
+	<!-- 网点设置 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20">
+		<form>
+			<div class="billing_list xianlusz">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab_jz" style="width: 70%">
+					<tr>
+						<td class="list_td" width="120"><label class="list_label"><em>*</em>司机姓名：</label></td>
+						<td class="list_td">
+							<div >
+								<input maxlength="11" ng-model="data.name" class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							</div>
+						</td>
+					<!-- </tr> -->
+			       <!--  <tr> -->
+						<td class="list_td"><label class="list_label">联系电话：</label></td>
+						<td class="list_td">
+							<div >
+							     <input maxlength="16" ng-model="data.telephone" class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							</div>
+						</td>
+					<!-- </tr>
+					<tr> -->
+						<td class="list_td"><label class="list_label"><em>*</em>司机手机：</label></td>
+						<td class="list_td">
+							<div >
+							     <input maxlength="16" ng-model="data.bill" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							</div>
+						</td>
+					 </tr> 
+						<tr>
+						<td class="list_td"><label class="list_label" style="width: 90px;"><em>*</em>司机身份证号：</label></td>
+						<td class="list_td">
+							<div >
+							     <input maxlength="18" ng-model="data.identityCardNo"  class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							</div>
+						</td>
+						<td class="list_td"><label class="list_label" ng-show="isOrgNameShow"><em>*</em>所属网点：</label></td>
+						<td class="list_td">
+							<div class="ui-select" ng-show="isOrgNameShow">
+									<select ng-model="data.orgId" 
+										ng-options="obj.orgId as obj.orgName for obj in orgInfo.items  ">
+									</select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label">银行账号：</label></td>
+						<td class="list_td">
+							<div >
+							     <input maxlength="16" ng-model="data.bankAccount" class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label">银行名称：</label></td>
+						<td class="list_td">
+							<div >
+							     <input maxlength="16" ng-model="data.bankName" class="form_billing ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							</div>
+						</td>
+					</tr>
+					<!-- <tr>
+						<td class="list_td"><label class="list_label">所属网点：</label></td>
+						<td class="list_td">
+							<div class="ui-select">
+									<select ng-model="data.orgId" 
+										ng-options="obj.orgId as obj.orgName for obj in orgInfo.items  ">
+									</select>
+							</div>
+						</td>
+					</tr> -->
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>身份证正面：</label></td>
+						<td class="list_td">
+						
+						<div class="controls">
+	                       <span my-File-Model="identityCard" is-Close="false" ></span>
+	                  </div>
+						<td class="list_td"><label class="list_label">身份证反面：</label></td>
+						<td class="list_td">
+							<div class="controls">
+		                       <span my-File-Model="identityCardBack" is-Close="false" ></span>
+		                    </div>
+							
+						</td>	
+					    </td>
+					</tr>
+					<!-- <tr>
+						<td class="list_td"><label class="list_label">身份证反面：</label></td>
+						<td class="list_td">
+							<div class="controls">
+		                       <span my-File-Model="identityCardBack" is-Close="false" ></span>
+		                    </div>
+							
+						</td> -->
+					</tr>
+					<tr>
+						<td class="list_td"><label class="list_label"><em>*</em>驾驶证照片：</label></td>
+						<td class="list_td">
+						
+						<div class="controls">
+	                       <span my-File-Model="drivingLicense" is-Close="false" ></span>
+	                    </div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+		<div class="bottom_nav1">
+		<a href="javascript:void(0)" ng-click="doSave()">保 存</a><a
+			href="javascript:void(0)" ng-click="close()">取 消</a>
+	</div>
+	</div>
+	
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmDriverInfoCtrl.js?v=${ver}"></script>
+</body>
+</html>

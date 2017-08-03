@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-4-7 9:30:19 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.app.vo.AppPushBillRelat" table="app_push_bill_relat">
+		<id name="pushRelatId" type="long">
+			<column name="PUSH_RELAT_ID" />
+			<generator class="native" />
+		</id>
+		<property name="billId" type="string">
+			<column name="BILL_ID" length="15" />
+		</property>
+		<property name="pushAppId" type="string">
+			<column name="PUSH_APP_ID" length="20" />
+		</property>
+		<property name="pushChannelId" type="string">
+			<column name="PUSH_CHANNEL_ID" length="50" />
+		</property>
+		<property name="pushUserId" type="string">
+			<column name="PUSH_USER_ID" length="50" />
+		</property>
+		<property name="channelType" type="string">
+			<column name="CHANNEL_TYPE" length="20" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordSpellApp"> 
+	<head>
+	    <title>联运汇_拼单管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="ordSpellCtrl" onload="setContentHeight(800)"  style="overflow:hidden">
+        <!-- 拼单管理 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">运单号：</label>
+                   		</td>
+						<td>
+							<input class="form_term" ng-model="query.trackingNum" maxlength="16" type="text">
+                        </td>
+                         
+						<td width="100">
+						    <label class="term_label">发货方：</label>
+                    	</td>
+						<td>
+                            <input class="form_term" ng-model="query.consignorName" maxlength="16" type="text">                           
+						</td>
+						<td width="100"><label class="term_label">开单时间：</label>
+                       	</td>
+						<td>
+	                        <input my-Date-Picker ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker id="endTime" class="form_term fl w_xjr" type="text">
+                        </td>
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter  href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100">
+						    <label class="term_label">收货电话：</label>
+                    	</td>
+						<td>
+                            <input class="form_term" ng-model="query.consigneeBill" maxlength="16" type="text">                           
+						</td>
+						<td width="100"><label class="term_label">运单状态：</label></td>
+						<td><div class="form_select">
+                                <select disabled="disabled">
+                                    <option selected="selected">拼单中</option>
+                                </select>
+                            </div></td>
+					    <td width="100"></td>
+						<td></td>
+						
+					</tr>
+	
+					
+				</tbody>
+		</table>
+        
+                
+                     <div class="search_nr clearfix mt_20">
+              
+                            
+                  <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+                  	<h2>查询结果</h2>
+                  	<a class="button ml_10 xinyxq" ng-click="toView()" style="cursor: pointer;"><i class="button_icon button_icon dw_xinyxq"></i>拼单详情</a>
+                  	
+                  	<a class="button ml_10 modify" ng-click="modifySpellOrder()" style="cursor: pointer;"><i class="button_icon button_icon dw_modify"></i>拼单修改</a>
+                  	
+                  	<a  ng-click="delSpellOrder()" style="cursor: pointer;">拼单移除</a>
+                  	<a href="javascript:void(0)" id="exportId" ng-click="page.downloadExcelFile()">导  出</a>
+                  	
+                  </div>
+         
+                <my-Adv-Table isShowSeq="false" width="100%" tablename="billingManage" isMultiSelect="true"  isShowCheck="true" doubleclick="toDetailAllInfo" isFilter="true" isSum="true" id="orderId" head='[
+                			{"name":"运单号","code":"trackingNum","width":"110"},
+                			{"name":"过账","code":"postingStsName","width":"60"},
+			                {"name":"开单网点","code":"orgIdName","width":"90"},
+			                {"name":"开单时间","code":"createDate","width":"125"},
+			                {"name":"库存网点","code":"currentOrgIdName","width":"90"},
+			                {"name":"运单状态","code":"seeOrderStateName","width":"70"},
+			                {"name":"配送网点","code":"distributionOrgIdName","width":"90"},
+			                {"name":"目的城市","code":"destCityName","width":"60"},
+			                {"name":"目的区域","code":"destCityNameAnddestCountyName","width":"60"},
+			                {"name":"收货人","code":"consigneeName","width":"130"},
+			                {"name":"收货人电话","code":"consigneeBill","width":"100"},
+			                {"name":"货品","code":"products","width":"80"},
+			                {"name":"货号","code":"goodsNumber","width":"80"},
+			                {"name":"交接方式","code":"deliveryTypeName","width":"70"},
+			                {"name":"总体积(方)","code":"volume","isSum":"true","number":"2","width":"70"},
+			                {"name":"件数","code":"count","isSum":"true","width":"70"},
+			                {"name":"总重量(kg)","code":"weight","isSum":"true","number":"1","width":"70"},
+			                {"name":"运费","code":"freightDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"配安费","code":"installCostsDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"回扣","code":"discountDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"费用合计","code":"totalFeeDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"付款方式1","code":"paymentTypeName","width":"70"},
+			                {"name":"金额1(元)","code":"cashMoneyDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"付款方式2","code":"paymentType2Name","width":"70"},
+			                {"name":"金额2(元)","code":"cashMoney2Double","isSum":"true","number":"2","width":"70"},
+			                {"name":"现付","code":"cashPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"到付","code":"freightCollectDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"月结","code":"monthlyPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"回单付","code":"receiptPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"转账","code":"transPaymentDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"收货地址","code":"address","width":"120"},
+			                {"name":"发货人","code":"consignorName","width":"130"},
+			                {"name":"发货人电话","code":"consignorTelephone","width":"100"},
+			                {"name":"合作商","code":"doObjName","width":"80"},
+			                {"name":"合作商电话","code":"doTel","width":"90"},
+			                {"name":"家装服务","code":"serviceTypeName","width":"80"},
+			                {"name":"制单人","code":"inputUserName","width":"80"},
+			                {"name":"仓管员","code":"consignee","width":"80"},
+			                {"name":"备注","code":"remarks","width":"170"},
+			                {"name":"是否签回单","code":"isReceiptName","width":"70"},
+			                {"name":"回单号","code":"receiptNum","width":"70"},
+			                {"name":"回单数量","code":"receiptCount","isSum":"true","width":"60"},  
+			                {"name":"是否核销","code":"isVerificationName","width":"60"},
+			                {"name":"商家订单号","code":"sellerOrderId","width":"80"},
+			                {"name":"是否直送","code":"isDirectName","width":"60"},
+			                {"name":"是否贵重物品","code":"isImportantName","width":"80"},
+			                {"name":"是否控货","code":"releaseNoteName","width":"60"},
+			                {"name":"代收货款","code":"collectingMoneyDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"代收手续费","code":"procedureFeeDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"申明价值","code":"goodsPriceDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"保险费","code":"offerDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"装卸费","code":"handingCostsDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"包装费","code":"packingCostsDouble","isSum":"true","number":"2","width":"70"},
+			                {"name":"提货费","code":"pickingCostsDouble","isSum":"true","number":"2","width":"70"}
+			                ]'>
+			                
+			                
+                </my-Adv-Table>
+                  
+                           
+		</div>
+        
+        </div>
+		 
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="ordSpellManage.js?v=${ver}"></script>
+</body>
+</html>
+

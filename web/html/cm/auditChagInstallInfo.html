@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="auditUserManageApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>师傅资料审核</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+</head>
+	<body ng-controller="auditUserManageCtrl"  onload="setContentHegthDelay(800)">
+		<div class="billing_1">
+			<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table">
+				  <tr>
+					<td width="150"><label class="control-label">省份：</label></td>
+					<td>
+						<div class="search_select w_146">
+							<select name="select" class="xl_z" ng-model="query.provinceId" ng-change="queryCity()" ng-disabled="all" ng-options="province.id as province.name for  province in provinces">
+								<option value="">所有</option>
+								</select>
+						</div>					
+					</td>
+					<td width="100"><label class="control-label w_100">地市：</label></td>
+					<td><div class="search_select w_146 fl">
+								<select name="select" class="xl_z" ng-model="query.cityId" ng-disabled="all" ng-click="selectCity()" ng-options="objCon.id as objCon.name for  objCon in citys">
+								<option value="">所有</option>
+								</select>						</div></td>
+					<td width="100"><label class="control-label w_100">常规服务：</label></td>
+					<td><div class="search_select w_146">
+							<my-select id="query.commonServiceId" code-type="SCHE_SERVICE_TYPE" has-all="true" default-value="-1" url="" />
+						</div></td>
+					<td rowspan="2">
+						<div class="search_button"><a class="search_button_ss" href="javaScript:void(0)" ng-Enter ng-click="doQuery()">搜索</a>  <a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">重置</a></div>					</td>
+				  </tr>
+				  <tr>
+					<td width="150"><label class="control-label">增值服务：</label></td>
+					<td><div class="search_select w_146">
+						<my-select id="query.valueServiceId" code-type="SCHE_VALUE_SERVICE_TYPE" has-all="true" default-value="-1" url="" />
+						</div>
+					</td>
+					<td><label class="control-label">师傅名称：</label></td>
+					<td><input class="input_box" ng-model="query.sfUserName" type="text" /></td>
+					<td width="100"><label class="control-label w_100">师傅账号：</label></td>
+					<td><input class="input_box" ng-model="query.sfUserAcct" type="text" /></td>
+					<td width="100"></td>
+					<td></td>
+				  </tr>
+				   <!--<tr>
+					 <td><label class="control-label">审核类型：</label></td>
+					<td>
+						<div class="search_select w_146">
+						<select name="select" class="xl_z" ng-model="query.auditState"  ng-disabled="all">
+								<option value="-1">所有</option>
+								<option value="1">已审核</option>
+								<option value="2">待待审核</option>
+						</select>		
+						</div>	
+					</td> 
+				  </tr>-->
+				</table>
+			</div>
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl"><i class="icon title_icon fl"></i>待审核师傅列表</h2>
+				<div class="fr mt15_mr20">
+					<a class="button fr ml_10 tixiansp2" href="#" ng-click="toAuditSfUser(2)"><i class="button_icon button_icon dw_tixiansp2"></i>通过</a>
+					<a class="button fr ml_10 tixiansp" href="#" ng-click="toAuditSfUser(4)"><i class="button_icon button_icon dw_tixiansp"></i>拒绝</a>
+					<a class="button fr ml_10 tixiansp" href="#" ng-click="toView()"><i class="button_icon button_icon dw_tixiansp"></i>查看</a>
+				</div>
+			</div>
+			 <my-table>
+			 <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead id="tb1">
+				  	<tr>
+						<th width="79"><div class="input_z">
+	                  			<input id="checkboxa" class="none input_gx" ng-click="selectAll('check-1','checkboxa');" type="checkbox">
+	            				<label for="checkboxa"></label>
+	          				</div></th>
+						<th width="15%">省</th>
+						<th width="15%">市</th>
+						<th width="20%">服务区域</th>
+						<th width="15%">师傅名称</th>
+						<th width="15%">师傅账号</th>
+						<th width="15%">货品类别</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak" ng-click="selectOne(o.sfUserId,'checkbox',o.auditState);" ng-repeat="o in page.data.items">
+                                  	<td  width="79" class="search_list_border"><div class="controls"><input id="checkbox{{o.sfUserId}}" class="none input_gx" value="{{o.sfUserId}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="15%">{{o.provinceName}}</td>
+                                    <td width="15%">{{o.cityName}}</td>
+                                    <td width="20%" style="white-space: inherit; text-align:left; padding-left:10px; width:200px" >{{o.areas}}</td>
+                                    <td width="15%">{{o.name}}</td>
+                                     <td width="15%">{{o.phone}}</td>
+                                    <td width="15%">{{o.productName}}</td>
+                                  </tr>
+				  </tbody>
+			</table>
+			</div>
+			</my-table>
+			</div>
+		</div>
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+			<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="auditChagInstallInfoCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

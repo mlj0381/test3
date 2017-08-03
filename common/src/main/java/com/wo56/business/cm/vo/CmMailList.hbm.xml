@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmMailList" table="cm_mail_list">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="native" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME">
+				<comment>联系人名称</comment>
+			</column>
+		</property>
+		<property name="bill" type="java.lang.String">
+			<column name="BILL">
+				<comment>手机号码</comment>
+			</column>
+		</property>
+		<property name="type" type="java.lang.Integer">
+			<column name="TYPE">
+				<comment>类型</comment>
+			</column>
+		</property>
+		<property name="userId" type="java.lang.Long">
+			<column name="USER_ID">
+				<comment>当前用户Id</comment>
+			</column>
+		</property>
+		<property name="createDate" type="java.sql.Timestamp">
+			<column name="CREATE_DATE">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="creatorId" type="java.lang.Long">
+			<column name="CREATOR_ID">
+				<comment>创建人id</comment>
+			</column>
+		</property>
+		<property name="opId" type="java.lang.Long">
+			<column name="OP_ID">
+				<comment>操作人id</comment>
+			</column>
+		</property>
+		<property name="opDate" type="java.sql.Timestamp">
+			<column name="OP_DATE">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="status" type="java.lang.Integer">
+			<column name="STATUS">
+				<comment>数据是否有效（1 有效 0 无效）</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID">
+				<comment>租户id</comment>
+			</column>
+		</property>
+		<property name="isBlack" type="java.lang.Integer">
+			<column name="IS_BLACK">
+				<comment>是否拉黑（0：未拉黑，1：已拉黑）</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

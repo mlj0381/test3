@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="contactGSTaskManageApp">
+<head>
+<title>调度任务-待分配任务</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+<style type="text/css">
+.BMapLabel{white-space:inherit!important;}
+</style>
+</head>
+<body ng-controller="contactGSTaskManageCtrl" style="overflow: hidden;">
+	<div class="billing_1" style="padding-bottom: 20px;">
+	<ul class="waybill_tab clearfix disp_a ng-cloak">
+			<li class="hover" id="two2"><a class="a1" href="javascript:window.top.changeCurrentTabUrl('/sche/BussTask/contactGSTaskManage.html');" >配安任务</a></li>
+			<li id="two3"><a class="a1" href="javascript:window.top.changeCurrentTabUrl('/sche/BussTask/contactGSRepairTaskManage.html');">维修任务</a></li>
+		</ul>
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="100"><label class="control-label">省份：</label></td>
+						<td>
+							<div class="search_select w_146">
+								<select ng-change="selectCity(query.provinceId);"
+									ng-model="query.provinceId"
+									ng-options="obj.id as obj.name for  obj in provinceData.items "
+									name="select" class="xl_z">
+								</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label w_100">城市：</label></td>
+						<td><div class="search_select w_146 fl">
+								<select ng-change="selectDistrict(query.cityId);"
+									ng-model="query.cityId"
+									ng-options="obj.id as obj.name for  obj in cityData.items "
+									name="select" class="xl_z">
+								</select>
+							</div></td>
+						<td width="100"><label class="control-label w_100">县区：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.countyId"
+									ng-options="obj.id as obj.name for  obj in districtData.items "
+									name="select" class="xl_z">
+								</select>
+							</div></td>
+						<td width="100"><label class="control-label w_100">订单来源：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.isTmall" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">天猫</option>
+								</select>
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+							<td width="100"><label class="control-label w_100">发货人：</label></td>
+						<td><input class="input_box" ng-model="query.clientName"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">收货人：</label></td>
+						<td><input class="input_box" ng-model="query.receiveName"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">任务状态：</label></td>
+						<td><div class="search_select w_146">
+								<my-select id="query.taskState" else-value="1" has-all="true" default-value=""
+									code-type="TASK_STATE" url-param='' />
+							</div></td>
+					</tr>
+						<tr>
+						<td width="100"><label class="control-label w_100">签收状态：</label></td>
+						<td><div class="search_select w_146">
+								<my-select id="query.signState"  has-all="true" default-value=""
+									code-type="SIGN_STATE" url-param='' />
+							</div></td>
+							<td width="100"><label class="control-label w_100">开单日期：</label>
+                   			</td>
+						<td colspan="2">
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly"   my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr" type="text">
+                            </td>
+					</tr>
+				</table>
+			</div>
+
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2>
+				<div class="fr mt15_mr20">
+				 <a class="button fr ml_10 rgfp" ng-click="cancerDis();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_rgfp"></i>取消分配</a>
+						<a class="button fr ml_10 rgfp" ng-click="openExc();" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>异常登记</a>
+						<a class="button ml_10 see_b" ng-click="openWayDetail()" href="javascript:void(0);"><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+						<a class="button ml_10 modify" href="javascript:void(0)"  ng-click="updateYM()" onClick="document.getElementById('vehicle_1').style.display='block';document.getElementById('fade1_xz').style.display='block'">
+						<i class="button_icon button_icon dw_modify"></i>修改配安费</a>
+						
+				</div>
+			</div>
+			<div class="bj_map">
+				<my_table>
+					<div  style="overflow:auto;min-height: 300px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_lista table_kz" style="width: 2600px;">
+					<thead id="tb1">
+						<tr>
+							<th width="60"><div class="input_z">
+									<input ng-click="selectAll();" id="checkbox"
+										class="none input_gx" name="checkbox" type="checkbox">
+									<label for="checkbox"></label>
+								</div></th>
+							<th width="100">运单号</th>
+							<th width="100">服务类型</th>
+							<th width="100">发货人</th>
+							<th width="100">收货人</th>	
+							<th width="100">品名</th>
+							<th width="100">件数</th>
+							<th width="100">体积</th>
+							<th width="100">重量</th>
+							<th width="100">配安费(元)</th>
+							<th width="220">详细地址</th>
+							<th width="130">到货时间</th>
+							<th width="100">合作商任务状态</th>
+							<th width="100">签收状态</th>
+							<th width="130">分配合作商时间</th>
+							<th width="100">合作商名称</th>
+							<th width="100">合作商帐号</th>
+							<th width="130">分配个体师傅时间</th>
+							<th width="100">师傅</th>
+							<th width="100">师傅帐号</th>
+							<th width="130">接单时间</th>
+							<!-- <th>提货时间</th> -->
+							<th width="130">预约时间</th>
+							<th width="130">上门时间</th>
+							<th width="130">签收时间</th>
+							
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-class="{'waybill_table_listtr':$index%2==0}"
+							class="ng-cloak" ng-click="selectOne(o.taskId);"
+							ng-repeat="o in page.data.items">
+							<td  width="60"><div class="input_z">
+									<input id="checkbox{{o.taskId}}" value="{{o}}"
+										class="none input_gx" name="check-1" type="checkbox">
+									<label for="check-1"></label>
+								</div></td>
+							<td  width="100" title="{{o.wayBillId}}">{{o.wayBillId}}</td>
+							<td width="100" ng-class="{'tianm_icon':o.isTmail=='1'}" title="{{o.serverType}}">{{o.serverType}}</td>
+							<td width="100" title="{{o.clientName}}">{{o.clientName}}</td>
+							<td width="100" title="{{o.receiverName}}">{{o.receiverName}}</td>
+							<td width="100" class=""  title="{{o.products}}"  ><!--  ng-mouseover="showGoodsDetail(o.orderId)" -->{{o.products}}
+							<!-- <div id="product" class="d_bzj_js cplx">
+									<label>{{o.products}}</label> <span class="cplx_span_hp"
+										style="display: none;">
+										<div class="arrow-up"></div>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											class="cplx_list">
+											<tr class="cplx_tr">
+												<td>产品</td>
+												<td>包装</td>
+												<td>数量</td>
+												<td>重量</td>
+												<td>体积</td>
+												<td>计费方式</td>
+												<td>配安费</td>
+											</tr>
+											<tr ng-repeat="g in goodsInfo">
+												<td>{{g.goodsName}}</td>
+												<td>{{g.packingTypeName}}</td>
+												<td>{{g.goodsCount}}</td>
+												<td>{{g.weight}}</td>
+												<td>{{g.volume}}</td>
+												<td>{{g.billingTypeName}}</td>
+												<td>{{g.installCosts/100}}</td>
+											</tr>
+										</table>
+									</span>
+								</div> --></td>
+							<td width="100" title="{{o.count}}">{{o.count}}</td>
+							<td width="100" title="{{o.volumes}}">{{o.volumes}}</td>
+							<td width="100" title="{{o.weight}}">{{o.weight}}</td>
+							<td width="100" title="{{o.branchAndInstall}}">{{o.branchAndInstall}}</td>
+							<td width="220" title="{{o.receAddr}}">{{o.receAddr}}</td>
+							<td width="130" title="{{o.gxEndTime}}">{{o.gxEndTime}}</td>
+							<td width="100" title="{{o.orderStateName}}">{{o.orderStateName}}</td>
+							<td width="100" title="{{o.signStateName}}">{{o.signStateName}}</td>
+							<td width="130" title="{{o.distributionTime}}">{{o.distributionTime}}</td>
+							<td width="100" title="{{o.serviceSfName}}">{{o.serviceSfName}}</td>
+							<td width="100" title="{{o.serviceSfTel}}">{{o.serviceSfTel}}</td>
+							<td width="130" title="{{o.disTime}}">{{o.disTime}}</td>
+							<td width="100" title="{{o.sfName}}" class="overflow_inherit"  >{{o.sfName}}
+							</td>
+							<td width="100" title="{{o.sfphone}}">{{o.sfPhone}}</td>
+							<td width="130" title="{{o.acceptTime}}">{{o.acceptTime}}</td>
+							<!-- <td title="{{o.pickTime}}">{{o.pickTime}}</td> -->
+							<td width="130" title="{{o.upFixTime}}">{{o.upFixTime}}</td>
+							<td width="130" title="{{o.yyTime}}">{{o.yyTime}}</td>
+							<td width="130" title="{{o.signTime}}">{{o.signTime}}</td>
+							
+						</tr>
+					</tbody>
+				</table>
+</div>
+				</my_table>
+			</div>
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+	
+        <!-- 修改 开始 -->
+        <div id="vehicle_1" class="popup" style="width: 320px; margin-left: -160px; top: 100px; z-index: 1006; display:none;">
+			
+			<div class="tx_tc">
+		
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table" style="padding-top: 20px;">
+				  <tbody>
+				  <tr>
+					<td width="60"><label class="control-label">配安费：</label></td>
+					<td><div class="step_ul"><input class="input_box" ng-model="query.totalMoney" type="text"><span class="f12_s">元</span></div></td>
+					<td width="60"><!-- <label class="control-label">修改后：</label> --></td>
+					<td><!-- <div class="step_ul"><input class="input_box" id="" type="text"><span class="f12_s">元</span> --></div>
+					</td>
+					<td><!-- <label class="control-label " style="width: 60px;">区：</label> --></td>
+					<td><!-- <div class="controls_1 fl mrzj">
+                            <input class="input_gx" type="checkbox" id="checkDistrict-131131222" >
+                            <label class="pl26 trunk_1" for="checkDistrict-131131222">天河区</label>
+                        </div> -->
+					</td>
+				  </tr>
+				   <tr>
+				   	<td><!-- <label class="control-label">按体积：</label> --></td>
+					<td><div class="step_ul"><!-- <input class="input_box" id="" type="text"><span class="f12_s">元/方</span> --></div></td>
+					<td><!-- <label class="control-label">按重量：</label> --></td>
+					<td><div class="step_ul"><!-- <input class="input_box" id="" type="text"><span class="f12_s">元/吨</span> --></div></td>
+					<td><!-- <label class="control-label">按件数：</label> --></td>
+					<td><div class="step_ul"><!-- <input class="input_box" id="" type="text"><span class="f12_s">元/件</span> --></div></td>
+				  </tr>
+				 
+				</tbody>
+				</table>
+			
+				<div class="tx_tc_button" style="margin: 15px 0 20px;">
+					<a class="button ml_10 baoc allow" href="#"  ng-click="toUpdate()" ><i class="button_icon button_icon dw_baoc"></i>保存</a>
+					<a class="search_button_cz" style="height: 28px;line-height: 28px;" href="#" onClick="document.getElementById('vehicle_1').style.display='none';document.getElementById('fade1_xz').style.display='none'">取消</a>
+				</div>
+			</div>
+    	</div>
+        <!-- 修改 结束 -->
+        
+        <!--半透明黑色背景  开始-->
+        <div id="fade1_xz" class="popup_bj" style="display:none;"></div>
+        <!--半透明黑色背景  结束-->
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript"
+		src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="contactGSTaskManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

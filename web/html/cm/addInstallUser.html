@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AddInstallUserApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>新增师傅资料</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+		<!-- <script type="text/javascript" src="../js/x.js?v=${ver}"></script> -->
+		
+		<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script><!--百度地图 测试-->
+
+</head>
+	<body ng-controller="AddInstallUserCtrl">
+		<!-- 新增安装师傅   start -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	 
+             <table width="96%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" style="margin: 0 auto;">
+					<tbody>
+					<tr>
+						<td width="140"><label class="term_label">师傅名称：</label></td>
+						<td><input ng-disabled="isView==1" class="form_term" ng-model="cmSfUser.name" maxlength="10"/></td>
+						<td width="140"><label class="term_label">籍贯：</label></td>
+						<td><input ng-disabled="isView==1" class="form_term" ng-model="cmSfUser.native_" maxlength="10"/></td>
+						<td>
+							<label class="term_label">师傅手机：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-disabled="isView==1||cmUser.sfUserId>0" ng-blur="checkPhone();" ng-model="cmSfUser.phone" maxlength="11"/>
+						</td>
+						
+					</tr>
+					<tr>
+						<td><label class="term_label">服务省：</label></td>
+						<td><div class="search_select">
+								<select name="select" ng-disabled="isView==1" class="xl_z" id="provinceId"  ng-model="cmSfUser.provinceId" ng-change="queryCity()"  ng-options="province.id as province.name for  province in provinces">
+								<option value="">请选择服务省</option>
+								</select>
+								<input id="provinceName" value="" ng-model="cmSfUser.provinceName" type="hidden" />
+							</div></td>
+						
+						<td><label class="term_label">服务市：</label></td>
+						<td><div class="search_select">
+								<select name="select" ng-disabled="isView==1" class="xl_z" id="cityId" ng-model="cmSfUser.cityId"  ng-click="selectCity()" ng-options="objCon.id as objCon.name for  objCon in citys">
+								<option value="">请选择服务市</option>
+								</select>
+							</div></td>
+							<td width="100"><label class="control-label w_100">服务区域：</label></td>
+					<td>
+						<div style=" width: 214px; position: relative;">
+							<input class="input_box search_select" id="districts" ng-readonly="setReadOnly" ng-click="queryDistrict()" ng-model="cmSfUser.districtNames" style="width:214px;" type="text" />
+							<!-- 下拉选择-->
+							<div id="selectItem" class="drop_down" style=" width:397px;min-height:200px;right: 0" ng-show="isAreaShow">
+								<div class="drop_down_1 clearfix" style="min-height:198px;">
+									<h2>选择服务区域(可多选)</h2>
+									<div class="drop_down_nr" ng-repeat="district in districts">
+									<a href="#" ng-click="selDistrict(this)" ng-class="districtIds.district_{{district.id}}" >{{district.name}}</a>
+									</div>
+									<div class="drop_down_ann" ng-show="setReadOnly!=true"><a class="drop_down_a" href="#" ng-click="selectAllDistrict()">全选</a><a class="drop_down_a" href="#" ng-click="districtConfirm()">确定</a><a class="drop_down_a" href="#" ng-click="isAreaShow=false">关闭</a></div>
+								</div>
+							</div>
+						</div>
+					</td>
+					</tr>
+					<tr>
+						<td><label class="term_label">合作方式：</label></td>
+						<td><div class="search_select">
+								<my-select id="cmSfUser.cooperationType"  has-all="false" default-value=""
+									code-type="COOPERATION_TYPE" url-param='' />
+							</div></td>
+						<td>
+							<label class="term_label">账户类型：</label>
+						</td>
+						<td ng-if="isView==1||isView==2">
+							<span>{{cmSfUser.receiTypeName}}</span>
+						</td>
+						<td ng-if="isView==null||isView==undefined||isView==''">
+							<div class="search_select">
+		 						<my-select id="cmSfUser.receiType"  has-all="false" default-value=""
+									code-type="ACCT_RECC_TYPE" url-param='' />
+                            </div>
+						</td>
+						<td><label class="term_label">持卡人/帐户名：</label></td>
+						<td><input class="form_term" ng-disabled="isView==1||isView==2" ng-model="cmSfUser.accountName" maxlength="11"/></td>
+					</tr>
+					<tr>
+						<td ng-show="cmSfUser.receiType==1"><label class="term_label">归属银行：</label></td>
+						<td ng-if="isView==1||isView==2" ng-show="cmSfUser.receiType==1">
+		 					<span>	{{cmSfUser.bankName}}</span>
+                            </td>
+                         <td ng-if="isView==null||isView==undefined||isView==''" ng-show="cmSfUser.receiType==1"><div class="search_select">
+						<my-select id="cmSfUser.bankType"  has-all="false" default-value=""
+						code-type="BANK_TYPE" url-param='' />
+                         </div></td>
+						<td>
+							<label class="term_label">卡号/帐号：</label>
+						</td>
+						<td>
+							<input ng-disabled="isView==1||isView==2" class="form_term" ng-model="cmSfUser.bankAccount" maxlength="20"/>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">身份证正面：</label>
+						</td>
+						<td>
+						<div>
+						<ul class="dd_cx clearfix">
+							<li><span my-File-Model="imageCounter" is-Close="true" ></span></li>
+						</ul>
+						</div>
+						</td>
+						<td>
+							<label class="term_label">身份证背面：</label>
+						</td>
+						<td>
+						<div>
+						<ul class="dd_cx clearfix">
+							<li><span my-File-Model="imagePositive" is-Close="true" ></span></li>
+						</ul>
+						</div>
+						</td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">仓库地址：</label>
+						</td>
+						<td colspan="5">
+						<div style="position:relative;border: 1px solid #dae2ef;border-radius: 5px;padding-right: 37px;">
+						<div class="search_sdt btn" style="height: 28px;"></div>
+						<input style="border:0" id="desPlaceDtl" placeholder="推荐填写，精准计算里程" name="desPlaceDtl" onkeyup="desPlaceDtlAutoComplete.start(event) " onblur="setBlurDesPlaceDtl();" class="form_term" ng-disabled="isView==1" style="width:95%" ng-model="cmSfUser.storeAddr" maxlength="200"/>
+						<!-- <div class="" id="desPlaceDtlDiv" style="background: #fff;padding: 8px;border: 1px solid #f4f4f4;position: absolute;z-index: 1;">
+								自动完成 DIV
+							</div> -->
+							<input id="storeEand" value="" ng-model="cmSfUser.storeEand" type="hidden" />
+							<input id="storeNand" value="" ng-model="cmSfUser.storeNand" type="hidden" />
+							<!-- <input class="input_box addition_input" ng-readonly="setReadOnly" ng-model="cmSfUser.storeAddr" type="text" /> -->
+						</div>
+						</td>
+						
+						
+					</tr>
+					<tr>
+								<td colspan="8">
+						<div style="margin-top:30px;">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							  <tr>
+								<td width="100"><label class="control-label w_100">常规服务：</label></td>
+								<td>
+								<div ng-if="isView!=1"  class="search_select w_146 fl mr_20">
+								<select name="select" class="xl_z" ng-model="cmSfUser.commonServiceId" ng-change="queryChildServiceType()" ng-disabled="all" ng-options="productService.prodId as productService.name for  productService in oneLevelProductItmes">
+								<option value="">请选择服务</option>
+								</select>
+								<input  ng-model="cmSfUser.commonServiceName" type="hidden" />
+								</div>
+								<div ng-if="isView!=1"  id='info_box'>
+									<div id='Cont_1'>
+										<div class="search_select w_146 search_select_bs fl">
+											<select name="select" class="xl_z" ng-model="cmSfUser.commonChildServiceId" ng-change="selChildService(this)" ng-disabled="all" ng-options="productService.prodId as productService.name for  productService in childServiceItmes">
+											<option value="">请选择服务子类</option>
+											<input  class="none input_gx" name="" ng-model="cmSfUser.commonChildServiceName"  type="hidden" />
+											</select>
+										</div>
+									</div>
+									<div id='Cont_2'  ng-class="showServiceType">
+										<ul class="addition_gx clearfix fl" style="margin-left:20px;">
+											<li>
+												<div class=" fl addition_gx_input">
+													<input id="check-7" class="none" name="" ng-model="serviceType.sendAndInstallValue"  ng-true-value="13" ng-false-value="''" type="checkbox" ng-click="selSfServices()" />
+													<label for="check-7" class="input_for" >配送到家并安装</label>
+												</div>
+											</li>
+											<li>
+												<div class=" fl addition_gx_input">
+													<input id="check-8" class="none" name="" ng-model="serviceType.sendValue"  ng-true-value="12" type="checkbox" ng-false-value="''" ng-click="selSfServices()">
+													<label for="check-8" class="input_for">配送到家</label>
+												</div>
+											</li>
+											<li>
+												<div class=" fl addition_gx_input">
+													<input id="check-9" class="none" name="" ng-model="serviceType.installValue" ng-true-value="14" type="checkbox" ng-false-value="''" ng-click="selSfServices()">
+													<label for="check-9" class="input_for">安装</label>
+												</div>
+											</li>
+										</ul>
+										<a class="search_button_ss fr" style="margin:0; height:42px; line-height:42px;" href="javascript:void(0);" ng-click="comfirmSfServices()" ng-show="setReadOnly!=true">确定</a>
+									</div>
+								</div>
+								</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td>
+									<div class="addition_div">
+										<div class="addition_1" id="addition_1" ng-show="showServiceTitle">请在上边选择类目，进行常规服务的配置，常规服务的配置，可以反复选择，配置多条记录！</div>
+										<div class="addition_2" id="addition_2" ng-show="showServiceInfo">
+											<dl class="clearfix" id="addition_3" ng-repeat=" serObj in cmSfUser.showSfServices"><div ng-if="serObj!=''"><dt>{{serObj.serName}}/{{serObj.serChildName}}：</dt><dd>{{serObj.installName}}</dd><dd>{{serObj.sendName}}</dd><dd>{{serObj.sendAndInstallName}}</dd><dd ng-show="setReadOnly!=true"><a class="addition_2_a mt_10" href="javascript:void(0);" ng-if="isView!=1"  ng-click="delSelService(serObj.serChildId)"></a></dd></div></dl>
+										</div>
+									</div>
+								</td>
+							  </tr>
+							</table>
+						</td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100">增值服务：</label></td>
+					<td colspan="7">
+						<ul class="addition_gx clearfix">
+							<li>
+								<div class=" fl addition_gx_input">
+									<input id="check-1" class="none input_gx" ng-model="cmSfUser.valueService.maintain" ng-disabled="setReadOnly" ng-true-value="1" ng-false-value="-1" type="checkbox">
+									<label for="check-1" class="input_for">维修</label>
+								</div>
+								<!-- 维修 勾选显示  开始-->
+								<ul class="addition_gx_z clearfix fl" ng-show="cmSfUser.valueService.maintain">
+									<li><div class="triangle-left"></div></li>
+									<li>
+										<div class=" fl addition_gx_input">
+											<input id="check-4" class="none input_gx" ng-model="cmSfUser.valueService.maintainAttr.skin" ng-disabled="setReadOnly" ng-true-value="1" ng-false-value="-1" type="checkbox">
+											<label for="check-4" class="input_for">皮艺</label>
+										</div>
+									</li>
+									<li>
+										<div class=" fl addition_gx_input">
+											<input id="check-5" class="none input_gx" ng-model="cmSfUser.valueService.maintainAttr.wood" ng-disabled="setReadOnly" ng-true-value="2" ng-false-value="-1" type="checkbox">
+											<label for="check-5" class="input_for">板式</label>
+										</div>
+									</li>
+									<li>
+										<div class=" fl addition_gx_input">
+											<input id="check-6" class="none input_gx" ng-model="cmSfUser.valueService.maintainAttr.other" ng-disabled="setReadOnly" ng-true-value="3" ng-false-value="-1" type="checkbox">
+											<label for="check-6" class="input_for">其他</label>
+										</div>
+									</li>
+								</ul>
+								<!-- 维修 勾选显示  结束-->
+							</li>
+							<li>
+								<div class=" fl addition_gx_input">
+									<input id="check-2" class="none input_gx" ng-model="cmSfUser.valueService.yanghu" ng-disabled="setReadOnly"  ng-true-value="3" ng-false-value="-1" type="checkbox">
+									<label for="check-2" class="input_for">养护</label>
+								</div>
+							</li>
+							<li>
+								<div class=" fl addition_gx_input">
+									<input id="check-3" class="none input_gx" ng-model="cmSfUser.valueService.returnGoods" ng-disabled="setReadOnly" ng-true-value="2" ng-false-value="-1" type="checkbox">
+									<label for="check-3" class="input_for">返货</label>
+								</div>
+							</li>
+						</ul>
+					</td>
+					
+				  </tr>
+				</tbody>
+		</table>
+        <div class="tx_tc_button">
+					<a class="search_button_ss" ng-if="isView!=1" ng-click="doSave();" href="javascript:void(0);">保存</a>
+					<a class="search_button_cz" ng-click="doClose();"  href="javascript:void(0);">取消</a></div>
+        	
+        </div>
+        <!-- 新增安装师傅  end -->
+	<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="addInstallUser.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery/autoComplete.js?v=${ver}"></script>
+	</body>
+</html>
+

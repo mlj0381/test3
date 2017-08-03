@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-1 13:46:15 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmUserAreaRel" table="cm_user_area_rel">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="userId" type="java.lang.Long">
+			<column name="USER_ID" not-null="true">
+				<comment>用户编号</comment>
+			</column>
+		</property>
+		<property name="provinceId" type="java.lang.Long">
+			<column name="PROVINCE_ID" not-null="true">
+				<comment>省份编号</comment>
+			</column>
+		</property>
+		<property name="provinceName" type="java.lang.String">
+			<column name="PROVINCE_NAME" length="25" not-null="true">
+				<comment>省份名称</comment>
+			</column>
+		</property>
+		<property name="cityId" type="java.lang.Long">
+			<column name="CITY_ID">
+				<comment>市</comment>
+			</column>
+		</property>
+		<property name="cityName" type="java.lang.String">
+			<column name="CITY_NAME" length="25" />
+		</property>
+		<property name="districtId" type="java.lang.Long">
+			<column name="DISTRICT_ID">
+				<comment>县/区</comment>
+			</column>
+		</property>
+		<property name="districtName" type="java.lang.String">
+			<column name="DISTRICT_NAME" length="25">
+				<comment>县/区 名称</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

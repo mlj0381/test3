@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="routeFeeConfigDtlApp">
+	<head>
+	    <title>众邦_线路费用管理详情 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+	  <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css"/>
+        <script type="text/javascript" src="js/jquery.js?v=${ver}"></script>
+</head>
+	<body ng-controller="routeFeeConfigDtlCtrl">
+    	     
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 plr_20" >
+                <ul class="search_term clearfix">
+                <li class="term_li"><label class="term_label"><em>*</em>归属公司：</label><div class="form_select w_b62 fl">
+                                <select ng-model="data.tenantId" ng-disabled="all" ng-options="obj.orgId as obj.orgName for obj in tenantData ">
+                            	</select>
+                            </div>
+                    </li>
+                	<li class="term_li">
+                	  <label class="term_label"><em>*</em>起始网点：</label>
+                            <div class="form_select w_b62 fl" >
+                               <select ng-model="data.startOrgid"
+									ng-options="obj.orgId as obj.orgName for obj in orgInfo" ng-disabled="all">
+								</select>
+                        </div>
+                     </li>
+                     <li class="term_li">
+                	  <label class="term_label"><em>*</em>到达网点：</label>
+                            <div class="form_select w_b62 fl" >
+                               <select ng-model="data.endOrgid"
+									ng-options="obj.orgId as obj.orgName for obj in orgInfo" ng-disabled="all">
+								</select>
+                        </div>
+                     </li>
+                     <li class="term_li">
+                	  <label class="term_label"><em>*</em>应收网点：</label>
+                            <div class="form_select w_b62 fl" >
+                               <select ng-model="data.receiOrgid"
+									ng-options="obj.orgId as obj.orgName for obj in orgInfo" ng-disabled="all">
+								</select>
+                        </div>
+                     </li>
+                    <li class="term_li"><label class="term_label"><em>*</em>科目：</label>
+	                    <div class="form_select w_b62 fl">
+	                                <select ng-model="data.feeId"  ng-disabled="all"  ng-options="obj.feeId as obj.feeName for obj in acFeeConfig ">
+                            	    </select> 
+	                      </div>
+                     </li>
+                   <li class="term_li"><label class="term_label"><em>*</em>运输方式：</label>
+	                    <div class="form_select w_b62 fl"  ng-disabled="all">
+	                                <!-- <my-select id="data.collectType" code-type="COLLECT_TYPE"  url=""/> -->
+	                                <select ng-model="data.carriageMode"  ng-disabled="all"  ng-options="obj.codeValue as obj.codeName for obj in stateDate ">
+                            	    </select>
+	                      </div>
+                     </li>
+                     <li class="term_li"><label class="term_label"><em>*</em>计费方式：</label>
+	                    <div class="form_select w_b62 fl">
+	                                 <my-select id="data.countType" code-type="COUNT_TYPE" url=""   />
+	                      </div>
+                     </li>
+				    
+                    <li class="term_li fr" style="width:auto;">
+	                    <div class="bottom_search"><a href="javaScript:void(0)" ng-click="doQuery()">查看</a>
+	                         <a href="javaScript:void(0)" ng-click="close()">返回</a>
+	                    </div>
+                    </li>
+                    
+                </ul> 
+                <!-- <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2 style="font-weight: bold;font-size: 14px; font-family:Microsoft YaHei; color:#333;"></h2></div> -->
+				<div style="position: relative;border:1px solid #e0e5e9; border-bottom:0;">
+                	<table border="0" cellspacing="0" cellpadding="0" class="search_list" width="100%">
+                                <thead>
+                                  <tr>
+                                    <th>计费方式</th>
+                                    <th>科目</th>
+                                    <th>起始范围</th>
+                                    <th>终止范围</th>
+                                    <th>最低价格</th>
+                                    <th>最高价格</th>
+                                    <th>公式</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="o in routeData">
+                                    <td>{{o.countTypeName}}</td>
+                                    <td>{{o.feeIdName}}</td>
+                                    <td>{{o.lowerLimit}}</td>
+                                    <td>{{o.topLimit}}</td>
+                                    <td>{{o.minPrice/100}}</td>
+                                    <td>{{o.maxPrice/100}}</td>
+                                    <td>{{o.formula}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                </div>
+				<!-- <div class="bottom_nav pb_20 bottom_nav_search clearfix" style="border-top:0;"><h2 style="font-weight: bold;font-size: 14px; font-family:Microsoft YaHei; color:#333;">网点费用</h2></div>
+				<div style="position: relative;border:1px solid #e0e5e9; border-bottom:0;">
+                	<table border="0" cellspacing="0" cellpadding="0" class="search_list" width="100%">
+                                <thead>
+                                  <tr>
+                                    <th>收入网点</th>
+                                    <th>科目</th>
+                                    <th>计费类型</th>
+                                    <th>金额</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="o in orgData">
+                                    <td>{{o.orgName}}</td>
+                                    <td>{{o.feeName}}</td>
+                                    <td>{{billingType}}</td>
+                                    <td>{{o.costAmount/100}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                </div> -->
+		</div>
+			<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="routeFeeConfigDtlCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

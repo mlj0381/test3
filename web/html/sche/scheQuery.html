@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="scheQueryApp">
+<head>
+<title>调度任务-待签收任务</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+<style type="text/css">
+.w_b60{width: 147px!important;}
+</style>
+</head>
+<body ng-controller="scheQueryCtrl"  style="overflow: hidden;">
+	<div class="billing_1" style="padding-bottom: 80px;">
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="100"><label class="control-label">收货地：</label></td>
+						<td>
+							 <span class="wdcy_input" my-city="des"></span>
+						</td>
+						<td width="100"><label class="control-label w_100">开单日期：</label>
+                   		</td>
+						<td colspan="2">
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginDate" id="beginDate" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endDate"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endDate" class="form_term fl w_xjr" type="text">
+                            </td> 
+								<td width="100"><label class="control-label w_100">干线状态：</label></td>
+						<td><div class="search_select w_146 fl"><select ng-model="query.isGxEnd" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">已结束</option>
+									<option  value="2">未结束</option>
+								</select></div>
+								</td>
+						<td width="100"><label class="control-label w_100">到货状态：</label></td>
+						<td><div class="search_select w_146 fl"><select ng-model="query.isArriveGoods" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">已到货</option>
+									<option  value="2">未到货</option>
+								</select></div>
+						</td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+					</tr>
+					<tr>
+					</tr>
+				</table>
+			</div>
+
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl" style="width: 140px;">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2>
+				<div class="fr mt15_mr20">
+				<a href="javascript:void(0)" class="button fr ml_10 gangxianjs" id="exportId" ng-click="commonExport()"><i class="button_icon button_icon dw_gangxianjs"></i>导  出</a>
+				<a class="button fr ml_10 rgfp" ng-click="openExc();" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>异常登记</a>
+					<a class="button fr ml_10 gangxianjs" ng-click="openSign();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_gangxianjs"></i>签收</a>
+						<a class="button fr ml_10 gangxianjs" ng-click="arriveGoods();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_gangxianjs"></i>到货</a>
+				<a class="button fr ml_10 rgfp" ng-click="openYy();" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>预约</a>
+				<a class="button fr ml_10 gangxianjs" ng-click="pickUp();" href="javascript:void(0);"><i class="button_icon button_icon dw_gangxianjs"></i>提货</a>
+						<a class="button ml_10 anzhuanks" ng-click="openUp();" href="javascript:void(0);"><i class="button_icon button_icon dw_anzhuanks"></i>上传签收图</a>
+				<a style="width: 110px;" class="button fr ml_10 write" ng-click="openGxEnd();" href="javascript:void(0);"><i class="button_icon button_icon dw_write"></i>补录提货信息</a>
+						<a class="button ml_10 see_b" ng-click="openWayDetail();" href="javascript:void(0);"><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+						 <a
+						class="button fr ml_10 rgfp" ng-click="cancerDis();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_rgfp"></i>取消分配</a>
+						
+					<!-- 	<a class="button ml_10 delete" href="javascript:void()" ng-click="deleteTask()"><i class="button_icon button_icon dw_delete ml0"></i>删除任务</a> -->
+				</div>
+			</div>
+			<my-Table-Cm head="head" is-Multi-Select="true" table="table" after-Init-Fn="doQuery()" url="url" param="urlParam" id="wayBillId" table-Name＝"" ver="${ver}"></my-Table-Cm>
+			
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+	<div id="vehicle_1" class="popup"
+		style="width: 700px; height: 470px; margin-left: -350px; margin-top: -235px; z-index: 1006; display: none;">
+		<div class="tx_tc">
+			<div style="min-height: 370px">
+				<dl class="dhl_credit_dl">
+					<dt>信用标准</dt>
+					<dd>
+						<b>1.信用体系规划：</b><br> 接单量、预约及时率、核销及时率、服务态度、投诉
+					</dd>
+					<dd>
+						<b>2.每项考核细则</b><br> 接单量：每接一单，得10分<br>
+						预约及时率：及时预约，得2分，超时扣2分<br> 核销及时率：及时核销，得2分，超时扣2分<br>
+						服务态度：满意，得2分，不满意，扣2分<br> 投诉：投诉一次扣10分，投诉3三次，取消资格<br>
+						重大投诉：取消资格
+					</dd>
+				</dl>
+			</div>
+			<div class="tx_tc_button">
+				<a class="search_button_cz" href="#"
+					onclick="document.getElementById('vehicle_1').style.display='none';document.getElementById('fade1_xz').style.display='none'">关闭</a>
+			</div>
+		</div>
+	</div>
+	<!-- 签收 -->
+	<div id="vehicle_qs" class="popup" style="width: 800px; height: 570px; margin-left: -400px; z-index: 1006; display: none;top:50px!important">
+			<div class="tx_tc">
+				<div style="min-height:350px; padding-top:20px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table" style="padding-top: 0">
+				  <tbody><tr>
+					<td width="100"><label class="control-label w_100">签收人：</label></td>
+					<td><input  ng-model="query.receiverName" class="input_box" maxlength="6" type="text" value=""></td>
+					<td width="100"><label class="control-label w_100">签收状态：</label></td>
+					<td><div class="search_select w_146">
+								<my-select id="query.isException" else-value="" has-all="false" default-value=""
+									code-type="SIGN_STATE" url-param='' />
+							</div></td>
+					<td width="100"></td>
+					<td></td>
+				  </tr>
+				   <tr>
+					<td width="100"><label class="control-label w_100">证件类型：</label></td>
+					<td><div class="search_select w_146">
+								<my-select id="query.idType" else-value="" has-all="false" default-value=""
+									code-type="ID_TYPE" url-param='' />
+									</div></td>
+					<td width="100"><label class="control-label w_100">证件号：</label></td>
+					<td><input class="input_box" ng-model="query.IDCard" id="" maxlength="20" type="text"></td>
+					<td width="100"></td>
+					<td></td>
+				  </tr>
+		<tr ng-if="query.isException==2">
+						<td width="100" valign="top"><label class="control-label w_100">签收描述：</label></td>
+						<td colspan="4"><textarea maxlength="500" style="height:90px; width:92.4%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="query.signDesc" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+						</td>
+						
+						
+					</tr>
+				</tbody></table>
+				<ul class="dd_cx clearfix">
+					<li><span my-File-Model="identityCard1" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard2" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard3" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard4" is-Close="true" ></span></li>
+					<li><span my-File-Model="identityCard5" is-Close="true" ></span></li>
+				</ul>
+				</div>
+				<div class="tx_tc_button"><a class="search_button_ss" href="javascript:void(0);" ng-click="doSign();">保存</a><a class="search_button_cz" href="javascript:void(0);" ng-click="closeSign();">取消</a></div>
+			</div>
+    	</div>
+    	<!-- 签收 -->
+    	<!-- 上传签收图 --><div id="vehicle_up_qs" class="popup" style="width: 800px; height: 450px; margin-left: -400px; top:50px!important; z-index: 1006; display: none;">
+			<div class="tx_tc">
+				<div style="min-height:200px; padding-top:20px;">
+				<ul class="dd_cx clearfix">
+					<li><span my-File-Model="idenCard1" is-Close="true" ></span></li>
+					<li><span my-File-Model="idenCard2" is-Close="true" ></span></li>
+					<li><span my-File-Model="idenCard3" is-Close="true" ></span></li>
+					<li><span my-File-Model="idenCard4" is-Close="true" ></span></li>
+					<li><span my-File-Model="idenCard5" is-Close="true" ></span></li>
+				</ul>
+				</div>
+				<div class="tx_tc_button"><a ng-hide="isShow==false" class="search_button_ss" href="javascript:void(0);" ng-click="doSavePic();">保存</a><a class="search_button_cz" href="javascript:void(0);" ng-click="closeUp();">取消</a></div>
+			</div>
+    	</div>
+    	<!-- 上传签收图 -->
+    	<!-- 干线结束 弹窗 开始 -->
+	<div id="vehicle_qxjs" class="popup"
+		style="width: 400px; height: 320px; margin-left: -200px; top:50px!important; z-index: 1006; display: none;">
+		<div class="tx_tc">
+			<div style="min-height: 120px; padding-top: 20px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table tx_tc_table" style="padding-top: 0">
+					<tr>
+						<td width="100"><label class="control-label w_100">提货人电话：</label></td>
+						<td><input class="input_box" ng-model="query.pickUpPhone"
+							id="" type="text" /></td>
+
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">提货地址：</label></td>
+						<td><input class="input_box" id=""
+							ng-model="query.pickUpAddr" type="text" /></td>
+
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">提货验证码：</label></td>
+						<td><input class="input_box" id=""
+							ng-model="query.pickCode" type="text" /></td>
+
+					</tr>
+					
+				</table>
+
+			</div>
+			<div class="tx_tc_button">
+				<a class="search_button_ss" ng-click="gxEnd();"
+					href="javascript:void(0);">保存</a><a class="search_button_cz"
+					href="javascript:void(0);" ng-click="closeGxEnd()">取消</a>
+			</div>
+		</div>
+	</div>
+	<!-- 干线结束 弹窗 结束 -->
+	<!-- 预约 -->
+	<div id="vehicle_yy" class="popup" style="width: 500px; height: 260px; margin-left: -250px;top:50px!important; z-index: 1006; display: none;">
+			<div class="tx_tc">
+				<div style="min-height:80px; padding-top:30px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table" style="padding-top: 0">
+				  <tbody>
+				  <tr>
+					<td width="80"><label class="control-label">上门时间：</label></td>
+					<td width="120"><input class="input_box" style="width: 120px;" id="yyTime" my-Date-Picker='{"minDate":"%y-%M-%d","dateFmt":"yyyy-MM-dd"}' type="text"></td>
+					<td width="80"><label class="control-label">时间段：</label></td>
+					<td><div class="search_select"><select	name="select" id="ipFixTime" class="xl_z">
+					<option selected="selected" value="上午">上午 </option>
+					<option value="下午">下午</option>
+					<option value="晚上">晚上</option>
+					</select></div>
+					</td>
+					
+				  </tr>
+				   
+		
+				</tbody></table>
+				
+				</div>
+				<div class="tx_tc_button"><a class="search_button_ss" ng-click="yy()" href="javascript:void(0);">保存</a><a class="search_button_cz" href="javascript:void(0);" ng-click="closeYy();">关闭</a></div>
+			</div>
+    	</div>
+	
+	<!-- 预约 -->
+	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" style="display: none;"></div>
+	<!--半透明黑色背景  结束-->
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	
+	
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="scheQueryCtrl.js?v=${ver}"></script>
+	<script type="text/javascript"src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/table/tableCommon.js?v=${ver}"></script>
+</body>
+</html>
+

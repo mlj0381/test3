@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ApplicationApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>运单详情</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css">
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.js"></script>
+		<script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+		
+</head>
+	<body ng-controller="ApplicationCtrl"  style="overflow:hidden">
+		<div class="billing_1" style="padding-bottom:80px;">
+			<ul class="waybill_tab clearfix">
+				<li class="hover" id="two1"><a class="a1" onClick="setTab('two',1,7)"  href="javascript:void(0)">投诉录入</a></li>
+			</ul>
+			<!--投诉录入 start-->
+			<div id="con_two_1">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="search_table com_liest" style="margin:50px auto;">
+				  <tr>
+					<td><label class="control-label">投诉级别：</label></td>
+					<td>
+						<!--代码开始-->
+						<div class="xx_pj">
+							<div class="xx_a">
+								<ul class="star" id="star">
+									<li><a href="javascript:void(0)" class="one-star">1</a></li>
+									<li><a href="javascript:void(0)" class="two-stars">2</a></li>
+									<li><a href="javascript:void(0)" class="three-stars">3</a></li>
+									<li><a href="javascript:void(0)" class="four-stars">4</a></li>
+									<li><a href="javascript:void(0)" class="five-stars">5</a></li>
+								</ul>
+								<div class="current-rating" id="showb"></div>
+							</div>
+						</div>
+						<!--代码结束-->
+					</td>
+				  </tr>
+				  <tr>
+					<td><label class="control-label">投诉来源：</label></td>
+					<td>
+						<div class="search_select w_146">
+							<my-select id="add.sourceType" code-type="COMPLAINT_INFO@SOURCE_TYPE" url="" />
+						</div>
+					</td>
+				  </tr>
+				  <tr>
+					<td><label class="control-label">投诉内容：</label></td>
+					<td><textarea maxlength="500" ng-model="add.complaintContent" style="height:90px; width:100%; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="newData.carOwnerVisitLog" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea></td>
+				  </tr>
+				  <tr>
+					<td><label class="control-label">责任公司：</label></td>
+						<td><input class="input_box" ng-model="add.companyName"
+							type="text" /></td>
+				  </tr>
+				  <tr>
+					<td><label class="control-label">责任师傅：</label></td>
+					<td>
+					<div class="search_select w_146">
+						<select ng-model="add.bcSfUserId"  ng-init="add.bcSfUserId=-1" >
+                           	<option value="-1">请选择</option>
+                           	<option ng-repeat="obj in itemsSf"  value="{{obj.sfUserId}}">{{obj.name}}{{obj.phone}}</option>
+						</select>
+					</div></td>
+				  </tr>
+				  <tr>
+					<td><label class="control-label">投诉状态：</label></td>
+					<td><div class="search_select w_146">
+							<my-select id="add.state" code-type="COMPLAINT_INFO@STATE" url="" />
+							</div></td>
+				  </tr>
+			  </table>
+				<div class="tx_tc_button">
+					<a class="search_button_ss" href="javaScript:void(0)"  ng-click="doSave()">保存</a>
+					<a class="search_button_cz" href="javaScript:void(0)"  ng-click="close()">取消</a>
+				</div>
+			</div>
+			<!--投诉录入 end-->
+		</div>
+	<script>
+	//星星
+	var selectStar;
+	$(document).ready(function(){
+	    var stepW = 25;
+	   // var description = new Array("一般差，回去再练练","真的是差，都不忍心说你了","很差","","差");
+	    var stars = $("#star > li");
+	    var descriptionTemp;
+	    $("#showb").css("width",0);
+	    stars.each(function(i){
+	        $(stars[i]).click(function(e){
+	            var n = i+1;
+	            $("#showb").css({"width":stepW*n});
+	        //    descriptionTemp = description[i];
+	        selectStar = $(this).find('a').html();
+	            $(this).find('a').blur();
+	            return stopDefault(e);
+	            return descriptionTemp;
+	        });
+	    });
+	});
+	function stopDefault(e){
+	    if(e && e.preventDefault)
+	           e.preventDefault();
+	    else
+	           window.event.returnValue = false;
+	    return false;
+	};
+	</script>	
+
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="ComplainAddCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

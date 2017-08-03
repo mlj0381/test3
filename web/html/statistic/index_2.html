@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>？鼠标移动显示</title>
+<script type="text/javascript" src="../../js/jquery/jquery.js"></script>
+<style>
+.d_bzj_js{color:#ff7800; font-size:14px; position:absolute; left:100px; width:20px; text-align:center; font-family:Arial;}
+.d_bzj_js p{ padding-top:5px; padding-bottom:8px; text-align:left; font-size:12px;}
+
+.cplx{position: relative;line-height: 22px;}
+.cplx span{position: absolute;background: #fff;padding: 10px 15px;width:300px/*调内容的宽度*/;border: 1px solid #DCDCDC;box-shadow: 1px 1px 5px #F4F4F4;left:-14px;top:40px;z-index: 99999999;color:#7f807f;}
+.arrow-up {width:0; height:0; border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:10px solid #dcdcdc;margin-top: -20px;}
+
+</style>
+</head>
+
+<body>
+
+<div class="d_bzj_js cplx">
+	<label>?</label>
+    <span style="display: none;">
+    	<div class="arrow-up"></div>
+        <p>说明如下：<br>1、保证金越高，信用度越高。<br>2、保证金为交易担保金，用户可以通过客服提取保证金。<br>3、如一方发生违约造成另一方损失，平台可在双方协商之后，从保证金中扣除损失金额</p>
+    </span>
+</div>
+
+<script type="text/javascript">
+$(function(){
+		$(".cplx").hover(function(){
+			$(this).find("span").show();
+		},function(){
+			$(this).find("span").hide();
+		});
+	});
+    </script>
+</body>
+</html>

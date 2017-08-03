@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="trunkApp">
+	<head>
+	    <title>联运汇_费用配置新增 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        <style type="text/css">
+        .id_sct .controls_pz .image-tips-wrap{width: 100px;}
+        .id_sct .controls_pz .image-tips-wrap img{height: 70px;width: 100px;}
+        .id_sct .controls_pz .a11,.id_sct .a11 a{width: 100px;font-size: 12px;}
+        .id_sct .kaa{left: 38px;top:20px;}
+        .id_sct .kaa img { width: 32px; height: 32px;}
+        </style>
+</head>
+	<body ng-controller="trunkCtrl" style="overflow: hidden;">
+        <div class="billing_1 clearfix pb_20 mt_20" >
+        		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">发货商家：</label></td>
+						<td>
+							<div class="form_select" >
+								   <select ng-model="query.businessOrgId"
+										ng-options="obj.orgId as obj.orgName for obj in businessData.items" name="select" class="xl_z">
+										<option value="">请选择发货商家</option>
+									</select>
+							</div>
+                        </td>
+						<td width="100"><label class="term_label">归属网点：</label>
+                    	</td>
+						<td><div class="form_select" >
+                               <select ng-model="query.orgId"
+									ng-options="obj.orgId as obj.orgName for obj in orgData.items" name="select" class="xl_z">
+									<option value="">请选择归属网点</option>
+								</select>
+                        	</div>
+						</td>
+						<td width="100"></td>
+						<td></td>
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label">省份：</label></td>
+						<td>
+							<div class="search_select">
+								<select ng-change="selectCity(query.province);" ng-model="query.province"
+									ng-options="obj.id as obj.name for obj in provinceData.items " name="select" class="xl_z">
+								</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label w_100">城市：</label></td>
+						<td><div class="search_select">
+								<select ng-change="selectDistrict(query.city);"
+									ng-model="query.city"
+									ng-options="obj.id as obj.name for obj in cityData.items"
+									name="select" class="xl_z">
+								</select>
+							</div>
+						</td>
+						<td width="100"></td>
+						<td></td>
+					</tr>
+				</tbody>
+		</table>
+                
+			<div class="search_nr clearfix mt_20">
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	                <h2>查询结果</h2>
+	                <a class="button ml_10 newly" href="javascript:void(0)" ng-click="add()"><i class="button_icon button_icon dw_newly"></i>新增</a>
+	                <a class="button ml_10 modify" href="javascript:void(0)" ng-click="openUpdateDialog('all')"><i class="button_icon button_icon dw_modify"></i>修改</a>
+	                <a class="button ml_10 delete" href="javascript:void(0)" ng-click="doDel()"><i class="button_icon button_icon dw_delete"></i>删除</a>
+	                <a class="button ml_10 modify" href="javascript:void(0)" ng-click="openUpdateDialog()"><i class="button_icon button_icon dw_modify"></i>修改结算方式</a>
+                </div>
+         		<my-Adv-Table isShowSeq="false" width="100%" isShowCheck="true" isFilter="false" isSum="false" id="costDetailId"
+                head='[
+                {"name":"归属网点","code":"orgIdName","width":"10%"},
+                {"name":"发货商家","code":"businessOrgIdName","width":"10%"},
+                {"name":"省","code":"provinceName","width":"10%"},
+                {"name":"市","code":"cityName","width":"10%"},
+                {"name":"区","code":"countyName","width":"10%"},
+				{"name":"元/方","code":"volumePriceDouble","width":"10%"},
+				{"name":"元/吨","code":"weightPriceDouble","width":"10%"},
+				{"name":"元/件","code":"countPriceDouble","width":"10%"},
+				{"name":"结算方式","code":"paymentTypeName","width":"16%"}
+                ]'>
+                </my-Adv-Table>
+		</div>
+        </div>
+        
+        <div id="update" class="popup" style="top: 100px; z-index: 1006; display:none;">
+			<div class="tx_tc">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table" style="padding-top:20px;">
+				  <tbody><tr>
+					<td width="90px"><label class="control-label">发货商家：</label></td>
+					<td width="220px"><div class="search_select">
+								<select ng-model="update.businessOrgId" disabled="disabled"
+									ng-options="obj.orgId as obj.orgName for obj in businessData.items" name="select" class="xl_z">
+								</select>
+							</div></td>
+					<td width="100px"><label class="control-label ">归属网点：</label></td>
+					<td><div class="search_select w_146">
+								<select ng-model="update.orgId" disabled="disabled"
+									ng-options="obj.orgId as obj.orgName for obj in orgData.items" name="select" class="xl_z">
+								</select>
+							</div>
+					</td>
+					<td width="90px"><label class="control-label ">支付方式：</label></td>
+					<td><div class="search_select w_146">
+								<select class="xl_z" name="select" id="paymentType"
+										ng-model="update.paymentType" ng-options="obj.codeValue as obj.codeName for obj in paymentTypeData.items">
+								</select>
+							</div>
+					</td>
+					</tr>
+					<tr>
+					<td width="55px" style="display:{{visible}}"><label class="control-label ">元/方：</label></td>
+					<td width="65px" style="display:{{visible}}""><div class="search_select w_146">
+								<input class="form_term " ng-model="update.volumePriceDouble" my-Double-Val="keyup" maxlength="10"/>
+							</div>
+					</td>
+					<td width="55px" style="display:{{visible}}""><label class="control-label ">元/千克：</label></td>
+					<td width="65px" style="display:{{visible}}"><div class="search_select w_146">
+								<input class="form_term " ng-model="update.weightPriceDouble" my-Double-Val="keyup" maxlength="10"/>
+							</div>
+					</td>
+					<td width="55px" style="display:{{visible}}"><label class="control-label ">元/件：</label></td>
+					<td width="65px" style="display:{{visible}}"><div class="search_select w_146">
+								<input class="form_term " ng-model="update.countPriceDouble" my-Double-Val="keyup" maxlength="10"/>
+							</div>
+					</td>
+				  </tr>
+				</tbody>
+				</table>
+				<div class="tx_tc_button" style="margin: 15px 0 20px;">
+					<a class="button ml_10 baoc" href="#" ng-click="update()"><i class="button_icon button_icon dw_baoc"></i>保存</a>
+					<a class="search_button_cz" style="height: 28px;line-height: 28px;" href="#" ng-click="closeUpdateDialog()">取消</a>
+				</div>
+			</div>
+    	</div>
+        
+        <!--半透明黑色背景  开始-->
+        <div id="fade1_xz" class="popup_bj" style="display:none;"></div>
+        <!--半透明黑色背景  结束-->
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="trunkCost.js?v=${ver}"></script>
+</body>
+</html>

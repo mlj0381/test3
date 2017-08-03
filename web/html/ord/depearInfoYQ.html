@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="departYQApp"> 
+	<head>
+	    <title>配载详情 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <style type="text/css">
+        	[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+        </style>
+</head>
+	<body ng-controller="departYQCtrl"   style="overflow:hidden" onload="setContentHeight()">
+	<div>
+        <!-- 搜索 详细 -->
+         <div id="print" class="billing_1 clearfix pb_20 mt_20">
+        
+            <!-- 搜索 详细 搜索开始 -->
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+                    <td width="100"><label class="term_label">批次号：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.batchNumAlias}}"  readonly="readonly"></td>
+                    <td width="120"><label class="term_label">状态：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.state}}" readonly="readonly"></td>
+                    <td width="120"><label class="term_label">配载人：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.loadOpName}}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                    <td><label class="term_label">配载时间：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.loadTime}}" readonly="readonly"></td>
+                    <td><label class="term_label">发车时间：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.departTime}}" readonly="readonly"></td>
+                    <td><label class="term_label">发车网点：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.sourceOrgName}}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                    <td><label class="term_label">目的网点：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.descOrgName}}" readonly="readonly"></td>
+                    <td><label class="term_label">到车时间：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.arrivalVehTime}}" readonly="readonly"></td>
+                    <td><label class="term_label">司机：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.driverName}}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                    <td><label class="term_label">司机电话：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.driverBill}}" readonly="readonly"></td>
+                    <td><label class="term_label">车牌号：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.plateNumber}}" readonly="readonly"></td>
+                    <td><label class="term_label">车辆类型：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.vehicleType}}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                    <td><label class="term_label">到付合计：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.totalFee}}" readonly="readonly"></td>
+                    <td><label class="term_label">代收货款合计：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.collectMoney}}" readonly="readonly"></td>
+                   	<td><!-- <label class="term_label">运输合同：</label> --></td>
+                    <td><!-- <input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.transportContract}}" readonly="readonly"> --></td>
+                   	<td ng-if="flag=='1'||flag==1" class="term_li fr" style="width:auto;width: 230px;"><div class="bottom_search" style="padding: 0">
+                   		<!-- <a style="margin-right:10px;" ng-click="confirmGoodVehi();" href="javascript:void(0);">到货确认</a> -->
+                   		<a href="javascript:void(0);" ng-click="close()">返回</a></div>
+                   	</td>
+                   </tr>
+                   <tr>
+                    <td><label class="term_label">核载重量：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.weight}}" readonly="readonly"></td>
+                    <td><label class="term_label">核载体积：</label></td>
+                    <td><input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.volume}}" readonly="readonly"></td>
+                   	<td><!-- <label class="term_label">配载人：</label> --></td>
+                    <td><!-- <input type="text" class="form_billing form_term ng-cloak" value="{{departDetail.loadOpName}}" readonly="readonly"> --></td>
+                   </tr>
+                   
+                   <tr>
+                    <td><label class="term_label">备注：</label></td>
+                    <td colspan="5">
+                    <textarea readonly="readonly"   rows="2" style="width:100%;" class="ng-cloak">	
+                    {{departDetail.remarks}}
+					</textarea>
+                    </td>
+                   </tr>
+                   
+                   
+                   </tbody>
+                   </table>
+           
+            <!-- 列表 -->
+			<div class="search_nr clearfix mt_20 dhl_add">
+	        	<my-Diy-Table name="pageData" isPage="false" isShowSeq="true" width="2715px" isMultiSelect="true" doubleclick="toDetailAllInfo"
+	        	       showTotal="false"  isShowTab="false" isShowCheck="true" isFilter="true" isSum="true" id="orderId" 
+	                head='[
+	                {"name":"运单号","code":"trackingNum","width":"85"},
+	                {"name":"子运单","code":"childTrackingNumAli","width":"85"},
+	                {"name":"状态","code":"childOrderState","width":"70"},
+	                {"name":"开单时间","code":"createTime","width":"120"},
+	                {"name":"开单网点","code":"billingOrgName","width":"120"},
+	                {"name":"库存网点","code":"currentOrgName","width":"120"},
+	                {"name":"目的网点","code":"dispatchingOrgName","width":"120"},
+	                {"name":"到站","code":"desCityName","width":"75"},
+	                {"name":"发货人","code":"consignor","width":"110"},
+	                {"name":"发货电话","code":"consignorPhone","width":"110"},
+	                {"name":"发货地址","code":"consignorAddress","width":"110"},
+	                {"name":"收货人","code":"consignee","width":"110"},
+	                {"name":"收货人手机","code":"consigneePhone","width":"110"},
+	                {"name":"收货人地址","code":"consigneeAddress","width":"110"},
+	                {"name":"配送方式","code":"interchangeName","width":"75"},
+	                {"name":"付款方式","code":"paymentName","width":"75"},
+	                {"name":"品名","code":"productName","width":"75"},
+	                {"name":"包装","code":"packName","width":"55"},
+	                {"name":"备注","code":"remarks","width":"200"}]'>
+                </my-Diy-Table>
+			</div>
+            <!-- 搜索 详细 列表结束 -->
+        </div>
+ 		</div>
+ 		<script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/lodop/lodop-business.js?v=${ver}"></script>
+		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="depearInfoYQCtrl.js?v=${ver}"></script>
+		
+</body>
+</html>

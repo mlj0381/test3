@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+	    <title>一智通</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="css/yzt/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="css/yzt/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="css/yzt/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="css/yzt/master.css?v=${ver}">
+		<link rel="stylesheet" href="css/pace-theme-center-simple.css?v=${ver}"><!-- 自动加载 css -->
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js?v=${ver}"></script>
+		<script type="text/javascript" src="js/pace.js?v=${ver}"></script><!-- 自动加载进度条插件 -->
+        
+		<script type="text/javascript" src="js/prototype.js?v=${ver}"></SCRIPT><!-- 导航 -->
+		
+		<style>
+        body, html{width: 100%;height: 100%;}
+    	</style>
+        <script type="text/javascript">
+            function setContentHeight() {
+				var y =document.body.clientHeight;
+                var x = document.getElementsByTagName('iframe').length;
+				
+				for(i=0;i<x;i++){
+				  document.getElementsByTagName('iframe')[i].style.height = y - 220 + "px";
+				
+				}
+				
+            }
+
+    	</script>
+      
+</head>
+	<body class="whole_bj" onload="setContentHeight();">
+		
+    	<!-- 头部 -->
+    	<div class="header" id="xcx_tabmenu">
+        	<div class="logo fl"><a href="#"><img src="image/yzt/logo.png" alt="" /></a></div>
+            <ul class="header_nav clearfix" id="ddimagetabs">
+            	<li class="nav_li "><a href="index.html" id="sclink1" onMouseOver="expandcontent('sc1', this)"><i class="block"><img src="image/yzt/nav_icon.png" alt="" /></i><span>首页</span></a></li>
+                <li class="nav_li"><a class="current" href="manage.html" id="sclink2" onMouseOver="expandcontent('sc2', this)"><i class="block"><img src="image/yzt/nav_icon2.png" alt="" /></i><span>基础管理</span></a></li>
+                <li class="nav_li"><a href="#" id="sclink3" onMouseOver="expandcontent('sc3', this)"><i class="block"><img src="image/yzt/nav_icon3.png" alt="" /></i><span>调度管理</span></a></li>
+                <li class="nav_li"><a href="#" id="sclink4" onMouseOver="expandcontent('sc4', this)"><i class="block"><img src="image/yzt/nav_icon4.png" alt="" /></i><span>考核管理</span></a></li>
+                <li class="nav_li"><a href="#" id="sclink5" onMouseOver="expandcontent('sc5', this)"><i class="block"><img src="image/yzt/nav_icon5.png" alt="" /></i><span>服务商</span></a></li>
+                <li class="nav_li"><a href="#" id="sclink6" onMouseOver="expandcontent('sc6', this)"><i class="block"><img src="image/yzt/nav_icon6.png" alt="" /></i><span>客户服务</span></a></li>
+                <li class="nav_li"><a href="#" id="sclink7" onMouseOver="expandcontent('sc7', this)"><i class="block"><img src="image/yzt/nav_icon7.png" alt="" /></i><span>结算管理</span></a></li>
+                <li class="nav_li"><a href="#" id="sclink8" onMouseOver="expandcontent('sc8', this)"><i class="block"><img src="image/yzt/nav_icon8.png" alt="" /></i><span>监控中心</span></a></li>
+            </ul>
+            
+          <div class="user icon">你好，张三！<p><a class="cancel" href="login.html">注销</a></p></div>
+          
+        </div>
+		<div class="" id="sc1"  style="display:none ;"></div>
+      	<div class="submenu" id="sc2" style="display: block;"><!-- a标签 加 class=hover 选中--><a href="#">角色管理</a><a href="#">角色权限</a><a href="#">操作员管理</a><a href="#">基础参数管理</a><a href="#">省份管理</a><a href="#">地市管理</a><a href="#">区县管理</a><a href="#">城镇管理</a><a href="#">接口管理</a><a href="#">价格管理</a><a href="#">匹配规则管理</a></div>
+		<div class="submenu" id="sc3" style="display: none;"><a href="#">运单详情</a><a href="#">异常管理</a><a href="#">开安装单</a><a href="#">调度查询</a><a href="#">省份管理</a><a href="#">调度任务</a><a href="#">轨迹回放</a></div>
+		<div class="" id="sc4"  style="display: none;"></div>
+		<div class="" id="sc5"  style="display: none;"></div>
+		<div class="" id="sc6"  style="display: none;"></div>
+		<div class="submenu" id="sc7" style="display: none;"><a href="#">提现申请</a><a href="#">提现审批</a><a href="#">营业流水</a><a href="#">账户流水</a><a href="#">公司对账</a></div>
+		<div class="" id="sc8"  style="display: none;"></div>
+	
+        
+        <!-- 内容块 -->
+        <div class="main_content wrap-fluid">
+        	<ul class="subnav">
+            	<li class="hover" id="one1"><a class="a1" onClick="setTab('one',1,8)"  href="javascript:void(0)">运单管理</a><i class="subnav_icon icon" onClick="document.getElementById('dh1').style.display='none'"></i></li>
+                <li id="one2"><a class="a1" onClick="setTab('one',2,8)"  href="javascript:void(0)">运单录入</a><i class="subnav_icon icon" onClick="document.getElementById('dh2').style.display='none'"></i></li>
+				<li id="one3"><a class="a1" onClick="setTab('one',3,8)"  href="javascript:void(0)">运单详情</a><i class="subnav_icon icon" onClick="document.getElementById('dh3').style.display='none'"></i></li>
+				<li id="one4"><a class="a1" onClick="setTab('one',4,8)"  href="javascript:void(0)">提现审批</a><i class="subnav_icon icon" onClick="document.getElementById('dh4').style.display='none'"></i></li>
+				<li id="one5"><a class="a1" onClick="setTab('one',5,8)"  href="javascript:void(0)">智能调度</a><i class="subnav_icon icon" onClick="document.getElementById('dh5').style.display='none'"></i></li>
+				<li id="one6"><a class="a1" onClick="setTab('one',6,8)"  href="javascript:void(0)">客户投诉</a><i class="subnav_icon icon" onClick="document.getElementById('dh6').style.display='none'"></i></li>
+				<li id="one7"><a class="a1" onClick="setTab('one',7,8)"  href="javascript:void(0)">新增师傅</a><i class="subnav_icon icon" onClick="document.getElementById('dh7').style.display='none'"></i></li>
+				<li id="one8"><a class="a1" onClick="setTab('one',8,8)"  href="javascript:void(0)">新增合作商</a><i class="subnav_icon icon" onClick="document.getElementById('dh7').style.display='none'"></i></li>
+                
+            </ul>
+			<div id="con_one_1"><iframe scrolling="yes" frameborder="0" src="search.html" name=""  style="width:100%; height:100%"></iframe></div>
+			<div id="con_one_2" style="display:none"><iframe scrolling="yes" frameborder="0" src="manage_lvru.html" name="" style="width:100%;height:100%"></iframe></div>
+			<div id="con_one_3" style="display:none;"><iframe id="mainframe" scrolling="yes" frameborder="0" src="waybill_details.html" name=""  width="100%" height="100%"></iframe></div>
+			<div id="con_one_4" style="display:none;"><iframe id="mainframe" scrolling="yes" frameborder="0" src="tixian_shengpi.html" name=""  width="100%" height="100%" ></iframe></div>
+			<div id="con_one_5" style="display:none;"><iframe id="mainframe" scrolling="yes" frameborder="0" src="dispatch_rw.html" name=""  width="100%" height="100%" ></iframe></div>
+			<div id="con_one_6" style="display:none;"><iframe id="mainframe" scrolling="yes" frameborder="0" src="complaint.html" name=""  width="100%" height="100%" ></iframe></div>
+			<div id="con_one_7" style="display:none;"><iframe id="mainframe" scrolling="yes" frameborder="0" src="anzhuang.html" name=""  width="100%" height="100%" ></iframe></div>
+			<div id="con_one_8" style="display:none;"><iframe id="mainframe" scrolling="yes" frameborder="0" src="new_partner.html" name=""  width="100%" height="100%" ></iframe></div>
+			
+            
+        </div>
+ 
+ 
+ 
+<script type="text/javascript" src="js/x.js?v=${ver}"></script>
+<!--导航-->
+<script>
+
+    var initialtab = [2, "sc2"]
+
+    var previoustab = "";
+    var intv;
+
+    function expandcontent(cid, aobject)
+        {
+        stopTimer();
+
+        highlighttab(aobject)
+
+        if (previoustab != "")
+            document.getElementById(previoustab).style.display = "none"
+
+        document.getElementById(cid).style.display = "block"
+        previoustab = cid
+        }
+
+    function highlighttab(aobject)
+        {
+        stopTimer();
+
+        if (typeof tabobjlinks == "undefined")
+            collectddimagetabs()
+
+        for (i = 0; i < tabobjlinks.length; i++)
+            tabobjlinks[i].className = ""
+
+        aobject.className = "current"
+        }
+
+    function collectddimagetabs()
+        {
+        var tabobj = document.getElementById("ddimagetabs")
+        tabobjlinks = tabobj.getElementsByTagName("A")
+        }
+
+    function do_onload()
+        {
+        collectddimagetabs()
+        expandcontent(initialtab[1], tabobjlinks[initialtab[0] - 1])
+        }
+
+    function startTimer()
+        {
+        intv = setTimeout("expandcontent(initialtab[1], tabobjlinks[initialtab[0]-1])", 2000);
+        }
+
+    function stopTimer()
+        {
+        clearTimeout(intv);
+        }
+
+    Event.observe(window, 'load', do_onload, false);
+    Event.observe('xcx_tabmenu', 'mouseover', function(event)
+        {
+        stopTimer();
+        },        false);
+
+    Event.observe('xcx_tabmenu', 'mouseout', function(event)
+        {
+        var reltg = (event.relatedTarget) ? event.relatedTarget : event.toElement;
+
+        var tg = (window.event) ? event.srcElement : event.target;
+
+        if (tg.nodeName != 'DIV')
+            return;
+
+        while (reltg != tg && reltg.nodeName != 'BODY')
+            {
+            reltg = reltg.parentNode;
+
+            if (reltg.id == "xcx_tabmenu")
+                return;
+            }
+
+        if (reltg == tg)
+            return;
+
+        stopTimer();
+        startTimer();
+        },        false);
+
+</script>
+
+</body>
+</html>
+

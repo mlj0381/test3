@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="sysMenuApp">
+	<head>
+	    <title>众邦_员工管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        
+</head>
+	<body ng-controller="sysMenuCtrl" style="overflow: hidden;" onload="setContentHegthDelay(800)">
+        <!-- 问题处理-回显 -->
+        <div class="billing_1 clearfix pb_20 mt_20" >
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">菜单名称：</label>
+                   			</td>
+						<td>
+                   			
+                   			<input class="form_term" ng-model="data.menuName" maxlength="10"/>
+                            
+                            </td>
+						<td width="100"></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+						
+						<td>
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							<!-- <div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" href="javascript:void(0);">查询</a><a class="search_button_cz" ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div> -->
+						</td>
+					</tr>
+					
+					
+				</tbody>
+		</table>
+               
+                 <div class="search_nr clearfix mt_20">
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+                    <h2>查询结果</h2>
+                    <a href="javascript:void(0)" ng-show="data.isShow==false" ng-click="toSave()">新增菜单</a>
+                    <a href="javascript:void(0)" ng-show="data.isShow==true" ng-click="close()">取 消</a>
+                    <!-- <a href="javascript:void(0)" ng-show="data.isShow==true" ng-click="saveUserRole()">保存</a> -->
+                    <a href="javascript:void(0)" ng-show="data.isShow==false" ng-click="toDel()">删除</a>
+                </div>
+                <my-table>
+                <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;min-height: 318px;">
+                
+                	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_lista">
+                                <thead id="tb1">
+                                  <tr>
+                                    <th width="70" class="search_list_border"><div class="controls"><input class="none input_gx" id="checkbox" type="checkbox"  ng-click="selectAll();" name="checkbox"><label for="checkbox"></label></div></th>
+                                    <th width="20%">菜单名称</th>
+                                    <th width="25%">菜单路径</th>
+                                    <th width="20%">创建时间</th>
+                                    <th width="15%">菜单序号</th>
+                                    <th width="15%">操作</th>
+                                  </tr>
+                                </thead>
+                   
+                                <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"   class="ng-cloak " ng-click="selectOne(o.menuId);" ng-repeat="o in page.data.items">
+                                    <td width="70" class="search_list_border"><div class="controls"><input id="checkbox{{o.menuId}}" class="none input_gx" value="{{o.menuId}}" type="checkbox" ng-click="selectOne(o.menuId)" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="20%">{{o.menuName}}</td>
+                                    <td width="25%">{{o.menuPath}}</td>
+                                    <td width="20%">{{o.createDate}}</td>
+                                    <td width="15%">{{o.menuSeq}}</td>
+                                    <td width="15%">
+	                                 	 <a href="javascript:void(0)" ng-click="toUpdate(o.menuId)">修改</a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+              
+                </div>
+             </my-table>
+                
+		</div>
+        </div>
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="sysMenuCtrl.js?v=${ver}"></script>
+		
+</body>
+</html>
+

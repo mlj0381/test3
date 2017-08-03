@@ -1,0 +1,22 @@
+@charset "gb2312";
+/*login css定义*/
+.login_header{ padding:45px 0 13px; min-width:1002px; margin:0 auto; text-align:center;}
+
+.login_banner{ height:330px; width:100%; background:#ff6166; position:relative;}
+.login_banner .banner_bg{ width:1002px; margin:0 auto;}
+.login_banner .banner_yun{background: url(../../image/$tenantId$/login_yun.png) no-repeat; width:680px; height:50px; bottom:0; position:absolute; left:50%; margin-left:-340px; z-index:99;}
+
+.login_form{ position:relative; min-width:1002px; padding:25px 0 36px 0;
+-webkit-box-shadow: 0 -6px 6px rgba(100,100,100,0.3);
+-moz-box-shadow: 0 -6px 6px rgba(100,100,100,0.3);
+box-shadow: 0 -6px 6px rgba(100,100,100,0.3);}
+.login_form .login_wrap{ margin:0 auto; width:240px;}
+.login_form .login_input{border: 1px solid #898989;line-height:18px;border-radius:2px; padding:4px 10px;}
+.login_form .login_btn{ background:#4489ca; width:240px; height:30px; color:#fff; font-family:"microsoft yahei"; font-weight:bold; font-size:13px; border:none; cursor: pointer;border-radius:2px;}
+
+.login_footer{ background: url(../../image/$tenantId$/login_footer.jpg) no-repeat center top; width:1002px; margin:0 auto}
+.login_footer p{ color:#949494; text-align:center; line-height:46px;}
+
+.login_error{ color:#e4393c; position:absolute;left: 255px;top: 3px;width: 100%; font-family:"宋体"}
+.error_icon{background: url(../../image/$tenantId$/icon.png) no-repeat -144px 0; width:16px; height:16px; display:block; margin-right:6px; margin-top:2px;}
+.form_item{ position:relative;}

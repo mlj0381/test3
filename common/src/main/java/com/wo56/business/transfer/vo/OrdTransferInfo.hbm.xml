@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-4-23 14:26:43 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.transfer.vo.OrdTransferInfo" table="ord_transfer_info">
+        <id name="batchNum" type="java.lang.Long">
+            <column name="BATCH_NUM" />
+            <generator class="native" />
+        </id>
+        <property name="sourceOrgId" type="java.lang.Long">
+            <column name="SOURCE_ORG_ID" not-null="true">
+                <comment>发车网点</comment>
+            </column>
+        </property>
+        <property name="descOrgId" type="java.lang.Long">
+            <column name="DESC_ORG_ID" not-null="true">
+                <comment>目标网点</comment>
+            </column>
+        </property>
+        <property name="loadTime" type="java.sql.Timestamp">
+            <column name="LOAD_TIME" length="19">
+                <comment>装货时间</comment>
+            </column>
+        </property>
+        <property name="departTime" type="java.sql.Timestamp">
+            <column name="DEPART_TIME" length="19">
+                <comment>发车时间</comment>
+            </column>
+        </property>
+        <property name="arrivalTime" type="java.sql.Timestamp">
+            <column name="ARRIVAL_TIME" length="19">
+                <comment>到达时间</comment>
+            </column>
+        </property>
+        <property name="plateNumber" type="java.lang.String">
+            <column name="PLATE_NUMBER" >
+                <comment>车牌号</comment>
+            </column>
+        </property>
+        <property name="driverId" type="java.lang.Long">
+            <column name="DRIVER_ID">
+                <comment>司机id</comment>
+            </column>
+        </property>
+        <property name="driverName" type="java.lang.String">
+            <column name="DRIVER_NAME" >
+                <comment>司机名称</comment>
+            </column>
+        </property>
+        <property name="driverBill" type="java.lang.String">
+            <column name="DRIVER_BILL" >
+                <comment>司机手机号码</comment>
+            </column>
+        </property>
+        <property name="loader" type="java.lang.String">
+            <column name="LOADER">
+                <comment>装货人</comment>
+            </column>
+        </property>
+        <property name="loaderId" type="java.lang.Long">
+            <column name="LOADER_ID">
+                <comment>装货人id</comment>
+            </column>
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="STATE" not-null="true">
+                <comment>状态</comment>
+            </column>
+        </property>
+        <property name="vehicleId" type="java.lang.Long">
+            <column name="VEHICLE_ID">
+                <comment>车辆id</comment>
+            </column>
+        </property>
+        <property name="orderNum" type="java.lang.Integer">
+            <column name="ORDER_NUM" not-null="true">
+                <comment>订单票数</comment>
+            </column>
+        </property>
+        <property name="volume" type="java.lang.Double">
+            <column name="VOLUME" precision="22" scale="0" not-null="true">
+                <comment>批次总体积</comment>
+            </column>
+        </property>
+        <property name="weight" type="java.lang.Double">
+            <column name="WEIGHT" precision="22" scale="0" not-null="true">
+                <comment>批次总重量</comment>
+            </column>
+        </property>
+        <property name="freight" type="java.lang.Long">
+            <column name="FREIGHT">
+                <comment>运费</comment>
+            </column>
+        </property>
+        <property name="tenantId" type="java.lang.Long">
+            <column name="TENANT_ID" not-null="true">
+                <comment>租户ID</comment>
+            </column>
+        </property>
+        <property name="payState" type="java.lang.Integer">
+            <column name="PAY_STATE">
+                <comment>运费支付状态 1:已付 2:未付</comment>
+            </column>
+        </property>
+        <property name="freightPayDot" type="java.lang.Long">
+            <column name="FREIGHT_PAY_DOT">
+                <comment>运费支付网点</comment>
+            </column>
+        </property>
+        <property name="stevedoring" type="java.lang.Long">
+            <column name="STEVEDORING">
+                <comment>装卸费</comment>
+            </column>
+        </property>
+        <property name="stevedoringPayDot" type="java.lang.Long">
+            <column name="STEVEDORING_PAY_DOT">
+                <comment>装卸支付网点</comment>
+            </column>
+        </property>
+        <property name="stevedoringPayState" type="java.lang.Integer">
+            <column name="STEVEDORING_PAY_STATE">
+                <comment>装卸费支付状态 1:已付 2：未付</comment>
+            </column>
+        </property>
+        <property name="freightCollect" type="java.lang.Long">
+            <column name="FREIGHT_COLLECT">
+                <comment>到付金额</comment>
+            </column>
+        </property>
+        <property name="receiptPayment" type="java.lang.Long">
+            <column name="RECEIPT_PAYMENT">
+                <comment>回单付金额</comment>
+            </column>
+        </property>
+        <property name="totalPayMoney" type="java.lang.Long">
+            <column name="TOTAL_PAY_MONEY">
+                <comment>应付金额</comment>
+            </column>
+        </property>
+        <property name="isPay" type="java.lang.Integer">
+            <column name="IS_PAY">
+                <comment>是否支付 0 未支付 1已支付</comment>
+            </column>
+        </property>
+        <property name="totalGetMoney" type="java.lang.Long">
+            <column name="TOTAL_GET_MONEY">
+                <comment>应收金额</comment>
+            </column>
+        </property>
+        <property name="isGet" type="java.lang.Integer">
+            <column name="IS_GET">
+                <comment>是否收取 0 未收取 1已收取</comment>
+            </column>
+        </property>
+         <property name="createDate" type="java.sql.Timestamp">
+            <column name="CREATE_DATE" length="19">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <property name="remarks" type="java.lang.String">
+            <column name="REMARKS" length="512">
+                <comment>备注</comment>
+            </column>
+        </property>
+         <property name="transferValue" type="java.lang.Long">
+            <column name="TRANSFER_VALUE">
+                <comment>外发总金额</comment>
+            </column>
+        </property>
+         <property name="transportContract" type="java.lang.String">
+            <column name="TRANSPORT_CONTRACT" length="45">
+                <comment>运输合同</comment>
+            </column>
+        </property>
+        <property name="collectingMoney" type="java.lang.Long">
+            <column name="COLLECTING_MONEY" >
+                <comment>代收货款</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

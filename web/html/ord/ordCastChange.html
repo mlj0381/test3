@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordCastChangeApp">
+	<head>
+	    <title>联运汇_费用异动 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        <style type="text/css">
+        
+         .hideString{
+		        white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+		    }
+		    
+		    .form_term{width: 140px!important;}
+		    .w_xjr{width: 80px!important;}
+		    .form_select {width: 140px!important;}
+        </style>
+        
+</head>
+	<body ng-controller="ordCastChangeCtrl" style="overflow: hidden;" onload="setContentHegthDelay()">
+        <!-- 问题处理-回显 -->
+        <div class="billing_1 clearfix pb_20 mt_20" >
+        
+        		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="90"><label class="term_label">登记时间：</label>
+                   			</td>
+						<td>
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.beginTime" id="beginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="endTime" class="form_term fl w_xjr" type="text">
+                            </td>
+						<td width="90"><label class="term_label">登记网点：</label>
+							</td>
+						<td><div class="form_select " >
+                                <select id="id1" ng-model="query.orgId" ng-options="obj.orgId as obj.orgName for  obj in orgInfo  ">
+                            	</select>
+                            </div>
+                        </td>
+						<td width="90"><label class="term_label">核销网点：</label>
+                        
+                    	</td>
+						<td>
+                            
+                            <div class="form_select">
+                                <!-- <select class="ng-cloak" ng-model="query.dutyOrgId">
+                                   <option selected="selected" value="{{currOrgId}}">{{currOrgName}}</option>
+                                </select> -->
+                                <select id="id2" ng-model="query.dutyOrgId" ng-options="obj.orgId as obj.orgName for  obj in orgInfo  ">
+                            	</select>
+                            </div>
+						</td>
+						<td width="90"><label class="term_label">运单号：</label>
+                        
+                    	</td>
+						<td>
+						<input class="form_term" style="width: 140px;" ng-model="query.trackingNum" maxlength="20"  my-Num-Val type="text">
+                        </td>
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;">
+							<a ng-click="doQuery();" ng-Enter  href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">开单时间：</label>
+                   			</td>
+						<td>
+						<input my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}'  ng-model="query.inputBeginTime" id="inputBeginTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.inputEndTime"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' id="inputEndTime" class="form_term fl w_xjr" type="text">
+                            </td>
+						<td width="100"><label class="term_label">付款方：</label>
+                    	</td>
+						<td>
+						  <input class="form_term"  ng-model="query.consignorName" maxlength="20"   type="text">
+                        </td>
+						<td><label class="term_label">收货人：</label></td>
+						<td><input class="form_term" ng-model="query.consigneeName" maxlength="20"   type="text"></td>
+						<td ><label class="term_label">收货人手机：</label></td>
+						<td><input  class="form_term"  ng-model="query.consigneeBill" maxlength="20"   type="text"></td>
+						
+					</tr>
+					
+				</tbody>
+		</table>
+              
+                  <div class="search_nr clearfix mt_20">
+                
+                   <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	              		   <h2>查询结果(双击查看运单详情)</h2>
+	              		   <a class="fr" href="javaScript:void(0)" id="exportId" ng-click="page.downloadExcelFile()">导出</a>
+	              		   <a class="button fr ml_10 rgfp" ng-click="toView(0)" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>异动修改</a>
+	              		   <a class="button fr ml_10 rgfp" ng-click="toView(1)" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>异动新增</a>
+	              		   <!-- <a href="javascript:void(0)" ng-click="toView()">查看详细</a> -->
+	              		   
+              		</div>
+<!--               	{"name":"减款金额","code":"rebatesExport","isSum":"true","width":"130"},
+			        {"name":"增加金额","code":"addAmountExport","isSum":"true","width":"130"}, -->
+	               <my-Adv-Table isShowSeq="false" width="100%" isMultiSelect="false" doubleclick="toView2"  isShowCheck="true" isFilter="true" isSum="true" id="id"
+		              head='[{"name":"异动编号","code":"id","width":"100"},
+			                {"name":"运单号","code":"trackingNum","width":"110"},
+			                {"name":"开单时间","code":"inputCreateDate","width":"130"},
+			                {"name":"登记网点","code":"orgIdName","width":"130"},
+			                {"name":"登记人","code":"opIdName","width":"130"},
+			                {"name":"收货人","code":"consigneeName","width":"130"},
+			                {"name":"收货人手机","code":"consigneeBill","width":"130"},
+			                {"name":"登记时间","code":"createDate","width":"130"},
+			                {"name":"核销网点","code":"dutyOrgIdName","width":"130"},
+			                {"name":"金额","code":"transactionMoneyDouble","isSum":"true","width":"130"},
+			                {"name":"付款方","code":"consignorName","width":"130"},
+			                {"name":"问题描述","code":"notes","width":"130"}]'>
+	               </my-Adv-Table>
+              </div>
+		</div>
+        
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="ordCastChangeCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

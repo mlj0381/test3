@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="trunkAddApp">
+	<head>
+	    <title>联运汇_费用配置新增 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        <style type="text/css">
+        .id_sct .controls_pz .image-tips-wrap{width: 100px;}
+        .id_sct .controls_pz .image-tips-wrap img{height: 70px;width: 100px;}
+        .id_sct .controls_pz .a11,.id_sct .a11 a{width: 100px;font-size: 12px;}
+        .id_sct .kaa{left: 38px;top:20px;}
+        .id_sct .kaa img { width: 32px; height: 32px;}
+        </style>
+</head>
+	<body ng-controller="trunkAddCtrl" onload="setContentHegthDelay()" style="overflow: hidden;">
+        
+        <!-- 新增 开始 -->
+        <div class="billing_1 clearfix pb_20 mt_20" >
+			 <table width="96%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">归属网点：</label>
+                    	</td>
+						<td width="15%">
+                   		<div class="form_select" >
+                               <select ng-model="saveInfo.lineOrgId" 
+									ng-options="obj.orgId as obj.orgName for  obj in lineOrgs " 
+									ng-change="selectChange(saveInfo.lineOrgId,1)">
+								</select>
+                        </div>
+                       
+                        </td>
+						<td width="100"></td>
+						<td width="15%"></td>
+						<td width="100"></td>
+						<td width="15%"></td>
+						<td width="100"></td>
+						<td></td>
+						
+						
+						
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">发货商家：</label>
+                    	</td>
+						<td><div class="form_select" >
+                               <select ng-model="saveInfo.businessOrgId" 
+									ng-options="obj.orgId as obj.orgName for  obj in businessOrgs " 
+									ng-change="selectChange(saveInfo.businessOrgId,2)">
+								</select>
+                       
+                        </div>
+                            
+                        </td>
+						<td width="100"><label class="term_label">结算方式：</label>
+                    	</td>
+						<td><div class="form_select" >
+                             <my-select id="saveInfo.paymentType" code-type="PAYMENT_TYPE" has-all="true" url="" />
+                        </div>
+                            
+                        </td>
+						
+						<td width="100"><label class="term_label">干线费用图片：</label>
+                    	</td>
+						<td rowspan="2" colspan="3">
+							<span my-File-Model="pic1" class="id_sct fl" is-Close="false" ></span>
+							<label class="term_label fl ml_50">配安费用图片：</label>
+							<span my-File-Model="pic2" class="id_sct fl" is-Close="false" ></span>
+                    	</td>
+						
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">省：</label>
+                    	</td>
+						<td>
+                   		<div class="form_select" >
+                               <select ng-model="saveInfo.province"
+									ng-options="obj.id as obj.name for  obj in provinces " 
+									ng-change="selectCity(saveInfo.province)">
+								</select>
+                        </div>
+                       
+                        </td>
+						<td width="100"><label class="term_label">市：</label>
+                    	</td>
+						<td>
+							<div class="form_select" >
+                               <select ng-model="saveInfo.city"
+									ng-options="obj.id as obj.name for  obj in citys " 
+									ng-change="selectCountry(saveInfo.city)">
+								</select>
+                        </div>
+						</td>
+						<td colspan="2"></td>
+
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">按体积：</label>
+                    	</td>
+						<td><div class="step_ul"><input class="input_box" id="" type="text" ng-model="saveInfo.volumePriceDouble" my-Double-Val="keyup" maxlength="8" ><span class="f12_s"   >元/方</span></div>
+                        </td>
+						<td width="100"><label class="term_label">按重量：</label>
+                    	</td>
+						<td><div class="step_ul"><input class="input_box" id="" type="text" ng-model="saveInfo.weightPriceDouble"  my-Double-Val="keyup" maxlength="8"><span class="f12_s"  >元/千克</span></div>
+						</td>
+						<td width="100"><label class="term_label">按件数：</label>
+                    	</td>
+						<td><div class="step_ul"><input class="input_box" id="" type="text" ng-model="saveInfo.countPriceDouble"  my-Double-Val="keyup"  maxlength="8"><span class="f12_s"  >元/件</span></div>
+						</td>
+						<td colspan="2"></td>
+						
+						
+						
+						
+					</tr>
+					<tr>
+						<td valign="top"><label class="term_label">区域：</label>
+						<td colspan="7">
+							<div class="controls_1 fl mrzj ng-cloak" ng-repeat="obj in districts"> 
+                                 <input class="input_gx"  name="check_name" type="checkbox" id="check_{{obj.id}}"  ng-click="changeDistrict(obj.id)" value="{{obj.id}}"  >
+                                 <label class="pl26 trunk_1" for="check_{{obj.id}}">{{obj.name}}</label>
+                            </div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="chey_b_1 bottom_nav pb_20 bottom_nav_search clearfix" style="padding-top: 0;border-top: 0;">
+			    <h2 style="left: 100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(注意标准配置,未选择发货商家即为该网点的标准配置)</h2>
+	            <a class="button ml_10 baoc" href="javascript:void(0)" ng-click="doSaveTable()"><i class="button_icon button_icon dw_baoc"></i>保存到表格</a>
+	            <a class="button ml_10 delete" href="javascript:void(0)" ng-click="delItems()"><i class="button_icon button_icon dw_delete"></i>删除</a>
+	            <!-- <a class="button ml_10 write" href="javascript:void(0)"><i class="button_icon button_icon dw_write"></i>预览</a> -->
+	                
+             </div>
+         
+	              <div class="table_height" style="width: 100%; overflow: auto; height: 607px;">
+                	<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="search_lista">
+                                <thead class="fixed-thead">
+			                             <tr>
+			                               <th width="10%" class="search_list_border"><div class="controls"><!-- <input class="none" id="checkbox" type="checkbox"  ng-click="selectAll();" name="checkbox"> --><label for="checkbox"></label></div></th>
+			                               <th width="15%">省</th>
+			                               <th width="15%">市</th>
+			                               <th width="15%">区域</th>
+			                               <th width="15%">元/方</th>
+			                               <th width="15%">元/千克</th>
+			                               <th width="15%">元/件</th>
+			          
+			                             </tr>
+			                           </thead>
+			                   
+                           <tbody class="fixed-tbody m_false">
+	                             <tr ng-class="{'search_list_tr':$index%2==1}"   class="ng-cloak" ng-repeat="o in saveItems"  ng-click="selectData(o.id)">
+		                               <td width="10%" class="search_list_border"><div class="controls"><input id="checkbox{{o.id}}" class="none" value="{{o.id}}" type="checkbox"  name="checkBox_" ><label for="check-1"></label></div></td>
+		                               <td width="15%" width="">{{o.provinceName}}</td>
+		                               <td width="15%" width="">{{o.cityName}}</td>
+		                               <td width="15%" width="">{{o.countyName}}</td>
+		                               <td width="15%" width="">{{o.volumePriceDouble}}</td>
+		                               <td width="15%"width="">{{o.weightPriceDouble}}</td>
+		                               <td width="15%" width="">{{o.countPriceDouble}}</td>
+	                             </tr>
+                           </tbody>
+                         </table>
+                </div>    
+             <div class="bottom_nav1 chey_b_1">
+				<a class="button ml_10 yiccl" href="javascript:void(0)" ng-click="doSave()"><i class="button_icon button_icon dw_yiccl"></i>提交</a>
+		
+			</div>
+		</div>
+		
+        <!-- 新增 结束 -->
+        
+        
+
+        <!--半透明黑色背景  开始-->
+        <div id="fade1_xz" class="popup_bj" style="display:none;"></div>
+        <!--半透明黑色背景  结束-->
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="trunkCostAdd.js?v=${ver}"></script>
+</body>
+</html>
+

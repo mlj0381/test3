@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AcProveManageApp"> 
+	<head>
+	    <title>众邦_核销管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body onload="setContentHeight()"  style="overflow: hidden" ng-controller="AcProveManageCtrl" >
+        <!-- 核销管理 -->
+        <div class="billing_1 clearfix pb_20 mt_20 plr_20">
+                <ul class="search_term clearfix">
+						<li class="term_li"><label class="term_label">订单编号：</label><input class="form_term w_b60" ng-model="query.orderId" type="text"></li>
+                        <li class="term_li"><label class="term_label">核销类型：</label>
+                       		<div class="form_select w_b60">
+                                <my-select id="query.checkType" code-type="AC_CASH_PROVE@CHECK_TYPE" has-all="true" default-value="-1" url="" />
+                            </div>
+                         </li>
+                        <li class="term_li"><label class="term_label">收支类型：</label>
+                       		<div class="form_select w_b60">
+                                <my-select id="query.inoutSts" code-type="AC_CASH_PROVE@INOUT_STS"  has-all="true" default-value="-1" />
+                            </div>
+                         </li>
+                        <li class="term_li"><label class="term_label">核销状态：</label>
+                       		<div class="form_select w_b60">
+                                <my-select id="query.checkSts" code-type="AC_CASH_PROVE@CHECK_STS" has-all="true" default-value="-1" url="" />
+                            </div>
+                         </li>
+                            <li class="term_li"></li>
+                             <li class="term_li"></li>
+                              <li class="term_li"></li>
+                              <li class="term_li"></li>
+                               <li class="term_li"></li>
+                        <li class="term_li fr" style="width:auto;">
+                        <div class="bottom_search" style="position:inherit;"><a href="javaScript:void(0)" ng-click="doQuery()" ng-Enter>查询</a>
+                        <a href="javaScript:void(0)" ng-click="clear();">清空</a></div></li>
+                    </ul>
+                     <div class="search_nr clearfix mt_20">
+              
+                            
+                  <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>--查询结果--</h2><a  ng-click="deal();" href="javascript:void(0)">核销</a><a  ng-click="undeal();" href="javascript:void(0)">反核销</a></div>
+                  <my-table>
+                              <div style="overflow: scroll; height: 318px; position: relative;border:1px solid #e0e5e9;">
+                               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_list">
+                               <thead>
+                                <tr >
+                                    <th class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                    <th>订单ID</th>
+                                    <th>核销金额</th>
+                                    <th>核销状态</th>
+                                    <th>创建日期</th>
+                                    <th>核销日期</th>
+                                    <th>收支类型</th>
+                                    <th>现金状态</th>
+                                    <th>对方对象类型</th>
+                                     <th>对方对象ID</th>
+                                     <th>核销类型</th>
+                                     <th>核销方式</th>
+                                     <th>系统备注</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.checkedId);" ng-repeat="o in page.data.items">
+                                  	<td class="search_list_border"><div class="controls"><input id="checkbox{{o.checkedId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td>{{o.orderId}}</td>
+                                    <td>{{o.amount/100}}</td>
+                                    <td>{{o.checkStsName}}</td>
+                                    <td>{{o.createDate}}</td>
+                                    <td>{{o.checkDate}}</td>
+                                    <td>{{o.inoutStsName}}</td>
+                                    <td>{{o.cashStsName}}</td>
+                                    <td>{{o.faceObjTypeName}}</td>
+                                    <td>{{o.faceObjIdName}}</td>
+                                    <td>{{o.checkTypeName}}</td>
+                                    <td>{{o.isSysDoName}}</td>
+                                    <td>{{o.sysRemark}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+							 </div>
+                </my-table>
+                           
+		</div>
+        
+        </div>
+		 
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="AcProveManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

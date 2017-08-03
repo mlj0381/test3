@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-15 16:26:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.cm.vo.CmVehicleInfo" table="cm_vehicle_info">
+        <id name="vehicleId" type="long">
+            <column name="VEHICLE_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="plateNumber" type="string">
+            <column name="PLATE_NUMBER" not-null="true">
+                <comment>&#232;&#189;&#166;&#231;&#137;&#140;&#229;&#143;&#183;</comment>
+            </column>
+        </property>
+        <property name="orgId" type="string">
+            <column name="ORG_ID" not-null="true">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#232;&#189;&#166;&#232;&#190;&#134;&#228;&#191;&#161;&#230;&#129;&#175;&#231;&#189;&#145;&#231;&#130;&#185;</comment>
+            </column>
+        </property>
+        <property name="tenantId" type="long">
+            <column name="TENANT_ID" not-null="true">
+                <comment>&#231;&#167;&#159;&#230;&#136;&#183;id</comment>
+            </column>
+        </property>
+        <property name="currentOrgId" type="long">
+            <column name="CURRENT_ORG_ID" not-null="true">
+                <comment>
+                &#232;&#189;&#166;&#232;&#190;&#134;&#230;&#137;&#128;&#229;&#156;&#168;&#231;&#154;&#132;&#229;&#189;&#147;&#229;&#137;&#141;&#231;&#189;&#145;&#231;&#130;&#185;</comment>
+            </column>
+        </property>
+        <property name="type" type="int">
+            <column name="TYPE" not-null="true">
+                <comment>&#230;&#137;&#128;&#229;&#177;&#158;&#231;&#177;&#187;&#229;&#158;&#139;</comment>
+            </column>
+        </property>
+        <property name="mainDriverId" type="java.lang.Long">
+            <column name="MAIN_DRIVER_ID">
+                <comment>&#228;&#184;&#187;&#233;&#169;&#190;&#233;&#169;&#182;&#229;&#143;&#184;&#230;&#156;&#186;id</comment>
+            </column>
+        </property>
+        <property name="secondDriverId" type="java.lang.Long">
+            <column name="SECOND_DRIVER_ID">
+                <comment>&#229;&#137;&#175;&#233;&#169;&#190;&#233;&#169;&#182;&#229;&#143;&#184;&#230;&#156;&#186;id</comment>
+            </column>
+        </property>
+        <property name="mainDriverName" type="string">
+            <column name="MAIN_DRIVER_NAME" >
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#232;&#189;&#166;&#232;&#190;&#134;&#228;&#191;&#161;&#230;&#129;&#175;&#231;&#189;&#145;&#231;&#130;&#185;</comment>
+            </column>
+        </property>
+        <property name="secondDriverName" type="string">
+            <column name="SECOND_DRIVER_NAME" >
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#232;&#189;&#166;&#232;&#190;&#134;&#228;&#191;&#161;&#230;&#129;&#175;&#231;&#189;&#145;&#231;&#130;&#185;</comment>
+            </column>
+        </property>
+         <property name="mainDriverPhone" type="string">
+            <column name="MAIN_DRIVER_PHONE" >
+                <comment>司机手机</comment>
+            </column>
+        </property>
+        
+        <property name="length" type="java.lang.Double">
+            <column name="LENGTH" precision="22" scale="0">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#233;&#149;&#191;&#229;&#186;&#166;</comment>
+            </column>
+        </property>
+        <property name="wide" type="java.lang.Double">
+            <column name="WIDE" precision="22" scale="0">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#229;&#174;&#189;&#229;&#186;&#166;</comment>
+            </column>
+        </property>
+        <property name="high" type="java.lang.Double">
+            <column name="HIGH" precision="22" scale="0">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#233;&#171;&#152;&#229;&#186;&#166;</comment>
+            </column>
+        </property>
+        <property name="volume" type="java.lang.Double">
+            <column name="VOLUME" precision="22" scale="0">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#228;&#189;&#147;&#231;&#167;&#175;</comment>
+            </column>
+        </property>
+        <property name="actualVolume" type="java.lang.Double">
+            <column name="ACTUAL_VOLUME" precision="22" scale="0" not-null="true">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#229;&#143;&#175;&#232;&#189;&#189;&#233;&#135;&#141;&#228;&#189;&#147;&#231;&#167;&#175;</comment>
+            </column>
+        </property>
+        <property name="actualWeight" type="java.lang.Double">
+            <column name="ACTUAL_WEIGHT" precision="22" scale="0" not-null="true">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#229;&#143;&#175;&#232;&#189;&#189;&#233;&#135;&#141;&#233;&#135;&#141;&#233;&#135;&#143;</comment>
+            </column>
+        </property>
+        <property name="status" type="int">
+            <column name="STATUS" not-null="true">
+                <comment>
+                &#232;&#189;&#166;&#232;&#190;&#134;&#228;&#191;&#161;&#230;&#129;&#175;&#230;&#152;&#175;&#229;&#144;&#166;&#230;&#156;&#137;&#230;&#149;&#136;&#239;&#188;&#140;0
+                &#230;&#151;&#160;&#230;&#149;&#136; 1 &#230;&#156;&#137;&#230;&#149;&#136;</comment>
+            </column>
+        </property>
+        <property name="vehicleType" type="java.lang.Integer">
+            <column name="VEHICLE_TYPE">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#231;&#177;&#187;&#229;&#158;&#139;</comment>
+            </column>
+        </property>
+        <property name="registDate" type="timestamp">
+            <column name="REGIST_DATE" length="19">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#230;&#179;&#168;&#229;&#134;&#140;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="pullDate" type="timestamp">
+            <column name="PULL_DATE" length="19">
+                <comment>&#230;&#138;&#165;&#229;&#186;&#159;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="systemType" type="string">
+            <column name="SYSTEM_TYPE">
+                <comment>&#232;&#189;&#166;&#232;&#190;&#134;&#229;&#147;&#129;&#231;&#137;&#140;&#229;&#158;&#139;&#229;&#143;&#183;</comment>
+            </column>
+        </property>
+        <property name="businessType" type="int">
+            <column name="BUSINESS_TYPE" not-null="true">
+                <comment>
+                &#231;&#187;&#143;&#232;&#144;&#165;&#230;&#150;&#185;&#229;&#188;&#143;&#239;&#188;&#154;&#229;&#144;&#136;&#231;&#186;&#166;&#239;&#188;&#140;&#232;&#135;&#170;&#232;&#144;&#165;</comment>
+            </column>
+        </property>
+        <property name="contractNo" type="string">
+            <column name="CONTRACT_NO">
+                <comment>&#229;&#144;&#136;&#229;&#144;&#140;&#231;&#188;&#150;&#229;&#143;&#183;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="CREATE_DATE" length="19" not-null="true">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="opId" type="long">
+            <column name="OP_ID" not-null="true">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#228;&#186;&#186;</comment>
+            </column>
+        </property>
+         <property name="vehicleState" type="java.lang.Integer">
+            <column name="VEHICLE_STATE" not-null="true">
+                <comment>车辆状态 1 空闲 2 待发车 3 运输中</comment>
+            </column>
+        </property>
+	    <property name="engineNo" type="string">
+	            <column name="ENGINE_NO">
+	                <comment>车发动机号</comment>
+	            </column>
+	   </property>
+	   <property name="frameNo" type="string">
+	            <column name="FRAME_NO">
+	                <comment>车驾号</comment>
+	            </column>
+	   </property>
+       <property name="drivingPic" type="string">
+	            <column name="DRIVING_PIC">
+	                <comment>行驶证照片</comment>
+	            </column>
+	   </property>
+	          <property name="opName" type="string">
+	            <column name="OP_NAME">
+	                <comment>操作人名称</comment>
+	            </column>
+	   </property>
+	    <property name="creatorId" type="java.lang.Long">
+            <column name="CREATOR_ID" length="20">
+            	<comment>操作人id</comment>
+            </column>
+        </property>
+         <property name="creatorName" type="string">
+            <column name="CREATOR_NAME" >
+            	<comment>操作人名称</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

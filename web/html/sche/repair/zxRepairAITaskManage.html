@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="repairAITaskManageApp">
+<head>
+<title>调度任务-维修任务</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运会" />
+<meta name="description" content="联运会" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master_open.css?v=${ver}">
+<style type="text/css">
+.w_b60{width: 147px!important;}
+</style>
+</head>
+<body ng-controller="repairAITaskManageCtrl" onload="setContentHeight()" style="overflow: hidden;">
+	<div class="billing_1" style="padding-bottom:20px;">
+		<!--待分配任务 start-->
+		<div id="con_two_1">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="100"><label class="control-label">收货地：</label></td>
+						<td>
+							 <span class="wdcy_input" my-city="des"></span>
+						</td>
+						<td width="100"><label class="control-label w_100">发货人：</label></td>
+						<td><input class="input_box" ng-model="query.clientName"
+							maxlength="20" id="" type="text" /></td>
+							<td width="100"><label class="control-label w_100">收货人：</label></td>
+						<td><input class="input_box" ng-model="query.receiveName"
+							maxlength="20" id="" type="text" /></td>
+						<td width="100"><label class="control-label w_100">订单来源：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.isTmall" name="select" class="xl_z">
+									<option selected="selected" value="-1">全部</option>
+									<option  value="1">天猫</option>
+								</select>
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter
+									href="javascript:void(0);">查询</a><a class="search_button_cz"
+									ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">运单号：</label></td>
+						<td><input class="input_box" ng-model="query.wayBillId"
+							maxlength="20" id="" type="text" /></td>
+					</tr>
+				</table>
+			</div>
+
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>任务列表
+				</h2>
+				<div class="fr mt15_mr20">
+				<a class="button fr ml_10 rgfp" ng-click="openExc();" href="javascript:void(0);"><i class="button_icon button_icon dw_rgfp"></i>异常登记</a>
+				<a class="button ml_10 write" href="javascript:void(0);" onclick="document.getElementById('dhl_map').style.display='none'"><i class="button_icon button_icon dw_write"></i>隐藏地图</a>
+					<a
+						class="button fr ml_10 rgfp" ng-click="queryMatchSf();"
+						href="javascript:void(0);"><i
+						class="button_icon button_icon dw_rgfp"></i>查找师傅</a>
+						<a class="button ml_10 see_b" href="javascript:void(0)" ng-click="dealExc()"><i class="button_icon button_icon dw_see_b"></i>查看详情</a>
+				</div>
+			</div>
+			<div class="bj_map">
+				<my_table>
+				<div class="zz_list " style="overflow:auto;">
+                    <table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0" style="width: 2000px;">
+					<thead  >
+						<tr>
+							<th width="80"><div class="input_z">
+									<input ng-click="selectAll();" id="checkbox"
+										class="none input_gx" name="checkbox" type="checkbox">
+									<label for="checkbox"></label>
+								</div></th>
+							<th width="100">运单号</th>
+							<th width="100">服务类型</th>
+							<th width="100">发货人</th>
+							<th width="100">收货人</th>
+							<th width="100">维修费(元)</th>
+							<th width="100">货品</th>
+							<th width="100">安装件数</th>
+							<th width="100">体积</th>
+							<th width="100">重量</th>
+							<th width="180">详细地址</th>
+							<!-- <th>干线结束时间</th>
+							<th>倒计时</th> -->
+							<th width="100">维修类型</th>
+							<!-- <th>信用</th> -->
+							<th width="180">提货地址</th>
+							<th width="180">备注</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="{{o.taskId}}" ng-class="{'waybill_table_listtr':$index%2==1}"
+							class="ng-cloak" ng-click="selectOne(o.taskId);"
+							ng-repeat="o in page.data.items">
+							<td width="80"><div class="input_z">
+									<input id="checkbox{{o.taskId}}" value="{{o}}"
+										class="none input_gx" name="check-1" type="checkbox">
+									<label for="check-1"></label>
+								</div></td>
+							<td  width="100" title="{{o.wayBillId}}">{{o.wayBillId}}</td>
+							<td width="100" ng-class="{'tianm_icon':o.isTmail=='1'}" title="{{o.serverType}}">{{o.serverType}}</td>
+							<td width="100" title="{{o.clientName}}">{{o.clientName}}</td>
+							<td width="100" title="{{o.receiverName}}">{{o.receiverName}}</td>
+							<td width="100" title="{{o.repairFee}}"><input style="width: 80px;" value="{{o.repairFee}}" id="{{o.taskId}}repair"
+								 placeholder="" ng-keyup="fixNumber(o.taskId,'repair');"
+								class="input_box dhl_map_input"   type="text"></td>
+							<td width="100" class=""  title="{{o.products}}"  ><!--  ng-mouseover="showGoodsDetail(o.orderId)" -->{{o.products}}
+							<!-- <div id="product" class="d_bzj_js cplx">
+									<label>{{o.products}}</label> <span class="cplx_span_hp"
+										style="display: none;">
+										<div class="arrow-up"></div>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											class="cplx_list">
+											<tr class="cplx_tr">
+												<td>产品</td>
+												<td>包装</td>
+												<td>数量</td>
+												<td>重量</td>
+												<td>体积</td>
+												<td>计费方式</td>
+												<td>配安费</td>
+											</tr>
+											<tr ng-repeat="g in goodsInfo">
+												<td>{{g.goodsName}}</td>
+												<td>{{g.packingTypeName}}</td>
+												<td>{{g.goodsCount}}</td>
+												<td>{{g.weight}}</td>
+												<td>{{g.volume}}</td>
+												<td>{{g.billingTypeName}}</td>
+												<td>{{g.installCosts/100}}</td>
+											</tr>
+										</table>
+									</span>
+								</div> --></td>
+							<td width="100" title="{{o.count}}">{{o.count}}</td>
+							<td width="100" title="{{o.volumes}}">{{o.volumes}}</td>
+							<td width="100" title="{{o.weight}}">{{o.weight}}</td>
+							<td width="180" title="{{o.receAddr}}">{{o.receAddr}}</td>
+							<!-- <td title="{{o.GxEndTime}}">{{o.GxEndTime}}</td>
+							<td title="{{o.remainingTime}}"><span ng-if="o.remainingTime<0" style="color: red;"> {{o.remainingTime}}h</span><span ng-if="o.remainingTime>0"> {{o.remainingTime}}h</span></td> -->
+							<td width="100" title="{{o.repairType}}">{{o.repairType}}</td> 
+							<td width="180" title="{{o.pickAddr}}">{{o.pickAddr}}</td>
+							<td width="180" title="{{o.pickAddr}}">{{o.remark}}</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+				</my_table>
+
+				
+				<!-- 地图  开始-->
+				<div id="dhl_map" class="dhl_map" style="display: none; top: 107px;">
+					<div class="d_map">
+						<!-- 投影 -->
+						<div id="box-shadow"></div>
+						<div class="dhl_map_1">
+						<div ng-click="showOrClose();"  class="dhl_d"><img  src="../../image/$tenantId$/rrecom.png" alt="" /></div>
+						<!-- 分配列表 -->
+						<div class="dhl_seach clearfix"><input class="input_box sfzh" style="width:230px!important" id="sfPhone" placeholder="输入师傅或者合作商名称或者账号"  id="" type="text"><a class="dhl_sfzh" ng-click="queryMatchSf()" href="javascript:void(0);" >搜索</a></div><!-- 师傅账号搜索 -->
+						<ul id="ul" class="dhl_map_liest clearfix">
+							<li class="dhl_map_li" ng-repeat="s in sfList">
+								<dl class="dhl_map_dl clearfix">
+									<dt class="dhl_map_dt">
+										<i class="yq_tb"></i><i ng-if="s.isApp==1" class="dhl_sj"></i>{{s.name}}({{s.phone}})
+									</dt>
+									<!-- <dd>信用：{{s.credit}}</dd>
+									<dd>
+										接单：<span class="red">{{s.currOrderSum}}</span>/{{s.maxOrderSum}}
+									</dd>
+									<dd ng-if="s.productNames!=null&&s.productNames!=undefined" style="float: inherit;">类别：{{s.productNames}}</dd> -->
+									</dl> <a class="dhl_map_button" ng-click="shceDisSf(s)"
+								href="javascript:void(0);">分配</a>
+							</li>
+						</ul>
+						</div>
+						<!-- 百度地图容器 -->
+						<div style="width: 100%; height: 600px;" id="allmap"></div>
+					</div>
+
+				</div>
+				<!-- 地图  结束-->
+			</div>
+			<!--任务列表 end-->
+		</div>
+		<!--待分配任务 end-->
+	</div>
+	<!-- 分配开始 -->
+	<div id="vehicle_fp" class="popup"
+		style="width: 400px; height: 260px; margin-left: -200px; margin-top: -130px; z-index: 1006; display: none;">
+		<div class="tx_tc">
+			<div style="min-height: 120px; padding-top: 20px;">
+				<dl class="dhl_map_dl clearfix">
+					<dt class="dhl_map_dt">
+						<i class="yq_tb"></i>{{sfInfo.name}}({{sfInfo.phone}})
+					</dt>
+					<dd ng-if="sfInfo.credit!=null&&sfInfo.credit!=undefined">信用：{{sfInfo.credit}}</dd>
+					<dd
+						ng-if="sfInfo.currOrderSum!=null&&sfInfo.currOrderSum!=undefined">
+						接单：<span class="red">{{sfInfo.currOrderSum}}</span>/{{sfInfo.maxOrderSum}}
+					</dd>
+					<dd ng-if="sfInfo.productNames!=null&&sfInfo.productNames!=undefined" style="float: inherit;">类别：{{sfInfo.productNames}}</dd>
+					<dd id="dhl_map_nr2">
+						<div class="fl dhl_map_nr">
+							修改费用： 维修费：<input value="{{repairFee}}"
+								ng-model="repairFee" placeholder="" my-double-val='keyup'
+								class="input_box dhl_map_input" id="" type="text">&nbsp;元&nbsp;&nbsp;
+						</div>
+
+					</dd>
+				</dl>
+
+			</div>
+			<div class="tx_tc_button">
+				<a class="search_button_ss" ng-click="shceDisSf();"
+					href="javascript:void(0);">确认分配</a><a class="search_button_cz"
+					href="javascript:void(0);"
+					onclick="document.getElementById('vehicle_fp').style.display='none';document.getElementById('fade1_xz').style.display='none'">取消</a>
+			</div>
+		</div>
+	</div>
+	<!-- 分配结束 -->
+	<div id="vehicle_1" class="popup"
+		style="width: 700px; height: 470px; margin-left: -350px; margin-top: -235px; z-index: 1006; display: none;">
+		<div class="tx_tc">
+			<div style="min-height: 370px">
+				<dl class="dhl_credit_dl">
+					<dt>信用标准</dt>
+					<dd>
+						<b>1.信用体系规划：</b><br> 接单量、预约及时率、核销及时率、服务态度、投诉
+					</dd>
+					<dd>
+						<b>2.每项考核细则</b><br> 接单量：每接一单，得10分<br>
+						预约及时率：及时预约，得2分，超时扣2分<br> 核销及时率：及时核销，得2分，超时扣2分<br>
+						服务态度：满意，得2分，不满意，扣2分<br> 投诉：投诉一次扣10分，投诉3三次，取消资格<br>
+						重大投诉：取消资格
+					</dd>
+				</dl>
+			</div>
+			<div class="tx_tc_button">
+				<a class="search_button_cz" href="#"
+					onclick="document.getElementById('vehicle_1').style.display='none';document.getElementById('fade1_xz').style.display='none'">关闭</a>
+			</div>
+		</div>
+	</div>
+	<!--半透明黑色背景  开始-->
+	<div id="fade1_xz" class="popup_bj" style="display: none;"></div>
+	<!--半透明黑色背景  结束-->
+
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="repairAITaskManageCtrl.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="http://api.map.baidu.com/api?v=2.0&ak=Qdr46VYff5fCeik9OoRRLZUNjHmHuvkr"></script>
+</body>
+</html>
+

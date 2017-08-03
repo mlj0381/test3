@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="installUserManageApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>公司列表</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../../css/yzt/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/yzt/public.css">
+		<link rel="stylesheet" type="text/css" href="../../css/yzt/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/yzt/master.css?v=${ver}">
+</head>
+	<body ng-controller="installUserManageCtrl">
+		<div class="billing_1">
+			<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table">
+				  <tr>
+					<td width="150"><label class="control-label">省份：</label></td>
+					<td>
+						<div class="search_select w_146">
+							<select name="select" class="xl_z" ng-model="query.provinceId" ng-change="queryCity()" ng-disabled="all" ng-options="province.id as province.name for  province in provinces">
+								<option value="">请选择服务省</option>
+								</select>
+						</div>					
+					</td>
+					<td width="100"><label class="control-label w_100">地市：</label></td>
+					<td><div class="search_select w_146 fl">
+								<select name="select" class="xl_z" ng-model="query.regionId" ng-disabled="all" ng-click="selectCity()" ng-options="objCon.id as objCon.name for  objCon in citys">
+								<option value="">请选择服务城市</option>
+								</select>						</div></td>
+					<td rowspan="2">
+						<div class="search_button"><a class="search_button_ss" href="javaScript:void(0)" ng-Enter ng-click="doQuery()">搜索</a>  <a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">重置</a></div>					</td>
+				  </tr>
+				  <tr>
+					<td><label class="control-label">网点名称：</label></td>
+					<td><input class="input_box" ng-model="query.orgName" type="text" /></td>
+					<td width="100"><label class="control-label w_100">负责人名称：</label></td>
+					<td><input class="input_box" ng-model="query.orgPrincipal" type="text" /></td>
+					<td width="100"></td>
+					<td></td>
+				  </tr>
+				</table>
+			</div>
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl"><i class="icon title_icon fl"></i>网点列表</h2>
+				<div class="fr mt15_mr20">
+					<!-- <a class="button fr ml_10 tixiansp2" href="#" ng-click="toAdd()"><i class="button_icon button_icon dw_tixiansp2"></i>新增</a>
+					<a class="button fr ml_10 tixiansp" href="#" ng-click="toDel()"><i class="button_icon button_icon dw_tixiansp"></i>删除</a>
+					<a class="button fr ml_10 tixiansq" href="#" ng-click="toModify()"><i class="button_icon button_icon dw_tixiansq"></i>修改</a> -->
+				</div>
+			</div>
+			 <my-table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th><div class="input_z">
+	                  			<input id="checkboxa" class="none input_gx" ng-click="selectAll('check-1','checkboxa');" type="checkbox">
+	            				<label for="checkboxa"></label>
+	          				</div></th>
+						<th>省</th>
+						<th>市</th>
+						<th>区</th>
+						<th>网点名称</th>
+						<th>网点编码</th>
+						<th>网点负责人</th>
+						<th>负责人号码</th>
+						<th>归属公司</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak" ng-click="selectOne(o.contractId,'checkbox');" ng-repeat="o in page.data.items">
+                                  	<td class="search_list_border"><div class="controls"><input id="checkbox{{o.contractId}}" class="none input_gx" value="{{o.contractId}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td>{{o.provinceName}}</td>
+                                    <td>{{o.regionName}}</td>
+                                    <td>{{o.countyName}}</td>
+                                    <td>{{o.orgName}}</td>
+                                     <td>{{o.orgCode}}</td>
+                                    <td>{{o.orgPrincipal}}</td>
+                                    <td>{{o.orgPrincipalPhone}}</td>
+                                   <td>{{o.tenantCode}}</td>
+                                  </tr>
+				  </tbody>
+			</table>
+			</my-table>
+			</div>
+		</div>
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+			<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="orgManageCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

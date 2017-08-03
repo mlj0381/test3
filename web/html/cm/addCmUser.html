@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="addCmUserInfoApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>新增员工资料</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <link type="text/css" rel="stylesheet" href="../css/$tenantId$/lrtk.css?v=${ver}" />
+		<!-- <script type="text/javascript" src="../js/x.js?v=${ver}"></script> -->
+</head>
+	<body ng-controller="addCmUserInfoCtrl">
+		<div class="billing_1" style="padding-bottom:80px;">
+		<form>
+			<!--新增用户 start-->
+			<div style=" padding:40px 90px 0;">
+				
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table addition_table">
+				  <tr>
+					<td width="100"><label class="control-label w_100"><em>*</em>登录账号：</label></td>
+					<td><input class="input_box"  maxlength="20" ng-model="data.loginAcct" type="text"></td>
+					<td></td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100"><em>*</em>姓名：</label></td>
+					<td><input class="input_box" ng-model="data.userName" maxlength="16" type="text"></td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100"><em>*</em>密码：</label></td>
+					<td><input class="input_box" ng-disabled="show" my-num-val ng-model="data.loginPwd" maxlength="16" type="password"></td>
+				  </tr>
+				   <tr>
+					<td width="100"><label class="control-label w_100"><em>*</em>归属公司：</label></td>
+				   <td> 
+					   <div class="search_select w_146">
+							<select name="select" class="xl_z" ng-model="data.tenantId"  ng-options="productService.tenantId as productService.deptName for  productService in companyData.items" ng-change="changeData(data.tenantId)">
+							</select>		
+						</div>
+					</td>
+				  </tr>
+				  <tr>
+					<td width="100"><label class="control-label w_100"><em>*</em>角色：</label></td>
+				    <td > 
+					   <div class="search_select w_146 fl">
+							<select name="select" class="xl_z" ng-model="data.roleId"  ng-options="productService.roleId as productService.roleName for  productService in userInRole">
+							</select>		
+						</div>
+						<a class="search_button_ss fl" href="javaScript:void(0)" ng-click="operWin()">角色管理</a>
+					</td>
+				  </tr>
+			    <tr>
+					<td width="100"><label class="control-label w_100"><em>*</em>归属网点：</label></td>
+				   <td> 
+					   <div class="search_select w_146">
+							<select name="select" class="xl_z" ng-model="data.orgId"   ng-options="productService.orgId as productService.orgName for  productService in orgInfo">
+							</select>		
+						</div>
+					</td>
+				  </tr>
+				</table>
+               
+				<div class="tx_tc_button" style="margin-top:50px;">
+					<a class="search_button_ss" href="javascript:void(0);" ng-click="doSave()">保存</a>
+					<a class="search_button_cz" href="javascript:void(0);" ng-click="close()">关闭</a></div>
+			</div>
+			<!--新增用户 end-->
+			
+			</form>
+		</div>
+	<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="addCmUserCtrl.js?v=${ver}"></script>
+		
+	</body>
+</html>
+

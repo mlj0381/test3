@@ -1,0 +1,483 @@
+<div class="billing_2 clearfix dhl_pm1" style="margin: 0px 20px 20px;">	
+			<!-- tal1 开始-->
+			<table width="45%" border="0" cellspacing="0" cellpadding="0" class="yd_list fl ng-cloak">
+				<tr>
+					
+					<td width="65" class="b_xianw"><label class="yd_label fr bj_f83">运单号</label></td>
+					<td class="b_xianw br_00">
+						<span class="fl form_input" ng-show="ShowTrackingNumBegin" style="width: 23%;background-color: #f3f4f8;font-size: 20px;font-weight: bold;text-align: right;">{{form.orderInfo.trackingNumBegin}}</span>
+						<span style="width: 112px;" id="_trackingNum"  ng-readonly="all"  ng-class="{true: 'kz_inpxs', false: 'kz_inpxs_w'}[ShowTrackingNumBegin]" class="form_input fl ng-pristine ng-valid-maxlength ng-touched ng-valid ng-valid-required" type="text" ng-disabled="showOrderId" ng-model="form.orderInfo.trackingNum" maxlength="16" required="" ng-change="upNum('form.orderInfo.trackingNum');" ng-blur="checkTrackingNumUsedState();">{{form.orderInfo.trackingNum}}</span>
+						<input ng-model="form.orderInfo.sellerOrderId" type="hidden"/>
+						
+					</td>
+					<td >
+						<div class="controls fl" style="margin-left: 10%;" >
+								<input id="check-26" class="none" type="checkbox"  ng-disabled="all"  name="check-26" ng-model="form.orderInfo.isDirect" />
+								<label for="check-26" class="yd_span">直送</label>
+						</div>
+					</td>
+					<td colspan="3" style="position:relative;">
+							<div ng-class="{true: 'ng-show', false: 'ng-hide'}[shipTypeConfig.isSeaTransport]" class="controls fl" style="margin-left: 10%;" >
+									<input id="check-sea" class="none" type="checkbox" ng-disabled="all" name="check-spell" ng-model="isSeaTransport" ng-change="arrivePointSet();" />
+									<label for="check-sea" class="yd_span">海运</label>
+							</div>
+						<!--状态css 开始 -->
+						<div class="wzgz_div ng-cloak" >
+							<div class="wzgz_1" ng-show="form.orderInfo.seeOrderState == 1"></div>
+							<div class="wzgz_2" ng-show="form.orderInfo.seeOrderState == 2"></div>
+							<div class="wzgz_3" ng-show="form.orderInfo.seeOrderState == 3"></div>
+							<div class="wzgz_4" ng-show="form.orderInfo.seeOrderState == 4"></div>
+							<div class="wzgz_5" ng-show="form.orderInfo.seeOrderState == 5"></div>
+							<div class="wzgz_6" ng-show="form.orderInfo.seeOrderState == 6"></div>
+							<div class="wzgz_7" ng-show="form.orderInfo.seeOrderState == 7"></div>
+							
+						</div>
+						<div ng-if="form.orderInfo.isInsurance == 1 || form.orderInfo.isInsurance == '1' " class="wzgz_div" style="top:240px;left: 580px;" >
+							<div class="wzgz_8" ></div>
+						</div>
+						
+						<div class="wzgz_div" style="top:0px;left: 400px;" >
+							<div ng-show="tranferFeeFlag == 3" class="wzgz_9" ></div><!-- 运费已结 -->
+							<div ng-show="tranferFeeFlag == 2" class="wzgz_10" ></div><!-- 部分核销 -->
+							<div ng-show="tranferFeeFlag == 1" class="wzgz_11" ></div><!-- 运费未结 -->
+						</div>
+						<!--状态css 结束 -->
+					</td>
+				</tr>
+				<tr>
+					<td width="65"><label class="yd_label fr bj_f83">发货方</label></td>
+					<td class="br_00">
+						<span type="text" class="form_input co_35a"  />{{form.orderInfo.consignorName}}</span>
+					</td>
+					
+					<td width="65"><label class="yd_label fr">联系电话</label></td>
+					<td class="br_00" style="width: 149px;">
+						<span  class="form_input"   type="text">{{form.orderInfo.consignorTelephone}}</span>
+					</td>
+					<td width="90" class="mn_top" >
+						<!-- TODO 后续处理  -->
+						<div class="controls" style="margin-left: 20px;" >
+							<input id="check-21" class="none" type="checkbox" ng-readonly="all"  name="check-2" ng-disabled="true" ng-model="form.orderInfo.isSign"/>
+							<label for="check-21" class="yd_span">签约客户</label>
+						</div>
+						
+					</td>
+				</tr>
+				<tr>
+					<td width="65"><label class="yd_label fr bj_f83">发货地址</label></td>
+					<td colspan="4"  class="">
+						<span class="form_input" type="text"  ng-readonly="all"   maxlength="255" id="_getGoodsAddress" ng-model="form.orderInfo.fromAddress"/>{{form.orderInfo.fromAddress}}</span>
+						<!-- 新增的 -->
+					</td>
+				</tr>
+				
+				<tr>
+					
+					<td colspan="5" class="" style="height: 37px;">
+						
+							<div class="controls fl" style="margin-left: 5%;" >
+								<input class="none" id="check-1" type="checkbox" name="check-1"  ng-disabled="all" ng-model="releaseNote"  ng-click="updateChecked()"/>
+								<label for="check-1" class="yd_span">要求控货</label>
+							</div>
+							<div class="controls fl" style="margin-left: 5%;" >
+									<input id="check-23" class="none" type="checkbox" name="check-23" ng-disabled="all"   ng-model="form.orderInfo.isVerification" />
+									<label for="check-23" class="yd_span">核销</label>
+							</div>
+							<div class="controls fl" style="margin-left: 5%;" >
+									<input id="check-24" class="none" type="checkbox" name="check-24" ng-disabled="all"  ng-model="form.orderInfo.isImportant" />
+									<label for="check-24" class="yd_span">贵重物品</label>
+							</div>
+						    <div class="controls fl" style="margin-left: 5%;" >
+									<input id="check-30" class="none" type="checkbox" name="check-30" ng-model="form.orderInfo.getGoodsType1" ng-change="changeGetGoodsType('getGoodsType1')"/>
+									<label for="check-30" class="yd_span">网点提货</label>
+							</div>
+							<div class="controls fl" style="margin-left: 5%;" >
+									<input id="check-31" class="none" type="checkbox" name="check-31" ng-model="form.orderInfo.getGoodsType2"  ng-change="changeGetGoodsType('getGoodsType2')"/>
+									<label for="check-31" class="yd_span">平台提货</label>
+							</div>
+					</td>
+					<!-- <td class="mn_top"></td> -->
+				</tr>
+				<tr>
+					<td colspan="5">
+						<div class="bottom_nav1 ta_l" style="margin-top: 4px;text-align: center;padding: 0;">
+						</div>
+					</td>
+				</tr>
+			</table>
+			<!-- tal1 结束-->
+			
+			<!-- tal2 开始-->
+			<table width="55%" border="0" cellspacing="0" cellpadding="0" class="yd_list fl" style="border-left: 3px solid #404853;">
+				<tr>
+					<td width="65" class="b_xianw"><label class="yd_label fr bj_f83">到达城市</label></td>
+					<td colspan="5" class="b_xianw">
+						<!-- 新增的 -->
+						<div class="yd_select fl" style="width: 20%;">
+                            <input placeholder="省份" ng-model="form.orderInfo.destProvinceName" class="form_input co_35a dhl_aq" maxlength="11" type="text" />
+                        </div>
+						<div class="yd_select fl" style="width: 20%;">
+						<!--<input placeholder="广州市" class="form_input co_35a dhl_aq" maxlength="11" type="text" />-->
+							<input ng-model="form.orderInfo.destCityName" class="form_input co_35a dhl_aq" type="text" ng-readonly="all"  />
+						</div>
+						<div class="yd_select fl"  style="width: 24%;">
+							<input placeholder="区县" ng-model="form.orderInfo.destCountyName" class="form_input co_35a dhl_aq" maxlength="11" type="text" />
+                        </div>
+						<div class="yd_select fl"  style="width: 36%;">
+							<input placeholder="街道" ng-model="form.orderInfo.destStreetName" class="form_input co_35a dhl_aq" maxlength="11" type="text" />
+                             
+                        </div>
+                    </td>
+					
+				</tr>
+				<tr>
+					<td width="65"><label class="yd_label fr bj_f83">收货方</label></td>
+					<td class="br_00" width="180" >
+						<input  class="form_input co_35a"  id="_rName"  type="text" ng-model="form.orderInfo.consigneeName"  title="{{form.orderInfo.consigneeName}}" ></input>
+					</td>
+					
+					<td width="65"><label class="yd_label fr" style="width: 64px;">联系电话</label></td>
+					<td class="br_00" style="width: 100px;">
+						<span  class="form_input"  type="text" >{{form.orderInfo.consigneeBill}}<span>
+					</td>
+					<td width="65"><label class="yd_label fr " style="width: 64px;">备用电话</label></td>
+					<td class="">
+						<span  class="form_input"  type="text" >{{form.orderInfo.consigneeTelephone}}</span>
+					</td>
+
+				</tr>
+				<tr>
+					
+					<td width="65"><label class="yd_label fr bj_f83" >收货地址</label></td>
+					<td colspan="5">
+						<span id="_address" class="form_input"  ng-readonly="all"  type="text" maxlength="250" ng-model="form.orderInfo.address">{{form.orderInfo.address}}</span>
+					</td>
+				</tr>
+				
+				<tr>
+					<td width="65"><label class="yd_label fr bj_f83">到达网点</label></td>
+					<td class="br_00">
+						<div class="yd_select">
+                          <!--    <select id="_distributionOrgId" ng-disabled="all"  ng-model="form.orderInfo.distributionOrgId" ng-options="objCon.endOrgId as objCon.endOwnerName for objCon in roateData.items" ng-change="doQueryArea(); "></select> -->
+                             <select id="_distributionOrgId" ng-disabled="all" >
+                                   <option selected="selected">{{form.orderInfo.distributionOrgName}}</option>
+                             </select>
+                        </div>
+					</td>
+					<td width="65" ><label class="yd_label fr"  style="width: 64px;">线路路由</label></td>
+					<td  colspan="3">
+					<span class="form_input" ng-readonly="all"   type="text" placeholder="" readonly="readonly" ng-model="form.orderInfo.rountOrgName" />{{form.orderInfo.rountOrgName}}</span></td>
+					
+				</tr>
+				<tr>
+					<td width="65"><label class="yd_label fr bj_f83">物流交接</label></td>
+					<td class="br_00">
+						<div class="form_input ">
+							{{form.orderInfo.deliveryTypeName}}
+                        </div>
+					</td>
+					<!-- <td width="65" ng-show="false"><label class="yd_label fr">有无电梯</label></td>
+					<td class="br_00" ng-show="false">
+						<div class="yd_select">
+							<select name="select" id="_isExistsElevator" ng-model="form.orderInfo.isLift">
+								<option selected="selected" value="0">楼梯</option>
+								<option value="1">电梯</option>
+							</select>
+						</div>
+					</td>
+					<td width="65" ng-show="false"><label class="yd_label fr">楼层</label></td>
+					<td class="" ng-show="false">
+						<div class="yd_select">
+							<select id="_floor" ng-model="form.orderInfo.floor" ng-readonly="all" >
+		                     	<option value="2">二楼</option>
+		                     	<option value="3">三楼</option>
+		                     	<option value="4">四楼</option>
+		                     	<option value="5">五楼</option>
+		                     	<option value="6">六楼</option>
+		                     	<option value="7">七楼</option>
+		                     	<option value="8">八楼</option>
+		                     	<option value="9">九楼</option>
+		                     </select>
+						</div>
+					</td> -->
+					<td width="65"><label class="yd_label fr " style="width: 64px;">家装服务</label></td>
+					<td class="" colspan="3">
+						<div class="form_input ">
+						{{form.orderInfo.serviceTypeName}}
+                        </div>
+					</td>
+					
+				</tr>
+
+			</table>
+			<!-- tal2 结束-->
+			<div style="overflow: auto;width: 100%">
+			<table width="140%" border="0" cellspacing="0" cellpadding="0" class="yd_table_list xx_kzj dhl_tabl" style="table-layout: fixed;">
+				<tr class="list_header">
+					<td width="8%" class="bj_f83">货品名</td>
+					<td ng-class="{true: 'ng-hide', false: 'ng-show'}[orderGoodsRowConfig.goodsType]" class="bj_f83" style="width: 6%">货品类型</td>
+					<td class="bj_f83" style="width: 6%">包装</td>
+					<td nowrap="nowrap" class="bj_f83" style="width: 6%">包装件数</td>
+					<td class="bj_f83" style="width: 6%">体积(方)</td>
+					<td style="width: 6%">体积单价</td>
+					<td class="bj_f83" style="width: 6%">重量(千克)</td>
+					<td style="width: 6%">重量单价</td>
+					<td style="width: 6%">配安费</td>
+					<td class="bj_f83" style="width: 6%">运费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.discount]" style="width: 6%">回扣</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.collectingMoney]" style="width: 6%">代收货款</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.procedureFee]"  style="width: 8%">代收手续费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.advanceMoney]" style="width: 6%">垫付货款</td>
+					
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.deliveryCosts]" style="width: 8%">物流配送费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.pickingCosts]"  style="width: 6%">提货费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.actualBillCosts]" style="width: 8%">实际提货费</td>
+					
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.upstairsFee]"  width="8%" nowrap="nowrap">上楼费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.goodsPrice]"  style="width: 6%">申明价值</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.offer]"  style="width: 6%">保险费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.handingCosts]"  style="width: 6%">装卸费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.packingCosts]" style="width: 6%">包装费</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.installCount]"  width="8%" nowrap="nowrap">安装件数</td>
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.custOrder]"  width="8%" nowrap="nowrap" style="border-right: 0;">订单号</td>
+
+				</tr>
+				<tr ng-repeat="goodsDetail in form.goodsDetails" >
+					<!-- 品名 -->
+					<td>
+						<input  class="form_input co_35a"  id="_rName"  type="text" value="{{goodsDetail.goodsName}}" title="{{form.orderInfo.consigneeName}}" ></input>
+					</td>
+					<!-- 货品类型-->
+					<td ng-class="{true: 'ng-hide', false: 'ng-show'}[orderGoodsRowConfig.goodsType]">
+						<span type="text" class="form_input input_td" >{{goodsDetail.goodsTypeName}}</span>
+					</td>
+					<!-- 包装 -->
+					<td>
+						<span type="text" class="form_input input_td" >{{goodsDetail.packingTypeName}}</span>
+					</td>
+					<!-- 包装件数 -->
+					<td><span  class="form_input input_td"  >{{goodsDetail.packageCounts}}</span></td>
+					<!-- 体积 -->
+					<td><span  class="form_input input_td"  >{{goodsDetail.volume}}</span></td>
+					<!-- 体积单价 -->
+					<td><span  class="form_input input_td"  >{{goodsDetail.volumeUnitDouble}}</span></td>
+					<!-- 重量 -->
+					<td><span  class="form_input input_td"  >{{goodsDetail.weight}}</span></td>
+					<!-- 重量单价 -->
+					<td><span  class="form_input input_td"  >{{goodsDetail.weightUnitDouble}}</span></td>
+					<!-- 配安费 --------------------->
+					<td><span  class="form_input input_td"  >{{goodsDetail.installCostsDouble}}</span></td>
+					<!-- 运费 -->
+					<td><span  class="form_input input_td"  >{{goodsDetail.freightDouble}}</span></td>
+					<!-- 回扣 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.discount]"><span   class="form_input input_td" >{{goodsDetail.discountDouble | filterString}}</span></td>
+					<!-- 代收货款 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.collectingMoney]"><span   class="form_input input_td" >{{goodsDetail.collectingMoneyDouble | filterString}}</span></td>
+					<!-- 代收手续费 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.procedureFee]"><span   class="form_input input_td" >{{goodsDetail.procedureFeeDouble | filterString }}</span></td>
+					<!-- 垫付货款	 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.advanceMoney]"><span   class="form_input input_td">{{goodsDetail.advanceMoneyDouble}}</span></td>
+					<!-- 物流配送费 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.deliveryCosts]"><span class="form_input input_td"  >{{goodsDetail.deliveryCostsDouble | filterString}}</span></td>
+					<!-- 提货费 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.pickingCosts]"><span  class="form_input input_td" >{{goodsDetail.pickingCostsDouble | filterString}}</span></td>
+					<!-- 实际提货费	 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.actualBillCosts]"><span class="form_input input_td">{{goodsDetail.actualBillCostsDouble}}</span></td>
+					<!-- 上楼费 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.upstairsFee]"><span  class="form_input input_td" >{{goodsDetail.upstairsFeeDouble | filterString}}</span></td>
+					<!-- 申明价值 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.goodsPrice]"><span  class="form_input input_td" >{{goodsDetail.goodsPriceDouble | filterString}}</span></td>
+					<!-- 保险费 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.offer]"><span class="form_input input_td"  >{{goodsDetail.offerDouble | filterString}}</span></td>
+					<!-- 装卸费 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.handingCosts]"><span  class="form_input input_td" >{{goodsDetail.handingCostsDouble | filterString }}</span></td>
+					<!-- 包装费 -->
+					<td  ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.packingCosts]"><span  class="form_input input_td" >{{goodsDetail.packingCostsDouble | filterString}}</span></td>
+					<!-- 安装件数 ---------------------->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.installCount]"><span  class="form_input input_td" >{{goodsDetail.installCount | filterString}}</span></td>
+					<!-- 订单号 -->
+					<td ng-class="{true: 'ng-show', false: 'ng-hide'}[orderGoodsRowConfig.custOrder]" style="border-right: 0">
+					<span   class="form_input input_td"  >{{goodsDetail.custOrder}}</span>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>合计</td>
+					<td ng-class="{true: 'ng-hide', false: 'ng-show'}[orderGoodsRowConfig.goodsType]">&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>{{form.goodsDetailSum.packageCounts == 0 ? '' : form.goodsDetailSum.packageCounts}}</td>
+					<td>{{form.goodsDetailSum.volume == 0 ? '' : form.goodsDetailSum.volume.toFixed(2)}}</td>
+					<td>&nbsp;</td>
+					<td>{{form.goodsDetailSum.weight == 0 ? '' : form.goodsDetailSum.weight.toFixed(1)}}</td>
+					<td>&nbsp;</td>
+					<td>{{form.goodsDetailSum.installCostsDouble}}</td>
+					<td>{{form.goodsDetailSum.freightDouble}}</td>
+					<td>{{form.goodsDetailSum.discountDouble}}</td>
+					<td>{{form.goodsDetailSum.collectingMoneyDouble}}</td>
+					<td>{{form.goodsDetailSum.procedureFeeDouble}}</td>
+					<td>{{form.goodsDetailSum.advanceMoneyDouble}}</td>
+					<td>{{form.goodsDetailSum.deliveryCostsDouble}}</td>
+					<td>{{form.goodsDetailSum.pickingCostsDouble}}</td>
+					<td>{{form.goodsDetailSum.actualBillCostsDouble}}</td>
+					<td>{{form.goodsDetailSum.upstairsFeeDouble}}</td>
+					<td>{{form.goodsDetailSum.goodsPriceDouble}}</td>
+					<td>{{form.goodsDetailSum.offerDouble}}</td>
+					<td>{{form.goodsDetailSum.handingCostsDouble}}</td>
+					<td>{{form.goodsDetailSum.packingCostsDouble}}</td>
+					
+					<td>{{form.goodsDetailSum.installCount}}</td>
+					<td style="border-right: 0">&nbsp;</td>
+				</tr>
+			</table>
+			</div>
+			
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="yd_list">
+				<tr>
+					<td width="65"><label class="yd_label fr bj_f83">费用合计</label></td>
+					<td class="br_00" style=" width: 100px;">
+						<input class="form_input fl" style="width: 70%" ng-readonly="all"  ng-model="form.orderInfo.totalFeeDouble"  type="text" />
+						<!-- 新增的 -->
+						<span class="fl yd_span" style="padding-left: 5px!important;">元</span>
+					</td>
+					<td width="65"><label class="yd_label fr bj_f83">付款方式1</label></td>
+					<td class="br_00" style="width: 200px;">
+						<div class="yd_select fl" style="width: 93px">
+						<input class="xl_z"  ng-model="form.ordFee.paymentTypeName" ></input></div>
+						<!-- <label class="yd_label fl" >金额</label> -->
+						<span  class="form_input fl" style="width:60px"  >{{form.ordFee.cashMoneyDouble}}</span><span class="fl yd_span" style="padding-left: 5px!important;">元</span>
+					</td>
+					<td width="65" ><label class="yd_label fr bj_f83">付款方式2</label></td>
+					<td class="br_00" style="width: 200px;">
+						<div class="yd_select fl" style="width: 93px">
+						<input class="xl_z"ng-model="form.ordFee.paymentType2Name" ></input></div>
+						<!-- <label class="yd_label fl" >金额</label>-->
+						<span class="form_input fl"  style="width:60px"  ng-keyup="money2Change(form.ordFee.cashMoney2)">{{form.ordFee.cashMoney2Double}}</span><span class="fl yd_span" style="padding-left: 5px!important;">元</span>
+					</td>
+					
+					
+					
+					<td width="65"><label class="yd_label fr bj_f83">回单号</label></td>
+					<td colspan="4"><input id="_receiptNum" class="form_input co_35a fl" style="width: 70px;" ng-readonly="all"   type="text" ng-model="form.orderInfo.receiptNum">
+					
+					
+					
+						<div class="controls fl" style="margin-left: 20px;margin-top: 1px;" >
+							<input id="check-25" class="none" type="checkbox"  ng-disabled="all" name="check-25" ng-model="form.orderInfo.isReceipt"/>
+							<label for="check-25" class="yd_span">签回单</label>
+						</div>
+						<input id="_receiptCount" class="form_input fl" style="width: 60px;" ng-readonly="all"  type="text" maxlength="11" ng-model="form.orderInfo.receiptCount" ng-change="upNum('form.orderInfo.receiptCount')"><span class="fl yd_span" style="padding-left: 5px!important;">份</span>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<td><label class="yd_label fr ">备注</label></td>
+					<td colspan="3"><input id="_remarks" class="form_input co_35a" ng-readonly="all"  style="margin-right:10px;" type="text" ng-model="form.orderInfo.remarks" ></td>
+					<td colspan="2" class="br_00" style="position: relative;">
+						<div ng-if="!(userData.userType==userTypeData.BUSINESS)" class="bottom_nav1 ta_l" style="padding-top:1px;padding-bottom: 1px;">
+						    <a class="qxfp " href="javascript:void(0)"  ng-click="toNewRemark(2,form.orderInfo.remarks)"  >追加备注</a>
+						    <a class="qxfp " href="javascript:void(0)"  ng-click="openRemark()"  >查看历史备注</a>
+						</div>
+						<!-- 新增开始 -->
+						<div ng-show="showNewRemark" class="popup" style="z-index: 1006; display: block; width: 670px; margin-left: -260px;top:30px;">
+							<div class="tx_tc">
+								<textarea rows="4" cols="100"  maxlength="120" ng-model="saveRemark.remarks" id="textAreaId" > </textarea>
+								<div class="tx_tc_button" style="margin: 15px 0 20px;">
+									<a class="button ml_10 baoc" href="#" ng-click="newRemark()"><i class="button_icon button_icon dw_baoc"></i>保存</a>
+									<a class="search_button_cz" style="height: 28px;line-height: 28px;" href="#" ng-click="toNewRemark(1)">取消</a>
+								</div>
+							</div>
+				    	</div>
+						<!--新增结束 -->
+						<!--备注历史开始 -->
+    					<div class="list_xl ng-cloak" style="bottom:30px;min-height:200px" ng-show="showRemark">
+            				<i class="list_xl_icon icon">
+            				   <a class="gone" href="javascript:(void)" ng-click="openRemark(1)"></a>
+            				</i>
+							<div class="list_xl_tbody ng-clock" id="pTable" style="height: 200px;">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								    <thead>
+									    <tr>
+									        <th style="width:20%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;font-family: "Arial","宋体";font-size: 12px;">操作人</th>
+									        <th style="width:55%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;">历史备注</th>
+									        <th style="width:35%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;">创建时间</th>
+									    </tr>
+								    </thead>
+            						<tbody>
+            							<!-- <tr ng-repeat="obj in customerRemark.items" ng-click="selectRemark(obj)"> -->
+										<tr style="height:36px!important;" ng-repeat="obj in remarkData.items">
+											<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:20%;white-space: inherit;text-align: center;" title="{{obj.opName}}">{{obj.opName}}</td>
+											<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:55%;white-space: inherit;text-align: center;" title ="{{obj.remarks}}">{{obj.remarks}}</td>
+											<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:25%;text-align: center;">{{obj.createDate.split(" ")[0]}}</td>
+										</tr>
+                  					</tbody>
+            					</table>
+            				</div>
+    					</div>
+    					<!--备注历史 结束--> 
+					</td>
+					<td ng-if="!(userData.userType==userTypeData.BUSINESS)" colspan="5">
+						<div class="controls fl" style="margin-left: 10px;">
+							<input id="check-3" class="none" type="checkbox" ng-disabled="all"   name="check-3" ng-model="isPayDiscount" ng-click="updateChecked()"/>
+							<label for="check-3" class="yd_span">回扣已返</label>
+						</div>
+						
+						<div class="controls fl" style="margin-left: 20px!important;">
+							<input id="check-4" class="none" type="checkbox" ng-if="form.ordFee.paymentType==1" ng-disabled="all"  name="check-4"  ng-model="isPayCash" ng-click="updateChecked()"/>
+							<label ng-if="form.ordFee.paymentType==1" for="check-4" class="yd_span">现付尚欠</label>
+						</div>
+						
+					</td>
+					
+				</tr>
+				
+				<tr>
+					<td colspan="4" style="position: relative;" class="br_00"><div class="bottom_nav1 ta_l">
+					</td>
+					<td><label class="yd_label fr ">货号</label></td>
+					<td class="br_00"><input class="form_input co_35a" ng-readonly="all"  type="text" ng-model="form.orderInfo.goodsNumber"></td>
+					<td colspan="5" style="height: 22px;text-align: right;">
+						<div class="controls fl" style="margin-left: 10px;">
+							<input id="check-5" class="none" type="checkbox" name="check-5" checked="checked" ng-disabled="all" /><label for="check-5" class="yd_span">打印运单</label>
+						</div>
+						<div class="controls fl" style="margin-left: 20px!important;">
+							<input id="check-7" class="none"  type="checkbox" name="check-7" checked="checked" ng-disabled="all" /><label for="check-7" class="yd_span">打印回单</label>
+						</div>
+						<div class="controls fl" style="margin-left: 20px!important;">
+							<input id="check-6" class="none" type="checkbox" name="check-6" checked="checked" ng-disabled="all" /><label for="check-6" class="yd_span">打印标签</label>
+						</div>
+						<div class="fl">
+							<input id="_totalCount" class="form_input fl co_35a" ng-readonly="all" type="text" style="width: 40px; padding-left: 10px; height: auto; line-height: 22px; text-indent: 0;" ng-model="totalCount" />
+							<span class="fl yd_span">份</span>
+						</div>
+					</td>
+					
+				</tr>
+				<tr ng-if="!(userData.userType==userTypeData.BUSINESS)">
+					
+					<td width="65"><label class="yd_label fr ">合作商</label></td>
+					<td class="br_00" style="width: 120px;">
+					<span type="text" id="_sfName" class="form_input co_35a" ng-readonly="all"  maxlength="11" ng-focus="openSf()" ng-readonly="all"  ng-model="form.orderInfo.sfName" ng-blur="showToFalse(4)"/>{{form.orderInfo.sfName}}</span>
+					</td>
+					<td width="65"><label class="yd_label fr ">合作商电话</label></td>
+					<td class="br_00" ><span id="_sfTel" class="form_input co_35a" ng-readonly="all"   type="text" ng-model="form.orderInfo.sfTel">{{form.orderInfo.sfTel}}</span></td>
+					<td width="50"><label class="yd_label fr" >配安费</label></td>
+					<td class="br_00"><input id="_sfFee" class="form_input co_35a fl" ng-readonly="all" style="width: 60%;" ng-readonly="all"   type="text" ng-model="form.orderInfo.sfFeeDouble"><span class="fl yd_span" style="padding-left: 5px;">元</span></td>
+					<td colspan="3" class="br_00">
+					<div class="controls fl" style="margin-left: 10px;width: 210px">
+							<input id="check-41" class="none" type="checkbox" ng-disabled="all"  name="check-41"  ng-model="form.orderInfo.isSfReceiver" />
+							<label for="check-41" class="yd_span">收货方打印为合作商转收货人</label>
+						</div>
+					</td>
+					<td>
+					<label class="yd_label fr"  style="width:45px">仓管员</label>
+					</td>
+					<td><input ng-model="form.orderInfo.consignee" ng-disabled="all" class="form_input " style="width:100%"  type="text" /></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		
+		 <!--半透明黑色背景  开始-->
+        <div ng-show="showBack" class="popup_bj"></div>
+         <!--半透明黑色背景 结束-->

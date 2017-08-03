@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+   <bean id="webDemo" class="com.wo56.business.demo.DemoBO" />
+   <bean id="routeBO" class="com.wo56.business.route.RouteBO" />
+  <!--  <bean id="OrdOrgBO" class="com.wo56.business.ord.OrdOrgCostBO" />  -->
+   <bean id="cmUserInfoBO" class="com.wo56.business.cm.impl.CmUserInfoBO" />
+   <bean id="webCmUserInfoBO" class="com.wo56.business.cm.impl.CmUserInfoBO" />
+   <bean id="vehicleInfoBO" class="com.wo56.business.cm.impl.CmVehicleInfoBO" />
+   <bean id="portalBusiBO" class="com.wo56.business.sys.PortalBusiBO" />
+  <!--  <bean id="orderInfoBO" class="com.wo56.business.ord.OrdOrderInfoBO" /> -->
+   <bean id="staticDataBO" class="com.wo56.business.common.SelectStaticDataBO" />
+   <bean id="customerBO" class="com.wo56.business.cm.CmCustomerBO"/>
+    <bean id="selectContainer" class="com.wo56.business.common.SelectContainerBO"/>
+   <!--  <bean id="ordExceptionBO" class="com.wo56.business.ord.OrdExceptionBO"/> -->
+     <bean id="organizationBO" class="com.wo56.business.cm.impl.OrganizationBO"/>
+     <bean id="statisticBO" class="com.wo56.business.statistic.impl.StatisticBO"/>
+     <bean id="routeAreaRelCfgBO" class="com.wo56.business.route.RouteAreaRelCfgBO"/>
+     <bean id="cmDriverInfoBO" class="com.wo56.business.cm.impl.CmDriverInfoBO"/>
+     <!--账户管理-->
+    <!--  <bean id="cashManageBO" class="com.wo56.business.sche.cash.CashManageBO"></bean>
+     <bean id="serveBO" class="com.wo56.business.sche.serve.ServeBO"></bean> -->
+     <bean id="scheTaskBO" class="com.wo56.business.sche.sche.ScheTaskBO"></bean>
+      <bean id="timeOutBO" class="com.wo56.business.sche.timeout.WayTimeOutBO"></bean>
+     <!-- <bean id="cmCtrCompanyInfoBO" class="com.wo56.business.cm.impl.CmContractCompanyBO"></bean> -->
+    <!--  <bean id="ordImportBillBO" class="com.wo56.business.ord.OrdImportBillBO"></bean> -->
+     <!-- 权限 -->
+     <bean id="sysRoleBO" class="com.wo56.business.sys.SysRoleBO"> </bean>
+      <bean id="addressBO" class="com.wo56.business.sche.address.AddressBO"> </bean>
+       <bean id="matchWeightBO" class="com.wo56.business.sche.macth.MatchWeightBO"> </bean>
+       <!-- 开发工具类 -->
+     <bean id="indexBusiBO" class="com.wo56.business.sys.IndexBusiBO"/>
+
+     
+     <bean id="sysSmsSendBO" class="com.wo56.business.sys.SysSmsSendBO"/>
+     <!-- 打印 -->
+	<!--  <bean id="printBO" class="com.wo56.business.sys.SysPrintBO" /> -->
+	 
+	 <bean id="sysBusiConfigBO" class="com.wo56.business.sys.SysBusiConfigBO" />
+	 
+	  <!-- 短信  -->
+	 <bean id="shortMessageBO" class="com.wo56.business.sys.ShortMessageBO"/>
+	 <!--运单底图  -->
+	 <bean id="ordUploadPicBO" class="com.wo56.business.ord.OrdUploadPicBO"/>
+	 
+	 <!-- cm 云启 -->
+	 <bean id="cmUserInfoPullBO" class="com.wo56.business.cm.impl.CmUserInfoPullBO" />
+	 <bean id="pullBlackCarrierBO" class="com.wo56.business.cm.impl.PullBlackCarrierBO"/>
+	 <bean id="cmAreaBO" class="com.wo56.business.cm.impl.CmAreaBO"/>
+	 
+	 <!-- order -->
+	 <bean id="orderFeeRuleBO" class="com.wo56.business.ord.OrderFeeRuleBO"></bean>
+	 <bean id="specialLineCompanyNexusBO" class="com.wo56.business.cm.impl.SpecialLineCompanyNexusBO"/> 
+	 <bean id="ordOrdersWebBO" class="com.wo56.business.ord.OrdOrdersWebBO"></bean>
+	 <bean id="orderInfoYQBO" class="com.wo56.business.ord.OrderInfoBO"/>
+	 <bean id="ordDepartInfoYqBO" class="com.wo56.business.ord.OrdDepartInfoYqBO"/>
+	 <!-- ac -->
+	 <bean id="acMyWalletBO" class="com.wo56.business.ac.impl.AcMyWalletBO"></bean>
+	 <bean id="acAccountWalletBO" class="com.wo56.business.ac.impl.AcAccountWalletBO"></bean>
+	 
+	 <!-- sys yunqi -->
+	  <bean id="sysTenantRegisterBO" class="com.wo56.business.sys.SysTenantRegisterBO"></bean>
+	  
+	   <!-- 表头列设定 -->
+	  <bean id="sysTableHeadConfigBO" class="com.wo56.business.sys.SysTableHeadConfigBO" />
+</beans>

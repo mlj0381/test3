@@ -1,0 +1,40 @@
+<!--发货信息 start-->
+				<div class="waybill_title bt_h2"><h2 class="title_h2"><i class="icon title_icon fl"></i>发货信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>发货人</th>
+						<th>发货人号码</th>
+						<th>发货地址</th>
+						<th>品名</th>
+						<th>代码</th>
+						<th>规格</th>
+						<th>颜色</th>
+						<th>数量</th>						
+						
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr class="waybill_table_listtr" ng-if="consignorInfo.items.length==0||consignorInfo.items==null||consignorInfo.items==undefined">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+				  </tr>
+				    <tr class="waybill_table_listtr" ng-repeat="o in consignorInfo.items" ng-if="consignorInfo.items.length>0">
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.consignorName}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.consignorBill}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.address}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.product}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.code}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.standard}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.color}}</td>
+						<td style="overflow: inherit;white-space: inherit;text-overflow: ellipsis;word-wrap:break-word">{{o.count}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--发货信息 end-->

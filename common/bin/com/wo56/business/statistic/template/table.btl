@@ -1,0 +1,107 @@
+<table>
+	<caption class="caption2">${table.title}</caption>
+	<tr>
+		<%
+		    if(table.yaxisHeads != null && table.yaxisHeads.~size > 0) {
+		%>
+				<th style="width: 60px;"><div class="out2"><b class="b2">${table.xaxisTip}</b><em class="em2">${table.yaxisTip}</em></div></th>
+		<%
+			}
+			for(var i = 0; i < table.xaxisHeads.~size;i++){
+		%>
+				<th>${table.xaxisHeads[i]}</th>
+		<%
+			}
+		%>
+	</tr>
+	<tr>
+		<%
+		    if(table.yaxisHeads != null && table.yaxisHeads.~size > 0) {
+		%>
+		<td class="td_border_right">
+			<table style="margin: 0px; width: 100%; border: 0px;">
+				<%
+					for(var i = 0; i < table.yaxisHeads.~size;i++){
+						if(table.yaxisHeads[i].subYAxisHeads == null || table.yaxisHeads[i].subYAxisHeads.~size == 0){// 没有子项
+				%>
+							<tr class="${table.yaxisHeads[i].className}">
+								<%
+									if(i == table.yaxisHeads.~size - 1){
+								%>
+										<td class="td_no_border">${table.yaxisHeads[i].name}</td>
+								<%	
+									} else {
+								%>
+										<td class="td_border_bottom">${table.yaxisHeads[i].name}</td>
+								<%
+									}
+								%>
+							</tr>
+				<%
+						} else {
+				%>
+							<tr>
+								<td class="td_no_border">
+									<table style="margin: 0px; width: 100%; border: 0px;">
+										<tr>
+											<td class="${(i == table.yaxisHeads.~size - 1) ? 'td_border_bottom' : 'td_border_right'}">${table.yaxisHeads[i].name}</td>
+											<td class="td_no_border">
+												<table style="margin: 0px; width: 100%; border: 0px;">
+													<%
+														var isBottomTr = (i == table.yaxisHeads.~size - 1);// 子项再最后一行，那么需要控制子项最后一项的td对应的border
+														for(var j = 0; j < table.yaxisHeads[i].subYAxisHeads.~size;j++){
+															var tdClass = 'td_border_bottom';
+															if(isBottomTr && j == table.yaxisHeads[i].subYAxisHeads.~size - 1){
+																tdClass = 'td_no_border';
+															}
+													%>
+															<tr class="${table.yaxisHeads[i].subYAxisHeads[j].className}">
+																<td class="${tdClass}">${table.yaxisHeads[i].subYAxisHeads[j].name}</td>
+															</tr>
+													<%
+														}
+													%>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+				<%
+						}
+					}
+				%>
+			</table>
+		</td>
+		<%
+			}
+			for(var i = 0; i < table.xaxisDataCols.~size;i++) {
+		%>
+				<td class="td_border_right">
+					<table style="margin: 0px; width: 100%; border: 0px;">
+						<%
+							for(var j = 0; j < table.xaxisDataCols[i].colRows.~size; j++) {
+						%>
+								<tr class="${table.xaxisDataCols[i].colRows[j].className}">
+									<td class="${j == table.xaxisDataCols[i].colRows.~size - 1 ? '' : 'td_border_bottom'}">${table.xaxisDataCols[i].colRows[j].value}</td>
+								</tr>
+						<%
+							}		
+						%>
+					</table>
+				</td>
+		<%
+			}
+		%>
+	</tr>
+	<%
+	if(table.total > 0){
+	%>
+		<tr style="background-color:#D6D3D6; border-top: 1px #525152 solid; ">
+			<td style="border-right: 1px #525152 solid;">${table.totalTip}</td>
+			<td colspan="${table.xaxisHeads.~size}">${table.total}</td>
+		</tr>
+	<%
+	}
+	%>
+</table>

@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-12 11:55:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrderFee" table="order_fee">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="orderId" type="java.lang.Long">
+			<column name="ORDER_ID" not-null="true">
+				<comment>订单ID</comment>
+			</column>
+		</property>
+		<property name="goodName" type="java.lang.String">
+			<column name="GOOD_NAME" length="100">
+				<comment>货品名</comment>
+			</column>
+		</property>
+		<property name="freight" type="java.lang.Long">
+			<column name="FREIGHT">
+				<comment>运费</comment>
+			</column>
+		</property>
+		<property name="reputation" type="java.lang.Long">
+			<column name="REPUTATION">
+				<comment>声价</comment>
+			</column>
+		</property>
+		<property name="premium" type="java.lang.Long">
+			<column name="PREMIUM">
+				<comment>保费</comment>
+			</column>
+		</property>
+		<property name="deliveryCharge" type="java.lang.Long">
+			<column name="DELIVERY_CHARGE">
+				<comment>送货费</comment>
+			</column>
+		</property>
+		<property name="transitFee" type="java.lang.Long">
+			<column name="TRANSIT_FEE">
+				<comment>中转费</comment>
+			</column>
+		</property>
+		<property name="otherFee" type="java.lang.Long">
+			<column name="OTHER_FEE">
+				<comment>其他费用</comment>
+			</column>
+		</property>
+		<property name="collectMoney" type="java.lang.Long">
+			<column name="COLLECT_MONEY">
+				<comment>代收货款</comment>
+			</column>
+		</property>
+		<property name="landFee" type="java.lang.Long">
+			<column name="LAND_FEE">
+				<comment>落地费</comment>
+			</column>
+		</property>
+		<property name="serviceCharge" type="java.lang.Long">
+			<column name="SERVICE_CHARGE">
+				<comment>服务费</comment>
+			</column>
+		</property>
+		<property name="totalFee" type="java.lang.Long">
+			<column name="TOTAL_FEE">
+				<comment>总运费</comment>
+			</column>
+		</property>
+		<property name="tip" type="java.lang.Long">
+			<column name="TIP">
+				<comment>小费</comment>
+			</column>
+		</property>
+		<property name="defaultTip" type="java.lang.Long">
+			<column name="DEFAULT_TIP">
+				<comment>系统计算小费</comment>
+			</column>
+		</property>
+		<property name="pickingCosts" type="java.lang.Long">
+			<column name="PACKING_COSTS">
+				<comment>包装费</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-8 16:29:12 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.org.vo.Organization" table="organization">
+		<id name="orgId" type="long">
+			<column name="ORG_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="orgCode" type="string">
+			<column name="ORG_CODE" length="20">
+				<comment>&#205;&#248;&#181;&#227;&#177;&#224;&#194;&#235;</comment>
+			</column>
+		</property>
+		<property name="orgName" type="string">
+			<column name="ORG_NAME" length="100">
+				<comment>&#205;&#248;&#181;&#227;&#195;&#251;&#179;&#198;</comment>
+			</column>
+		</property>
+		<property name="orgShorter" type="string">
+			<column name="ORG_SHORTER" length="50">
+				<comment>&#205;&#248;&#181;&#227;&#188;&#242;&#179;&#198;</comment>
+			</column>
+		</property>
+		<property name="parentOrgCode" type="string">
+			<column name="PARENT_ORG_CODE" length="32">
+				<comment>&#201;&#207;&#188;&#182;&#205;&#248;&#181;&#227;&#177;&#224;&#194;&#235;</comment>
+			</column>
+		</property>
+		<property name="parentOrgId" type="long">
+			<column name="PARENT_ORG_ID" not-null="true">
+				<comment>&#184;&#184;&#205;&#248;&#181;&#227;&#163;&#168;&#185;&#233;&#202;&#244;&#215;&#233;&#214;&#175;&#163;&#169;</comment>
+			</column>
+		</property>
+		<property name="provinceName" type="string">
+			<column name="PROVINCE_NAME" length="50">
+				<comment>&#202;&#161;&#195;&#251;&#179;&#198;</comment>
+			</column>
+		</property>
+		<property name="provinceId" type="string">
+			<column name="PROVINCE_ID" length="50">
+				<comment>&#202;&#161;&#183;&#221;</comment>
+			</column>
+		</property>
+		<property name="regionName" type="string">
+			<column name="REGION_NAME" length="50">
+				<comment>&#202;&#208;&#195;&#251;&#179;&#198;</comment>
+			</column>
+		</property>
+		<property name="regionId" type="string">
+			<column name="REGION_ID" length="50">
+				<comment>&#202;&#208;</comment>
+			</column>
+		</property>
+		<property name="countyName" type="string">
+			<column name="COUNTY_NAME" length="50" />
+		</property>
+		<property name="countyId" type="string">
+			<column name="COUNTY_ID" length="50">
+				<comment>&#207;&#216;/&#199;&#248;</comment>
+			</column>
+		</property>
+		<property name="departmentAddress" type="string">
+			<column name="DEPARTMENT_ADDRESS" length="100">
+				<comment>&#211;&#170;&#210;&#181;&#178;&#191;&#207;&#234;&#207;&#184;&#181;&#216;&#214;&#183;</comment>
+			</column>
+		</property>
+		<property name="longitude" type="string">
+			<column name="LONGITUDE" length="50">
+				<comment>&#190;&#173;&#182;&#200;</comment>
+			</column>
+		</property>
+		<property name="latitude" type="string">
+			<column name="LATITUDE" length="50">
+				<comment>&#206;&#179;&#182;&#200;</comment>
+			</column>
+		</property>
+		<property name="acceptLinkPhone" type="string">
+			<column name="ACCEPT_LINK_PHONE" length="20">
+				<comment>&#189;&#211;&#187;&#245;&#181;&#231;&#187;&#176;</comment>
+			</column>
+		</property>
+		<property name="carryLinkPhone" type="string">
+			<column name="CARRY_LINK_PHONE" length="20">
+				<comment>&#204;&#225;&#187;&#245;&#181;&#231;&#187;&#176;</comment>
+			</column>
+		</property>
+		<property name="orgManager" type="string">
+			<column name="ORG_MANAGER" length="100">
+				<comment>&#205;&#248;&#181;&#227;&#190;&#173;&#192;&#237;</comment>
+			</column>
+		</property>
+		<property name="orgType" type="java.lang.Integer">
+			<column name="ORG_TYPE">
+				<comment>&#205;&#248;&#181;&#227;&#192;&#224;&#208;&#205;
+					&#163;&#186;1&#211;&#170;&#210;&#181;&#205;&#248;&#181;&#227;&#161;&#162;2&#188;&#175;&#201;&#162;&#214;&#208;&#208;&#196;&#161;&#162;3&#215;&#220;&#185;&#171;&#203;&#190;</comment>
+			</column>
+		</property>
+		<property name="orgPrincipal" type="string">
+			<column name="ORG_PRINCIPAL" length="20">
+				<comment>&#205;&#248;&#181;&#227;&#184;&#186;&#212;&#240;&#200;&#203;</comment>
+			</column>
+		</property>
+		<property name="orgPrincipalPhone" type="string">
+			<column name="ORG_PRINCIPAL_PHONE" length="20">
+				<comment>&#205;&#248;&#181;&#227;&#184;&#186;&#212;&#240;&#200;&#203;&#202;&#214;&#187;&#250;</comment>
+			</column>
+		</property>
+		<property name="fax" type="string">
+			<column name="FAX" length="20">
+				<comment>&#180;&#171;&#213;&#230;</comment>
+			</column>
+		</property>
+		<property name="supportStaff" type="string">
+			<column name="SUPPORT_STAFF" length="50">
+				<comment>&#191;&#205;&#183;&#254;&#200;&#203;&#212;&#177;</comment>
+			</column>
+		</property>
+		<property name="supportStaffPhone" type="string">
+			<column name="SUPPORT_STAFF_PHONE" length="20">
+				<comment>&#191;&#205;&#183;&#254;&#181;&#231;&#187;&#176;</comment>
+			</column>
+		</property>
+		<property name="supportStaff2" type="string">
+			<column name="SUPPORT_STAFF2" length="50">
+				<comment>&#191;&#205;&#183;&#254;&#200;&#203;&#212;&#177;</comment>
+			</column>
+		</property>
+		<property name="supportStaffPhone2" type="string">
+			<column name="SUPPORT_STAFF_PHONE2" length="20">
+				<comment>&#191;&#205;&#183;&#254;&#181;&#231;&#187;&#176;</comment>
+			</column>
+		</property>
+		<property name="businessType" type="java.lang.Integer">
+			<column name="BUSINESS_TYPE">
+				<comment>&#190;&#173;&#211;&#170;&#192;&#224;&#208;&#205;</comment>
+			</column>
+		</property>
+		<property name="isDepartment" type="int">
+			<column name="IS_DEPARTMENT" not-null="true">
+				<comment>&#202;&#199;&#183;&#241;&#211;&#170;&#210;&#181;&#178;&#191;&#195;&#197;</comment>
+			</column>
+		</property>
+		<property name="isPaymentCollection" type="java.lang.Integer">
+			<column name="IS_PAYMENT_COLLECTION">
+				<comment>&#202;&#199;&#183;&#241;&#180;&#250;&#202;&#213;&#187;&#245;&#191;&#238;</comment>
+			</column>
+		</property>
+		<property name="limitForCollection" type="java.lang.Long">
+			<column name="LIMIT_FOR_COLLECTION">
+				<comment>&#180;&#250;&#202;&#213;&#191;&#238;&#207;&#222;&#182;&#238;</comment>
+			</column>
+		</property>
+		<property name="isSettleDocket" type="java.lang.Integer">
+			<column name="IS_SETTLE_DOCKET">
+				<comment>&#202;&#199;&#183;&#241;&#189;&#225;&#203;&#227;&#181;&#189;&#184;&#182;&#181;&#165;</comment>
+			</column>
+		</property>
+		<property name="currencyType" type="java.lang.Integer">
+			<column name="CURRENCY_TYPE">
+				<comment>&#177;&#190;&#206;&#187;&#177;&#210;&#192;&#224;&#208;&#205;</comment>
+			</column>
+		</property>
+		<property name="cashReference" type="string">
+			<column name="CASH_REFERENCE" length="20">
+				<comment>&#204;&#225;&#207;&#214;&#187;&#249;&#215;&#188;</comment>
+			</column>
+		</property>
+		<property name="lockLimit" type="java.lang.Long">
+			<column name="LOCK_LIMIT">
+				<comment>&#203;&#248;&#187;&#250;&#182;&#238;&#182;&#200;</comment>
+			</column>
+		</property>
+		<property name="warningLimit" type="java.lang.Long">
+			<column name="WARNING_LIMIT">
+				<comment>&#212;&#164;&#190;&#175;&#182;&#238;&#182;&#200;</comment>
+			</column>
+		</property>
+		<property name="managementCos" type="java.lang.Integer">
+			<column name="MANAGEMENT_COS">
+				<comment>&#185;&#220;&#192;&#237;&#183;&#209;(&#212;&#170;/&#204;&#236;)&#163;&#168;&#212;&#221;&#178;&#187;&#191;&#188;&#194;&#199;&#163;&#169;</comment>
+			</column>
+		</property>
+		<property name="remark" type="string">
+			<column name="REMARK" length="100">
+				<comment>&#177;&#184;&#215;&#162;</comment>
+			</column>
+		</property>
+		<property name="tenantId" type="java.lang.Long">
+			<column name="TENANT_ID">
+				<comment>&#185;&#233;&#202;&#244;&#185;&#171;&#203;&#190;</comment>
+			</column>
+		</property>
+		<property name="tenantType" type="string">
+			<column name="TENANT_TYPE" length="30">
+				<comment>公司类型：1 平台 2 专线 3商家</comment>
+			</column>
+		</property>
+
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE">
+				<comment>1&#161;&#162;&#211;&#208;&#208;&#167;
+					0&#161;&#162;&#206;&#222;&#208;&#167;</comment>
+			</column>
+		</property>
+
+		<property name="busiNotes" type="java.lang.String">
+			<column name="BUSI_NOTES" length="200">
+				<comment>主营业务</comment>
+			</column>
+		</property>
+		<property name="sellerNotes" type="java.lang.String">
+			<column name="SELLER_NOTES" length="500">
+				<comment>商家简介</comment>
+			</column>
+		</property>
+		<property name="streetId" type="string">
+			<column name="STREET_ID" length="50" />
+		</property>
+		<property name="streetName" type="string">
+			<column name="STREET_NAME" length="50">
+				<comment>&#207;&#216;/&#199;&#248;</comment>
+			</column>
+		</property>
+		<property name="corporateBackCard" type="string">
+			<column name="CORPORATE_BACK_CARD" length="200">
+				<comment>法人身份证反面图片</comment>
+			</column>
+		</property>
+		<property name="corporateFrontCard" type="string">
+			<column name="CORPORATE_FRONT_CARD" length="200">
+				<comment>法人身份证正面图片</comment>
+			</column>
+		</property>
+		<property name="businesslicensePic" type="string">
+			<column name="BUSINESSLICENSE_PIC" length="200">
+				<comment>营业执照图片</comment>
+			</column>
+		</property>
+		<property name="createDate" type="java.sql.Timestamp">
+			<column name="CREATE_DATE" length="19">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="creatorId" type="java.lang.Long">
+			<column name="CREATOR_ID">
+				<comment>创建人</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

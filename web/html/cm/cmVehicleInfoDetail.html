@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="cmVehicleInfoDetailApp">
+<head>
+<title>众邦_车辆新增</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}" />
+<link TYPE="text/css" rel="stylesheet" href="../css/angucomplete/angucomplete.css?v=${ver}" />
+<link TYPE="text/css" rel="stylesheet" href="../css/angucomplete/structure.css?v=${ver}" />
+<style type="text/css">
+.dhl_zz li.yic_li label.yic_label{width: 160px;}
+</style>
+</head>
+<body ng-controller="cmVehicleInfoDetailCtrl" onload="setContentHegthDelay()" style="overflow: hidden;">
+	<!-- 车辆详情 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 400px">
+		
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="yic_n clearfix fl yic_sx dhl_zz" style="padding: 20px 0;">
+					<tbody>
+					<tr>
+			<td class="yic_li" width="140"><label class="yic_label"><em>*</em>车牌信息：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.plateNumber" type="text" maxlength="7" />
+				
+			</td>
+		   <td class="yic_li" width="140"><label class="yic_label"><em>*</em>核载体积：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.actualVolume" type="text" maxlength="8"/>
+				
+			</td>
+			<td class="yic_li "><label class="yic_label"><em>*</em>核载重量：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.actualWeight" type="text" maxlength="6"/>
+				
+			</td>
+			</tr>
+			<tr>
+				<td class="yic_li" id="area_id_display" ><label class="yic_label">发动机号：</label></td>
+				<td><input class="yic_input" readonly="readonly" ng-model="data.engineNo" type="text" maxlength="6"/>
+				</td>
+				<td class="yic_li" id="area_id_display" ><label class="yic_label">车架号：</label></td>
+				<td><input class="yic_input" readonly="readonly" ng-model="data.frameNo" type="text" maxlength="6"/>
+				</td>
+				
+				<td class="yic_li" id="area_id_display" ><label class="yic_label"><em>*</em>车辆类型：</label></td>
+				<td><div class="form_select_c">
+					 <my-select id="data.vehicleType" code-type="VEHICLE_TYPE" url="" disabled="disabled"/>
+				    </div>
+				</td>
+			</tr>
+			<tr>
+			<td class="yic_li" id="area_id_display" ><label class="yic_label">注册时间：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.registDate" id="beginTime"  type="text" />
+				
+			</td>
+			<td class="yic_li" id="area_id_display" ><label class="yic_label">报废时间：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.pullDate"  type="text" />
+				
+			</td>
+			<td class="yic_li" id="area_id_display" ><label class="yic_label">车辆品牌型号：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.systemType" type="text" maxlength="20"/>
+				
+			</td>
+			</tr>
+			<tr>
+			<td class="yic_li" width="140"><label class="yic_label">车厢长（m）：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.length" type="text" maxlength="6"/>
+				
+			</td>
+			<td class="yic_li"><label class="yic_label">车厢宽（m）：</label></td>
+			<td>
+					<input class="yic_input" readonly="readonly" ng-model="data.wide" type="text" maxlength="6"/>
+				
+			</td>
+			<td class="yic_li"><label class="yic_label">车厢高（m）：</label></td>
+			<td>
+					<input class="yic_input " readonly="readonly" ng-model="data.high" type="text" maxlength="6"/>
+				
+			</td>
+			</tr>
+			<tr>
+			<td class="yic_li" id="area_id_display" ><label class="yic_label"><em>*</em>经营类型：</label></td>
+			<td><div class="form_select_c ">
+						     <my-select id="data.businessType" disabled="disabled" code-type="BUSINESS_TYPE"  url="" ng-click="vehicleChange()"/>
+			    </div>
+			</td>
+			<td class="yic_li"><label class="yic_label"><em>*</em>归属网点：</label></td>
+			<td><div class="form_select_c ">
+                                <select ng-model="data.orgId" disabled="disabled"  ng-options="obj.orgId as obj.orgName for  obj in orgInfo.items ">
+                            	</select>
+                            </div>
+           </td>
+           <td class="yic_li"><label class="yic_label">合同编号：</label></td>
+			<td>
+					<input class="yic_input " readonly="readonly" ng-model="data.contractNo" type="text" maxlength="16"/>
+				
+			</td>
+			</tr>
+			<tr>
+			<td class="yic_li"><label class="yic_label">行驶证照片：</label></td>
+						<td class="list_td">
+						<div class="controls">
+	                       <span my-File-Model="drivingPic" is-Close="false" ></span>
+	                  </div>
+					    </td>
+			</tr>
+			</tbody>
+			</table>
+			<div>
+			  <span style="color: red">提示：对于"经营方式"是"自营""的车辆，可以在"基础数据"-"司机管理"-"新增司机"后，选择司机</span><br/>
+			  <span style="margin-left: 37px;color: red">对于"经营方式"是"加盟"的车辆，直接填写"司机姓名"、"司机手机"即可</span>
+			</div>
+			<div class="bottom_nav1 pb_20 bottom_nav_search" style="border-top: 1px solid #eeeeee;padding-top: 15px;margin-top: 10px;">
+			<a href="javascript:void(0)" ng-click="close()">关闭</a>
+	</div>
+	</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="cmVehicleInfoDetailCtrl.js?v=${ver}"></script>
+	<script TYPE="text/javascript" src="../js/autoComplemet/angular-touch.min.js"></script>
+    <script TYPE="text/javascript" src="../js/autoComplemet/angucomplete.js"></script>
+</body>
+</html>
+

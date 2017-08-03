@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="cmUserInfoApp">
+	<head>
+	    <title>${title}_员工管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        
+</head>
+	<body ng-controller="cmUserInfoCtrl" style="overflow: hidden;">
+        <!-- 问题处理-回显 -->
+        <div class="billing_1 clearfix pb_20 mt_20" 	>
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">网点：</label>
+                   			</td>
+						<td>
+						<div class="form_select">
+                              <select ng-model="queryParam.orgId"
+									ng-options="obj.orgId as obj.orgName for  obj in orgInfos  ">
+								</select>
+						</div>
+                            </td>
+						<td width="100"><label class="term_label">角色：</label>
+							</td>
+						<td><div class="form_select">
+                               <select ng-model="queryParam.roleId" 
+									ng-options="obj.roleId as obj.roleName for obj in roleInfos ">
+								</select>
+                            </div></td>
+						<td width="100"><label class="term_label">姓名：</label>
+                    	</td>
+						<td><input class="form_term" ng-model="queryParam.userName" maxlength="10"/>
+						</td>
+						
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="cleanQuery();">清空</a></div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">账号：</label>
+                    	</td>
+						<td>
+                        <input class="form_term" ng-model="queryParam.loginAcct" maxlength="11"/>
+                        </td>
+						<td width="100"></td>
+						<td></td>
+						<td width="100"></td>
+						<td></td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+                
+                 <div class="search_nr clearfix mt_20">
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	                <h2>查询结果</h2>
+	                <a href="javascript:void(0)" ng-click="addUser()">新增账号</a>
+	                <a href="javascript:void(0)" ng-click="updateUser()">修改账号</a>
+	                <a href="javascript:void(0)" ng-click="delUser()">注销账号</a>
+<!-- 	                <a href="javaScript:void(0)" ng-click="toUserArea()">操作区域</a>
+ --><!-- 	                <a href="javascript:void(0)" ng-click="roleManager()">角色管理</a>
+ -->                </div>
+               <my-Adv-Table isShowSeq="false" isMultiSelect="false" width="100%" isShowCheck="true" isFilter="false" isSum="false" id="userId"  
+               	head='[{"name":"公司账号","code":"tenantCode","width":"12%"},
+               	{"name":"公司","code":"tenantName","width":"12%"},
+               	{"name":"网点","code":"orgName","width":"12%"},
+               	{"name":"角色名称","code":"roleName","width":"12%"},
+               	{"name":"登录账号","code":"loginAcct","width":"12%"},
+               	{"name":"登录类型","code":"loginTypeName","width":"12%"},
+               	{"name":"姓名","code":"userName","width":"12%"},
+               	{"name":"创建时间","code":"createTime","width":"12%"}]'>
+               </my-Adv-Table>
+                
+		</div>
+        </div>
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="cmUserInfoCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

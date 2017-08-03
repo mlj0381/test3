@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="orderApp"> 
+	<head>
+	    <title>${title}_订单管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+	    <link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+	    <link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+	    <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+	    <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+   <style type="text/css">
+		.arrow-down {width:0;height:0; border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #dedede;margin:0 auto}
+		.ng-cloak {display: none;}
+	</style>
+</head>
+	<body ng-controller="orderCtrl" style="overflow:hidden" onload="setContentHeight(800)">
+        
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	 <!-- 订单管理   start -->
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">订单号：</label></td>
+						<td><input class="form_term" ng-model="queryParam.sellerOrderId" maxlength="20"/></td>
+						<td width="100"><label class="term_label">订单状态：</label></td>
+						<td><div class="form_select">
+                               <select ng-model="queryParam.state" 
+									ng-options="obj.roleId as obj.roleName for obj in roleInfos ">
+								</select>
+                            </div></td>
+						<td width="100"><label class="term_label">收货人手机：</label></td>
+						<td><input class="form_term" ng-model="queryParam.receiveTeL" maxlength="12"/></td>
+						
+						<td rowspan="2"><div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div></td>
+					</tr>
+					<tr>
+						
+						<td width="100"><label class="term_label">发往城市：</label></td>
+						<td>
+                              <div my-City="source" style="width: 280px;" classvalue="form_term" input-id="_source"></div>
+                            </td>
+						<td width="100"><label class="term_label">收货人：</label></td>
+						<td><input class="form_term" ng-model="queryParam.receiveName" maxlength="15"/></td>
+						<td width="100"><label class="term_label">商品编号：</label></td>
+						<td><input class="form_term" ng-model="queryParam.userName" maxlength="15"/></td>
+						
+					</tr>
+					
+				</tbody>
+		</table>
+        <div class="search_nr clearfix mt_20">
+              <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果</h2><a href="javascript:void(0)" ng-click="add(1)">新增</a><a href="javascript:void(0)">导入</a><a href="javascript:void(0)" ng-click="add(2)">修改</a></div>
+              <my-table>
+                   <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0">
+                               <thead id="tb1">
+                                <tr>
+                                    <th width="79" class="search_list_border"><div class="controls"><input id="checkbox" class="none input_gx" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+									<th width="10%">订单号</th>
+									<th width="8%">商品分类</th>
+									<th width="8%">商品编码</th>
+                                    <th width="10%">商品名称/价格</th>
+                                    <th width="14%">商品体积/重量/件数</th>
+                                    <th width="10%">收货人</th>
+                                    <th width="10%">收货人地址</th>
+                                    <th width="8%">服务类型</th>
+                                    <th width="8%">订单状态</th>
+                                    <th width="10%">下单时间</th>
+                                    
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                                  <!-- <tr ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.orderId);" ng-repeat="o in page.data.items" > -->
+                                  <tr>
+                                  	<td width="79" class="search_list_border"><div class="controls">
+                                  		<input id="checkbox{{o.orderId}}" class="none input_gx" value="{{o}}" type="checkbox" name="check-1" >
+                                  		<label for="check-1"></label></div>
+                                  	</td>
+                                    <td  width="10%">DS000000001</td>
+                                    <td width="8%">家具类</td>
+                                    <td width="8%">000001</td>
+                                    <td width="10%">电视柜/900.00</td>
+                                    <td width="14%">1.2方/20kg/2</td>
+                                    <td width="10%">张三/13800138000</td>
+                                    <td width="10%">湖南长沙xxxx</td>
+                                    <td width="8%">配送安装</td>
+                                    <td width="8%">未开单</td>
+                                    <td width="10%" >2016-07-16 12：30</td>
+                                    
+                                  </tr>
+                              </tbody>
+                            </table>
+                           
+                </div>
+                </my-table>
+        	</div>
+        	<!-- 订单管理  end -->
+        </div>
+        
+        
+		
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="orderManagementCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

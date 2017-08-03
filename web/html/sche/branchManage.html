@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="branchManageApp">
+<head>
+<title>调度任务-支线价格管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="branchManageCtrl" onload="setContentHegthDelay(800)" style="overflow: hidden;" >
+	<div class="billing_1">
+		<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="120"><label class="control-label">省份：</label></td>
+						<td>
+							<div class="search_select w_146">
+								<select  ng-change="selectCity(query.provinceId);" ng-model="query.provinceId" ng-options="obj.id as obj.name for  obj in provinceData.items " name="select" class="xl_z">
+								</select>
+							</div>
+						</td>
+						<td width="100"><label class="control-label w_100">城市：</label></td>
+						<td><div class="search_select w_146 fl">
+								<select ng-change="selectDistrict(query.regionId);" ng-model="query.regionId"  ng-options="obj.id as obj.name for  obj in cityData.items " name="select" class="xl_z">
+								</select>
+							</div></td>
+						<td width="100"><label class="control-label w_100">县区：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.countyId" ng-change="selectStreet(query.countyId);"  ng-options="obj.id as obj.name for  obj in districtData.items " name="select" class="xl_z">
+								</select>
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a
+									class="search_button_cz" ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="control-label w_100">乡镇：</label></td>
+						<td><div class="search_select w_146">
+								<select ng-model="query.townId"  ng-options="obj.id as obj.name for  obj in streetData.items " name="select" class="xl_z">
+								</select>
+							</div></td>
+					</tr>
+				</table>
+
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix">
+				<h2 class="title_h2 fl">
+					<i class="icon title_icon fl"></i>列表展示
+				</h2>
+				<div class="fr mt15_mr20">
+					<a class="button fr ml_10 tixiansp" href="javascript:void(0);"
+						ng-click="doDelete();"><i
+						class="button_icon button_icon dw_tixiansp"></i>删除</a> <a
+						class="button fr ml_10 tixiansp2" href="javascript:void(0);"
+						ng-click="doSave();"><i
+						class="button_icon button_icon dw_tixiansp2"></i>新增</a> <a
+						class="button fr ml_10 tixiansq" href="javascript:void(0);"
+						ng-click="toView(2);"><i
+						class="button_icon button_icon dw_tixiansp2"></i>修改</a>
+						<a class="button fr ml_10 gangxianjs" href="javascript:void(0);"
+						ng-click="toView(1);"><i
+						class="button_icon button_icon dw_tixiansq"></i>查看</a>
+				</div>
+			</div>
+			  <my-table>
+			<div id="size" class="zz_list table_height" style="overflow:auto;">
+			<table class="search_lista table_kz" border="0" cellspacing="0" cellpadding="0" style="width: 2000px;">
+				<thead  id="tb1">
+					<tr>
+						<th width="79"><div class="input_z">
+								<input ng-click="selectAll();" id="checkbox" class="none input_gx" name="checkbox"
+									type="checkbox"> <label for="checkbox"></label>
+							</div></th>
+						<th width="79">省</th>
+						<th width="9%">市</th>
+						<th width="9%">县</th>
+						<th width="9%">乡镇</th>
+						<th width="10%">支线费</th>
+						<th width="10%">超方定义(立方米)</th>
+						<th width="10%">超方单价(元)</th>
+						<th width="10%">超远定义(km)</th>
+						<th width="10%">超远价格(元)</th>
+						<th width="16%">创建时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class="{'waybill_table_listtr':$index%2==0}" class="ng-cloak" ng-click="selectOne(o.branchId);" ng-repeat="o in page.data.items">
+						<td width="9%"><div class="input_z">
+								<input  id="checkbox{{o.branchId}}"  value="{{o}}"  class="none input_gx" name="check-1"
+									type="checkbox"> <label for="check-1"></label>
+							</div></td>
+						<td width="9%">{{o.provinceName}}</td>
+						<td width="9%">{{o.regionName}}</td>
+						<td width="9%">{{o.countyName}}</td>
+						<td width="10%">{{o.townName}}</td>
+						<td width="10%">{{o.priceUnit}}</td>
+						<td width="10%">>{{o.exceedVolume}}</td>
+						<td width="10%">{{o.exceedVolumePrice}}元/方</td>
+						<td width="10%">>{{o.exceedDis}}</td>
+						<td width="10%">{{o.exceedDisPrice}}元/公里</td>
+						<td width="16%">{{o.createTime}}</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			</my-table>
+			<!--任务列表 end-->
+		</div>
+	</div>
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="branchManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+<!--运费信息 start-->
+				<div class="waybill_title bt_h2"><h2 class="title_h2"><i class="icon title_icon fl"></i>运费信息</h2></div>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+				  <thead>
+				  	<tr>
+						<th>运费</th>
+						<th>声价</th>
+						<th>保费</th>
+						<th>送货费</th>
+						<th>中转费</th>
+						<th>小费</th>
+						<th>货款</th>
+						<th>落地费</th>
+						<th>服务费</th>
+						<th>包装费</th>
+						<th>其他费用</th>
+						<th>总费用{{}}</th>
+				  </tr>
+				  </thead>
+				  <tbody>
+				  <tr ng-if="feeInfo==''||feeInfo==null||feeInfo==undefined">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+				  </tr>
+				   <tr ng-if="feeInfo!=''&&feeInfo!=null&&feeInfo!=undefined">
+						<td>{{feeInfo.freight/100 | number:2}}</td>
+						<td>{{feeInfo.reputation/100 | number:2}}</td>
+						<td>{{feeInfo.premium/100 | number:2}}</td>
+						<td>{{feeInfo.deliveryCharge/100 | number:2}}</td>
+						<td>{{feeInfo.transitFee/100 | number:2}}</td>
+						<td>{{feeInfo.tip/100 | number:2}}</td>
+						<td>{{feeInfo.collectMoney/100 | number:2}}</td>
+						<td>{{feeInfo.landFee/100 | number:2}}</td>
+						<td>{{feeInfo.serviceCharge/100 | number:2}}</td>
+						<td>{{feeInfo.pickingCosts/100 | number:2}}</td>
+						<td>{{feeInfo.otherFee/100 | number:2}}</td>
+						<td>{{feeInfo.totalFee/100 | number:2}}</td>
+				  </tr>
+				  </tbody>
+				</table>
+				<!--运费信息 end-->

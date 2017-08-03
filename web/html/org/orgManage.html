@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="orgManageApp"> 
+	<head>
+	    <title>联运汇_网点管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        
+</head>
+	<body ng-controller="orgManageCtrl" style="overflow:hidden" onLoad="setContentHeight();">
+        <!-- 运单录入 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+        		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">网点名称：</label>
+                   			</td>
+						<td><input  class="form_term" maxlength="16" ng-model="query.orgName" type="text">
+                        </td>
+						<td width="100"><label class="term_label">网点负责人：</label>
+                       	</td>
+						<td><input  class="form_term" maxlength="16" ng-model="query.orgPrincipal" type="text">
+						</td>
+						<td width="120"><label class="term_label">负责人手机：</label>
+                       		
+                        
+                    	</td>
+						<td><input  class="form_term" maxlength="16"  ng-model="query.orgPrincipalPhone" type="text">
+						</td>
+						
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">网点类型：</label>
+                       		
+                        
+                    	</td>
+						<td>
+                        <div class="form_select">
+                                 <my-select id="query.orgType"  has-all="true"  code-type="ORG_TYPE" url-param='' filter="承运商"/>
+                            </div>
+                        </td>
+						<td width="100"><label class="term_label">经营类型：</label></td>
+						<td><div class="form_select">
+                                 <my-select id="query.businessType"  has-all="true"  code-type="BUSINESS_TYPE" url-param=''/>
+                            </div></td>
+						<td width="100"><label class="term_label">省份：</label></td>
+						<td><div class="form_select">
+                                <select class="ng-cloak" ng-change="selectCity(query.provinceId);" ng-model="query.provinceId" ng-options="obj.id as obj.name for  obj in provinceData.items ">
+                                </select>
+                            </div>
+                         </td>
+						
+						
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">城市：</label>
+                        
+                    	</td>
+						<td>
+                        	<div class="form_select">
+                                <select class="ng-cloak" ng-change="selectDistrict(query.regionId);" ng-model="query.regionId"  ng-options="obj.id as obj.name for  obj in cityData.items ">
+                                </select>
+                            </div>
+                        </td>
+						<td width="100"><label class="term_label">县区：</label></td>
+						<td><div class="form_select">
+                                <select class="ng-cloak" ng-model="query.countyId" ng-change="streetCreat(query.countyId);"  ng-options="obj.id as obj.name for  obj in districtData.items ">
+                                </select>
+                            </div></td>
+                            <td class="list_td"><label class="term_label">街道：</label></td>
+						<td><div class="form_select">
+								<select  class="ng-cloak" ng-model="query.streetId" ng-options="obj.id as obj.name for  obj in streetData.items ">
+								</select>
+							</div>
+							</td>
+						
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+                
+                     <div class="search_nr clearfix mt_20">
+						  <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+						  	<h2>查询结果</h2>
+							<a class="button ml_10 newly" style="width: auto;" ng-click="doSave()" href="javascript:void(0)">
+								<i style="margin-left: 0" class="button_icon button_icon dw_newly"></i>
+								新增网点信息
+							</a>
+							<a class="button ml_10 newly" href="javascript:void(0)" ng-click="toUpdate()"><i class="button_icon button_icon dw_newly"></i>修改</a>
+							<a class="button ml_10 newly" href="javascript:void(0)" ng-click="toDel()">删除</a>
+							<!-- <a onClick="document.getElementById('popup2').style.display='block';document.getElementById('fade1_xz').style.display='block';" href="javascript:void(0)">充值</a> -->
+						</div>
+               
+               <my-Adv-Table isShowSeq="false" isMultiSelect="false" isShowCheck="true" width="150%"  isFilter="false"  isSum="false" id="orgId" 
+                head='[
+                {"name":"网点名称","code":"orgName","width":"140"},
+                {"name":"网点简称","code":"orgShorter","width":"100"},
+                {"name":"上级网点","code":"parentOrgName","width":"100"},
+                {"name":"接货电话","code":"acceptLinkPhone","width":"100"},
+                {"name":"提货电话","code":"carryLinkPhone","width":"100"},
+                {"name":"网点类型","code":"orgTypeName","width":"100"},
+                {"name":"网点经理","code":"orgManager","width":"100"},
+                {"name":"网点负责人","code":"orgPrincipal","width":"100"},
+                {"name":"负责人手机","code":"orgPrincipalPhone","width":"100"},
+                {"name":"客服1","code":"supportStaff","width":"100"},
+                {"name":"客服电话1","code":"supportStaffPhone","width":"100"},
+                {"name":"客服2","code":"supportStaff2","width":"100"},
+                {"name":"客服电话2","code":"supportStaffPhone2","width":"100"},
+                {"name":"经营类型","code":"businessTypeName","width":"100"},
+                {"name":"是否营业部门","code":"isDepartmentName","width":"100"},
+                {"name":"网点地址","code":"address","width":"160"},
+                {"name":"备注","code":"remark","width":"180"}
+                ]'>
+                </my-Adv-Table>
+						
+						
+<!-- 
+                  <my-table>
+				  
+	
+				  <div class="zz_list" style="overflow:auto;">
+                    
+                         <table class="search_lista" border="0" cellspacing="0" cellpadding="0" style=" display:block;width:100%;table-layout: auto;">
+                               <thead>
+                              <tr>
+                                   <th width="79" class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                   <th width="120">网点名称</th>
+                                   <th width="100">上级网点</th>
+                                   <th width="130">接货电话</th>
+                                   <th width="130">提货电话</th>
+                                   <th width="110">网点类型</th>
+                                   <th width="100">网点负责人</th>
+                                   <th width="130">负责人手机</th>
+                                   <th width="100">经营类型</th>
+                                   <th width="100">是否营业部门</th>
+                                   <th width="120">是否代收货款</th>
+                                   <th width="120">代收款限额</th>
+                                   <th width="120">是否结算到付单</th>
+                                   <th width="100">锁机额度</th>
+                                   <th width="88">预警额度</th>
+                                   <th width="230">网点地址</th>
+                                   <th width="200">备注</th> 
+                                </tr>
+                            </thead>
+                         
+                              <tbody>
+								<tr select ng-class="{'search_list_tr':$index%2==1}"  class="ng-cloak" ng-click="selectOne(o.orgId);" ng-repeat="o in page.data.items">
+									<td width="79" class="search_list_border"><div class="controls"><input id="checkbox{{o.orgId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+									<td width="120">{{o.orgName}}</td>
+                                    <td width="100">{{o.parentOrgName}}</td>
+                                    <td width="130">{{o.acceptLinkPhone}}</td>
+                                    <td width="130">{{o.carryLinkPhone}}</td>
+                                    <td width="110">{{o.orgTypeName}}</td>
+                                    <td width="100">{{o.orgPrincipal}}</td>
+                                    <td width="130">{{o.orgPrincipalPhone}}</td>
+                                    <td width="100">{{o.businessTypeName}}</td>
+                                    <td width="100"><label ng-if="o.isDepartment==1">是</label><label ng-if="o.isDepartment==2">否</label></td>
+                                    <td width="120"><label ng-if="o.isPaymentCollection==1">代收</label><label ng-if="o.isPaymentCollection==2">非代收</label></td>
+                                    <td width="120">{{o.limitForCollection/100}}</td>
+                                    <td width="120"><label ng-if="o.isSettleDocket==1">是</label><label ng-if="o.isSettleDocket==2">否</label></td>
+                                    <td width="100">{{o.lockLimit/100}}</td>
+                                    <td width="88">{{o.warningLimit/100}}</td>
+                                    <td width="230" title="{{o.provinceName+o.regionName+o.countyName+o.streetName+o.departmentAddress}}">{{o.provinceName}}{{o.regionName}}{{o.countyName}}{{o.streetName}}{{departmentAddress}}</td>
+                                    <td width="200"><div class="cc_yc" style="width: 200px;">{{o.remark}}</div></td>
+								</tr>
+							</tbody>
+						</table>
+                   
+                    
+                </div> -->
+				 
+                            <!--<div style="overflow: scroll; height: 318px; position: relative;border:1px solid #e0e5e9;">
+                               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_list">
+
+                               <thead>
+                                <tr >
+                                    <th class="search_list_border"><div class="controls"><input id="checkbox" class="none" ng-click="selectAll();" type="checkbox"><label for="checkbox"></label></div></th>
+                                    <th>网点名称</th>
+                                    <th>父级网点</th>
+                                    <th>接货电话</th>
+                                   <th>提货电话</th>
+                                     <th>网点类型</th>
+                                    <th>网点负责人</th>
+                                     <th>网点负责人手机</th>
+                                    <th>经营类型</th>
+                                    <th>是否营业部门</th>
+                                    <th>是否代收货款</th>
+                                     <th>代收款限额</th>
+                                     <th>是否结算到付单</th>
+                                     <th>锁机额度</th>
+                                     <th>预警额度</th>
+                                     <th>网点地址</th>
+                                     <th>备注</th> 
+                                     <th>操作</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak" ng-click="selectOne(o.orgId);" ng-repeat="o in page.data.items">
+                                  	<td class="search_list_border"><div class="controls"><input id="checkbox{{o.orgId}}" class="none" value="{{o}}" type="checkbox" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td>{{o.orgName}}</td>
+                                    <td>{{o.parentOrgName}}</td>
+                                    <td>{{o.acceptLinkPhone}}</td>
+                                    <td>{{o.carryLinkPhone}}</td>
+                                    <td>{{o.orgTypeName}}</td>
+                                    <td>{{o.orgPrincipal}}</td>
+                                    <td>{{o.orgPrincipalPhone}}</td>
+                                    <td>{{o.businessTypeName}}</td>
+                                    <td><label ng-if="o.isDepartment==1">是</label><label ng-if="o.isDepartment==2">否</label></td>
+                                     <td><label ng-if="o.isPaymentCollection==1">代收</label><label ng-if="o.isPaymentCollection==2">非代收</label></td>
+                                    <td>{{o.limitForCollection/100}}</td>
+                                      <td><label ng-if="o.isSettleDocket==1">是</label><label ng-if="o.isSettleDocket==2">否</label></td>
+                                   <td>{{o.lockLimit/100}}</td>
+                                   <td>{{o.warningLimit/100}}</td>
+                                    <td title="{{o.provinceName+o.regionName+o.countyName+o.departmentAddress}}">{{o.provinceName}}{{o.regionName}}{{o.countyName}}{{departmentAddress}}</td>
+                                    <td>{{o.remark}}</td>
+                                     <td>
+                                 	   <a href="javascript:void(0)" ng-click="toUpdate(o.orgId)">修改</a>
+                                 	</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                            </div>-->
+              <!--   </my-table> -->
+        </div>
+        </div>
+		
+		
+<div id="popup2" class="popup1" style="width:350px;height:200px;margin-left:-175px;  margin-top:-150px;display: none;">
+        	<h2><span>充值</span><a href="javascript:void(0)"  ng-click="close();">x</a></h2>
+            <div style="margin:35px 0 25px 0"><label class="label">充值：</label><input ng-model="money" my-double-val='keyup' type="text" class="xl_z" /></div>
+			<div style="display: inline-block;text-align: center; width: 100%;"><a class="cx dhl_an" href="javaScript:void(0)"  ng-click="recharge()">确定</a><a class="cx dhl_an" href="javaScript:void(0)" ng-click="close()">取消</a></div>
+            
+    </div>
+
+<div id="fade1_xz" class="black_overlay_xz1" style="display: none;"></div>
+		
+ 		
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="orgManageCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

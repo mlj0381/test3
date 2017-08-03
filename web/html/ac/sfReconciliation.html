@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="AcSfApp"> 
+	<head>
+	    <title>联运汇_师傅对账</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="联运汇"/> 
+		<meta name="description" content="联运汇" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+        <style type="text/css">
+        .w_b60{
+        	width: 214px!important;
+        }
+          .form_term{width: 140px!important;}
+		    .w_xjr{width: 80px!important;}
+		    .form_select {width: 140px!important;}
+        </style>
+</head>
+	<body ng-controller="AcSfCtrl" onload="setContentHegthDelay()"  style="overflow:hidden">
+        <!-- 核销管理 -->
+        <div class="billing_1 clearfix pb_20 mt_20">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">开单时间：</label>
+                   		</td>
+						<td>
+							<input my-Date-Picker ng-model="query.beginDate" id="beginDate" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endDate"  my-Date-Picker id="endDate" class="form_term fl w_xjr" type="text">
+                        </td>
+                        <td width="100"><label class="term_label">签收时间：</label>
+                   		</td>
+						<td>
+							<input my-Date-Picker ng-model="query.beginDateSign" id="beginDateSign" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endDateSign"  my-Date-Picker id="endDateSign" class="form_term fl w_xjr" type="text">
+                        </td>
+                        <td width="100"><label class="term_label">运单状态：</label>
+                        
+                    	</td>
+						<td>
+                        <div class="form_select" >
+                                <my-select id="query.orderState" selectid="id='id4'" has-all="true"  code-type="APP_ORDER_STATE"  showName="codeName" defaultValue="-1" showValue="codeId" filter="拼单中,已删除" ></my-select>
+                            </div>
+                        </td>
+					    <td width="100"><label class="term_label">发货方：</label></td>
+						<td><input class="form_term" ng-model="query.consignorName" maxlength="16" type="text"></td>
+						<td rowspan="3">
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">发货商家：</label>
+                    	</td>
+						<td>
+                        	<div class="form_select">
+                                <select ng-model="query.tenantId" 
+									ng-options="obj.tenantId as obj.orgName for  obj in orgIds " 
+									ng-change="selectChange()">
+								</select>
+                            </div>
+                        </td>
+						<td width="100"><label class="term_label">付款方式：</label>
+                       		
+                    	</td>
+						<td><div class="form_select">
+                                <my-select id="query.paymentType"  code-type="PAYMENT_TYPE"  has-all="true" default-value="-1" />
+                            </div>
+						</td>
+					
+						<td width="100"><label class="term_label">运单号：</label></td>
+						<td><input class="form_term" ng-model="query.trackingNum" my-Num-val maxlength="16" type="text"></td>
+						<td width="100"><label class="term_label">师傅名称：</label></td>
+						<td><input class="form_term" ng-model="query.sfName" maxlength="16" type="text"></td>
+					</tr>
+					<tr>
+				        <td width="100"><label class="term_label">师傅手机：</label></td>
+						<td><input class="form_term" ng-model="query.sfPhone" maxlength="16" type="text"></td>
+					   
+						<td width="100"><label class="term_label">收货地：</label></td>
+						<td ><span class="wdcy_input fl" my-city="des"></span></td>
+						<td width="100"><label class="term_label">到站网点：</label></td>
+						<td><div class="form_select fl"><select ng-model="query.distributionOrgId" ng-options="obj.endOrgId as obj.endOrgName for  obj in orgInfo.items  " width="130px"></select></div></td>
+						<!--  -->
+						<td width="100"><label class="term_label">分配时间：</label>
+                   		</td>
+						<td>
+							<input my-Date-Picker ng-model="query.beginDistributionTime" id="beginDistributionTime" readonly="readonly" class="form_term fl w_xjr"  type="text"><span class="search_span fl">到</span><input readonly="readonly" ng-model="query.endDistributionTime"  my-Date-Picker id="endDistributionTime" class="form_term fl w_xjr" type="text">
+                        </td>
+						<!--  -->
+						
+					</tr>
+					
+				</tbody>
+		</table>
+        
+                
+                     <div class="search_nr clearfix mt_20">
+          <!--       {"name":"异常费","code":"exceptionFeeDouble","isSum":"true","number":"2","width":"80"}, -->
+                            
+                  <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+                  	<h2>查询结果</h2>
+                  	<a  ng-click="page.downloadExcelFile();" href="javascript:void(0)">导出</a>
+                  </div>
+                      	<my-Adv-Table width="2095px" doubleclick="toDetailAllInfo" isShowSeq="false" isShowCheck="false" isFilter="true" isSum="true" id="checkedId"
+			                head='[
+			                {"name":"师傅手机","code":"doTel","width":"150"},
+			                {"name":"师傅名称","code":"doObjName","width":"150"},
+			                {"name":"运单号","code":"trackingNum","width":"175"},
+			                {"name":"运费","code":"freightDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"配安费","code":"installCostsDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"开单费用合计","code":"totalFeeDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"回扣","code":"discountDouble","isSum":"true","number":"2","width":"80"}, 
+			                {"name":"运单状态","code":"seeOrderStateName","width":"100"},
+			                {"name":"开单网点","code":"orgIdName","width":"130"},
+			                {"name":"开单时间","code":"createDate","width":"130"},
+			                {"name":"开单时间（天）","code":"createDateFormat","width":"100"},
+			                {"name":"签收时间","code":"signDate","width":"130"},
+			                {"name":"签收时间（天）","code":"signDateFormat","width":"100"},
+			                {"name":"发车时间","code":"departTime","width":"130"},
+			                {"name":"分配时间","code":"disTime","width":"130"},
+			                {"name":"代收货款","code":"collectingMoneyDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"现付","code":"cashPaymentDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"到付","code":"freightCollectDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"月结","code":"monthlyPaymentDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"回单付","code":"receiptPaymentDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"免费补发","code":"freeMoneyDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"转账","code":"transPaymentDouble","isSum":"true","number":"2","width":"80"},
+			                {"name":"货品名","code":"products","width":"80"},
+			                {"name":"总体积(方)","code":"volume","isSum":"true","number":"2","width":"80"},
+			                {"name":"总重量(kg)","code":"weight","isSum":"true","number":"1","width":"80"},
+			                {"name":"件数","code":"count","isSum":"true","width":"80"},
+			                {"name":"发货商家名称","code":"sellerTenantIdName","width":"175"},
+			                {"name":"发货方","code":"consignorName","width":"100"},
+			                {"name":"发货电话","code":"consignorBill","width":"100"},
+			                {"name":"收货人","code":"consigneeName","width":"140"},
+			                {"name":"仓管员","code":"consignee","width":"140"},
+			                {"name":"收货人联系电话","code":"consigneeBill","width":"100"},
+			                {"name":"收货人备用电话","code":"consigneeTelephone","width":"100"},
+			                {"name":"到达省","code":"destProvinceName","width":"100"},
+			                {"name":"到达市","code":"destCityName","width":"100"},
+			                {"name":"到达区(县)","code":"destCountyName","width":"100"},
+			                {"name":"备注","code":"remarks","width":"170"}
+			                
+			                ]'>
+	                </my-Adv-Table>
+		</div>
+        
+        </div>
+		 
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="sfReconciliation.js?v=${ver}"></script>
+</body>
+</html>
+

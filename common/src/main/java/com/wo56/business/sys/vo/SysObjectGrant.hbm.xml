@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-10 11:36:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.sys.vo.SysObjectGrant" table="sys_object_grant">
+        <id name="objectGrantId" type="int">
+            <column name="object_grant_id" />
+            <generator class="identity" />
+        </id>
+        <property name="objectType" type="int">
+            <column name="object_type" not-null="true">
+                <comment>&#229;&#175;&#185;&#232;&#177;&#161;&#231;&#177;&#187;&#229;&#158;&#139; 1:&#232;&#167;&#146;&#232;&#137;&#178; 2:&#231;&#187;&#132;&#231;&#187;&#135;
+                3:&#230;&#147;&#141;&#228;&#189;&#156;&#229;&#145;&#152;</comment>
+            </column>
+        </property>
+        <property name="objectId" type="long">
+            <column name="object_id" not-null="true">
+                <comment>&#229;&#175;&#185;&#232;&#177;&#161;&#231;&#188;&#150;&#229;&#143;&#183;
+                &#229;&#189;&#147;object_type=1&#230;&#151;&#182;&#239;&#188;&#140;&#228;&#184;&#186;&#232;&#167;&#146;&#232;&#137;&#178;&#231;&#188;&#150;&#229;&#143;&#183;&#239;&#188;&#155;
+                &#229;&#189;&#147;object_type=2&#230;&#151;&#182;&#239;&#188;&#140;&#228;&#184;&#186;&#231;&#187;&#132;&#231;&#187;&#135;&#231;&#188;&#150;&#229;&#143;&#183;&#239;&#188;&#155;
+                &#229;&#189;&#147;object_type=3&#230;&#151;&#182;&#239;&#188;&#140;&#228;&#184;&#186;&#230;&#147;&#141;&#228;&#189;&#156;&#229;&#145;&#152;&#231;&#188;&#150;&#229;&#143;&#183;&#227;&#128;&#130;</comment>
+            </column>
+        </property>
+        <property name="entityId" type="int">
+            <column name="entity_id" not-null="true">
+                <comment>&#230;&#157;&#131;&#233;&#153;&#144;&#229;&#174;&#158;&#228;&#189;&#147;&#231;&#188;&#150;&#229;&#143;&#183;</comment>
+            </column>
+        </property>
+        <property name="isPermit" type="int">
+            <column name="is_permit" not-null="true">
+                <comment>&#230;&#152;&#175;&#229;&#144;&#166;&#232;&#174;&#184;&#229;&#143;&#175; 1:&#232;&#174;&#184;&#229;&#143;&#175;
+                0&#230;&#136;&#150;&#229;&#133;&#182;&#228;&#187;&#150;:&#231;&#166;&#129;&#230;&#173;&#162;</comment>
+            </column>
+        </property>
+        <property name="state" type="int">
+            <column name="state" not-null="true">
+                <comment>&#231;&#138;&#182;&#230;&#128;&#129;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19">
+                <comment>&#229;&#136;&#155;&#229;&#187;&#186;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="modifyDate" type="timestamp">
+            <column name="modify_date" length="19">
+                <comment>&#228;&#191;&#174;&#230;&#148;&#185;&#230;&#151;&#182;&#233;&#151;&#180;</comment>
+            </column>
+        </property>
+        <property name="opId" type="long">
+            <column name="op_id">
+                <comment>&#230;&#147;&#141;&#228;&#189;&#156;&#229;&#145;&#152;&#229;&#183;&#165;&#229;&#143;&#183;</comment>
+            </column>
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" length="128">
+                <comment>&#229;&#164;&#135;&#230;&#179;&#168;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

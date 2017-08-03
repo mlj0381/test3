@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="viewApplicationApp" xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+	    <title>调度任务-提现申请</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+         <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css?v=${ver}">
+		 
+		<script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+</head>
+	<body ng-controller="viewApplicationCtrl" onload="setContentHeight(300)"  style="overflow:hidden">
+		<div class="billing_1">
+			
+			<!-- 提现明细 开始 -->
+			<div class="tx_tc" id="vehicle_2" style="margin-top:0; padding-top:28px; padding-bottom:20px;">
+					<div class="search" style=" padding-top:0;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table">
+						  <tbody>
+						  <tr>
+						<td width="100"><label class="control-label">安装师傅：</label></td>
+						<td><input disabled="disabled" class="input_box" type="text" ng-model="auditView.ca.workerName" /></td>
+						<td width="100"><label class="control-label">师傅帐号：</label></td>
+						<td><input class="input_box" id="" type="text" ng-model="auditView.ca.workerLoginAcct" disabled="disabled"/></td>
+						<td><!-- <label class="control-label">提现金额：</label> --></td>
+						<td><!-- <input disabled="disabled" class="input_box" type="text" value="{{auditView.ca.dzMoney/100|number:2}}"  /> --></td>
+					  </tr>
+					   <tr>
+						<td><label class="control-label">付款方式：</label></td>
+						<td><input class="input_box" id="" type="text" disabled="disabled" ng-model="auditView.ca.receiTypeName"/></td>
+						<td width="100"><label class="control-label">卡名：</label></td>
+						<td><input class="input_box" id="" type="text" ng-model="auditView.ca.bankName" disabled="disabled"/></td>
+						<td width="100"><label class="control-label">持卡人：</label></td>
+						<td><input class="input_box" id="" type="text" ng-model="auditView.ca.accountName" disabled="disabled"/></td>
+						<td><label class="control-label"><span ng-if="auditView.ca.receiType==1">银行卡号：</span><span ng-if="auditView.ca.receiType==2">支付宝号：</span><span ng-if="auditView.ca.receiType==3">微信号：</span></label></td>
+						<td colspan="3">
+						<input disabled="disabled"  class="input_box input_bbj" type="text" ng-model="auditView.ca.bankAccount"/>
+					  </tr>
+					   <tr>
+						<td width="150"><label class="control-label">待提现金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" value="{{sf.waitCash}}" /></td>
+						<td width="100"><label class="control-label">提现中金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" value="{{sf.getCash}}" /></td>
+						<td width="100"><label class="control-label">已提现金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" ng-model="sf.hasCash" /></td>
+						<td><label class="control-label w_100">申请提现金额：</label></td>
+						<td><input disabled="disabled" class="input_box input_bbj" type="text" value="{{auditView.ca.dzMoney/100|number:2}}"/></td>
+					  </tr>
+						</tbody></table>
+					</div>
+					<!--任务列表 start-->
+					<div class="waybill_title clearfix"></div>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list">
+										  <thead>
+										  	<tr>
+													<th>任务类别</th>
+													<th>运单号</th>
+													<th>金额</th>
+													<th>费用类型</th>
+										  </tr>
+										  </thead>
+										  <tbody>
+				                                  <tr ng-class="{'search_list_tr':$index%2==0}"  class="ng-cloak" ng-repeat="t in auditView.cad">
+				                                    <td>{{t.taskTypeName}}</td>
+				                                    <td>{{t.wayBillId}}</td>
+				                                    <td>{{t.dzMoney/100|number:2}}</td>
+				                                    <td>{{t.feeTypeName}}</td>
+				                                  </tr>
+										  </tbody>
+									</table>
+					<!--任务列表 end-->
+					
+					<div class="search" style=" padding-top:20px;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table">
+						  <tbody><tr>
+							<td width="150"><label class="control-label">申请人：</label></td>
+							<td><input disabled="disabled" class="input_box"  id="" type="text" ng-model="auditView.ca.createName" /></td>
+							<td width="100"><label class="control-label">申请时间：</label></td>
+							<td><input disabled="disabled" class="input_box"  id="" type="text" ng-model="auditView.ca.strCreateDate"/></td>
+							<td width="150"><label class="control-label">审核人：</label></td>
+							<td><input disabled="disabled" class="input_box"  type="text"  ng-model="auditView.ca.auditMan" /></td>
+							<td width="100"><label class="control-label">审核时间：</label></td>
+							<td><input disabled="disabled" class="input_box"  type="text"  ng-model="auditView.ca.strAuditDate" /></td>
+						  </tr>
+							  <tr>
+								
+								<td width="150"><label class="control-label">审核状态：</label></td>
+								<td><input disabled="disabled" class="input_box"  type="text" ng-model="auditView.ca.stateName" /></td>
+								<td width="100"><label class="control-label">审核备注：</label></td>
+								<td><input disabled="disabled" class="input_box"  type="text" value="300"  ng-model="auditView.ca.auditNote"/></td>
+								<td><label class="control-label">打款时间：</label></td>
+								<td ><input disabled="disabled" class="input_box" type="text"  ng-model="auditView.ca.strVeriyDate" /></td>
+								<td><label class="control-label">核销码：</label></td>
+								<td ><input disabled="disabled" class="input_box"   type="text"  ng-model="auditView.ca.verifyId" /></td>
+							  </tr>
+						</tbody></table>
+					</div>
+					
+					<div class="tx_tc_button" style="margin-top:20px;"> <a class="search_button_ss" ng-if="isView==1" href="javascript:void(0);" ng-click="verification()">核销</a><a class="search_button_cz" href="javascript:void(0);"  ng-click="close()">返回</a></div>
+			</div>
+    		<!-- 提现明细 结束 -->
+			
+		</div>
+ 		<!--[if !IE]> -->
+	    <script src='../../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.js"></script>
+		<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="viewApplicationCtrl.js?v=${ver}"></script>
+	</body>
+</html>
+

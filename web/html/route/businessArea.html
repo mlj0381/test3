@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="businessAreaApp"> 
+	<head>
+	    <title>${title}_网点业务区域配置 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/lrtk.css?v=${ver}">
+        <style >
+	        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+    	</style>
+</head>
+	<body ng-controller="businessAreaCtrl" style="overflow:hidden" >
+        <div class="billing_1 clearfix pb_20 mt_20">
+             <span ng-show="isFlag==true">
+	        	 <!-- 网点业务区域配置  start -->
+	             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+						<tr>
+							<td width="100"><label class="term_label">网点名称：</label></td>
+							<td>
+								<div class="form_select">
+		                            <select ng-model="query.destOrgId"  ng-init="query.destOrgId=-1">
+		                            	<option value="-1">全部</option>
+		                            	<option ng-repeat="obj in orgInfo.items"  value="{{obj.endOrgId}}">{{obj.endOrgName}}</option>
+									</select>
+								</div>
+							</td>
+							<td width="100"><label class="term_label">服务区域：</label></td>
+							<td>
+								<div my-City="source" style="width: 280px;" classvalue="form_term" ></div>
+							</td>
+							<td width="100"><label class="term_label">区域名称：</label></td>
+							<td><input class="form_term" ng-model="query.relName" maxlength="10"/></td>
+							<td >
+								<div class="bottom_search search_button" style="position:inherit;">
+									<a ng-click="doQuery()" ng-Enter href="javascript:void(0);">查询</a>
+									<a class="qink" href="javascript:void(0);" ng-click="doReset();">清空</a>
+	<!-- 								<a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a> -->
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+	        	<div class="search_nr clearfix mt_20" >
+	              <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	              	<h2>查询结果</h2>
+	              	<a class="button ml_10 newly" href="javascript:void(0)" ng-click="doAdd()" ng-show="isTopOrg"><i class="button_icon button_icon dw_newly"></i>新增服务区域</a>
+	              	<a class="button ml_10 modify" href="javascript:void(0)" ng-click="doUpdate()" ng-show="isTopOrg"><i class="button_icon button_icon dw_modify"></i>修改服务区域</a>
+	              	
+	              </div>
+	              <my-Adv-Table isShowSeq="false" isMultiSelect="false" isShowCheck="true" isFilter="false" isSum="false" width="100%" id="reLId"  
+	              		head='[{"name":"网点ID","code":"orgId","width":"12%"},
+	              		{"name":"区域名称","code":"relName","width":"13%"},
+	              		{"name":"网点名称","code":"destOrgName","width":"13%"},
+	              		{"name":"归属组织名称","code":"orgName","width":"15%"},
+	              		{"name":"服务区域","code":"proCityCount","width":"14%"},
+	              		{"name":"是否海运","code":"isSeaTransport","width":"14%"},
+	              		{"name":"操作人","code":"opName","width":"14%"},
+	              		{"name":"操作时间","code":"opDate","width":"15%"}]'>
+                  </my-Adv-Table>
+	        	</div>
+	        	<!-- 网点业务区域配置  end -->
+            </span>
+            <span ng-show="isFlag==false" class="ng-hide">
+	        	 <!-- 新增服务区域  start -->
+	             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term" >
+					<tbody>
+						<tr>
+							<td width="100">
+								<label class="term_label">区域名称：</label>
+							</td>
+							<td>
+								<input class="form_term" ng-model="dataFrom.relName" maxlength="10"/>
+							</td>
+							<td width="100">
+								<label class="term_label">归属网点：</label>
+							</td>
+							<td>
+								<div class="form_select">
+									<select ng-model="dataFrom.destOrgId"  ng-init="dataFrom.destOrgId=-1">
+		                            	<option value="-1">请选择</option>
+		                            	<option ng-repeat="obj in orgInfo.items"  value="{{obj.endOrgId}}">{{obj.endOrgName}}</option>
+									</select>
+	                            </div>
+	                        </td>
+	                        <td width="100">
+								<label class="term_label">海运：</label>
+							</td>
+							<td>
+								<input type="checkbox"  ng-model="isSeaTransport" name="isSeaTransport" />
+	                        </td>
+							<td width="100">
+								<label class="term_label">省份：</label>
+							</td>
+							<td>
+								<div class="form_select">
+									<select ng-model="dataFrom.provinceId"  ng-init="dataFrom.provinceId=-1" ng-change="changeProvince()">
+		                            	<option value="-1">请选择</option>
+		                            	<option ng-repeat="obj in province"  value="{{obj.id}}">{{obj.name}}</option>
+									</select>
+	                            </div>
+	                        </td>
+							<td >
+								<div class="bottom_search search_button" style="position:inherit;">
+									<a ng-click="add();" href="javascript:void(0);" ng-bind="saveTitle"></a>
+									<a class="qink" href="javascript:void(0);" ng-click="doCancel();">取消</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+	        	<div class="search_nr clearfix mt_20">
+                   <div class="zz_list ng-scope" style="overflow:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0">
+                         	<thead>
+                                <tr>
+                                    <th width="79" class="search_list_border">
+                                    	<div class="controls" ng-show="isAddOrUp==1" >
+                                    		<input id="checkbox" class="none input_gx" ng-click="selectAll($event)" ng-checked="isSelectedAll()" type="checkbox">
+                                    		<label for="checkbox"></label>
+                                    	</div>
+                                    </th>
+									<th width="20%">城市</th>
+									<th>区</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                  <tr ng-repeat="obj in cityDistrict" >
+                                  	<td width="79" class="search_list_border"><div class="controls" ng-show="isAddOrUp==1" >
+                                  		<input class="none input_gx"   type="checkbox" id="checkCity-{{obj.city.id}}"  ng-checked="isSelectedCity(obj.city.id)" ng-click="updateSelectionCity($event,obj.city.id)" >
+                                  		<label for="checkCity-{{obj.city.id}}"></label></div>
+                                  	</td>
+                                    <td>
+										<div class="controls">
+											<input class="none input_gx" type="checkbox" id="checkCity-1-{{obj.city.id}}" ng-checked="isChoiceCitys(obj.city.id)" ng-click="eventChoiceCitys($event,obj.city.id)"> 
+											<label for="checkCity-1-{{obj.city.id}}"></label>
+										</div> {{obj.city.name}}
+                                    </td>
+                                    <td style="white-space: inherit;text-align: left;">
+                                    	<div class="controls_1" ng-repeat="objDis in obj.district"  repeat-Finish>
+                                  			<input class="none input_gx"  type="checkbox" id="checkDistrict-{{objDis.id}}"  ng-checked="isSelectedDistrict(objDis.id)"  ng-click="updateSelectionDistrict($event,objDis.id)" >
+                                  			<label class="pl26" for="checkDistrict-{{objDis.id}}">{{objDis.name}}</label>
+                                  		</div>
+                                  	</td>
+                                  </tr>
+                            </tbody>
+                         </table>
+                	</div>
+                	<div style="text-align: center;min-height: 100px;line-height: 60px;color: #ff0000;top:70px;position: absolute;width: 100%;z-index: 1;" ng-show="cityDistrict.length<=0">请选择省份</div>             
+	        	</div>
+        	</span>
+        	<!-- 新增服务区域  end -->
+        </div>
+        
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="businessAreaCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

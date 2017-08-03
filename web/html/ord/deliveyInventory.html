@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="deliveyApp">
+	<head>
+	    <title>众邦_发货库存</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+       <style type="text/css">
+           	  .search_page {
+           	  
+					    width: 90%;
+					    position: absolute;
+		      }
+		      .redColor {
+					background-color: #FF5757;
+					    color: #fff!important;
+			  }
+			  .greenColor{
+			  		background-color:#81DAA5;
+			  }
+        </style>
+</head>
+	<body ng-controller="deliveyCtrl" onload="setContentHeight(800)" style="overflow: hidden;">
+     <!-- 发货库存 -->
+     <!-- 发货库存-查询 -->
+   <div class="billing_1 clearfix pb_20 mt_20" >
+   	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">入库时间从：</label></td>
+						<td><input my-date-picker="{&quot;minDate&quot;:&quot;2016-03-01&quot;,&quot;maxDate&quot;:&quot;%y-%M-%d&quot;}" ng-model="query.beginDate" id="beginDate" readonly="readonly" class="form_term w_xjr fl ng-pristine ng-untouched ng-valid" type="text" /><span class="search_span fl">到</span><input class="form_term w_xjr fl" id="endDate" ng-model="query.endDate"  my-Date-Picker='{"minDate":"2016-03-01","maxDate":"%y-%M-%d"}' readonly="readonly" type="text"/></td>
+						<td width="100"><!-- <label class="term_label">收货站点：</label> --></td>
+                       		
+						<td><!-- <div class="form_select">
+                             <select ng-model="query.beginOrgId"  ng-options="obj.orgId as obj.orgName for  obj in orgInfoBegin  ">
+                             </select>
+                            </div> --></td>
+						
+						
+						<td rowspan="2">
+							<!-- <div class="search_button">
+								<a class="search_button_ss" ng-click="doQuery();" href="javascript:void(0);">查询</a><a class="search_button_cz" ng-click="clear();" href="javascript:void(0);">清空</a>
+							</div> -->
+							<div class="bottom_search search_button">
+								<a style="cursor: pointer;" ng-click="doQuery()" ng-Enter href="javascript:void(0);">搜索</a>
+								<a class="qink" style="cursor: pointer;" ng-click="clearModel()">清空</a>
+								<!-- <a style="cursor: pointer;" ng-click="printTable()" id="dayin">打印</a> -->
+								<a style="cursor: pointer;" ng-click="page.downloadExcelFile()" id="exportId">导出</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><!-- <label class="term_label">目的站点： --></label>
+                       	</td>
+						<td><!-- <div class="form_select">
+                              <select ng-model="query.endOrgId"  ng-options="obj.orgId as obj.orgName for  obj in orgInfo  ">
+                             </select>
+                            </div> --></td>
+						<td width="100"></td>
+						<td></td>
+						
+						
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+    
+                <my-Adv-Table 
+                isShowSeq="false" 
+                isMultiSelect="true" 
+                isShowCheck="true" 
+                isFilter="true" 
+                isSum="true" 
+                width="2280px"
+                id="orderId" 
+                head='[
+                {"name":"运单号","code":"trackingNum","width":"110"},
+                {"name":"入库时间","code":"stockInTime","width":"140"},
+                {"name":"入库网点","code":"orgIdName","width":"110"},
+                {"name":"在库时长","code":"stockDuration","width":"110"},
+                {"name":"发货人","code":"consignorLinkmanName","width":"110"},
+                {"name":"发货人电话","code":"consignorBill","width":"110"},
+                {"name":"收货人省","code":"destProvinceName","width":"110"},
+                {"name":"收货人市","code":"destCityName","width":"110"},
+                {"name":"收货人区","code":"destCountyName","width":"110"},
+                {"name":"收货人","code":"consigneeLinkmanName","width":"110"},
+                {"name":"联系电话","code":"consigneeBill","width":"110"},
+                {"name":"货品","code":"products","width":"110"},
+                {"name":"总重量(kg)","code":"weight","isSum":"true","number":"1","width":"80"},
+                {"name":"总体积(方)","code":"volume","isSum":"true","number":"2","width":"80"},
+                {"name":"数量","code":"count","isSum":"true","width":"80"},
+                {"name":"交接方式","code":"deliveryTypeName","width":"110"},
+                {"name":"付款方式1","code":"paymentTypeName","width":"80"},
+                {"name":"金额(元)","code":"cashMoneyString","isSum":"true","width":"80","number":"2"},
+                {"name":"付款方式2","code":"paymentType2Name","width":"80"},
+                {"name":"金额(元)","code":"cashMoney2String","isSum":"true","width":"80","number":"2"},
+                {"name":"贷款(元)","code":"collectingMoneyString","isSum":"true","width":"80","number":"2"},
+                {"name":"运费(元)","code":"freightString","isSum":"true","width":"80","number":"2"}
+                ]'> 
+                </my-Adv-Table>
+          </div>
+		
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="deliveyInventoryCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

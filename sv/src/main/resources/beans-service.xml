@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="svDemo" class="com.wo56.business.demo.DemoSV" />
+	<!-- intf START -->
+	<!-- ROUTE -->
+	<bean id="routeTF" class="com.wo56.business.route.intf.RouteTF" />
+	 <bean id="graphRouteSV" class="com.wo56.business.route.impl.GraphRouteSV" />
+	 <bean id="routeTowardsSV" class="com.wo56.business.route.impl.RouteTowardsSV" />
+	<bean id="routeAreaRelCfgSV" class="com.wo56.business.route.impl.RouteAreaRelCfgSV" />
+	 
+	<!-- ORD -->
+	 <bean id="ordOrdersInfoSV" class="com.wo56.business.ord.impl.OrdOrdersInfoSV" />
+	<bean id="ordStockTF" class="com.wo56.business.ord.intf.OrdStockTF" />
+
+	<!-- <bean id="ordGoodsDetailSV" class="com.wo56.business.ord.impl.OrdGoodsDetailSV" />
+	<bean id="ordGoodsDetailTF" class="com.wo56.business.ord.intf.OrdGoodsDetailTF" /> -->
+	<!-- CM -->
+	<bean id="cmCustomerTF" class="com.wo56.business.cm.intf.CmCustomerTF" />
+	<bean id="cmVehicleTF" class="com.wo56.business.cm.intf.CmVehicleInfoTF" />
+	<!-- <bean id="cmOrgNoteTF" class="com.wo56.business.cm.intf.CmOrgNoteTF" /> -->
+	<bean id="cmUserInfoTF" class="com.wo56.business.cm.intf.CmUserInfoTF">
+		<property name="cmUserSv" ref="cmUserSv"></property>
+		<!-- <property name="cmServAreaInstTF" ref="cmServAreaInstTF"></property> -->
+	</bean>
+	<bean id="cmDriverInfoTF" class="com.wo56.business.cm.intf.CmDriverInfoTF" />
+	<!-- <bean id="cmCarrierCompanyTF" class="com.wo56.business.cm.intf.CmCarrierCompanyTF" /> -->
+	<!-- <bean id="cmServiceSV" class="com.wo56.business.cm.impl.CmServiceInstSV" />  -->
+	<bean id="cmUserSv" class="com.wo56.business.cm.impl.CmUserSV" />
+	<!-- <bean id="cmServAreaInstSV" class="com.wo56.business.cm.impl.CmServAreaInstSV" />
+	<bean id="cmServiceInstSV" class="com.wo56.business.cm.impl.CmServiceInstSV" /> -->
+	<!-- <bean id="cmServAttrInstSV" class="com.wo56.business.cm.impl.CmServAttrInstSV" /> -->
+	<bean id="cmUserOrgRelSV" class="com.wo56.business.cm.impl.CmUserOrgRelSV" />
+
+	<bean id="cmUserOrgRelTF" class="com.wo56.business.cm.intf.CmUserOrgRelTF">
+		<property name="userOrgRelSV" ref="cmUserOrgRelSV"></property>
+	</bean>
+	<!-- <bean id="cmServiceInstTF" class="com.wo56.business.cm.intf.CmServiceInstTF">
+		<property name="cmServiceInstSV" ref="cmServiceInstSV"></property>
+		<property name="cmServAttrInstTF" ref="cmServAttrInstTF"></property>
+	</bean> -->
+
+	<!-- <bean id="cmServAttrInstTF" class="com.wo56.business.cm.intf.CmServAttrInstTF">
+		<property name="cmServAttrSV" ref="cmServAttrInstSV"></property>
+	</bean>
+	<bean id="cmServAreaInstTF" class="com.wo56.business.cm.intf.CmServAreaInstTF">
+		<property name="cmServAreaInstSV" ref="cmServAreaInstSV"></property>
+	</bean> -->
+	
+	<!-- BASE -->
+	<bean id="selectCityTF" class="com.wo56.business.common.intf.SelectCityTF" />
+	<bean id="selectDataTF" class="com.wo56.business.common.intf.SelectStaticDataTF" />
+	<bean id="commonExportTF" class="com.wo56.business.common.intf.CommonExportTF" />
+
+	<bean id="tennatDataConfigTF" class="com.wo56.business.base.intf.TennatDataConfigTF" />
+	<bean id="tennatDataConfigSV" class="com.wo56.business.base.impl.TennatDataConfigSV" />
+
+
+	<!-- SYS -->
+	<bean id="portalBusiTF" class="com.wo56.business.sys.intf.PortalBusiTF"></bean>
+	<!-- <bean id="sysConnectTF" class="com.wo56.business.sys.intf.SysConnectTF"></bean> -->
+	<bean id="sysRoleTF" class="com.wo56.business.sys.intf.SysRoleTF"></bean>
+	<bean id="sysRoleOperRelTF" class="com.wo56.business.sys.intf.SysRoleOperRelTF"></bean>
+	<bean id="sysRoleOperRelSV" class="com.wo56.business.sys.impl.SysRoleOperRelSV"></bean>
+
+	<!-- <bean id="sysShortcutSV" class="com.wo56.business.sys.impl.SysShortcutSV"></bean> -->
+	<!-- <bean id="indexBusiTF" class="com.wo56.business.sys.intf.IndexBusiTF">
+		<property name="sysShortcutSV" ref="sysShortcutSV"></property>
+	</bean> -->
+	<!-- <bean id="newsTF" class="com.wo56.business.sys.intf.NewsTF"></bean> -->
+
+	<!-- org -->
+	<bean id="organizationSV" class="com.wo56.business.cm.impl.OrganizationSV"></bean>
+	<bean id="organizationTF" class="com.wo56.business.cm.intf.OrganizationTF">
+		<property name="orgSV" ref="organizationSV"></property>
+	</bean>
+	
+	<!-- <bean id="cashManageSV" class="com.wo56.business.sche.cash.impl.CashManageSV" />
+	CM
+	<bean id="customerSV" class="com.wo56.business.cm.impl.CmCustomerSV" /> -->
+
+	<!-- ACCOUNT -->
+	<bean id="accountSV" class="com.wo56.business.ac.impl.AcAccountSV" />
+	<!-- SYS -->
+	<bean id="portalBusiSV" class="com.wo56.business.sys.impl.PortalBusiSV"></bean>
+	<bean id="sysRoleSV" class="com.wo56.business.sys.impl.SysRoleSV"></bean>
+	<!-- <bean id="statisticTF" class="com.wo56.business.statistic.intf.StatisticTF" /> -->
+	<!-- SMS -->
+	<bean id="sysSmsSendSV" class="com.wo56.common.sms.impl.SysSmsSendSV" />
+	<bean id="baseSmsSV" class="com.wo56.common.sms.impl.BaseSmsSV"></bean>
+	<bean id="sysSmsTF" class="com.wo56.common.sms.intf.SysSmsTF">
+		<property name="sysSmsSendSV" ref="sysSmsSendSV"></property>
+	</bean>
+	<!-- sche -->
+	<!-- <bean id="productSV" class="com.wo56.business.sys.impl.ProductDefSV"></bean> -->
+	<!-- <bean id="sysProductTF" class="com.wo56.business.sys.intf.ProductDefTF">
+		<property name="productSV" ref="productSV"></property>
+	</bean> -->
+
+	<!-- SERVICE END -->
+
+	<!-- sche TF start -->
+	<!-- <bean id="scheTaskTF" class="com.wo56.business.sche.sche.intf.ScheTaskTF"></bean> -->
+	<bean id="indexTF" class="com.wo56.business.sche.index.intf.IndexTF"></bean>
+	<!-- sche TF end -->
+
+	<!-- sche service start -->
+	<!-- <bean id="scheTaskSV" class="com.wo56.business.sche.sche.impl.ScheTaskSV"></bean> -->
+
+
+	<!--sche 账户管理 -->
+	<!-- <bean id="cashManageTF" class="com.wo56.business.sche.cash.intf.CashManageTF" />
+	<bean id="timeOutTF" class="com.wo56.business.sche.timeout.intf.WayTimeOutTF"></bean> -->
+	<bean id="addressTF" class="com.wo56.business.sche.address.AddressTF"></bean>
+	<bean id="matchWeightTF" class="com.wo56.business.sche.match.MatchWeightTF"></bean>
+	<bean id="sysSmsSendTF" class="com.wo56.business.sys.intf.SysSmsSendTF"></bean>
+	<!-- 打印 -->
+	<!-- <bean id="printTF" class="com.wo56.business.sys.intf.SysPrintTF" /> -->
+
+	<bean id="sysBusiConfigTF" class="com.wo56.business.sys.intf.SysBusiConfigTF" />
+
+	<!-- 短信查询 -->
+	 <bean id="shortMessageTF" class="com.wo56.business.sys.intf.ShortMessageTF"></bean> 
+	 <bean id="sysShortMessageSV" class="com.wo56.business.sys.impl.SysShortMessageSV"></bean> 
+	<!-- app 云企 -->
+	<bean id="appPushBillRelatTF" class="com.wo56.business.app.intf.AppPushBillRelatTF"></bean>
+	<bean id="appPushBillRelatSV" class="com.wo56.business.app.impl.AppPushBillRelatSV"></bean>
+	<bean id="toAppYunQiTF" class="com.wo56.business.out.intf.ToAppYunQiTF" />
+	<bean id="toWeChatYunQiTF" class="com.wo56.business.out.intf.ToWeChatYunQiTF"/>
+
+
+	<!-- sys 云企 -->
+	<bean id="sysLoginLogSV" class="com.wo56.business.sys.impl.SysLoginLogSV" />
+	<bean id="sysAttachSV" class="com.wo56.business.sys.impl.SysAttachSV" />
+	<bean id="sysBaseBusiSV" class="com.wo56.business.sys.impl.SysBaseBusiSV" />
+	<bean id="sysTenantRegisterSV" class="com.wo56.business.sys.impl.SysTenantRegisterSV" />
+	<bean id="sysTenantRegisterTF" class="com.wo56.business.sys.intf.SysTenantRegisterTF" />
+	<!-- 表头列设定 -->
+    <bean id="sysTableHeadConfigSV" class="com.wo56.business.sys.impl.SysTableHeadConfigSV"></bean>
+    <bean id="sysTableHeadConfigTF" class="com.wo56.business.sys.intf.SysTableHeadConfigTF">
+    	<property name="sysTableHeadConfigSV" ref="sysTableHeadConfigSV"></property>
+    </bean>
+    
+	
+
+	<!-- cm 云企 -->
+	<bean id="cmAddressTF" class="com.wo56.business.cm.intf.CmAddressTF" />
+	<bean id="cmAddressSV" class="com.wo56.business.cm.impl.CmAddressSV" />
+	<bean id="cmUserInfoPullSV" class="com.wo56.business.cm.impl.CmUserInfoPullSV" />
+	<bean id="cmUserInfoPullTF" class="com.wo56.business.cm.intf.CmUserInfoPullTF" />
+	<bean id="cmUserInfoYunQiTF" class="com.wo56.business.cm.intf.CmUserInfoYunQiTF" />
+	<bean id="cmUserInfoYunQiSV" class="com.wo56.business.cm.impl.CmUserInfoYunQiSV" />
+	<bean id="cmMailListTF" class="com.wo56.business.cm.intf.CmMailListTF" />
+	<bean id="cmMailListSV" class="com.wo56.business.cm.impl.CmMailListSV" />
+	<bean id="cmPullBlackSV" class="com.wo56.business.cm.impl.CmPullBlackSV" />
+	<bean id="specialLineCompanyNexusTF" class="com.wo56.business.cm.intf.SpecialLineCompanyNexusTF" />
+	<bean id="pullBlackCarrierTF" class="com.wo56.business.cm.intf.PullBlackCarrierTF" />
+	<bean id="cmCustomerYQTF" class="com.wo56.business.cm.intf.CmCustomerYQTF"></bean>
+	<bean id="cmCustomerYQSV" class="com.wo56.business.cm.impl.CmCustomerYQSV"></bean>
+	<bean id="cmAreaSV" class="com.wo56.business.cm.impl.CmAreaSV"></bean>
+	<bean id="cmAreaTF" class="com.wo56.business.cm.intf.CmAreaTF"></bean>
+	<!-- org 云企 -->
+	<bean id="organizationYunQiSV" class="com.wo56.business.cm.impl.OrganizationYunQiSV" />
+	<bean id="organizationYunQiTF" class="com.wo56.business.cm.intf.OrganizationYunQiTF" />
+
+	<!-- ac 云企 -->
+	<bean id="acPaymentMethodSV" class="com.wo56.business.ac.impl.AcPaymentMethodSV" />
+	<bean id="acPaymentMethodTF" class="com.wo56.business.ac.interfaces.AcPaymentMethodTF" />
+	<bean id="acWalletRelSV" class="com.wo56.business.ac.impl.AcWalletRelSV" />
+	<bean id="acWalletRelTF" class="com.wo56.business.ac.interfaces.AcWalletRelTF" />
+	<bean id="acAccountWalletTF" class="com.wo56.business.ac.interfaces.AcAccountWalletTF" />
+	<bean id="acAccountWalletSV" class="com.wo56.business.ac.impl.AcAccountWalletSV" />
+	<bean id="ordersInfoTF" class="com.wo56.business.ord.intf.OrdOrdersInfoTF" />
+	<bean id="acMyWalletTF" class="com.wo56.business.ac.interfaces.AcMyWalletTF" />
+	<bean id="acMyWalletSV" class="com.wo56.business.ac.impl.AcMyWalletSV" />
+	<!--ord 云企 -->
+	<bean id="ordOpLogYunQiTF" class="com.wo56.business.ord.intf.OrdOpLogYunQiTF" />
+	<bean id="orderInfoTF" class="com.wo56.business.ord.intf.OrderInfoTF" />
+	<bean id="orderInfoSV" class="com.wo56.business.ord.impl.OrderInfoSV" />
+	<bean id="orderFeeRuleSV" class="com.wo56.business.ord.impl.OrderFeeRuleSV" />
+	<bean id="ordIndexStatisticsTF" class="com.wo56.business.ord.intf.OrdIndexStatisticsTF" />
+	<bean id="ordLogNewTF" class="com.wo56.business.ord.intf.OrdLogNewTF" />
+	<bean id="orderFeeRuleTF" class="com.wo56.business.ord.intf.OrderFeeRuleTF" />
+	<bean id="ordOrdersWebTF" class="com.wo56.business.ord.intf.OrdOrdersWebTF" />
+	
+	<bean id="orderInfoChildSV" class="com.wo56.business.ord.impl.OrderInfoChildSV" />
+	<bean id="orderInfoChildTF" class="com.wo56.business.ord.intf.OrderInfoChildTF" />
+	
+	<bean id="ordDepartInfoYqSV" class="com.wo56.business.ord.impl.OrdDepartInfoYqSV" />
+	<bean id="ordDepartInfoYqTF" class="com.wo56.business.ord.intf.OrdDepartInfoYqTF" />
+	<bean id="orderInfoTmsErrorTF" class="com.wo56.business.ord.intf.OrderInfoTmsErrorTF" />
+			
+	<!-- abutment -->
+	<bean id="toAbutmentYunQiTF" class="com.wo56.business.out.intf.ToAbutmentYunQiTF"></bean>
+	
+	<bean id="ordChildOpLogTF" class="com.wo56.business.ord.intf.OrdChildOpLogTF"></bean>
+	<bean id="toAppTF" class="com.wo56.business.out.intf.ToAppTF" />
+	
+</beans>

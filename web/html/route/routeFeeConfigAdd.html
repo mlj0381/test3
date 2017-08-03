@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="routeFeeConfigAddApp">
+<head>
+<title>众邦_线路费用新增</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}" />
+
+</head>
+<body ng-controller="routeFeeConfigAddCtrl" onload="setContentHeight()">
+	<!-- 异常处理 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 400px">
+		
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">归属组织：</label></td>
+						<td><div class="form_select ">
+                                <select ng-model="data.tenantId" ng-disabled="all" ng-options="obj.orgId as obj.orgName for obj in rootOrgInfo ">
+                            	</select>
+                            </div></td>
+						<td width="140"><label class="term_label">运输方式：</label></td>
+						<td><div class="form_select">
+							 <my-select id="data.carriageMode" code-type="AC_ROUTE_FEE_CONFIG@CARRIAGE_MODE" has-all="true"  url="" />
+						</div></td>
+						<td width="100"><label class="term_label">发车网点：</label></td>
+						<td><div class="form_select">
+                                <select ng-model="data.startOrgid" ng-disabled="all" ng-change="queryFacePoints(data.startOrgid)" ng-options="obj.orgId as obj.orgName for  obj in orgInfo ">
+                            	</select>
+                            </div>
+                        </td>
+						
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">到达网点：</label>
+				
+						</td>
+						<td>
+							<div class="form_select">
+                                <select ng-model="data.endOrgid" ng-disabled="all" ng-options="obj.endOrgId as obj.endOrgName for  obj in facePoints.items ">
+                            	</select>
+                            </div>
+						</td>
+						<td><label class="term_label">应收网点：</label>
+				</td>
+						<td><div class="form_select">
+                                <select ng-model="data.receiOrgid" ng-disabled="all" ng-options="obj.orgId as obj.orgName for  obj in orgInfo ">
+                            	</select>
+                            </div></td>
+						<td><label class="term_label">费用科目：</label>
+					</td>
+						<td><div class="form_select">
+                                <select ng-model="data.feeId"  ng-options="obj.feeId as obj.feeName for obj in acFeeConfig ">
+                            	</select>				</div></td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">计费方式：</label>
+					
+						</td>
+						<td>
+							<div class="form_select">
+								 <my-select id="data.countType" code-type="COUNT_TYPE" url=""  change="changeLimitTip(data.countType)" />
+							</div>
+						</td>
+						<td><label class="term_label">线路费类型：</label>
+						</td>
+						<td><div class="form_select">
+							 <my-select id="data.lfType" code-type="LF_TYPE"  url="" />
+						</div></td>
+						<td><label class="term_label">起始范围：</label>
+						</td>
+						<td>
+							<input class="form_term " ng-model="data.lowerLimit" type="text"  id="lowerLimit" onfocus="this.value=''"  value="重量:单位千克"/>
+						</td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">终止范围：</label>
+				
+						</td>
+						<td>
+							
+								<input class="form_term " ng-model="data.topLimit" type="text"  id="topLimit" onfocus="this.value=''" value="重量:单位千克" />
+							
+						</td>
+						<td><label class="term_label">最低价格：</label>
+						</td>
+						<td>
+							<input class="form_term " ng-model="data.minPrice" type="text" placeholder="单位:分" />
+						</td>
+						<td><label class="term_label">最高价格：</label>
+						</td>
+						<td>
+							<input class="form_term " ng-model="data.maxPrice" type="text" placeholder="单位:分"/>
+						</td>
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">公式：</label>
+						</td>
+						<td>
+							<input class="form_term" ng-model="data.formula" type="text" placeholder="计算金额：单位分"/>
+						</td>
+						<td></td>
+						<td colspan="3"></td>
+						
+						
+					</tr>
+					<tr>
+						
+						<td>
+							<label class="term_label">备注：</label>
+						</td>
+						<td colspan="5">
+							<input class="form_term " style="width: 95%" ng-model="params.linkPhone" maxlength="11"/>
+						</td>
+						
+						
+					</tr>
+					
+				</tbody>
+		</table>
+		<!-- <ul class="yic_n clearfix fl yic_sx">
+			<li class="yic_li fl"><label class="yic_label">归属组织：</label>
+				<div class="form_select_c fl " style="min-width:140px">
+                                <select ng-model="data.tenantId" ng-disabled="all" ng-options="obj.orgId as obj.orgName for obj in rootOrgInfo ">
+                            	</select>
+                            </div></li>
+			<li class="yic_li fl"><label class="yic_label">运输方式：</label>
+					<div class="form_select_c fl " style="min-width:140px">
+					 <my-select id="data.carriageMode" code-type="AC_ROUTE_FEE_CONFIG@CARRIAGE_MODE" has-all="true"  url="" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">发车网点：</label>
+				<div class="form_select_c fl " style="min-width:140px">
+                                <select ng-model="data.startOrgid" ng-disabled="all" ng-change="queryFacePoints(data.startOrgid)" ng-options="obj.orgId as obj.orgName for  obj in orgInfo ">
+                            	</select>
+                            </div></li>
+			<li class="yic_li fl"><label class="yic_label">到达网点：</label>
+				<div class="form_select_c fl " style="min-width:140px">
+                                <select ng-model="data.endOrgid" ng-disabled="all" ng-options="obj.endOrgId as obj.endOrgName for  obj in facePoints.items ">
+                            	</select>
+                            </div></li>
+			<li class="yic_li fl"><label class="yic_label">应收网点：</label>
+				<div class="form_select_c fl " style="min-width:140px">
+                                <select ng-model="data.receiOrgid" ng-disabled="all" ng-options="obj.orgId as obj.orgName for  obj in orgInfo ">
+                            	</select>
+                            </div></li>
+			<li class="yic_li fl"><label class="yic_label">费用科目：</label>
+					<div class="form_select_c fl " style="min-width:140px">
+                                <select ng-model="data.feeId"  ng-options="obj.feeId as obj.feeName for obj in acFeeConfig ">
+                            	</select>				</div></li>
+			<li class="yic_li fl"><label class="yic_label">计费方式：</label>
+					<div class="form_select_c fl " style="min-width:140px">
+					 <my-select id="data.countType" code-type="COUNT_TYPE" url=""  change="changeLimitTip(data.countType)" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">线路费类型：</label>
+					<div class="form_select_c fl " style="min-width:140px">
+					 <my-select id="data.lfType" code-type="LF_TYPE"  url="" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">起始范围：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.lowerLimit" type="text"  id="lowerLimit" onfocus="this.value=''"  value="重量:单位千克"/>
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">终止范围：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.topLimit" type="text"  id="topLimit" onfocus="this.value=''" value="重量:单位千克" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">最低价格：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.minPrice" type="text" placeholder="单位:分" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">最高价格：</label>
+				<div class="fl">
+					<input class="yic_input fl" ng-model="data.maxPrice" type="text" placeholder="单位:分"/>
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">公式：</label>
+					<div class="fl"  style="min-width:385px">
+					<input class="yic_input fl" ng-model="data.formula" type="text" placeholder="计算金额：单位分"/>
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label">备注：</label>
+				<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="data.remarks"  />
+				</div></li>
+		</ul> -->
+		<ul class="yic_n clearfix fl yic_sx" style="width: 100%">
+			<li class="yic_li fl"><label class="yic_label">提示：</label>
+				<div class="fl"  style="min-width:380px">
+				符号：+（加）、-（减）、*（乘）、/（除）、（）括号<br>
+				变量：W（重量）、V（体积）、N（件数）、F（楼层）、L（距离）、P（百分比）<br>
+				范围：起始（重量）< W <= 终止（重量）<br>
+				例如：支线费，20KG以内，首重3KG为12元，续重1KG为3元，则配置为：<br>
+				<div style="color:red">起始范围：0，终止范围：20，最低价格：12，最高价格：无<br>
+				公式：12+(W－3)*3</div>
+				</div></li>
+		</ul>
+	</div>
+
+	<div class="bottom_nav1">
+		<a href="javascript:void(0)" ng-click="doSave()" ng-show="showSave">保 存</a><a href="javascript:void(0)" ng-click="close()">取
+			消</a>
+	</div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="routeFeeConfigAddCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

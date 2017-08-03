@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="loginApp">
+<head>
+<title>联运汇首页</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/$tenantId$/public.css?v=${ver}"/>
+<link rel="stylesheet" type="text/css" href="css/$tenantId$/login.css?v=${ver}"/>
+<link rel="shortcut icon" href="/image/$tenantId$/32x32.ico" type="image/x-icon" />
+<style>
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, button, select, option, textarea, p, blockquote, th, td {padding: 0px;margin: 0px;color:#627691; font-family:"宋体"}
+*{margin:0;	padding:0;list-style-type: none;outline:medium}
+em,i{font-style: normal;}
+li{list-style-type:none;}
+.clear{clear: both;float: none;border: medium none;line-height:1px;}
+.clearfix:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+a{color:#000;text-decoration: none;}
+a:hover{ color:#f83148; text-decoration: none}
+em{color: red;font-family: "宋体";}
+img{ border:none}
+
+.fl{ float:left}
+.fr{ float: right}
+
+
+
+.lyh_body{background: url(image/lyh_bj.png) no-repeat 50% 30px #2994e2; padding-top:30px; text-align:center;}
+.sy_logo{ margin:10px auto 0; width:190px;}
+.sy_search{ margin-top:55px; height:55px;position:absolute; top:100px; margin-left:-332px; left:50%; width:664px;}
+
+.sy_nr{margin: 144px auto 0;}
+.sy_pwz{ font-size:14px; color:#fff; font-family:"Microsoft YaHei","Arial"; text-align:left; line-height:22px; width:664px; margin: 0 auto;}
+
+
+.btn-input1{ width:250px; height:55px; border:none; font-size:18px; color:#000;font-family:"Microsoft YaHei","Arial"; padding-left:26px;}
+.btn-input2{ width:89px; height:55px; border:none;box-shadow: 0 0px 0px #fff; font-size:18px; color:#000;font-family:"Microsoft YaHei","Arial"; padding-left:18px; margin-left:1px;}
+.btn-input1 option{font-size:18px;}
+
+.btn-input1::-webkit-input-placeholder { /* WebKit browsers */color:#b0b0b0;}
+.btn-input1::-moz-placeholder { /* Mozilla Firefox 4 to 18 */color:#b0b0b0;}
+.btn-input1::-moz-placeholder { /* Mozilla Firefox 19+ */color:#b0b0b0;}
+.btn-input1::-ms-input-placeholder { /* Internet Explorer 10+ */color:#b0b0b0;}
+
+.btn-search{font-size: 18px;color: #FFF;background-color: #e4451b; cursor: pointer; height: 55px; border: none; width: 110px;font-family:"Microsoft YaHei","Arial"; margin-left:10px;}
+.btn-search:hover{background-color: #ed4d23;}
+.lyh_footer{ font-size:12px; color:#fff;font-family:"Microsoft YaHei","Arial"; text-align:center; width:600px; margin:40px auto 30px; }
+.floata .sy_pwz{display: none;}
+
+
+html{ _background-image:url(about:blank); _background-attachment:fixed;} 
+* html .floata{ position:absolute; _top:expression(documentElement.scrollTop-0);} 
+.floata{ position:fixed; z-index:999999; top:0px; width:100%;height:72px; background:#2485ca;} 
+.floata .sy_search{ margin-top:8px;top:0;}
+
+.lyh_list{ width:664px; margin:0 auto; background:#ffffff; margin-bottom:10px;}
+.lyh_list_h2{ font-size:18px; color:#2994e2;font-family:"Microsoft YaHei","Arial"; background:#f3faff; height:50px; display:block; line-height:50px; font-weight:normal; padding-left:14px;text-align: left;}
+.lyh_list_span1,.lyh_list_span2,.lyh_list_em,.lyh_list_ul td{ font-size:14px; color:#555555;font-family:"Microsoft YaHei","Arial";}
+.lyh_list_span1{ padding-left:7px;}
+.lyh_list_span2{ margin-left:20px;}
+.lyh_list_ul{background: url(image/xt1.jpg) no-repeat 127px 0px;}
+.lyh_list_ul,.lyh_list_ul1{ padding-bottom:28px;}
+.lyh_list_ul li{ border-bottom:1px solid #f0f0f0; line-height:40px; text-align:left;}
+.lyh_list_ul td{ border-bottom:1px solid #f0f0f0; line-height:26px; padding: 10px 0;}
+.lyh_list_em{ color:#2994e2;}
+
+.xt_1{border-left: 1px solid #f0f0f0;}
+.yuand{background: #d5d5d5;width: 10px;height: 10px;border-radius:50%;display:block;margin: 0 auto;}
+.lyh_tdb{border-bottom: 1px solid #fff!important;}
+.hly_red{background: #e4451b!important;}
+.red{color: #e4451b!important;}
+.pl_10{padding-left: 10px;}
+.ng-hide{display: none !important;}
+.form_select {
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    background: url(../../image/$tenantId$/select-billing.png) no-repeat right #fff;
+    display: inline-block;
+    margin-right: 1px;
+   }
+  .form_select select {
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+    border-radius: 1px;
+    background: transparent;
+    border: none;
+}
+</style>
+
+
+
+</head>
+
+<body class="lyh_body"  ng-controller="loginCtrl" ng-init="genCode();">
+<div class="lyh_bj" id="nrxs">
+	<img class="sy_logo" src="image/sy_logo.png" width="190" height="64" alt="">
+	<div class="sy_nr" style="min-height:300px;">
+		<!--查询隐藏 开始 -->
+		<p class="sy_pwz"  id="nryc" >1、以下专线支持在线查单：<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;南哥物流-广东专线，乐达物流-江西专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;合丰物流-云南专线，巨杰物流-安徽专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;正佳物流-浙江专线，远行物流-湖南专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;顺风车物流-福建专线，鸿吉物流-海南专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;庆隆物流-山东专线，途顺物流-山西专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;东邦物流-河北专线，安中物流-湖北专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;秦鼎物流-陕西专线，华邦物流-内蒙古专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;旭阳升物流-北京、天津专线，公正物流-河南专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;亿航物流-四川、重庆专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;广西大本营-广西专线；<br />
+		2、以下专线后续支持在线查单：<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;东升物流-贵州专线，速邦物流-东三省专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;吉龙物流-港澳台专线，路军物流-新疆专线，<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;诚胜盛物流-江苏、上海专线<br />
+		</p>
+		<!--查询隐藏 结束 -->
+	
+		<!--查询显示 内容 开始 -->
+		<!-- <div ng-repeat="a in trackingNumList">
+		  <div class="lyh_list">
+			<h2 class="lyh_list_h2" ng-cloak>【{{a[0].trackingNumString}}】运单跟踪</h2>
+			<ul class="lyh_list_ul" ng-repeat="o in a">
+				<li>
+					<span class="lyh_list_span1" ng-cloak>{{o.createDate}}</span>
+					<span class="lyh_list_span2" ng-cloak>{{o.opContent}}</span>
+				</li>
+			</ul>
+		 </div>
+		</div>
+		 -->
+		<div class="ng-hide" ng-show="trackingNumList.length > 0">
+		  <div class="lyh_list clearfix" ng-repeat="a in trackingNumList">
+			<h2 class="lyh_list_h2" ng-cloak>【{{a[0].trackingNumString}}】运单跟踪</h2>
+			<div style="position: relative;margin: 0 26px;" >
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="lyh_list_ul" >
+				  <tr ng-repeat="o in a" >
+				  
+				    <td ng-if="$index == 0" width="88" class="lyh_tdb red" align="right" ng-cloak>{{o.time}}</td>
+				    <td ng-if="$index != 0" width="88" class="lyh_tdb" align="right" ng-cloak>{{o.time}}</td>
+				    <td ng-if="$index == 0" width="78" class="lyh_tdb"><span class="yuand hly_red"></span></td>
+				    <td ng-if="$index != 0" width="78" class="lyh_tdb"><span class="yuand"></span></td>
+				    <td ng-if="$index == 0" class="red pl_10" ng-cloak>{{o.opContent}}</td>
+				    <td ng-if="$index != 0" class="pl_10" ng-cloak>{{o.opContent}}</td>
+				    
+				    <td align="right" width="100" ng-cloak>{{o.yearTime}}</td>
+				  </tr>
+				</table>
+					
+			</div>
+		 </div>
+		</div>
+		
+		
+		<!--查询内容 结束 -->
+	</div>
+</div>
+<div class="pf">
+	<div class="sy_search ">
+			<div  class="form_select fl">
+				<select ng-model="consigneeBill" class="btn-input1" name="select" style="width: 155px">
+				    <option value="0" selected="selected">运单号</option>
+				    <option value="1">收货人电话</option>
+				</select>
+			</div>
+			<input ng-model="trackingNum" type="text" style="width: 220px" id="_trackingNum" class="btn-input1 fl" name="fname" placeholder="如：1100000011" />
+			<!-- <input ng-model="trackingNum" type="text" style="width: 220px" id="_trackingNum" class="btn-input1 fl" name="fname" placeholder="如：13800138000" />  收货人电话-->
+			<input type="text" class="btn-input2 fl"  id="_vaildCode" ng-model="vaildCode" required="" placeholder="验证码" />
+			<img ng-src='{{codeUrl}}' class="fl" style="cursor:pointer;"  ng-click="genCode()" alt="" width="78" height="55" />
+			<input class="btn-search fl" type="button" ng-click="submit()" onclick="document.getElementById('nrxs').style.display='block';document.getElementById('nryc').style.display='none';" value="运单查询">
+			<p class="sy_pwz" style="color:#FBFF00;padding-left: 0px;overflow: hidden;">(可下拉选择运单号、收货人电话查询运单信息)</p>
+	</div>
+	
+</div>
+
+
+
+
+
+<div class="lyh_footer">联系电话：400-830-5900  公司地址：广东省佛山市顺德区乐从镇新桂路205号联运汇电商物流园<br /> 
+Copyright &copy; 2015-2017,www.lyhewl.com,All rights reserved  <br />备案号：粤ICP备16109668号-1  </div>
+
+
+<script type="text/javascript"> 
+window.onscroll=function(){ 
+	if ($(document).scrollTop() > 280){  
+		//$("#pf_nav").show(); 
+		$(".pf").addClass('floata'); 
+	}else{ 
+		//$("#pf_nav").hide(); 
+		$(".pf").removeClass('floata'); 
+		} 
+	} 
+</script>
+		<!--[if !IE]> -->
+	    <script src='js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="js/jquery/jquery.min.js?v=${ver}"></script>
+		<script type="text/javascript" src="js/jquery.hotkeys.js?v=${ver}"></script>
+		<script type="text/javascript" src="js/base64.js"></script>
+		<script type="text/javascript" src="js/md5.js"></script>
+		<script type="text/javascript" src="js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="loginBillingCtrl.js?v=${ver}"></script>
+	
+</body>
+</html>

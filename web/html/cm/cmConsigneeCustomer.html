@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="cmConSigneeCustomerApp">
+	<head>
+	    <title>众邦_收货人管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="众邦"/> 
+		<meta name="description" content="众邦" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}"/>	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}"/>
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}"/>
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}"/>
+        
+</head>
+	<body ng-controller="cmConSigneeCustomerCtrl" style="overflow: hidden;" onload="setContentHegthDelay()">
+        <!-- 问题处理-回显 -->
+         <!-- 问题处理-回显 -->
+           <div class="billing_1 clearfix pb_20 mt_20" >
+        		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody><tr>
+						<td width="100"><label class="term_label">收货方：</label>
+                    	</td>
+						<td><input class="form_term " ng-model="data.name" maxlength="10"/>
+                       </td>
+						<td width="100"><label class="term_label">联系手机：</label>
+						</td>
+						<td>
+                   		 <input class="form_term " ng-model="data.telephone" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+                        </td>
+						<td width="100"><label class="term_label">网点：</label>
+                    	</td>
+						<td><div class="form_select " >
+                               <select ng-model="data.orgId"
+									ng-options="obj.orgId as obj.orgName for  obj in orgInfo.items ">
+								</select>
+                        </div>
+						</td>
+						<td>
+							<div class="bottom_search search_button" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a><a class="qink" href="javascript:void(0);" ng-click="clear();">清空</a></div>
+							
+						</td>
+					</tr>
+					
+				</tbody>
+		</table>
+                
+                 <div class="search_nr clearfix mt_20">
+                <div class="bottom_nav pb_20 bottom_nav_search clearfix">
+	                <h2>查询结果</h2>
+	                <a class="button ml_10 newly" href="javascript:void(0)" ng-click="toSave()"><i class="button_icon button_icon dw_newly"></i>新增收货人</a>
+	                 <a class="button ml_10 newly" href="javascript:void(0)" ng-click="update()"><i class="button_icon button_icon dw_newly"></i>修改收货人</a>
+	                <a class="button ml_10 delete" href="javascript:void(0)" ng-click="doDel()"><i class="button_icon button_icon dw_delete"></i>删除收货人</a>
+                </div>
+                  <my-Adv-Table 
+                isShowSeq="false" 
+                isMultiSelect="false" 
+                isShowCheck=true 
+                width="100%"
+                isFilter="false" 
+                isSum="false" 
+                id="id" 
+                head='[
+                {"name":"收货方","code":"name","width":"15%"},
+                {"name":"联系人","code":"linkmanName","width":"15%"},
+                {"name":"联系手机","code":"telephone","width":"15%"},
+                {"name":"客服号码","code":"bill","width":"15%"},
+                {"name":"归属网点","code":"orgName","width":"20%"},
+                {"name":"详细地址","code":"address","width":"16%"}
+                ]'>
+                </my-Adv-Table>
+               <!--  <my-table>
+                		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="waybill_table_list">
+                                <thead>
+                                  <tr>
+                                    <th style="width:50px" class="search_list_border"><div class="controls"><input class="none" id="checkbox" type="checkbox"  ng-click="selectAll();" name="checkbox"><label for="checkbox"></label></div></th>
+                                    <th width="20%">收货方</th>
+                                    <th width="25%">联系人</th>
+                                    <th width="23%">联系手机</th>
+                                    <th width="20%">客服号码</th>
+                                    <th width="20%">归属网点</th>
+                                    <th width="20%">详细地址</th>
+                                    <th width="20%">操作</th>
+                                  </tr>
+                                </thead>
+                       
+                                <tbody>
+                                  <tr ng-class="{'search_list_tr':$index%2==1}"   class="ng-cloak"  ng-repeat="o in page.data.items" ng-click="selectOne(o.id)">
+                                    <td style="width:50px" class="search_list_border"><div class="controls"><input id="checkbox{{o.id}}" class="none" value="{{o.id}}" type="checkbox" ng-click="selectOne(o.id)" name="check-1" ><label for="check-1"></label></div></td>
+                                    <td width="20%">{{o.name}}</td>
+                                    <td width="25%">{{o.linkmanName}}</td>
+                                    <td width="23%">{{o.telephone}}</td>
+                                    <td width="20%">{{o.bill}}</td>
+                                    <td width="20%">{{o.orgName}}</td>
+                                    <td width="20%">{{o.address}}</td>
+                                    <td width="20%">
+                                 	   <a href="javascript:void(0)" ng-click="toUpdate(o.id)">修改</a>
+                                 	</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                    
+             </my-table> -->
+                
+		</div>
+        </div>
+ 		<!-- <script type="text/javascript" src="../js/x.js"></script> -->
+        <!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="cmConSigneeCustomerCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

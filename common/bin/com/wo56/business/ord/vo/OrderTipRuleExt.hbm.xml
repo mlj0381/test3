@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-12 11:55:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.wo56.business.ord.vo.OrderTipRuleExt" table="order_tip_rule_ext">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="tipId" type="java.lang.Long">
+			<column name="TIP_ID" not-null="true" />
+		</property>
+		<property name="minWieght" type="java.lang.String">
+			<column name="MIN_WIEGHT" length="50">
+				<comment>最小 单位：kg</comment>
+			</column>
+		</property>
+		<property name="maxWieght" type="java.lang.String">
+			<column name="MAX_WIEGHT" length="50">
+				<comment>最大 单位：kg</comment>
+			</column>
+		</property>
+		<property name="fee" type="java.lang.Long">
+			<column name="FEE">
+				<comment>区间费用 单位：元</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

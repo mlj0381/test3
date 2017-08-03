@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="mapShowApp">
+<head>
+<title>调度任务-地址库查询</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/$tenantId$/master.css?v=${ver}" />
+	<link href="../../css/$tenantId$/font-awesome.css?v=${ver}" rel="stylesheet">
+	
+
+</head>
+<body ng-controller="mapShowCtrl" onload="setContentHeight()">
+	
+<div id="container" style="height: 500px; width:100%; margin: 0 auto"></div>
+
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script src="../../js/highchartmap/highcharts.js"></script>
+	<script src="../../js/highchartmap/map.js"></script>
+	<!--<script src="http://code.highcharts.com/maps/highmaps.js"></script>-->
+	<script src="../../js/highchartmap/data.js"></script>
+	<script src="../../js/highchartmap/drlldown.js"></script>
+	<script type="text/javascript" src="../../js/highchartmap/cn-china-by-peng8.js"></script>
+		
+	<script type="text/javascript" src="mapShowCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

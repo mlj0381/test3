@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-18 10:56:55 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.wo56.business.cm.vo.CmCompanyInfo" table="cm_company_info">
+		<id name="tenantId" type="long">
+			<column name="TENANT_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="tenantCode" type="string">
+			<column name="TENANT_CODE" length="10">
+				<comment>&#185;&#171;&#203;&#190;&#177;&#224;&#194;&#235;</comment>
+			</column>
+		</property>
+		<property name="deptName" type="string">
+			<column name="DeptName" length="100">
+				<comment>&#195;&#251;&#179;&#198;</comment>
+			</column>
+		</property>
+		<property name="fullDeptName" type="string">
+			<column name="FullDeptName" length="100" />
+		</property>
+		<property name="deptQuickName" type="string">
+			<column name="DeptQuickName" length="50" />
+		</property>
+		<property name="provinceId" type="java.lang.Long">
+			<column name="Province_id" />
+		</property>
+		<property name="provinceName" type="string">
+			<column name="Province_name" length="50">
+				<comment>&#202;&#161;</comment>
+			</column>
+		</property>
+		<property name="cityName" type="string">
+			<column name="City_name" length="20" />
+		</property>
+		<property name="cityId" type="java.lang.Long">
+			<column name="City_id">
+				<comment>&#202;&#208;</comment>
+			</column>
+		</property>
+		<property name="countyName" type="string">
+			<column name="County_name" length="50" />
+		</property>
+		<property name="countyId" type="string">
+			<column name="County_id" length="12">
+				<comment>&#199;&#248;</comment>
+			</column>
+		</property>
+		<property name="manager" type="string">
+			<column name="Manager" length="20">
+				<comment>&#184;&#186;&#212;&#240;&#200;&#203;</comment>
+			</column>
+		</property>
+		<property name="managerphone" type="string">
+			<column name="Managerphone" length="50">
+				<comment>&#184;&#186;&#212;&#240;&#200;&#203;&#181;&#231;&#187;&#176;</comment>
+			</column>
+		</property>
+		<property name="deptType" type="string">
+			<column name="DeptType" length="20" />
+		</property>
+		<property name="deptPhone" type="string">
+			<column name="DeptPhone" length="50">
+				<comment>&#185;&#171;&#203;&#190;&#181;&#231;&#187;&#176;</comment>
+			</column>
+		</property>
+		<property name="deptAddress" type="string">
+			<column name="DeptAddress" length="200">
+				<comment>&#185;&#171;&#203;&#190;&#181;&#216;&#214;&#183;</comment>
+			</column>
+		</property>
+		<property name="labelnName" type="string">
+			<column name="LabelnName" length="100" />
+		</property>
+		<property name="shipDeptId" type="string">
+			<column name="ShipDeptID" length="20" />
+		</property>
+		<property name="pickAddress" type="string">
+			<column name="PickAddress" length="200" />
+		</property>
+		<property name="pickPhone" type="string">
+			<column name="PickPhone" length="200" />
+		</property>
+		<property name="superId" type="string">
+			<column name="SuperID" length="20" />
+		</property>
+		<property name="remark" type="string">
+			<column name="Remark" length="65535" />
+		</property>
+		<property name="state" type="byte">
+			<column name="State" not-null="true">
+				<comment>1&#161;&#162;&#211;&#208;&#208;&#167;
+					&#163;&#172;0&#161;&#162;&#206;&#222;&#208;&#167;</comment>
+			</column>
+		</property>
+		<property name="modifier" type="string">
+			<column name="Modifier" length="30" />
+		</property>
+		<property name="modifyDate" type="timestamp">
+			<column name="ModifyDate" length="19" />
+		</property>
+		<property name="yjMoney" type="float">
+			<column name="YJ_Money" precision="10" />
+		</property>
+		<property name="szMoney" type="float">
+			<column name="SZ_Money" precision="10" />
+		</property>
+		<property name="ycMoney" type="float">
+			<column name="YC_Money" precision="10" />
+		</property>
+		<property name="dshkPounDage" type="float">
+			<column name="DSHK_PounDage" precision="10" />
+		</property>
+		<property name="dshkPounDageLow" type="float">
+			<column name="DSHK_PounDage_Low" precision="10" />
+		</property>
+		<property name="dshkPounDageHigh" type="float">
+			<column name="DSHK_PounDage_High" precision="10" />
+		</property>
+		<property name="isWaitgivePounDage" type="float">
+			<column name="IsWaitgive_PounDage" precision="10" />
+		</property>
+		<property name="srReceiptPounDage" type="float">
+			<column name="SR_Receipt_PounDage" precision="10" />
+		</property>
+		<property name="swReceiptPounDage" type="float">
+			<column name="SW_Receipt_PounDage" precision="10" />
+		</property>
+		<property name="inSuredmoneyPounDage" type="float">
+			<column name="InSuredmoney_PounDage" precision="10" />
+		</property>
+		<property name="isOperateCenter" type="java.lang.Boolean">
+			<column name="IsOperateCenter" />
+		</property>
+		<property name="operateWeiPrice" type="float">
+			<column name="OperateWeiPrice" precision="9" />
+		</property>
+		<property name="operateVolPrice" type="float">
+			<column name="OperateVolPrice" precision="9" />
+		</property>
+		<property name="bankName" type="string">
+			<column name="BankName" length="50" />
+		</property>
+		<property name="bankAccount" type="string">
+			<column name="BankAccount" length="50" />
+		</property>
+		<property name="bankAddress" type="string">
+			<column name="BankAddress" length="100" />
+		</property>
+		<property name="hubId" type="string">
+			<column name="HubID" length="10" />
+		</property>
+		<property name="reportName" type="string">
+			<column name="ReportName" length="50" />
+		</property>
+		<property name="isSetNbjs" type="java.lang.Boolean">
+			<column name="IsSetNBJS" />
+		</property>
+		<property name="deptAttribute" type="java.lang.Byte">
+			<column name="DeptAttribute" />
+		</property>
+		<property name="dkwgtprice" type="java.lang.Long">
+			<column name="DKWgtprice" precision="10" scale="0" />
+		</property>
+		<property name="dkvolprice" type="float">
+			<column name="DKVolprice" precision="9" />
+		</property>
+		<property name="dkminprice" type="float">
+			<column name="DKMinprice" precision="9" />
+		</property>
+		<property name="opMinprice" type="float">
+			<column name="OpMinprice" precision="9" />
+		</property>
+		<property name="isAutoNumber" type="java.lang.Boolean">
+			<column name="IsAutoNumber" />
+		</property>
+		<property name="isLineJs" type="java.lang.Boolean">
+			<column name="IsLineJS" />
+		</property>
+		<property name="isSenMsgOfSh" type="java.lang.Boolean">
+			<column name="IsSenMsgOfSH" />
+		</property>
+		<property name="isSenMsgOfFh" type="java.lang.Boolean">
+			<column name="IsSenMsgOfFH" />
+		</property>
+		<property name="isHeadquarters" type="java.lang.Boolean">
+			<column name="IsHeadquarters" />
+		</property>
+		<property name="defaultPassWord" type="string">
+			<column name="DefaultPassWord" length="6" />
+		</property>
+		<property name="prefix" type="string">
+			<column name="Prefix" length="10" />
+		</property>
+		<property name="isNavigation" type="java.lang.Boolean">
+			<column name="isNavigation" />
+		</property>
+		<property name="logoUrl" type="string">
+			<column name="LogoUrl" length="50" />
+		</property>
+		<property name="isAudit" type="java.lang.Boolean">
+			<column name="IsAudit" />
+		</property>
+		<property name="auditName" type="string">
+			<column name="AuditName" length="20" />
+		</property>
+		<property name="auditDate" type="timestamp">
+			<column name="AuditDate" length="19" />
+		</property>
+		<property name="loginFileIndex" type="string">
+			<column name="LoginFileIndex" length="250" />
+		</property>
+		<property name="logFileIndex" type="string">
+			<column name="LogFileIndex" length="250" />
+		</property>
+		<property name="frozenAccount" type="float">
+			<column name="FrozenAccount" precision="9" />
+		</property>
+		<property name="tkccycle" type="java.lang.Integer">
+			<column name="TKCcycle" />
+		</property>
+		<property name="tkamount" type="java.lang.Integer">
+			<column name="TKAmount" />
+		</property>
+		<property name="smsAppId" type="string">
+			<column name="SmsAppID" length="50" />
+		</property>
+		<property name="isUseYw" type="java.lang.Byte">
+			<column name="isUseYW" />
+		</property>
+		<property name="updateDate" type="timestamp">
+			<column name="update_date" length="19">
+				<comment>&#184;&#252;&#208;&#194;&#202;&#177;&#188;&#228;</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

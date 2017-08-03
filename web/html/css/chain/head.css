@@ -1,0 +1,66 @@
+@charset "gb2312";
+body{ background:#DDDEE1;}
+/*header css定义*/
+.header{ height:70px; background:#4e6390; position:relative;z-index: 2;}
+.header .logo{ padding:8px 0 0 4%;position: absolute;left: 0;z-index: 10;}
+.header .user{ font-size:12px; color:#fff; line-height:16px;display: inline-block;white-space: nowrap; float:right; padding:5px 5% 0 34px;background-position:-499px 8px; height:60px;position: absolute;right: 0;z-index: 10;}
+.header .user img{ width:40px; border:2px solid #f9f9f9; margin-right:15px;}
+.header .user p{ color:#fff;text-align: center;}
+
+.block{ display:block; height:35px;}
+
+.header_nav a.nav_li_a:hover,.nav_hover{background: url(../../image/$tenantId$/nav_sj.png) no-repeat center bottom;;}
+.header_nav a.current,.header_nav a.nav_li_a:hover,.current:hover{background: url(../../image/$tenantId$/nav_sj.png) no-repeat center bottom;-webkit-transition: all .0s ease-out!important;
+    -moz-transition: all .0s ease-out!important;
+    -o-transition: all .0s ease-out!important;
+    transition: all .0s ease-out!important;}
+.header_nav a.nav_li_a span,.nav_hover span{ font-size:16px; color:#fff; line-height:26px; position:relative;height: 28px;display: block;}
+
+
+
+/*header 注销 css定义*/
+.cancel{ color:#fff; background:#e66045;border-radius:5px;font-size:12px; height:18px;display:inline-block; text-align:center; line-height:18px; margin:3px 3px 0;padding: 1px 5px;float: inherit!important;}
+.cancel:hover{ text-decoration:none; background:#cc5138; color:#fff;}
+
+
+/*header nav css定义*/
+.header_nav{ width:68%;z-index:9;position:absolute;/* padding:11px 0 0 0; position:absolute; margin:0 auto;margin-left: -31%;left: 50%;*/padding:8px 13% 0 19%;}
+.header_nav li.nav_li{ float:left;text-align:center; width:10%; height:64px;}
+.header_nav li.nav_li a.nav_li_a{text-decoration:none;text-decoration: none;display: block;margin: 0 auto;height: 64px;}
+.header_nav li.nav_li a.nav_li_a span {font-size: 15px;color: #fff;line-height: 20px;position: relative;}
+
+.icon_down{background-position:-414px 0px; width:13px; height:7px; display:block; position:absolute; right:-18px; bottom:5px;}
+
+.header_nav li.gray:hover a.nav_li_a{ pointer-events:none; border-bottom: none;}
+.gray .submenu{display:none}
+/*header submenu css定义动作*/
+.header_nav li:hover a.nav_li_a, .header_hover a.nav_li_a {background: url(../../image/$tenantId$/nav_sj.png) no-repeat center bottom;
+    -webkit-transition: all .0s ease-out!important;
+    -moz-transition: all .0s ease-out!important;
+    -o-transition: all .0s ease-out!important;
+    transition: all .0s ease-out!important;}
+    
+
+.submenu{ width:100%; left: 0;position:absolute;top:70px;z-index:9999;min-height:29px; background:#fff; padding-top:6px; text-align:center;padding-bottom: 6px;box-shadow: 0 2px 2px #BDBDBD/*  */;}
+.submenu a{ color:#4a5f6d;line-height:24px; font-size:13px; padding:0 10px; height:24px; display:inline-block; margin:0 5px;}
+.submenu a:hover{ text-decoration:none; background:#e66045;border-radius:20px; color:#fff;}
+
+
+.red{ color:#f7314a!important}
+
+.header_nav a.nav_qsj:hover{background: transparent!important;}
+.us_lb{height: 20px;/* overflow: hidden;left: 60px; position: absolute;*/z-index: 999;padding: 0px 6px;}
+.us_lb li{display:block;width: 100%;line-height:20px;height: 20px}
+.us_lb li a{color: #fff;font-size: 12px;}
+.us_lb:hover{height:auto;overflow:inherit;background: #fff;color: #000;border-radius: 2px;padding: 0px 6px;position: absolute;right: 0;}
+.us_lb:hover li{display: block!important;}
+.us_lb:hover li a{color: #000;}
+.us_lb:hover li a:hover{text-decoration: none;color: #ff0000;}
+.us_lb:hover .top_tj{border-top: 6px solid #000;}
+.top_tj{display: inline-block; width: 0px;margin-left: 5px;
+            height: 0px;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #fff;
+            font-size: 0px;
+            line-height: 0px;cursor: pointer;margin-top:6px;}   

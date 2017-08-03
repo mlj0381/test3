@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">none</property>
+		<property name="show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+
+		<!-- MYSQL5 -->
+		<property name="hibernate.dialect">com.framework.core.dialect.MySQLDBExtDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+ 		<property name="hibernate.connection.url">@jdbc.url@</property>
+ 		<property name="connection.useUnicode">true</property>
+ 		<property name="connection.characterEncoding">UTF-8</property>
+		<property name="hibernate.connection.username">@jdbc.user@</property>
+ 		<property name="hibernate.connection.password">@jdbc.password@</property>
+		<property name="hibernate.max_fetch_depth">2</property>
+		<property name="hibernate.jdbc.fetch_size">20</property>
+		<property name="hibernate.jdbc.batch_size">50</property>
+
+		<!-- cache and dialect -->
+		<!-- Enable the second-level cache -->
+		<property name="cache.use_second_level_cache">true</property>
+		<property name="cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
+		<property name="net.sf.ehcache.configurationResourceName">ehcache.xml</property>
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.min_size">1</property>
+		<property name="hibernate.c3p0.max_size">3</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.max_statements">100</property>
+		<property name="hibernate.c3p0.acquire_increment">2</property>
+		<property name="hibernate.c3p0.idle_test_period">20</property>
+
+		<!-- CORE -->
+		<mapping resource="com/framework/core/cache/vo/SysCacheRefresh.hbm.xml" />
+		<mapping resource="com/framework/core/cache/vo/SysStaticData.hbm.xml" />
+		<mapping resource="com/framework/core/cache/vo/SysCfg.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/SysIntf.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttp.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttpParam.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttpFilter.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/CfgHttpAccess.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/OpenAppDef.hbm.xml" />
+		<mapping resource="com/framework/core/interceptor/vo/SysUrl.hbm.xml" />
+		<mapping resource="com/framework/core/interceptor/vo/SysLockReq.hbm.xml" />
+		<mapping resource="com/framework/core/inter/vo/SysPostLog.hbm.xml" />
+		
+		<!-- COMPONENTS -->
+		<mapping resource="com/wo56/business/sys/vo/SysTenantDef.hbm.xml" />
+		<mapping resource="com/wo56/common/sms/vo/SysTenantExtend.hbm.xml" />
+		<mapping resource="com/framework/components/fdfs/vo/SysAttach.hbm.xml" />
+		<mapping resource="com/framework/components/match/vo/MatchChainDef.hbm.xml" />
+		<mapping resource="com/framework/components/match/vo/MatchSimilarRule.hbm.xml" />
+		<mapping resource="com/framework/components/match/vo/MatchResults.hbm.xml" />
+		
+		<!-- common -->
+		<mapping resource="com/framework/components/citys/Province.hbm.xml" />
+		<mapping resource="com/framework/components/citys/City.hbm.xml" />
+		<mapping resource="com/framework/components/citys/District.hbm.xml" />
+		<mapping resource="com/framework/components/citys/Street.hbm.xml" />
+		
+		<!-- CACHE -->
+		<mapping resource="com/wo56/business/org/vo/Organization.hbm.xml" />
+		<!-- <mapping resource="com/wo56/business/ac/vo/AcFeeConfig.hbm.xml" /> -->
+		<!-- <mapping resource="com/wo56/business/sys/vo/SysProductDef.hbm.xml" /> -->
+		
+		<!-- PAYMENT -->
+		<!-- <mapping resource="com/wo56/business/payment/vo/PaymentIntf.hbm.xml" />
+		<mapping resource="com/wo56/business/payment/vo/PayoutIntf.hbm.xml" /> -->
+		
+		<!-- PERMISSION -->
+		<mapping resource="com/wo56/business/sys/vo/SysEntity.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysMenu.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysRole.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysRoleGrant.hbm.xml" />
+		<mapping resource="com/wo56/business/sys/vo/SysRoleOperRel.hbm.xml" />
+	<!-- 	<mapping resource="com/wo56/business/ord/vo/OrdOrderInfoPic.hbm.xml"/> -->
+		<!-- orders -->
+		<mapping resource="com/wo56/business/ord/vo/OrdBusiPerson.hbm.xml"/>
+		<mapping resource="com/wo56/business/ord/vo/OrdGoodsInfo.hbm.xml"/>
+		<mapping resource="com/wo56/business/ord/vo/OrdOrdersInfo.hbm.xml"/>
+		<mapping resource="com/wo56/business/ord/vo/OrdSignInfo.hbm.xml"/>
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoTmsError.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoTmsErrorHis.hbm.xml" />
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoChild.hbm.xml" />
+		
+		<mapping resource="com/wo56/business/ord/vo/OrderInfoChildSign.hbm.xml" />
+		
+		
+		
+		<mapping resource="com/wo56/business/cm/vo/CmArea.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>

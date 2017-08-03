@@ -1,0 +1,25 @@
+	<!-- 运单跟踪 开始 -->
+	<div class="waybill_title bt_h2"><h2 class="title_h2 yd_h22" style="padding-top: 0;"><i class="icon title_icon fl"></i>跟踪信息</h2></div>
+						<div class="yd_div">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="waybill_table_list" style="border-left: 1px solid #b7d3e7;">
+						  <thead>
+							<tr>
+								<th>操作</th>
+								<th>操作内容</th>
+								<th>操作时间</th>
+								<th>操作人</th>
+													
+								
+						  </tr>
+						  </thead>
+						  <tbody>
+						 <tr ng-repeat="o in showData.items">
+		                                    <td width="60" style="text-align: center;">{{o.opTypeName}}</td>
+		                                    <td  width="270" style="text-align: center;white-space: inherit; word-break: inherit;text-align: left;" title="{{o.opContent}}">{{o.opContent}}</td>
+		                                    <td width="120" style="text-align: center;font-size: 12px;">{{o.createDate}}</td>
+		                                    <td width="100">{{o.opName}}</td>
+		                                  </tr>
+						  </tbody>
+						</table>
+				</div>
+		<!-- 运单跟踪 结束 -->

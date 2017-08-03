@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="GeneralApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>服务商流水查询</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="一智通" />
+<meta name="description" content="一智通" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../../css/$tenantId$/master.css?v=${ver}">
+
+
+<script type="text/javascript" src="../../js/x.js?v=${ver}"></script>
+</head>
+<body ng-controller="GeneralCtrl" onload="setContentHeight()" style="overflow:hidden">
+	<div class="billing_1">
+		<div id="vehicle">
+			<div class="search">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table">
+					<tr>
+						<td width="150"><label class="control-label">公司名称：</label></td>
+						<td><div class="search_select w_146"> <select name="select" class="xl_z" ng-model="query.doObjId"  ng-disabled="all" ng-options="obj.tenantId as obj.name for obj in orgData.items" >
+								    <option value="">所有</option>
+						        </select></div>	</td>
+						<td width="100"><label class="control-label">提现状态：</label></td>
+						<td><div class="search_select w_146">
+								<my-select id="query.state" code-type="WITHDRAW_STS"
+									has-all="true" default-value="-1" url="" />
+							</div></td>
+						<td rowspan="2">
+							<div class="search_button">
+								<a class="search_button_ss" href="javaScript:void(0)" ng-Enter
+									ng-click="doQuery()">搜索</a> <a class="search_button_cz"
+									href="javaScript:void(0)" ng-click="clear();">重置</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+					    <td width="150"><label class="control-label">签收开始时间：</label></td>
+						<td><input my-Date-Picker class="input_box" ng-model="query.signTimeBegin"
+							type="text" /></td>
+						<td width="100"><label class="control-label">签收结束时间：</label></td>
+						<td><input my-Date-Picker class="input_box" ng-model="query.signTimeEnd"
+							type="text" /></td>
+						<td width="100"></td>
+						<td></td>
+					</tr>
+				</table>
+
+			</div>
+			<!--任务列表 start-->
+			<div class="waybill_title clearfix"><div class="title_h2 fl sf_ls"><i class="icon title_icon fl"></i><span class="sf_zh">账户余额：{{sf.waitCash}}</span><span class="sf_zh">申请提现：{{sf.getCash}}</span><span class="sf_zh">已提现：{{sf.hasCash}}</span></div></div>
+			<my-table>
+			<div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="search_lista" style="width: 2000px;">
+				<thead id="tb1">
+					<tr>
+						<th width="100">合作商名称</th>
+						<th width="100">联系方式</th>
+						<th width="100">运单号</th>
+						<th width="80">科目</th>
+						<th width="80" >金额</th>
+						<th width="120">签收时间</th>
+						<th width="100">提现状态</th>
+						<th width="120">申请时间</th>
+						<th width="100">合作商名称</th>
+						<th width="120">审批时间</th>
+						<th width="100">审批人</th>
+						<th width="100">打款人</th>
+						<th width="120">核销码</th>
+						<th width="100">核销金额</th>
+						<th width="100">提现编号</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class="{'search_list_tr':$index%2==0}" class="ng-cloak"
+						ng-repeat="o in page.data.items" ng-dblclick="toDetailAllInfo(o)">
+						<td width="100">{{o.doObjName}}</td>
+						<td width="100">{{o.doTel}}</td>
+						<td width="100">{{o.bussId}}</td>
+						<td width="80">{{o.feeName}}</td>
+						<td width="80">{{o.totalMoney}}</td>
+						<td width="120">{{o.signTime}}</td>
+						<td width="100">{{o.stateName}}</td>
+						<td width="120">{{o.createTimeStr}}</td>
+						<td width="100">{{o.createName}}</td>
+						<td width="120">{{o.auditDate}}</td>
+						<td width="100">{{o.auditMan}}</td>
+						<td width="100">{{o.verifyPerson}}</td>
+						<td width="120">{{o.verifyId}}</td>
+						<td width="100">{{o.verifyMoney}}</td>
+						<td width="100">{{o.appId}}</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<!--任务列表 end--> </my-table>
+		</div>
+	</div>
+	<!--[if !IE]> -->
+	<script src='../../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../../js/md5.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+	<script type="text/javascript" src="../../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="ComCashTotalCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

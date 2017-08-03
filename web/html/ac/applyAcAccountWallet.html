@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	ng-app="applyAcAccountWalletApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css">
+	<link type="text/css" rel="stylesheet" href="../css/angucomplete/angucomplete.css?v=${ver}" />
+<link type="text/css" rel="stylesheet" href="../css/angucomplete/structure.css?v=${ver}" />
+<style>
+.form_billing {
+	border-radius: 1px;
+}
+
+.ui-select {
+	width: 100%;
+	width: -moz-calc(100% - 2px);
+	width: -webkit-calc(100% - 2px);
+	width: calc(100% - 2px)
+}
+
+.ui-select, .ui-select select {
+	height: 24px !important;
+	min-height: 24px !important;
+}
+
+.ui-select select {
+	
+}
+</style>
+
+</head>
+<body ng-controller="applyAcAccountWalletCtrl" class="ng-cloak">
+
+	<!-- 拉包工 新增 开始 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 300px">
+		<div class="billing_list">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="search_table search_term" style="width: 90%; margin: 0 auto;">
+				<tr>
+					<td width="110"><label class="term_label">拉包工帐号：</label></td>
+					<td width="266">
+						<!-- <input  maxlength="15" ng-model="save.loginAcct" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/> -->
+						<div class="goodsli">
+							<!-- <div class="fl w_mn" style="position: relative;float: left;" ng-show="applySee == 1">
+								<angucomplete id="user_select" placeholder="请输入拉包工账号" pause="100"
+									selectedobject="selectVehicle" localdata="userInfoData"
+									ng-keyUp="getPullName()" searchfields="loginAcct" ng-Enter="getPullName()"
+									titlefield="loginAcct,userName" minlength="1" inputclass="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched "
+									matchclass="highlight" callback="userCallBack(name)" />
+							</div> -->
+							<input  maxlength="15" ng-model="query.loginAcct" placeholder="请输入拉包工账号，按Enter查询" ng-Enter-Function="getPullName()" ng-blur="getPullName()" ng-disabled="isSee == 1 || passSee == 1" class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched"/>
+							<!-- <div class="fl" ng-class="{is_read:!isRead}" style="line-height: 32px;color: #444;padding: 0 10px;">{{o.loginAcct}} {{o.loginAcct}}</div> -->
+						</div>
+					</td>
+					<td width="110"><label class="term_label">拉包工：</label></td>
+					<td width="266"><input maxlength="16" ng-model="query.userName" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td width="110"></td>
+					<td width="266"></td>
+					<td width="110"></td>
+					<td width="266"></td>
+				</tr>
+				<tr>
+					<td><label class="term_label">收款方式：</label></td>
+					<td>
+						<div class="ui-select">
+								<select ng-model="query.paymentTypeString" disabled="disabled"
+									ng-options="obj.codeValue as obj.codeName for obj in paymentDate.items ">
+									<option value="">所有</option>
+								</select>
+							</div>
+					</td>
+					<td><label class="term_label">卡名：</label></td>
+					<td><input maxlength="16" ng-model="query.bankCard" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td><label class="term_label">持卡人：</label></td>
+					<td><input maxlength="16" ng-model="query.bankHolder" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td><label class="term_label">帐号：</label></td>
+					<td><input maxlength="16" ng-model="query.accountNum" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+				</tr>
+				<tr>
+					<td><label class="term_label">已提现金额：</label></td>
+					<td><input maxlength="16" ng-model="query.alreadyPresentFee" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+					</td>
+					<td><label class="term_label">提现中金额：</label></td>
+					<td><input maxlength="16" ng-model="query.cashWithdrawalFee" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" /></td>
+					<td><label class="term_label">待提现金额：</label></td>
+					<td><input maxlength="16" ng-model="query.notPresentFee" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+					</td>
+					<td><label class="term_label">申请提现金额：</label></td>
+					<td><input maxlength="16" ng-model="query.applyFee" disabled="disabled"
+						class="form_billing w_b100 ng-pristine ng-valid ng-valid-maxlength ng-touched" />
+					</td>
+				</tr>
+
+
+			</table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="search_term"
+				style="width: 90%; margin: 0 auto; padding: 4px 0 !important;">
+				<tr>
+					<td width="110"></td>
+					<td colspan="7">
+						<div
+							style="border-top: 0px solid #f0f5fb; border-bottom: 0px solid #f0f5fb;">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0"
+								class="waybill_table_list"
+								style="border-right: 1px solid #b7d3e7;">
+								<thead>
+									<tr>
+										<th width="60" ng-show="applySee == 1" >
+											<div class="input_z">
+												<input ng-click="selectAll();" id="checkbox" class="none input_gx" name="checkbox" type="checkbox">
+												<label for="checkbox"></label>
+											</div>
+										</th>
+										<th>序号</th>
+										<th>费用类型</th>
+										<th>订单号</th>
+										<th>运单号</th>
+										<th>小费金额</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="waybill_table_listtr" ng-repeat="obj in acMyWalletData.items">
+										<td ng-show="applySee == 1">
+											<div class="input_z">
+												<input ng-click="selectObj(obj);" id="checkbox_{{obj.id}}"  class="none input_gx" name="checkbox_{{obj.id}}" type="checkbox" value="{{obj.id}}">
+												<label for="checkbox_{{obj.id}}"></label>
+											</div>
+										</td>
+										<td>{{$index+1}}</td>
+										<td>{{obj.state}}</td>
+										<td>{{obj.trackingNum}}</td>
+										<td>{{obj.orderNum}}</td>
+										<td>{{obj.amount}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" ng-show="passSee == 1 || isSee == 1"
+				class="search_table search_term" style="width: 90%; margin: 0 auto;">
+				<tr >
+					<td valign="top" width="110"><label class="term_label">审批备注：</label></td>
+					<td colspan="7"><textarea maxlength="200"
+							style="height: 90px; width: 100%; border: 1px solid #A1BBD1; border-radius: 2px; padding: 3px 4px;"
+							ng-model="query.remark"
+							class="form-control fl ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched"></textarea>
+					</td>
+
+				</tr>
+			</table>
+		</div>
+		<div class="bottom_nav1"
+			style="border-top: 1px dashed #cee1f1; padding-top: 20px; margin-top: 15px;">
+			<a href="javascript:void(0)" ng-click="doApply(1)" ng-show="applySee == 1">申请</a> 
+			<a href="javascript:void(0)" ng-click="doPass(1)" ng-show="passSee == 1">审批通过</a> 
+			<a href="javascript:void(0)" ng-click="doApply(3)"  ng-show="applySee == 1">申请并审批</a> 
+			<a href="javascript:void(0)" ng-click="doPass(2)" ng-show="passSee == 1">审批不通过</a> 
+			<a href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+	<!-- 拉包工 新增 结束 -->
+	
+	<!-- 确认订单 弹窗 开始 -->
+	<div class="popup" style="width: 500px; height: 240px; top: 20px; margin-left: -250px;" ng-show="isApllyOrPass">
+       		<div class="title"><h2 class="popup_bt">提示</h2><i href="javascript:void(0)" class="list_xl_icon icon" ng-click="closePass()"></i></div>
+            <div class="popup_content"><p class="popup_p" style="color: #ff0000;">确定将【{{query.userName}}】的费用审批通过</p></div>
+			<div class="clearfix xianlusz"><label class="list_label fl" style="width: 130px;">请填写审批备注：</label>
+			<textarea maxlength="200" style="height:90px; width:300px; border: 1px solid #d9e2ee;border-radius: 5px; padding:3px 4px;" ng-model="query.remark" class="form-control fl ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched"></textarea></div>
+            <div class="bottom_nav1" style="margin-top:10px;">
+				<a class="button ml_10 baoc" href="javascript:void(0)" ng-click="doApply(2)"><i class="button_icon button_icon dw_baoc"></i>审批通过</a>
+				<a href="javascript:void(0)" ng-click="closePass()">取 消</a>
+			</div>
+     </div>
+	 <!-- 确认订单 弹窗 结束 -->
+	 <!-- 透明背景 -->
+	 <div class="popup_bj" ng-show="isShow"></div>
+	
+	
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script TYPE="text/javascript" src="../js/autoComplemet/angular-touch.min.js"></script>
+	<script TYPE="text/javascript" src="../js/autoComplemet/angucompleteYQ.js"></script>
+	<script type="text/javascript" src="../js/table/tableCommon.js?v=${ver}"></script>
+	<script type="text/javascript" src="applyAcAccountWalletCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

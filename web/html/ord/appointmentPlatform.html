@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="appointmentPlatformApp"> 
+	<head>
+	    <title>${title}_提货管理 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <style >
+	        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+	    		display: none !important;
+			}
+    	</style>
+	</head>
+	<body ng-controller="appointmentPlatformCtrl" style="overflow:hidden" onload="setContentHeight()">
+        <div class="billing_1 clearfix pb_20 mt_20">
+        	<span ng-show='isFlag==1'>
+        	 <!-- 预约提货   start -->
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+				<tbody>
+					<tr>
+						<td width="100"><label class="term_label">预约提货时间：</label></td>
+						<td><input class="form_term" id="pickupDate" ng-model="queryParam.pickupDate" maxlength="10"  my-Date-Picker='{"dateFmt":"yyyy-MM-dd"}'/></td>
+						<td width="100"><label class="term_label">提货状态：</label></td>
+						<td><div class="form_select" ng-cloak>
+								<select ng-model="queryParam.state" ng-init="queryParam.state=1">
+									<option value="-1" >所有</option>
+	                            	<option ng-repeat="obj in state"  value="{{obj.codeValue}}"  ng-selected="obj.codeValue==1">{{obj.codeName}}</option>
+								</select>
+                            </div>
+                        </td>
+						<td width="100"><label class="term_label">下单时间：</label></td>
+						<td><input class="form_term" id="createDate" ng-model="queryParam.createDate" maxlength="10"  my-Date-Picker='{"dateFmt":"yyyy-MM-dd"}'/></td>
+						<td rowspan="2">
+							<div class="bottom_search search_button" style="position:inherit;">
+								<a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a>
+								<a class="qink" href="javascript:void(0);" ng-click="doReset();">清空</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="100"><label class="term_label">联系人：</label></td>
+						<td><input class="form_term" ng-model="queryParam.orgContactor" maxlength="10"/></td>
+						<td width="100"><label class="term_label">联系号码：</label></td>
+						<td><input class="form_term" ng-model="queryParam.orgTel" maxlength="11"/></td>
+						<td width="100"></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+        	<div class="search_nr clearfix mt_20">
+              <div class="bottom_nav pb_20 bottom_nav_search clearfix"><h2>查询结果</h2>
+	              <a href="javascript:void(0)"  ng-click="doAdd()">提货</a>
+	              <a href="javascript:void(0)"  ng-click="doFinish()">完成</a>
+	              <a href="javascript:void(0)" ng-click="doUpdata()">修改</a>
+	              <a href="javascript:void(0)" ng-click="doSee()">详情</a>
+              </div>
+              <my-Adv-Table isShowSeq="false" width="100%" isMultiSelect="true" isShowCheck="true" isFilter="false" isSum="false" id="NOTIFY_ID"  
+	              		head='[{"name":"提货序号","code":"NOTIFY_ID","width":"9%"},
+	              		{"name":"提货商家","code":"ORG_NAME","width":"9%"},
+	              		{"name":"商品方数","code":"STERE","width":"9%"},
+	              		{"name":"商品件数","code":"GCOUNT","width":"9%"},
+	              		{"name":"商品重量","code":"WEIGHT","width":"9%"},
+	              		{"name":"联系人","code":"ORG_CONTACTOR","width":"9%"},
+	              		{"name":"联系号码","code":"ORG_TEL","width":"9%"},
+	              		{"name":"预约提货时间","code":"PICKUP_DATE","width":"9%"},
+	              		{"name":"提货状态","code":"STATE_NAME","width":"9%"},
+	              		{"name":"提货地址","code":"ORG_ADDRESS","width":"15%"}]'>
+              </my-Adv-Table>
+        	</div>
+        	</span>
+        	<!-- 预约提货  end -->
+        	<!-- 录入提货信息  start -->
+        	<span ng-show="isFlag==2" class="ng-hide">
+	        	<div class="order_xz">
+		            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table addition_table delivery_1">
+						<tbody>
+						  <tr>
+							<td width="40%" align="right"><label class="control-label w_100">提货人：</label></td>
+							<td width="50%"><input class="input_box"  style="width: 200px!important" ng-model="fromData.contactor" type="text" maxlength="11"></td>
+						  </tr>
+						  <tr>
+						  	<td width="40%" align="right"><label class="control-label w_100">提货人手机：</label></td>
+							<td width="50%"><input class="input_box" style="width: 200px!important" ng-model="fromData.driverPhone" type="text" maxlength="11"></td>
+						  </tr> 
+						  <tr>
+							<td width="40%" align="right"><label class="control-label w_100">车牌号：</label></td>
+							<td width="50%"><input class="input_box" ng-model="fromData.platenumber" style="width: 200px!important" type="text" maxlength="11"></td>
+						  </tr>
+						  <tr>
+							<td width="40%" align="right"><label class="control-label w_100">提货时间：</label></td>
+							<td width="50%"><input class="input_box" ng-model="fromData.finishDate" my-Date-Picker='{"dateFmt":"yyyy-MM-dd HH:mm:ss"}' readonly="readonly" style="width: 200px!important" type="text" maxlength="11"></td>
+						  </tr>
+						</tbody>
+					</table>
+	        	</div>
+	        	<div class="tx_tc_button" style="margin-top:50px;">
+					<a class="search_button_ss" href="javascript:void(0)"  ng-click="add()" >提交</a>
+					<a class="search_button_cz" href="javascript:void(0)"  ng-click="doCancel()">返回</a>
+				</div>
+        	<!-- 录入提货信息  end -->
+        	</span>
+        	<span ng-show="isFlag==3" class="ng-hide">
+        	<!-- 修改提货信息  end -->
+	        	<div class="order_xz">
+		            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table addition_table delivery_1">
+						<tbody>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">商品方数：</label></td>
+							<td width="148">{{ordFromData.stere}}</td>
+							<td width="100" align="right"><label class="control-label w_100">商品件数：</label></td>
+							<td width="148">{{ordFromData.gcount}}</td>
+							<td width="100" align="right"><label class="control-label w_100">商品重量：</label></td>
+							<td width="148">{{ordFromData.weight}}</td>
+						  </tr>
+						  <tr>
+						  	<td width="100" align="right"><label class="control-label w_100">联系人：</label></td>
+							<td width="148">{{ordFromData.orgContactor}}</td>
+							<td width="100" align="right"><label class="control-label w_100">联系号码：</label></td>
+							<td width="148">{{ordFromData.orgTel}}</td>
+							<td width="100" align="right"><label class="control-label w_100">预约提货时间：</label></td>
+							<td width="148">
+								{{ordFromData.pickupDate}}{{ordFromData.periodTypeName}}
+		                    </td>
+						  </tr> 
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">提货地址：</label></td>
+							<td colspan="5">{{ordFromData.orgAddress}}</td>
+						  </tr>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">备注：</label></td>
+							<td colspan="5">{{ordFromData.notes}}</td>
+						  </tr>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">提货人：</label></td>
+							<td><input class="input_box" ng-model="ordFromData.contactor" type="text" maxlength="11" /></td>
+							<td width="100" align="right"><label class="control-label w_100">提货人手机：</label></td>
+							<td><input class="input_box" ng-model="ordFromData.driverPhone" type="text" maxlength="11" /></td>
+							<td width="100" align="right"><label class="control-label w_100">车牌号：</label></td>
+							<td><input class="input_box" ng-model="ordFromData.platenumber" type="text" maxlength="11" /></td>
+						  </tr>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">提货时间：</label></td>
+							<td><input class="input_box" ng-model="ordFromData.finishDate" my-Date-Picker='{"dateFmt":"yyyy-MM-dd HH:mm:ss"}' readonly="readonly" type="text" maxlength="11"></td>
+						  	<td width="100" align="right"><label class="control-label w_100"></label></td>
+							<td></td>
+							<td width="100" align="right"><label class="control-label w_100"></label></td>
+							<td></td>
+						  </tr>
+						</tbody>
+					</table>
+	        	</div>
+	        	<div class="tx_tc_button" style="margin-top:50px;">
+					<a class="search_button_ss" href="javascript:void(0)"  ng-click="update()" >提交</a>
+					<a class="search_button_cz" href="javascript:void(0)"  ng-click="doCancel()">返回</a>
+				</div>
+        	<!-- 录入提货信息  end -->
+        	</span>
+        	
+        	<span ng-show="isFlag==4" class="ng-hide">
+        	<!-- 修改提货信息  end -->
+	        	<div class="order_xz">
+		            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table addition_table delivery_1">
+						<tbody>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">商品方数：</label></td>
+							<td width="148">{{ordFromData.stere}}</td>
+							<td width="100" align="right"><label class="control-label w_100">商品件数：</label></td>
+							<td width="148">{{ordFromData.gcount}}</td>
+							<td width="100" align="right"><label class="control-label w_100">商品重量：</label></td>
+							<td width="148">{{ordFromData.weight}}</td>
+						  </tr>
+						  <tr>
+						  	<td width="100" align="right"><label class="control-label w_100">联系人：</label></td>
+							<td width="148">{{ordFromData.orgContactor}}</td>
+							<td width="100" align="right"><label class="control-label w_100">联系号码：</label></td>
+							<td width="148">{{ordFromData.orgTel}}</td>
+							<td width="100" align="right"><label class="control-label w_100">预约提货时间：</label></td>
+							<td width="148">
+								{{ordFromData.pickupDate}}{{ordFromData.periodTypeName}}
+		                    </td>
+						  </tr> 
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">提货地址：</label></td>
+							<td colspan="5">{{ordFromData.orgAddress}}</td>
+						  </tr>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">备注：</label></td>
+							<td colspan="5">{{ordFromData.notes}}</td>
+						  </tr>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">提货人：</label></td>
+							<td width="148">{{ordFromData.contactor}}</td>
+							<td width="100" align="right"><label class="control-label w_100">提货人手机：</label></td>
+							<td width="148">{{ordFromData.driverPhone}}</td>
+							<td width="100" align="right"><label class="control-label w_100">车牌号：</label></td>
+							<td width="148">{{ordFromData.platenumber}}</td>
+						  </tr>
+						  <tr>
+							<td width="100" align="right"><label class="control-label w_100">提货时间：</label></td>
+							<td width="148">{{ordFromData.finishDate}}</td>
+						  	<td width="100" align="right"><label class="control-label w_100"></label></td>
+							<td width="148"></td>
+							<td width="100" align="right"><label class="control-label w_100"></label></td>
+							<td width="148"></td>
+						  </tr>
+						</tbody>
+					</table>
+	        	</div>
+	        	<div class="tx_tc_button" style="margin-top:50px;">
+					<a class="search_button_cz" href="javascript:void(0)"  ng-click="doCancel()">返回</a>
+				</div>
+        	<!-- 录入提货信息  end -->
+        	</span>
+        </div>
+       
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="appointmentPlatformCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

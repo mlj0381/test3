@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="areaManagementAddApp">
+<head>
+<title>${title}_专线查询</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="${title}" />
+<meta name="description" content="${title}" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+<link rel="stylesheet" type="text/css" href="../css/$tenantId$/lrtk.css?v=${ver}">
+<link TYPE="text/css" rel="stylesheet" href="../css/angucomplete/angucomplete.css?v=${ver}" />
+<link type="text/css" rel="stylesheet" href="../css/angucomplete/structure.css?v=${ver}" />
+<style type="text/css">
+.dhl_xzm {
+	display: inline-block;
+	font-size: 12px;
+	font-family: "Arial", "宋体";
+	margin-right: 15px;
+}
+
+.dhl_xzm a {
+	padding-left: 2px;
+}
+
+.tj_and {
+	
+}
+</style>
+</head>
+<body ng-controller="areaManagementAddCtrl" style=""
+	onLoad="setContentHeight()">
+
+	<!-- 新增  start -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20"
+		style="min-height: 430px">
+		<form class="ng-pristine ng-valid ng-valid-maxlength">
+			<div class="billing_list">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="search_table com_liest">
+					<tbody>
+						<tr>
+							<td class="list_td" width="38%"><label class="list_label"><em>*</em>服装城名称：</label></td>
+							<td class="list_td" width="32%"><input maxlength="50"
+								ng-model="data.clothCityName"
+								class="form_billing_x ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched" /></td>
+							<td width="30%"></td>
+						</tr>
+						<tr>
+							<td class="list_td"><label class="list_label"><em>*</em>省市区：</label>
+							</td>
+							<td class="list_td"><table-City input-Value=""
+									is-County="true" gain="gain"
+									table-Class="form_billing_x ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched"
+									table-Disabled="" /></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="list_td"><label class="list_label"><em>*</em>详细地址：</label>
+							</td>
+							<td class="list_td">
+								<div class="goodsli">
+									<div class="fl w_mn" style="position: relative; float: left;background:white;">
+										<angucomplete id="address_select" placeholder="请输入详细地址"
+											pause="100" selectedobject="selectVehicle"
+											localdata="addressData" ng-keyUp="getAddressByCode()"
+											searchfields="name" ng-Enter="getAddressByCode()"
+											titlefield="name" minlength="1" ng-model="data.address"
+											descriptionfield ="address"
+											inputclass="form_billing_x ng-pristine ng-valid ng-valid-maxlength ng-touched ng-untouched"
+											matchclass="highlight" callback="userCallBack(name)" />
+									</div>
+								</div>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="list_td"><label class="list_label"><em>*</em>经纬度：</label>
+							</td>
+							<td class="list_td"><input maxlength="100" type="text"  ng-model="data.latAndLng" class="form_billing_x" /></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="list_td"><label class="list_label"><em>*</em>关键字：</label></td>
+							<td class="list_td"><input maxlength="13" type="text"
+								ng-model="data.keyWords" class="form_billing_x" /></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+		<div class="bottom_nav1" style="margin-top: 20px">
+
+			<a class="button ml_10 baoc" href="javascript:void(0)"
+				ng-click="doSave()"><i class="button_icon button_icon dw_baoc"></i>保存</a>
+			<a href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+	</div>
+
+	<!-- 新增  end -->
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/md5.js"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/table/tableCommon.js?v=${ver}"></script>
+	<script TYPE="text/javascript" src="../js/autoComplemet/angular-touch.min.js"></script>
+	<script TYPE="text/javascript" src="../js/autoComplemet/angucompleteYQ.js"></script>
+	<script type="text/javascript" src="areaManagementAddCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

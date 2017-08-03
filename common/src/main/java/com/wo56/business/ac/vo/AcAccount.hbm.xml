@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-21 9:53:59 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.wo56.business.ac.vo.AcAccount" table="ac_account">
+        <id name="accountId" type="java.lang.Long">
+            <column name="ACCOUNT_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="objType" type="int">
+            <column name="OBJ_TYPE" not-null="true">
+            </column>
+        </property>
+        <property name="objId" type="java.lang.Long">
+            <column name="OBJ_ID" not-null="true">
+            </column>
+        </property>
+        <property name="accountType" type="java.lang.Integer">
+            <column name="ACCOUNT_TYPE">
+            </column>
+        </property>
+        <property name="accountPwd" type="string">
+            <column name="ACCOUNT_PWD" length="50">
+            </column>
+        </property>
+        <property name="modPwdTime" type="timestamp">
+            <column name="MOD_PWD_TIME" length="19">
+            </column>
+        </property>
+        <property name="balance" type="java.lang.Long">
+            <column name="BALANCE" not-null="true">
+            </column>
+        </property>
+        <property name="opId" type="java.lang.Long">
+            <column name="OP_ID" not-null="true">
+            </column>
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="CREATE_TIME" length="19" not-null="true">
+            </column>
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" length="500">
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

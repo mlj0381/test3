@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordCostChangeToApp">
+<head>
+<title>联运汇_异动处理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/tooltipster.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+<!-- css -->
+
+<style type="text/css">
+.ng-hide{display: none !important;}
+.aft_list {
+	border-bottom: 1px solid #b7d3e7;
+	border-right: 1px solid #b7d3e7;
+	border-radius: 3px;
+	width: -moz-calc(100% -       1px);
+	width: -webkit-calc(100% -       1px);
+	width: calc(100% -       1px)
+}
+
+.aft_list td {
+	font-family: 宋体;
+	font-size: 12px;
+	border-left: 1px solid #b7d3e7;
+	border-top: 1px solid #b7d3e7;
+	padding: 0 5px
+}
+
+.aft_list label {
+	text-align: right;
+	line-height: 26px;
+	color: #333;
+	display: block;
+}
+
+.aft_td {
+	background: #f1f5fc;
+}
+
+.search_list {
+	border-top: 1px solid #A1BBD1;
+}
+.search_list thead th,.search_list_dhl td {
+	line-height: 22px !important;
+	color: #000 !important;
+	font-size: 14px;
+	font-weight: normal;
+	background: #E4EAF5;
+	border-right: 1px solid #A1BBD1;
+	border-bottom: 1px solid #A1BBD1;
+}
+
+.search_list tbody td {
+	line-height: 22px !important;
+	color: #323232;
+	border-bottom: 1px solid #A1BBD1;
+	border-right: 1px solid #A1BBD1;
+	height: 22px;
+	font-size: 12px;
+	white-space: nowrap;
+	word-break: keep-all;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.search_list tbody td {
+    text-align: center;
+}
+
+input[type='radio'] + label:before, input[type='checkbox'] + label:before{background-color: #ccc;}
+.aft_list td{white-space: nowrap;}
+</style>
+</head>
+<body ng-controller="ordCostChangeToCtrl" onload="setContentHegthDelay(250)" style="overflow: hidden;">
+	<!-- 问题处理 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20" style="min-height: 400px">
+		<table width="120%" border="0" cellspacing="0" cellpadding="0" class="search_table tx_tc_table dhl_r" style="width: 800px;margin: 0 auto;">
+					  <tbody>
+					  <tr>
+						<td width="100"><label class="control-label"><em>*</em>运单号：</label></td>
+						
+						<td width="350" colspan="2">
+						<!--  ng-blur="queryOrg(data.trackingNum) -->
+							<input class="input_box" type="text" ng-model="ordMap.ordOrderInfo.trackingNum"  ng-blur="selectAll(ordMap.ordOrderInfo.trackingNum);" my-Num-Val ng-disabled="dataAll" maxlength="19"  />
+						</td>
+						
+ 						<td colspan="2">
+ 							<a ng-show="isShow" class="search_ydcx" style="font-size: 12px "  ng-click="selectAll(ordMap.ordOrderInfo.trackingNum);"href="javascript:void(0);">确定</a>
+ 							<a ng-show="isShow" class="search_ydcx" style="font-size: 12px "  ng-click="doQueryOrder();"href="javascript:void(0);">选择更多运单</a>
+ 						</td>
+						
+						<td></td>
+					  </tr>
+					  
+					  <tr>
+						  <td colspan="5"> 
+						  	<table width="100%" border="0" cellspacing="0" cellpadding="0"
+									class="aft_list">
+									<tr>
+										<td class="aft_td" width="8%"><label>始发站</label></td>
+										<td width="17%" class="ng-cloak">{{ordMap.ordOrderInfo.orgIdName}}
+										</td>
+										<td width="10%" class="aft_td"><label>到站</label></td>
+										<td width="15%" class="ng-cloak">{{ordMap.ordOrderInfo.distributionOrgName}}
+										</td>
+										<td width="8%" class="aft_td"><label>发货人</label></td>
+										<td width="17%" class="ng-cloak">{{ordMap.ordOrderInfo.consignorName}}
+										</td>
+										<td width="10%" class="aft_td"><label>发货人电话</label></td>
+										<td width="15%" class="ng-cloak">{{ordMap.ordOrderInfo.consignorTelephone}}
+										</td>
+									</tr>
+									<tr>
+										<td class="aft_td"><label>收货人</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.consigneeName}}
+										</td>
+										<td class="aft_td"><label>收货人电话</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.consigneeBill}}
+										</td>
+										<td class="aft_td"><label>收货地址</label></td>
+										<td class="ng-cloak" colspan="3">
+										<div style="overflow-x:auto; width:100%; height:40px; resize: none;">
+											<div style=" width:100%; white-space: nowrap; " rows="1" cols="3">{{ordMap.ordOrderInfo.destCityName+ordMap.ordOrderInfo.destCountyName+ordMap.ordOrderInfo.address}}</div>
+										</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="aft_td"><label>货品</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.products}}</td>
+										<td class="aft_td"><label>件数</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.count}}</td>
+										<td class="aft_td"><label>体积</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.volume}}
+										</td>
+										<td class="aft_td"><label>重量</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.weight}}</td>
+									</tr>
+									<tr>
+										<td class="aft_td"><label>运费</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.freight/100 | number:2}}
+										</td>
+										<td class="aft_td"><label>配安费</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.installCosts/100 | number:2}}
+										</td>
+										<td class="aft_td"><label>回扣</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.discount/100 | number:2}}
+										</td>
+										<td class="aft_td"><label>费用总计</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.totalFee | number:2}}
+										</td>
+									</tr>
+									<tr>
+										<td class="aft_td"><label>付款方式</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.paymentTypeName}} {{ordMap.ordFee.paymentType2Name}}</td>
+										<td class="aft_td"><label>月结</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.monthlyPayment/100 | number:2}}</td>
+										<td class="aft_td"><label>回单付</label></td>
+										<!--  | number：1 -->
+										<td class="ng-cloak">{{ordMap.ordFee.receiptPayment/100 | number:2}}</td>
+										<td class="aft_td"><label>转账</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.transPayment/100 | number:2}}</td>
+									</tr>
+									<tr>
+										<td class="aft_td"><label>现付</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.cashPayment/100 | number:2}}</td>
+										<td class="aft_td"><label>到付</label></td>
+										<td class="ng-cloak">{{ordMap.ordFee.freightCollect/100 | number:2}}</td>
+										<td class="aft_td"><label>物流交接</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.deliveryTypeName}}</td>
+										<td class="aft_td"><label>家装服务</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.serviceTypeName}}</td>
+									</tr>
+									<tr>
+										<td class="aft_td"><label>开单时间</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.createDate}}</td>
+										<td class="aft_td"><label>开单人</label></td>
+										<td class="ng-cloak">{{ordMap.ordOrderInfo.inputUserName}}</td>
+										<td class="aft_td"><label>备注</label></td>
+										
+										<td class="ng-cloak" colspan="2">
+										<div style="overflow-x:auto; width:100%; height:40px; resize: none;">
+											<div style=" width:100%; white-space: nowrap; " rows="1" cols="3">{{ordMap.ordOrderInfo.remarks}}</div>
+										</div>
+										</td>
+										<td class="ng-cloak" style="position: relative;">
+										
+							<!--备注历史开始 -->
+											<button type="submit" value="Submit" ng-click="openRemark(1)">历史备注</button>
+										<div class="list_xl ng-cloak" style="min-height:200px;right: 0" ng-show="showRemark">
+										<i class="list_xl_icon icon" ng-click="historyClose()">
+										</i>
+										<div class="list_xl_tbody ng-clock" id="pTable" style="height: 200px;">
+											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+												<thead>
+													<tr>
+														<th style="width:20%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;font-family: " arial","宋体";font-size:="" 12px;"="">操作人</th>
+														<th style="width:55%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;">历史备注</th>
+														<th style="width:35%;height:36px;text-align: center;background: #f5f8fd;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;color: #4a5f6d;">创建时间</th>
+													</tr>
+												</thead>
+												<tbody >
+												<tr style="height:36px!important;" ng-repeat="obj in items.items">
+													<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:20%;white-space: inherit;text-align: center;" title="{{obj.opName}}">{{obj.opName}}</td>
+													<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:55%;white-space: inherit;text-align: center;" title ="{{obj.remarks}}">{{obj.remarks}}</td>
+													<td  style="height:36px!important;border-right: 1px solid #e0e7ef;border-top: 1px solid #e0e7ef;text-indent:0;width:25%;text-align: center;">{{obj.createDate.split(" ")[0]}}</td>
+												</tr>
+													
+												</tbody>
+												</table>
+											</div>
+										</div>
+    					<!--备注历史 结束--> 
+									   </td>
+									</tr>
+								</table>
+						  </td>	
+					  </tr>	
+					  
+					  <tr>
+						<td width="100"><label class="control-label"><em>*</em>异动原因:</label></td>
+						<td colspan="4">
+							<div class="fl w_b78">
+								<textarea  class="form-control " style="height:90px; width:100%; border: 1px solid #A1BBD1;border-radius: 5px; padding:3px 4px;" ng-model="ordMap.ordCastChangeInfo.notes" maxlength="250" ng-disabled="all"></textarea>
+							</div>																																						
+						</td>
+					  </tr>
+					 <tr>
+						<td width="100"><label class="control-label"><em>*</em>金额：</label></td>
+						<td width="150"><input class="input_box fl" style="width:150px;" my-double-val="keyup" ng-model="ordMap.ordCastChangeInfo.transactionMoneyDouble"  maxlength="11" ng-disabled="all" type="text"  />
+						</td>
+						<td colspan="2"> 
+							<span><font color="#ff5656">提示：当异动金额为增加则填写正数;当异动金额为减少，则填写负数</font></span>
+						</td>
+						<td></td>
+					  </tr>
+					 <tr>
+						<td width="100"><label class="control-label"><em>*</em>异动时间：</label></td>
+						<td><input class="input_box fl" style="width:150px;" type="text" my-Date-Picker='{"dateFmt":"yyyy-MM-dd HH:mm:ss","minDate":"2016-10-10","maxDate":"%y-%M-%d:%H:%m:%s"}' ng-model="ordMap.ordCastChangeInfo.createDate" readonly="readonly"/></td>
+						<td width="100"><label class="control-label"><em>*</em>异动人员：</label></td>
+						<td><input class="input_box fl" style="width: auto;"  ng-model="ordMap.ordOrderInfo.orgIdName" maxlength="11" ng-disabled="people" type="text"  />
+					  	<td></td>
+					  </tr>
+					</tbody></table>
+		
+		
+		<div class="bottom_nav1"  style="margin:20px 0;border-top: 1px solid #d2e0f0;padding-top: 20px;">
+			<a href="javascript:void(0)"  ng-click="doSave()">提 交</a><a href="javascript:void(0)" ng-click="close()">取 消</a>
+		</div>
+		
+	</div>
+	
+	
+	
+  <!--首页查询结果 7.5 新增 开始 --> 
+  <div  id="isShowSearch" style="position:fixed; left:50%; width:960px; height:490px; margin-left:-480px;top:20px; z-index:9999999;display: none">
+		<a class="tc_x" href="javascript:void(0)" ng-click="closeView()">x</a>
+   		<div class="billing_1 clearfix plr_20" style="margin: 0!important">
+			
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term kz_fx"  style=" padding: 0px 0px;">
+					<tr>
+				<td width="80"><label class="term_label">运单号：</label></td>
+				<td width="150"><input ng-model="query.trackingNum"  class="form_term" type="text" maxlength="22" id="id1"></td>
+				<td width="90"><label class="term_label">货品名：</label></td>
+				<td width="150"><input ng-model="query.goodsName"  class="form_term" type="text"  maxlength="255" id="id2"></td>
+				<td width="80"><label class="term_label">件数：</label></td>
+				<td width="150"><input placeholder="件数大于" ng-model="query.goodsCount"  class="form_term" type="text"  maxlength="22" id="id3"></td>
+				<td rowspan="4">
+					<div class="search_button">
+						<a class="search_button_ss" href="javaScript:void(0)" ng-click="doQueryOrder()" style="cursor: pointer;">搜索</a> 
+						<a class="search_button_cz" href="javaScript:void(0)" ng-click="clearModel()" style="cursor: pointer;" >重置</a>
+					</div>
+				</td>
+				</tr>
+				<tr>
+				<td><label class="term_label">签收状态：</label></td>
+				<td><div class="form_select"><my-select id="query.signState"  has-all="true" has-all="true"  code-type="SIGN_STATUS" width="130px"/></div></td>
+                <td><label class="term_label">货方：</label></td>
+                <td><input  placeholder="发货方或收货方"  ng-model="query.consignorName"     class="form_term" type="text"  maxlength="22" id="id5"></td>
+                <td><label class="term_label">货方电话：</label></td>
+                <td><input placeholder="发货方或收货方电话"  ng-model="query.consignorTelephone"  class="form_term" type="text"  maxlength="22" id="id6"></td>
+                </tr>
+                <tr>
+                
+                <!-- <td><label class="term_label">联系人：</label></td>
+                <td><input placeholder="发货人或收货人" ng-model="query.consignorLinkmanName"     class="form_term" type="text"  maxlength="22" id="id7"></td>
+               	<td><label class="term_label">联系人手机：</label></td>
+               	<td><input placeholder="发货人或收货人手机" ng-model="query.consignorBill"  class="form_term" type="text"  maxlength="22" id="id8"></td>
+                 -->
+                 
+                 
+                 
+                <td><label class="term_label">外发单号：</label></td>
+                <td><input  ng-model="query.outgoingTrackingNum"   class="form_term" type="text"  maxlength="22" id="id4"></td>
+               	 
+               	<td><label class="term_label">是否中转：</label></td>
+                <td><div class="form_select"><my-select id="query.transitOutgoingState" default-value=0 code-type="TRANSIT_OUTGOING_STATE" width="130px"/></div></td>
+                <td><label class="term_label">到站网点：</label></td>
+                <td><div class="form_select"><select ng-model="query.distributionOrgId" ng-options="ordMap.endOrgId as obj.endOwnerName for  obj in orgInfo.items " width="130px"></select></div></td>
+                
+               
+                </tr>
+                <tr>
+                
+                <td><label class="control-label">收货地：</label></td>
+						<td>
+							 <span class="wdcy_input" my-city="des"></span>
+						</td>
+						<td><label class="control-label">配安费：</label></td>
+						<td>
+							<input placeholder="配安费"  ng-model="query.fee"   onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')"  class="form_term" type="text"  maxlength="22" id="id6">
+						</td>
+                </tr>
+                <!-- <tr>
+                <td><label class="term_label">中转状态：</label></td>
+                <td><div class="form_select"><my-select id="query.transitOutgoingState" default-value=0 code-type="TRANSIT_OUTGOING_STATE" width="130px"/></div></td>
+                <td><label class="term_label">到站：</label></td>
+                <td><div class="form_select"><select ng-model="query.distributionOrgId" ng-options="obj.endOrgId as obj.endOwnerName for  obj in orgInfo.items " width="130px"></select></div></td>
+                <td></td>
+                <td></td>
+				
+				</tr> -->
+			</table>
+			<div class="bottom_nav_search clearfix" style="margin-bottom: 5px; padding-top:5px; border-top: 1px solid #dee6e9">
+				<h2 style="color: #7f8f97; float: left; font-family: '宋体'; font-size: 12px; font-weight: normal; line-height: 30px;">--查询结果--(双击选中运单信息)</h2><!-- <a href="#">查看详情</a> -->
+			</div>
+			<div class="kz_fx_list"> 
+				 <my-Adv-Table width="3495px" isautohide="false" doubleclick="toDetail" isShowSeq="false" isMultiSelect="false" isShowCheck="fasle" isFilter="true" isSum="true" id="trackingNum" 
+	                           head='[
+	                           {"name":"运单号","code":"trackingNum","width":"100"}
+	                           ,{"name":"开单日期","code":"createDate","width":"120"}
+	                           ,{"name":"件数","code":"count","isSum":"true","width":"60"}
+	                           ,{"name":"货品名","code":"goodsName","width":"80"}
+	                           ,{"name":"开单网点","code":"orgIdName","width":"100"}
+	                           ,{"name":"配送网点","code":"distributionOrgName","width":"90"}
+			                   ,{"name":"目的城市","code":"cityName","width":"70"}
+			                   ,{"name":"目的区域","code":"destCityNameAnddestCountyName","width":"100"}
+	                           ,{"name":"发货方","code":"consignorName","width":"100"}
+	                           ,{"name":"发货方电话","code":"consignorTelephone","width":"100"}
+	                           ,{"name":"收货方","code":"consigneeName","width":"100"}
+	                           ,{"name":"收货方电话","code":"consigneeTelephone","width":"100"}
+	                           ,{"name":"运单状态","code":"seeOrderStateName","width":"100"}
+	                           ,{"name":"收货地址","code":"address","width":"180"}
+	                           ,{"name":"运费","code":"freightString","isSum":"true","width":"80"}
+	                           ,{"name":"提货费","code":"pickingCostsString","isSum":"true","width":"80"}
+	                           ,{"name":"配安费","code":"installCost","isSum":"true","width":"80"}
+	                           ,{"name":"装卸费","code":"handingCostsString","width":"80","isSum":"true"}
+	                           ,{"name":"包装费","code":"packingCostsString","width":"80","isSum":"true"}
+	                           ,{"name":"送货费","code":"deliveryCostsString","width":"80","isSum":"true"}
+	                           ,{"name":"现付金额","code":"cashPaymentString","width":"80","isSum":"true"}
+	                           ,{"name":"到付金额","code":"freightCollectString","width":"80","isSum":"true"}
+	                           ,{"name":"回单付金额","code":"receiptPaymentString","width":"80","isSum":"true"}
+	                           ,{"name":"月结金额","code":"monthlyPaymentString","width":"80","isSum":"true"}
+	                           ,{"name":"回扣金额","code":"discountString","width":"80","isSum":"true"}
+	                           ,{"name":"代收货款金额","code":"collectingMoneyString","width":"120","isSum":"true"}
+	                           ,{"name":"代收货款手续费","code":"procedureFeeString","width":"120","isSum":"true"}
+	                           ,{"name":"付款方式","code":"paymentTypeName","width":"80"}
+	                           ,{"name":"承运公司","code":"carrierCompanyName","width":"100"}
+	                           ,{"name":"外发单号","code":"outgoingTrackingNum","width":"100"}
+	                           ,{"name":"外发费","code":"outgoingFeeString","width":"100","isSum":"true"} 
+	                           ,{"name":"本地联系人","code":"linkerName","width":"100"} 
+	                           ,{"name":"联系电话","code":"linkerPhone","width":"100"} 
+	                           ,{"name":"提货电话","code":"deliveryPhone","width":"100"} 
+	                           ,{"name":"提货地址","code":"deliveryAddress","width":"100"} 
+	                           ]'>
+	                   </my-Adv-Table> 
+	            </div>
+		</div>
+	</div>
+<!--首页查询结果 7.5 新增 结束 --> 
+<div id="alertMsgIsShow" class="popup_bj"  style="display: none;z-index:99995"></div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	    <script type="text/javascript" src="ordCostChangeToCtrl.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="../js/billingCommon.js?v=${ver}"></script>
+		
+</body>
+</html>
+

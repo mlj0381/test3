@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordBillingDetailApp">
+<head>
+	<title>${title}_运营管理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="keywords" content="${title}" />
+	<meta name="description" content="${title}" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="../image/$tenantId$/32x32.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+	<link rel="stylesheet" type="text/css" href="../css/$tenantId$/master_open.css?v=${ver}">
+	
+	<style type="text/css">
+		.arrow-down {width:0;height:0; border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #dedede;margin:0 auto}
+		.ng-cloak {display: none;}
+		.dhl_detail label.list_label{font-size: 14px;}
+		.dhl_detail .form_billing{background: #fff;font-size: 14px;}
+		.dhl_detail .ui-select{background:none;height: 30px;}
+		.dhl_detail .ui-select select{color: #000;font-size: 14px;}
+		.dhl_detail .form_billing,.dhl_detail .billing_list_1 td.list_1_td,.dhl_detail .billing_list_2 td.list_1_td{font-family: "Arial","宋体";color: #000;font-size: 14px;}
+		.dhl_detail label.list_label{width: 100px;}
+		.dhl_detail input[type='radio'] + label,.dhl_detail input[type='checkbox'] + label{font-family: "Arial","宋体";font-size: 14px;}
+		.dhl_detail td.list_td{font-size: 14px;line-height: 32px;}
+		.dhl_detail input.form_billing{height: 32px;}
+		.dhl_detail .in_fen{font-size: 14px;font-family: "Arial","宋体";}
+		
+		.dhl_ul2 li{float: left;font-size: 14px;font-weight: bold;color: #333;}
+		.dhl_ul2 li a{display:block;padding: 0 10px;line-height: 30px;color: #888;}
+		.dhl_ul2 .hover a{color: #f83148;}
+	    .hideString{
+	        white-space: nowrap !important;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;
+	    }
+	    
+	    .dhl_detail .form_billing ,.dhl_detail .ui-select{border:1px solid #ddd;}
+		.dhl_detail .ui-select select{ line-height: 30px;height: 30px;}
+		.mkae td{font-size: 14px;}
+		.dhl_yy .form_input{color: #35a1e5;background-color: #F0FFFF;font-weight: bold;}
+		.dhl_yy .br_00{color: #35a1e5;background-color: #F0FFFF;font-weight: bold;}
+		.dhl_yy td{color: #35a1e5;background-color: #F0FFFF;font-weight: bold;}
+		.dhl_yy .br_00 .yd_select select{color: #35a1e5;background-color: #F0FFFF;font-weight: bold;}
+		.dhl_yy  .yd_select select{color: #35a1e5;background-color: #F0FFFF;font-weight: bold;}
+		
+		
+		.wzgz_1,.wzgz_2,.wzgz_3,.wzgz_4,.wzgz_5,.wzgz_6,.wzgz_7,.wzgz_8,.wzgz_9,.wzgz_10,.wzgz_11{width:116px; height:46px; display:inline-block;}
+		
+		
+		.wzgz_1{background: url(../image/$tenantId$/dfc.png) no-repeat; text-indent:-99999px}
+		.wzgz_2{background: url(../image/$tenantId$/ysz.png) no-repeat; text-indent:-99999px}
+		.wzgz_3{background: url(../image/$tenantId$/dps.png) no-repeat; text-indent:-99999px}
+		.wzgz_4{background: url(../image/$tenantId$/dqs.png) no-repeat; text-indent:-99999px}
+		.wzgz_5{background: url(../image/$tenantId$/yqs.png) no-repeat; text-indent:-99999px}
+		.wzgz_6{background: url(../image/$tenantId$/ysc.png) no-repeat; text-indent:-99999px}
+		.wzgz_7{background: url(../image/$tenantId$/pdz.png) no-repeat; text-indent:-99999px}
+		.wzgz_8{background: url(../image/$tenantId$/tou_b.png) no-repeat; text-indent:-99999px}
+		.wzgz_9{background: url(../image/$tenantId$/yf_1.png) no-repeat; text-indent:-99999px}
+		.wzgz_10{background: url(../image/$tenantId$/yf_2.png) no-repeat; text-indent:-99999px}
+		.wzgz_11{background: url(../image/$tenantId$/yf_3.png) no-repeat; text-indent:-99999px}
+		
+		
+		.wzgz_div{position: absolute;left: 40%;top: 0px;z-index: 1;}
+		
+		/**2016-10-11  展示跟踪信息修改 */
+		.search_list_dxb tbody td { line-height: 32px!important;color: #323232;text-align: center;white-space: nowrap;padding: 0 10px; border-bottom: 1px solid #D8D8D8; font-family: "Arial","宋体"; height: 32px;} 
+        .search_list_dxb thead th, .search_list_dhl td {line-height: 32px!important;color: #666!important;font-family: "Arial","宋体"; font-size: 12px; white-space: nowrap;padding: 0 10px;  font-weight: bold;}
+        .notice td{ line-height: 43px!important;}
+        
+        
+        
+        .dhl_jbxx .yd_label{ width: 60px;line-height: 22px;padding-right: 5px;font-size: 12px;}
+        .dhl_jbxx .yd_list td{line-height: 22px; font-size: 14px;}
+        .dhl_jbxx .form_input{height: 22px;font-size: 14px;line-height: 22px;text-indent: 6px;font-weight: bold;}
+        .dhl_jbxx .yd_span{font-size: 14px;padding-left: 20px!important;}
+        .dhl_jbxx .controls {margin-left: 10px!important;}
+        .dhl_jbxx .yd_select{height: 22px; min-height: 22px !important;background:transparent;}
+        .dhl_jbxx .yd_select select{    height: 22px;font-size: 14px;padding: 0px 0px 0px 0px;width: auto;font-weight: bold;}
+        .dhl_jbxx .dhl_pm1{width:1150px!important;}
+        
+        @media(min-width:1800px){
+        .dhl_jbxx .dhl_pm1{width: 99%!important;}
+        }
+        .dhl_jbxx .dhl_tabl{/* width: 200% */}
+        .dhl_jbxx .yd_table_list td{line-height: 22px;font-size: 14px;}
+        .dhl_jbxx .yd_table_list .list_header td{font-size: 12px;}
+        .dhl_jbxx .input_td{height: 22px!important;line-height: 22px!important;}
+        .dhl_jbxx .bottom_nav1 a{height: 18px;line-height: 18px;font-size: 14px;padding: 0 5px;}
+      
+        
+        
+        .billing_3{margin: 0px 0% 10px!important;border: 0}
+        
+        .billing_3 .title_h2{color:#f83148;;font-weight: bold;}
+        .search_list {}
+        .search_list thead th, .search_list_dhl td{line-height: 22px!important;color: #000!important;font-size: 14px;font-weight:normal; background: #E4EAF5;
+    border-right: 1px solid #A1BBD1;border-bottom: 1px solid #A1BBD1;}
+    .search_list thead th{font-size: 12px;}
+    	.search_list {border-top: 1px solid #A1BBD1;}
+    	.search_list tbody td{line-height: 22px!important;color: #323232;border-bottom: 1px solid #A1BBD1; border-right: 1px solid #A1BBD1;
+    height: 22px;font-size: 12px;white-space: nowrap;word-break: keep-all;overflow: hidden;text-overflow: ellipsis;}
+    
+    	.yd_label{background-color: #e4eaf5;font-size: 14px;padding-right: 10px;line-height: 22px;}
+    	.dhl_dd{border-top: 1px solid #A1BBD1;}
+    	.dhl_dd td{border-bottom: 1px solid #A1BBD1;border-right:1px solid #A1BBD1  }
+    	.dhl_dd .form_billing{background: #fff;}
+    	.input_box{    height: 22px;line-height: 22px;}
+    	.search_select{    height: 20px;min-height: 20px !important;}
+    	.notice .notice_fa{background: #E4EAF5;line-height: 24px!important;}
+    	.notice td{line-height: 24px!important;font-size: 12px;}
+    	.title_h2 {font-size: 14px;padding-top: 5px}
+    	.title_icon{margin: 0 12px 0 20px;background: #9E9E9E;width: 3px;height: 16px;margin-top: 2px;}
+    	.search_select select{    height: 20px;}
+    	.search_list thead th,.search_list tbody td{padding: 0 5px!important; white-space: inherit!important;
+    word-break: inherit;
+    overflow: auto;
+    text-overflow: inherit;}
+    .hig_1{overflow: auto;height: 300px}
+    .dhl_ml_0{margin-left: 0;}
+    @media(max-width:1700px){
+        .dhl_jbxx,.dhl_ydgz{width: 100%!important;margin: 0px!important;position: relative;}
+        .dhl_d1{margin: 0px!important;}
+        .dhl_jbxx .dhl_pm1{width: 96%!important;}
+         .hig_1{overflow: auto;height: auto!important}
+         .dhl_ml_0{margin-left: 20px;}
+         .list_xl{left:200px;}
+        }
+        .dhl_table1{table-layout: auto!important;}
+        .dhl_table1 thead th,.dhl_table1 tbody td{white-space: nowrap!important;overflow: inherit;}
+	</style>
+</head>
+<body ng-controller="ordBillingDetailCtrl" id="body">
+<div class="billing_1 clearfix ng-cloak" style="padding-top: 10px;position: relative;">
+       	<ul class="yc_message_span dhl_ul2 clearfix" style="border-bottom: 1px solid #e0e5e9;margin-bottom: 20px;">
+        		<li style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">运单号:</li>
+        		<li><input type="text" class="form_term" style="width:100px;margin-right: 5px;height: 28px;" ng-model="selectDate.trackingNum" ng-keydown="($event.which === 13)?toInitView():0" placeholder="按Enter查询" id="queryOrderInfoId"/></li>
+                <li style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">开单员:</li>
+                <li><input type="text"  ng-disabled="all" class="form_term" style="width:80px;margin-right: 20px;height: 28px;"  ng-model="inputUserNameDetail" readonly="readonly"/></li>
+                <li style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">开单网点:</li>
+                <li><input type="text"  ng-disabled="all" class="form_term" style="width:80px;margin-right: 20px;height: 28px;"  ng-model="orgNameDetail" readonly="readonly"/></li>
+                <li style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">开单时间:</li>
+                <li><input type="text"  ng-disabled="all" class="form_term" style="width:130px;margin-right: 20px;height: 28px;" value="{{createDateDetail.substring(0,createDateDetail.length-3)}}"  readonly="readonly" /></li>
+                
+          <!--       <li class="fr"><span style="line-height: 28px;font-weight: normal;font-family:宋体;padding-right: 5px;color: #444;">{{createDateDetail | date:"yyyy-MM-dd"}}</span></li>
+        		<li class="fr" style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">开单时间:</li>
+        		<li class="fr"><span style="line-height: 28px;font-weight: normal;font-family:宋体;padding-right: 5px;">{{orgNameDetail}}</span></li>
+        		<li class="fr" style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">开单网点:</li>
+        		<li class="fr"><span style="line-height: 28px;font-weight: normal;font-family:宋体;padding-right: 5px;color: #444;">{{inputUserNameDetail}}</span></li>
+        		<li class="fr" style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">开单员:</li>
+        		<li class="fr"><input type="text" class="form_term" style="width:100px;margin-right: 5px;height: 28px;" ng-model="selectDate.trackingNum" ng-keydown="($event.which === 13)?toInitView():0" placeholder="按Enter查询"/></li>
+        		<li class="fr" style="line-height: 28px;font-weight: normal;font-family:宋体;color: #f83148;padding-right: 5px;">运单号:</li> -->
+        </ul>
+        
+        <div class="clearfix billing_3 dhl_d1" style="margin-top: 10px!important;border: 0;margin-left: 20px!important;">
+        	
+			
+			<!-- 基本信息开始 -->
+			<div class="ng-cloak fl dhl_jbxx"  style="width: 68%;overflow: auto;">
+				<billing init-view="initView" create-Date-Detail="createDateDetail"  org-Name-Detail="orgNameDetail" input-User-Name-Detail="inputUserNameDetail" is-Show-Return="isShowReturn" is-Show-Tab="isShowTab" set-Tab="setTab" ver="${ver}"/>
+			</div>
+		    <!-- 基本信息结束 -->
+		  
+		    <!-- 运单跟踪 开始 -->
+			<div class="billing_3 clearfix ng-cloak fr dhl_ydgz" style="width: 29%;margin: 0px 20px 0 0!important;" >
+				<!--修改运单 开始 -->
+    			
+    			<!--修改运单 结束-->  
+				<track-show trackingnum="trackingNum" ver="${ver}"/>
+				
+				
+			</div>
+			<!-- 运单跟踪 结束 -->
+	     </div>
+	  <!-- 费用核销 开始 -->
+		<div class="billing_3 clearfix">
+			<excver-show trackingnum="trackingNum" excVer-show="excverShow" ver="${ver}"/>
+		</div>
+	  <!-- 费用核销 结束 -->
+	     
+	  <!-- 异动费用 开始 -->
+		<div class="billing_3 clearfix">
+			<trancost-show trackingnum="trackingNum" trancost-show="trancostShow" ver="${ver}"/>
+		</div>
+	  <!-- 异动费用 结束 -->  
+		
+	  <!--配载信息  开始 -->
+	  <div class="billing_4 clearfix" ng-if="!(userData.userType==userTypeData.BUSINESS)">
+	  <depart-show trackingnum="trackingNum" ver="${ver}"/>
+		</div>
+		<!--配载信息  结束 -->	
+		
+		<!-- 安装信息开始 -->
+		<div  class="billing_3 clearfix" ng-if="!(userData.userType==userTypeData.BUSINESS)">
+			<install-show trackingnum="trackingNum" ver="${ver}"/>
+		</div>
+		<!-- 安装信息 结束 -->
+		
+		<!-- 售后跟踪 开始 -->
+		<div class="billing_4 clearfix">
+			<aftersales-show trackingnum="trackingNum" aftersales-show="aftersalesShow" ver="${ver}"/>
+		</div>
+	   <!-- 售后跟踪  结束 --> 
+	  
+		<!-- 异常信息 开始 -->
+		<div  class="billing_3 clearfix">
+		<exc-show trackingnum="trackingNum" ver="${ver}"/>
+		</div>
+		<!-- 异常信息 结束 -->
+		
+		<!-- 上传底单图片开始 -->
+		<div class="billing_3 clearfix">
+		<order-pic-show trackingnum="trackingNum"  ver="${ver}"/>
+			
+		</div>
+		<!-- 传底单图片结束 -->
+		
+		<!-- 签收信息开始 -->
+		<div class="billing_3 clearfix">
+		<sign-show trackingnum="trackingNum" show-Sign="showSign"  ver="${ver}"/>
+			
+		</div>
+		<!-- 签收信息结束 -->
+		
+		<!-- 修改信息开始 -->
+		<div class="billing_3 clearfix">
+		<update-show trackingnum="trackingNum"  ver="${ver}"/>
+		</div>
+		<!-- 修改信息结束 -->
+		
+		
+		
+		 <!-- 现金收支 开始 -->
+		<!-- <div ng-show="true" class="billing_3 clearfix ng-cloak" >
+			<cost-show trackingnum="trackingNum" ver="${ver}"/>
+		</div> -->
+		<!-- 现金收支 结束 -->
+		
+		
+		<!-- 异常信息 开始 -->
+		<!-- <div ng-show="true" class="billing_3 clearfix ng-cloak">
+			<exc-show trackingnum="trackingNum" ver="${ver}"/>
+		</div> -->
+		<!-- 异常信息 结束 -->
+	    
+		
+		<!-- 安装信息 开始 -->
+		<!-- <div  ng-show="true" class="billing_3 clearfix ng-cloak">
+			<install-show trackingnum="trackingNum" ver="${ver}"/>
+		</div> -->
+		<!-- 安装信息结束 -->
+		
+		<!-- 签收信息开始(专线签收) -->
+		<!-- <div  ng-show="true" class="billing_3 clearfix ng-cloak">
+			<zx-sign-show trackingnum="trackingNum" ver="${ver}"/>
+		</div> -->
+		<!-- 签收信息结束 -->
+		
+		
+		<div class="bottom_nav1">
+			<a href="javascript:void(0)" ng-show="isShowReturn" ng-click="close();">返回</a>
+		</div>
+</div>	
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+<!-- 	<script type="text/javascript" src="../js/lodop/LodopFuncs.js?v=${ver}"></script> -->
+	<script type="text/javascript"
+		src="../js/lodop/lodop-business.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/jquery-1.11.1.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery.hotkeys.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/tenantConfig.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/billingCommon.js?v=${ver}"></script>
+	<script type="text/javascript" src="ordDetail/ordDetail.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/autoCompleteDiv.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/angular-touch.min.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/angucomplete.js?v=${ver}"></script>
+	<script type="text/javascript" src="ordBillingDetailCtrl.js?v=${ver}"></script>
+	<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+		<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+	</object>
+</body>
+</html>

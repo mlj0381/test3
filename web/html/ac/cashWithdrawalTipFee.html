@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	ng-app="cashWithdrawalTipFeeApp">
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="联运汇" />
+<meta name="description" content="联运汇" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css">
+<style>
+.form_billing {
+	border-radius: 1px;
+}
+
+.ui-select {
+	width: 100%;
+	width: -moz-calc(100% - 2px);
+	width: -webkit-calc(100% - 2px);
+	width: calc(100% - 2px)
+}
+
+.ui-select, .ui-select select {
+	height: 24px !important;
+	min-height: 24px !important;
+}
+
+.ui-select select {
+	
+}
+
+<!--
+鼠标悬停 css 开始-->.xf_1 {
+	position: relative;
+	line-height: 20px;
+}
+
+.xf_1_span_sf {
+	position: absolute;
+	background: #fff;
+	border: 1px solid #81d7ff;
+	box-shadow: 1px 1px 5px #F4F4F4;
+	top: 24px;
+	z-index: 99999999;
+	left: 6px;
+}
+
+.xf_1_span_sf .arrow-up {
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #81d7ff;
+	margin-top: -10px;
+	position: absolute;
+	left: 5%;
+}
+
+.xf_table td {
+	padding: 0px 10px;
+	border-right: 1px solid #f0f5fb;
+	border-bottom: 1px solid #f0f5fb;
+	line-height: 32px;
+	font-family: "Arial", "宋体";
+	font-size: 12px;
+}
+
+.xf_table tbody tr:nth-child(even) {
+	background: #fff;
+}
+
+.xf_table tbody tr:nth-child(odd) {
+	background: transparent
+}
+
+.xf_table tr.cplx_tr td {
+	font-weight: bold;
+	color: #4a5f6d;
+}
+
+.xf_1:hover .xf_1_span_sf {
+	display: block !important
+}
+<!--
+鼠标悬停
+
+ 
+
+css
+
+ 
+
+结束--
+>
+</style>
+
+</head>
+<body ng-controller="cashWithdrawalTipFeeCtrl"  class="ng-cloak" >
+
+	<div class="billing_1 clearfix pb_20 mt_20" style="min-height: 300px">
+		<div class="search">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="search_table search_term">
+				<tbody>
+					<tr>
+						<td width="80"><label class="term_label">申请时间：</label></td>
+						<td width="15%"><input style="width: 40% !important;"
+							my-Date-Picker='' ng-model="query.applyBegin" id="applyBegin"
+							readonly="readonly" class="form_term fl w_xjr" type="text">
+							<span class="search_span fl" style="width: 10% !important;">到</span>
+							<input readonly="readonly" style="width: 40% !important;"
+							ng-model="query.applyEnd" my-Date-Picker='' id="applyEnd"
+							class="form_term fl w_xjr" type="text"></td>
+						<td width="80"><label class="term_label">核销时间：</label></td>
+						<td width="15%"><input style="width: 40% !important;"
+							my-Date-Picker='' ng-model="query.writeBegin" id="writeBegin"
+							readonly="readonly" class="form_term fl w_xjr" type="text">
+							<span class="search_span fl" style="width: 10% !important;">到</span>
+							<input readonly="readonly" style="width: 40% !important;"
+							ng-model="query.writeEnd" my-Date-Picker='' id="writeEnd"
+							class="form_term fl w_xjr" type="text"></td>
+						<td width="80"><label class="term_label">审核状态：</label></td>
+						<td width="15%">
+							<!-- <input class="input_box w_b90 " ng-model="query.auditStatus"	maxlength="20" id="" type="text" /> -->
+							<div class="ui-select">
+								<select ng-model="query.auditStatus"
+									ng-options="obj.codeValue as obj.codeName for obj in auditDate.items ">
+									<option value="">所有</option>
+								</select>
+							</div>
+						</td>
+						<td width="80"></td>
+						<td width=""></td>
+						<td rowspan="3" width="12%"><div
+								class="bottom_search search_button" style="position: inherit;">
+								<a ng-click="doQuery();" ng-enter="" href="javascript:void(0);">查询</a><a
+									class="qink" href="javascript:void(0);"
+									ng-click="cleanQuery();">清空</a>
+							</div></td>
+					</tr>
+					<tr>
+						<td><label class="term_label">核销状态：</label></td>
+						<td width="">
+							<!-- <input class="input_box w_b90 " ng-model="query.writeState"	maxlength="20" id="" type="text" /> -->
+							<div class="ui-select">
+								<select ng-model="query.writeState"
+									ng-options="obj.codeValue as obj.codeName for obj in writeData.items ">
+									<option value="">所有</option>
+								</select>
+							</div>
+						</td>
+
+						<td><label class="term_label">拉包工：</label></td>
+						<td><input class="input_box w_b90 " ng-model="query.userName"
+							maxlength="20" id="" type="text" /></td>
+						<td><label class="term_label">拉包工账号：</label></td>
+						<td><input class="input_box w_b90 "
+							ng-model="query.loginAcct" maxlength="20" id="" type="text" /></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="position: relative;" class="search_nr clearfix mt_20">
+			<div class="bottom_nav pb_20 bottom_nav_search clearfix tableStyle">
+				<h2>查询结果</h2>
+				<a class="button fr ml_10 gangxianjs"
+					ng-click="page.downloadExcelFile()" href="javascript:void(0);">
+					<i class="button_icon button_icon dw_gangxianjs"></i>导出
+				</a>
+				<a class="button fr ml_10 gangxianjs" ng-click="seeTipFee()"
+					href="javascript:void(0);"> <i
+					class="button_icon button_icon dw_gangxianjs"></i>查看明细
+				</a>
+				<a class="button fr ml_10 gangxianjs" ng-click="writeTip(2)"
+					href="javascript:void(0);"> <i
+					class="button_icon button_icon dw_gangxianjs"></i>反核销
+				</a>
+				<a class="button fr ml_10 gangxianjs" ng-click="writeTip(1)"
+					href="javascript:void(0);"> <i
+					class="button_icon button_icon dw_gangxianjs"></i>核销
+				</a>
+				<a class="button fr ml_10 gangxianjs" ng-click="applyTipFee(2)"
+					href="javascript:void(0);"> <i
+					class="button_icon button_icon dw_gangxianjs"></i>提现审批
+				</a>
+				<a class="button fr ml_10 see_b" ng-click="applyTipFee(1)"
+					href="javascript:void(0);"> <i
+					class="button_icon button_icon dw_see_b"></i>申请提现
+				</a>
+			</div>
+
+			<my-Table-Cm head="head" table="page" url="url" param="urlParam"
+				id="id" table-Name="cashWithdrawalTipFee" is-Filter="false"
+				is-Multi-Select="true" ver="${ver}" after-Init-Fn="doQuery()" is-Show-Row="true"></my-Table-Cm>
+		</div>
+	</div>
+	<!-- 小费对账 结束 -->
+
+
+
+
+
+	<!-- 透明背景 -->
+	<div id="fade1_xz" class="popup_bj" ng-show="isShow == true"></div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="../js/table/tableCommon.js?v=${ver}"></script>
+	<script type="text/javascript"
+		src="cashWithdrawalTipFeeCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

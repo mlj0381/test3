@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-8 16:29:12 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.wo56.business.org.vo.OrdImportBill" table="ord_import_bill">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="fhdh" type="java.lang.String">
+            <column name="fhdh" length="50" />
+        </property>
+        <property name="artNo" type="java.lang.String">
+            <column name="Art_No" length="50" />
+        </property>
+        <property name="fridges" type="java.lang.String">
+            <column name="fridges" length="100" />
+        </property>
+        <property name="number" type="java.lang.Integer">
+            <column name="number" />
+        </property>
+        <property name="volume" type="java.lang.String">
+            <column name="volume" length="20" />
+        </property>
+        <property name="payment" type="java.lang.String">
+            <column name="payment" length="20" />
+        </property>
+        <property name="freight" type="java.lang.Long">
+            <column name="Freight" />
+        </property>
+        <property name="consignee" type="java.lang.String">
+            <column name="consignee" length="30" />
+        </property>
+        <property name="consigneePhone" type="java.lang.String">
+            <column name="consigneePhone" length="30" />
+        </property>
+        <property name="alternativePhone" type="java.lang.String">
+            <column name="Alternative_phone" length="20" />
+        </property>
+        <property name="recProvinces" type="java.lang.Long">
+            <column name="Rec_provinces" />
+        </property>
+        <property name="recProvincesName" type="java.lang.String">
+            <column name="Rec_provincesName" length="20" />
+        </property>
+        <property name="recCity" type="java.lang.Long">
+            <column name="rec_city" />
+        </property>
+        <property name="recCityName" type="java.lang.String">
+            <column name="rec_cityName" length="20" />
+        </property>
+        <property name="recDistrict" type="java.lang.Long">
+            <column name="rec_district" />
+        </property>
+        <property name="recDistrictName" type="java.lang.String">
+            <column name="rec_districtName" length="20" />
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="address" />
+        </property>
+        <property name="opId" type="java.lang.Long">
+            <column name="op_id" />
+        </property>
+        <property name="opName" type="java.lang.String">
+            <column name="op_name" length="20" />
+        </property>
+        <property name="createDate" type="java.sql.Timestamp">
+            <column name="create_date" length="19" />
+        </property>
+        
+        
+        <property name="weight" type="java.lang.String">
+            <column name="`weight`" length="20" />
+        </property>
+         <property name="deliveryType" type="java.lang.Integer">
+            <column name="delivery_Type" length="2" />
+        </property>
+        <property name="deliveryTypeName" type="java.lang.String">
+            <column name="delivery_Type_Name" length="20" />
+        </property>
+         <property name="serviceType" type="java.lang.Integer">
+            <column name="service_Type" length="2" />
+        </property>
+         <property name="serviceTypeName" type="java.lang.String">
+            <column name="service_Type_name" length="20" />
+        </property>
+         <property name="installCosts" type="java.lang.Long">
+            <column name="`installCosts`" />
+        </property>
+         <property name="remarks" type="java.lang.String">
+            <column name="`remarks`" length="255" />
+        </property>
+        <property name="paymentName" type="java.lang.String">
+            <column name="payment_Name" length="20" />
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="`state`" length="2" />
+        </property>
+        <property name="trackingNum" type="java.lang.String">
+            <column name="`trackingNum`" length="50" />
+        </property>
+        <property name="consignor" type="java.lang.String">
+            <column name="`consignor`" length="100" />
+        </property>
+         <property name="consignorPhone" type="java.lang.String">
+            <column name="`consignorPhone`" length="50" />
+        </property>
+         <property name="orgId" type="java.lang.Long">
+            <column name="org_id" />
+        </property>
+         <property name="tenantId" type="java.lang.Long">
+            <column name="tenant_id" />
+        </property>
+        <property name="volumeNum" type="java.lang.Integer">
+            <column name="volume_num" />
+        </property>
+        <property name="weightNum" type="java.lang.Integer">
+            <column name="weight_num" />
+        </property>
+    </class>
+</hibernate-mapping>

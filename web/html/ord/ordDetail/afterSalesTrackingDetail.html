@@ -1,0 +1,55 @@
+<div class="billing_3 clearfix" style="padding-top: 10px;" >
+<h2 class="title_h2"><i class="icon title_icon fl"></i>售后跟踪</h2></div>
+			
+			
+			<div class="mkae" style="position: relative; overflow: auto;">
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" class="search_list yc_message_list dhl_uy dhl_table1" style="width: 100%;">
+					<thead>
+						<tr>
+							<th width="80">跟踪人</th>
+							<th width="100">跟踪时间</th>
+							<th width="100">售后类型</th>
+							<th width="120">下次跟踪时间</th>
+							<th width="100">承担方1</th>
+							<th width="90">金额1</th>
+							<th width="90">承担方2</th>
+							<th width="90">金额2</th>
+							<th width="90">承担方3</th>
+							<th width="90">金额3</th>
+							<th width="200">售后备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="ng-scope" ng-show="showData.items.length==0" >
+							<td width="80"></td>
+							<td width="100"></td>
+							<td width="100"></td>
+							<td width="120"></td>
+							<td width="100"></td>
+							<td width="90"></td>
+							<td width="90"></td>
+							<td width="90"></td>
+							<td width="90"></td>
+							<td width="90"></td>
+							<td width="200"></td>
+						</tr>
+						<tr class="ng-scope" ng-repeat="o in showData.items" >
+							<td width="80">{{o.creater}}</td>
+							<td width="100">{{o.opDateString}}</td>
+							<td width="100">{{o.salesTypeString}}</td>
+							<td width="120">{{o.trackDateString}}</td>
+							<td width="100">{{o.bearPartyOneIdName}}</td>
+							<td width="90">{{o.bearPartyOneMoneyString}}</td>
+							<td width="90">{{o.bearPartyTwoIdName}}</td>
+							<td width="90">{{o.bearPartyTwoMoneyString}}</td>
+							<td width="90">{{o.bearPartyThreeIdName}}</td>
+							<td width="90">{{o.bearPartyThreeMoneyString}}</td>
+							<td width="200" title="{{o.trackRemark}}">
+								<!-- <input type="text" readOnly ng-model="o.trackRemark" title="o.trackRemark" style="font-size:12px; font-family:宋体; border:0; background:#fff"> -->
+								{{o.trackRemark}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		<!-- 问题件 结束 -->

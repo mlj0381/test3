@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="sysRoleGrantApp">
+<head>
+	    <title>角色权限</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="一智通"/> 
+		<meta name="description" content="一智通" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+	
+        <link rel="stylesheet" type="text/css" href="../css/yzt/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/yzt/public.css">
+		<link rel="stylesheet" type="text/css" href="../css/yzt/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/yzt/master.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/yzt/bootstrap.css?v=${ver}">
+        
+     <style>
+	  .ng-cloak{display:none;}  
+.content {position: relative; background: #fff;}
+.cl_zlgl{padding: 35px 40px 25px;}
+
+.chey_bz{ margin:40px 20px 0;}
+.chey_bz dl{ overflow:hidden; margin-bottom:0;}
+.chey_bz dl dt{ color:#ff7800; font-weight:bold; padding-bottom:10px;}
+.chey_bz dl dd{ float:left; margin:0 6px 10px 0;}
+.xt_jcqx table{ width:93%; margin:0 auto;}
+.xt_jcqx td{ line-height:30px;}
+.xt_jcqx input{ margin-right:6px;}
+
+
+.chey_bz_xt{ padding:50px 0 0 100px;}
+.chey_bz_xt ul{ margin:0; padding:0; overflow:hidden;}
+.chey_bz_xt li label,.chey_bz_xt label{ width:90px; float:left; display: block; text-align:right; font-weight:normal; line-height:28px; margin:0;}
+.chey_bz_xt li{width:80%; margin-bottom:10px; overflow:hidden;}
+.chey_bz_xt li input{ float:left; margin-right:10px;}
+.chey_bz_xt li span{ float:left; line-height:28px; color:#ff0000}
+.w480_h60{ width:480px; height:100px!important;}
+.w440_h60{ width:440px; height:100px!important;}
+.chey_bz h3{ font-size:14px;  color:#ff7800; font-weight:bold; border-top:1px solid #f7f7f7; margin-top:20px; border-bottom:1px solid #f7f7f7; margin-bottom:20px; padding:10px 0 10px 20px;}
+.chey_bz h4{ font-size:14px;  color:#ff7800; font-weight:bold; border-top:0px solid #f7f7f7; margin-top:0px; border-bottom:1px solid #f7f7f7;  padding:10px 0 10px 20px;}
+
+.hygl ul{ border-bottom:1px solid #f7f7f7; padding-bottom:20px; margin-bottom:20px;}
+
+.role_1{ margin:20px 0 0 2px;font-family:"Open Sans",sans-serif;}
+.role_1 ol.tree{ float:left; padding:0;}
+	.role_1 li{position: relative;margin-left: -15px;list-style: none; float:none; width:auto; height:auto; margin:0;  color:#526273; line-height:30px;}
+	.role_1 li ol li{ position:static}
+	.role_1 li a{cursor: pointer;display:block;}/*--1--*/
+	.role_1 li a.minus,.role_1 li a.plus{cursor: pointer;display:block;}/*--1--*/
+	.role_1 li a span{display:inline-block;width:9px;height:9px;overflow:hidden;float:left;position:absolute;top:12px; left:0px;}
+	.role_1 li a.minus span{background:url(../image/yzt/role_1.png) no-repeat 0 -17px #fff;}
+	.role_1 li a.plus span{background:url(../image/yzt/role_1.png) no-repeat #fff;}
+	.role_1 li label{cursor: pointer;display: block;padding-left: 37px; width:auto; height:auto; line-height:16px; margin-top:10px!important;}
+	.role_1 li input.xt_djt{display:block; position:absolute;top:7px; left:18px;}
+	.role_1 li ol.xx_aq{background: url(../image/yzt/role_2.png) repeat-y 24px 0;padding-left: 50px;}
+	 </style>
+</head>
+<body ng-controller="sysRoleGrantCtrl" style="background-color: transparent;">
+
+    <!-- navbar -->
+    <simple-navbar id="simpleNavbarId"></simple-navbar>
+	<simple-menu id="simpleMenuId" loadurl="sysMenu.ajax?cmd=loadMenu"
+		currenturl="/warehouse/system/sysRoleGrant.html">
+	</simple-menu>
+
+	<!-- main container -->
+	<div class="content billing_1">
+	  <div class="users-list">
+	    
+	    <div class="cl_zlgl">
+	      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	        <tr>
+	           <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	            <tr>
+	              <td width="150"><label class="control-label">公司：</label></td>
+					<td>
+						<div class="search_select w_146">
+						<select name="select" class="xl_z"  ng-model="data.tenantId"  ng-change="selecSysRole(data.tenantId)"  ng-disabled="all" ng-options="productService.tenantId as productService.deptName for  productService in companyData.items">
+								<option value="">所有</option>
+						</select>		
+						</div>	
+					</td>
+					<td width="150"><label class="control-label">角色：</label></td>
+					<td>
+						<div class="search_select w_146">
+						<select name="select" class="xl_z" ng-model="data.roleId" ng-change="selChange(data.roleId)"  ng-disabled="all" ng-options="productService.roleId as productService.roleName for  productService in sysRole">
+								<option value="">所有</option>
+						</select>		
+						</div>	
+					</td>
+					
+					<td rowspan="2">
+						<div class="search_button">
+							<a class="search_button_ss" href="javaScript:void(0)"  ng-click="doSave()">保存</a> 
+							<!-- <a class="search_button_cz" href="javaScript:void(0)" ng-click="clear();">返回</a> -->
+						 </div>			
+					</td>
+					
+                </tr>
+	            </table></td>
+            </tr>
+          </table>
+        </div>
+	    <!-- <div class="chey_sx">
+	     </div> -->
+            <div id="light2_xz" >
+                        <div class="chey_bz">
+                            <div class="xt_jcqx">
+                               	<h4>权限列表：</h4>
+								  <div class="role_1 clearfix" >
+                                    	<table width="100%" border="0" cellspacing="0" cellpadding="0" id="enTable"  >
+                                         <tr ng-repeat="ob in RoleGrant">
+                                            <td valign="top" width="25%" ng-repeat="obj in ob">
+                                                <ol class="tree clearfix">
+                                                    <li>
+                                                        <div class=" clearfix">
+                                                            <a href="javascript:void(0);" class="minus" id="min{{obj.entityId}}" ng-click="showHide(obj.entityId);"><span ></span>
+                                                            <label>{{obj.menuName}}</label>
+                                                            </a> <input   class="xt_djt" name="checkbox2" type="checkbox" id="check{{obj.entityId}}"  attr="{{obj.menuId}}" value="{{obj.entityId}}"  ng-click="selectAll(obj)"/>
+                                                        </div>
+                                                        <ol id="{{obj.entityId}}" class="xx_aq" >
+                                                            <li ng-repeat="objs in obj.childMenus">
+                                                                <input ng-click="selectOne(obj)" id="{{objs.entityId}}"  name="checkbox2" type="checkbox" value="{{objs.entityId}}">{{objs.menuName}}
+                                                                <div style="background:#fff; width:30px; height:16px; position: absolute; bottom:0; left:0">
+                                                                </div>
+                                                            </li>
+                                                        </ol>
+                                                    </li>
+                                                 </ol>
+                                             </td>
+                                           </tr>
+                                        </table>
+           							</div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                       <!--  <div class="che_qdqx m1359 w100_50" style="position:relative; bottom:20px;">
+	                         <a class="btn btn-lg btn-danger" href="javascript:void(0)" ng-click="doSave()" style="margin-left: 300px;"  >确定</a>
+                        </div> -->
+                      </div>
+        
+        
+        
+      </div>
+</div>
+
+<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+
+		<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+        <script type="text/javascript" src="sysRoleGrantCtrl.js?v=1.0"></script>    
+    
+</body>
+</html>

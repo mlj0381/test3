@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="ordQuestionInApp">
+<head>
+<title>众邦_异常处理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="众邦" />
+<meta name="description" content="众邦" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/icon.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/public.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/head.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/leftboxcs.css?v=${ver}" />
+<link rel="stylesheet" type="text/css"
+	href="../css/$tenantId$/master.css?v=${ver}" />
+<style type="text/css">
+input[type='radio'] + label:before, input[type='checkbox'] + label:before{background-color: #ccc;}
+</style>
+</head>
+<body ng-controller="ordQuestionInCtrl" onload="setContentHeight()" style="overflow: hidden;">
+	<!-- 问题处理 -->
+	<div class="billing_1 clearfix pb_20 mt_20 plr_20" style="min-height: 400px">
+		<ul class="yic_n clearfix wt_j">
+			<li class="yic_li fl"><label class="yic_label"><em>*</em>运单号：</label>
+			<div class="fl">
+					<input class="yic_input fl" type="text" ng-model="data.trackingNum" my-Num-Val ng-disabled="all" maxlength="19" />
+					<input class="yic_input fl" type="hidden" ng-model="data.id" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label"><em>*</em>登记网点：</label>
+			<div class="fl">
+					<input class="yic_input fl" ng-model="data.orgIdName" readOnly type="text" />
+					<input class="yic_input fl" ng-model="data.orgId" readOnly type="hidden" />
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label"><em>*</em>接收网点：</label>
+				<div class="fl w138">
+					<select class="yic_input fl" ng-disabled="all" ng-model="data.dutyOrgId"
+						ng-options="obj.orgId as obj.orgName for  obj in orgInfo  ">
+					</select>
+				</div></li>
+			<li class="yic_li fl"><label class="yic_label"><em>*</em>问题类型：</label>
+				<div class="fl w138">
+					<select class="yic_input " ng-disabled="all" ng-model="data.type"
+						ng-options="obj.codeValue as obj.codeName for  obj in questionTypeData.items  ">
+					</select>
+				</div></li>
+			<li class="yic_li fl w_b100"><label class="yic_label"><em>*</em>问题描述：</label>
+			<div class="fl w_b78">
+					<textarea class="yic_text" ng-model="data.notes" maxlength="40" ng-disabled="all"></textarea>
+				</div></li>
+			<li class="yic_li fl w_b100"><label class="yic_label">问题协议商费用：</label>
+			<div class="fl wt_wz red">（要求接收网点补加的费用）</div></li>
+			<li class="yic_li fl w_b100"><label class="yic_label"><em>*</em>协商金额：</label>
+			<div class="fl">
+					<input class="yic_input fl" style="width: auto;" ng-model="data.amount"   my-Double-Val maxlength="11" ng-disabled="all" type="text"  /><span class="fl">（元）</span>
+				</div></li>
+		</ul>
+		<ul class="yic_n clearfix wt_j" ng-show="audit">
+            	<li class="yic_li w_b100 fl"><label class="sh_xz wt_wz">接收网点审核</label><div class="fl"></div></li>
+                <li class="yic_li w_b100 fl" style="margin-left:105px;"><div class="controls">
+                	<em>*</em><input class="none" style="color: red" id="radio-1" type="radio" ng-disabled="auditEdit" ng-model="data.auditStatus" value="1" name="r-group-1" checked="checked" />
+                		<label for="radio-1">同意</label>
+               	 	<input class="none" id="radio-2" style="color: red" type="radio" ng-disabled="auditEdit" ng-model="data.auditStatus" value="2" name="r-group-1" />
+               	 		<label for="radio-2">不同意</label></div>
+               	</li>
+                <li class="yic_li w_b100 fl"><label class="yic_label"><em>*</em>审核意见：</label><div class="fl w_b78">
+                <textarea class="yic_text" ng-model="data.auditIdea"  ng-disabled="auditEdit" maxlength="40"></textarea></div></li>
+                
+            </ul>
+	</div>
+
+	<div class="bottom_nav1">
+		<a href="javascript:void(0)" ng-click="doSave()" ng-show="showSave">提 交</a><a href="javascript:void(0)" ng-click="close()">取 消</a>
+	</div>
+
+	<!--[if !IE]> -->
+	<script src='../js/angular/angular.min.js'></script>
+	<!-- <![endif]-->
+	<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+	<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+	<script type="text/javascript" src="../js/md5.js?v=${ver}"></script>
+	<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+	<script type="text/javascript" src="ordQuestionInCtrl.js?v=${ver}"></script>
+</body>
+</html>
+

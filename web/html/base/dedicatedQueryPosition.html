@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html ng-app="dedicatedQueryPosition"> 
+	<head>
+	    <title>${title}_专线查询 </title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="${title}"/> 
+		<meta name="description" content="${title}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/icon.css?v=${ver}">	
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/public.css?v=${ver}">
+		<link rel="stylesheet" type="text/css" href="../css/$tenantId$/head.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/leftboxcs.css?v=${ver}">
+        <link rel="stylesheet" type="text/css" href="../css/$tenantId$/master.css?v=${ver}">
+       
+</head>
+	<body ng-controller="dedicatedQueryPositionCtrl" style="overflow:hidden" onload="setContentHeight(800)">
+ 	<!-- 配安费用  start -->
+    <div class="billing_1 clearfix pb_20 mt_20">
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search_table search_term">
+					<tbody>
+					<tr>
+						<td width="100"><label class="term_label">货物名称：</label></td>
+						<td width="230"><input class="form_term" ng-model="queryParam.loginAcct" maxlength="10"/></td>
+						<td><div class="bottom_search" style="position:inherit;"><a ng-click="doQuery();" ng-Enter href="javascript:void(0);">查询</a></div></td>
+					</tr>
+				</tbody>
+		</table>
+        <div class="search_nr clearfix mt_20">          
+              <my-table>
+                   <div id="size" class="zz_list ng-scope table_height" style="overflow:auto;">
+                         <table width="100%" class="search_lista" border="0" cellspacing="0" cellpadding="0">
+                               <thead id="tb1">
+                                <tr>
+                                   
+									<th width="20%">产品名称</th>
+									<th width="20%">单价(元)</th>
+									<th width="20%">单位</th>
+                                    <th width="20%">属性(元)</th>  
+                                </tr>
+                              </thead>
+                               
+                              <tbody>
+                                  <tr>
+                                  	
+                                    <td width="25%">T00001</td>
+                                    <td width="25%">联运汇专线</td>
+                                    <td width="25%">联运汇</td>
+                                    <td width="23%">湖南/湖北</td>   
+                                  </tr>
+                              </tbody>
+                            </table>
+                           
+                </div>
+                </my-table>
+        	</div>
+    </div>
+    <!-- 配安费用  end -->
+ 	
+ 		<!--[if !IE]> -->
+	    <script src='../js/angular/angular.min.js'></script>
+		<!-- <![endif]-->
+		<!--[if lte IE 8 ]>
+			<script src='../js/angular-1.2.19/angular.min.js'></script>
+		<![endif]-->
+		<!--[if !lte IE 8 ]>
+			<script src='../js/angular/angular.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/common.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/base64.js?v=${ver}"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js?v=${ver}"></script>
+		<script type="text/javascript" src="dedicatedQueryPositionCtrl.js?v=${ver}"></script>
+</body>
+</html>
+
